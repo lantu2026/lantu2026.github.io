@@ -63,7 +63,7 @@ body{
 
 /* ---------- 工具条 ---------- */
 .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:24px 0 4px;padding-top:20px;border-top:1px solid var(--line)}
-.search{position:relative;flex:1;min-width:220px;max-width:340px}
+.search{position:relative;flex:1;min-width:0}
 .search input{width:100%;padding:10px 14px 10px 36px;border:1px solid var(--line);background:var(--card);border-radius:11px;font-size:14px;color:var(--text);outline:none;transition:.18s;font-family:inherit}
 .search input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-3)}
 .search span{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.5;pointer-events:none}
@@ -190,7 +190,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
     <p class="secdesc">给老师看的：培训讲座、工具手册、学校共建平台。用来推广方法，不只是展示成品。</p>
     <div class="grid">
 
-      <a class="card" href="works/shuzhi-funeng/" data-k="数智赋能 网页学件 制作实战 讲座 校本培训 AI 零代码 全学科">
+      <a class="card" href="works/shuzhi-funeng/" data-short="数智赋能" data-k="数智赋能 网页学件 制作实战 讲座 校本培训 AI 零代码 全学科">
         <div class="ic">🧭</div>
         <h3>数智赋能 · 网页学件制作实战</h3>
         <p>校本培训讲座：不讲原理，直接带着老师用 AI 做出能上课的跨学科网页学件。</p>
@@ -198,7 +198,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">works/shuzhi-funeng</div>
       </a>
 
-      <a class="card" href="works/workbuddy-2/" data-k="WorkBuddy 教师 数字化 实战 培训 2.0 AI 工具链 教师发展">
+      <a class="card" href="works/workbuddy-2/" data-short="WB 培训" data-k="WorkBuddy 教师 数字化 实战 培训 2.0 AI 工具链 教师发展">
         <div class="ic">🛠️</div>
         <h3>WorkBuddy 教师数字化实战 2.0</h3>
         <p>教师 AI 工具链培训第二版，把备课、命题、统计、发布串成一条可复制的路径。</p>
@@ -206,7 +206,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">works/workbuddy-2</div>
       </a>
 
-      <a class="card" href="works/it-teacher-guide/" data-k="信息老师 指南 手册 WorkBuddy 信息科技 课堂 落地">
+      <a class="card" href="works/it-teacher-guide/" data-short="信息指南" data-k="信息老师 指南 手册 WorkBuddy 信息科技 课堂 落地">
         <div class="ic">📘</div>
         <h3>小学信息老师 WorkBuddy 应用全指南</h3>
         <p>面向信息科技教师的手册，按真实课堂场景给做法，不堆概念。</p>
@@ -214,7 +214,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">works/it-teacher-guide</div>
       </a>
 
-      <a class="card" href="works/qinmei-wiki/" data-k="勤美 汤小 wiki 学校 手册 共建 投稿 数据汇聚 云端 教师端">
+      <a class="card" href="works/qinmei-wiki/" data-short="勤美 wiki" data-k="勤美 汤小 wiki 学校 手册 共建 投稿 数据汇聚 云端 教师端">
         <div class="ic">🏫</div>
         <h3>勤美汤小 wiki</h3>
         <p>师生家长共建的学校实用手册。教师端可投稿，数据走云端汇总，投稿墙实时回显。</p>
@@ -234,7 +234,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
     <p class="secdesc">给学生用的：单个学件即开即用，适配电脑和平板。所有学件不含学生姓名、学号、成绩等个人信息。</p>
     <div class="grid">
 
-      <a class="card" href="learn/photosynthesis/" data-k="光合作用 实验室 科学 变量控制 实验 跨学科 六年级">
+      <a class="card" href="learn/photosynthesis/" data-short="光合作用" data-k="光合作用 实验室 科学 变量控制 实验 跨学科 六年级">
         <div class="ic">🌿</div>
         <h3>光合作用探索实验室</h3>
         <p>调光照、调水分，看植物怎么长。练的是变量控制与实验记录。</p>
@@ -242,7 +242,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/photosynthesis</div>
       </a>
 
-      <a class="card" href="learn/planting/" data-k="种植 体验 自动 定时 增湿 过程 控制 自动化">
+      <a class="card" href="learn/planting/" data-short="种植体验" data-k="种植 体验 自动 定时 增湿 过程 控制 自动化">
         <div class="ic">🌱</div>
         <h3>种植体验 · 自动定时增湿</h3>
         <p>用定时控制模拟养护流程，让学生看见自动化的边界和漏洞。</p>
@@ -250,7 +250,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/planting</div>
       </a>
 
-      <a class="card" href="learn/thermos/" data-k="保温水壶 闭环 控制 流程图 拖拽 比较器 反馈 传感器">
+      <a class="card" href="learn/thermos/" data-short="保温水壶" data-k="保温水壶 闭环 控制 流程图 拖拽 比较器 反馈 传感器">
         <div class="ic">♨️</div>
         <h3>保温水壶 · 闭环控制流程图</h3>
         <p>拖拽拼装闭环控制流程，把比较器、执行器、反馈讲清楚。</p>
@@ -258,7 +258,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/thermos</div>
       </a>
 
-      <a class="card" href="learn/lamp/" data-k="组装 台灯 过程 控制 输入 处理 输出 六年级 拆解">
+      <a class="card" href="learn/lamp/" data-short="组装台灯" data-k="组装 台灯 过程 控制 输入 处理 输出 六年级 拆解">
         <div class="ic">💡</div>
         <h3>组装台灯 · 过程与控制</h3>
         <p>六年级过程与控制单元学件，把一件日用品拆成输入、处理、输出。</p>
@@ -266,7 +266,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/lamp</div>
       </a>
 
-      <a class="card" href="learn/algorithm-flow/" data-k="算法 流程图 教学工具 多场景 顺序 分支 循环 画图">
+      <a class="card" href="learn/algorithm-flow/" data-short="流程图" data-k="算法 流程图 教学工具 多场景 顺序 分支 循环 画图">
         <div class="ic">🔀</div>
         <h3>多场景 · 算法流程图教学工具</h3>
         <p>换场景就能画流程图，练顺序、分支、循环三种结构。</p>
@@ -274,7 +274,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/algorithm-flow</div>
       </a>
 
-      <a class="card" href="learn/ai-literacy/" data-k="AI 素养 测评 护眼 评价 限时 课堂">
+      <a class="card" href="learn/ai-literacy/" data-short="AI 测评" data-k="AI 素养 测评 护眼 评价 限时 课堂">
         <div class="ic">👁️</div>
         <h3>小学 AI 素养测评（护眼版）</h3>
         <p>测评加护眼提醒，适合课堂限时用，做完就知道薄弱点在哪。</p>
@@ -282,7 +282,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/ai-literacy</div>
       </a>
 
-      <a class="card" href="learn/ai-literacy-dash/" data-k="AI 素养 测评 数据 大屏 可视化 班级 讲评">
+      <a class="card" href="learn/ai-literacy-dash/" data-short="测评大屏" data-k="AI 素养 测评 数据 大屏 可视化 班级 讲评">
         <div class="ic">📊</div>
         <h3>小学 AI 素养测评（数据大屏）</h3>
         <p>测评结果可视化大屏，全班一起看，讲评时有据可依。</p>
@@ -290,7 +290,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/ai-literacy-dash</div>
       </a>
 
-      <a class="card" href="learn/it-park/" data-k="信息科技 乐园 综合 练习 多模块 入口">
+      <a class="card" href="learn/it-park/" data-short="科技乐园" data-k="信息科技 乐园 综合 练习 多模块 入口">
         <div class="ic">🎡</div>
         <h3>小学生信息科技乐园</h3>
         <p>多个信息科技练习模块的合体入口，适合早读或社团自由练。</p>
@@ -298,7 +298,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/it-park</div>
       </a>
 
-      <a class="card" href="learn/task-arena/" data-k="课堂 任务 大闯关 互动 即时 反馈">
+      <a class="card" href="learn/task-arena/" data-short="任务闯关" data-k="课堂 任务 大闯关 互动 即时 反馈">
         <div class="ic">🎯</div>
         <h3>课堂任务大闯关</h3>
         <p>把一节课的任务拆成关卡，闯一关给一次即时反馈。</p>
@@ -306,7 +306,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/task-arena</div>
       </a>
 
-      <a class="card" href="learn/quiz/" data-k="课堂 知识 竞赛 出题 版 互动 抢答">
+      <a class="card" href="learn/quiz/" data-short="知识竞赛" data-k="课堂 知识 竞赛 出题 版 互动 抢答">
         <div class="ic">🏆</div>
         <h3>课堂知识竞赛（出题版）</h3>
         <p>自己出题自己办比赛，题目换起来不用改代码。</p>
@@ -314,7 +314,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/quiz</div>
       </a>
 
-      <a class="card" href="learn/typing/" data-k="打字 乐园 年级 闯关 指法 速度 分层">
+      <a class="card" href="learn/typing/" data-short="打字乐园" data-k="打字 乐园 年级 闯关 指法 速度 分层">
         <div class="ic">⌨️</div>
         <h3>打字乐园 · 年级闯关</h3>
         <p>指法与速度分层闯关，练准不练快，每天十分钟就够。</p>
@@ -322,7 +322,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/typing</div>
       </a>
 
-      <a class="card" href="learn/enumeration/" data-k="小智 采购 任务 枚举 算法 初探 百元 买百笔 旁白 六年级">
+      <a class="card" href="learn/enumeration/" data-short="枚举算法" data-k="小智 采购 任务 枚举 算法 初探 百元 买百笔 旁白 六年级">
         <div class="ic">🔍</div>
         <h3>小智的采购任务 · 枚举算法</h3>
         <p>百元买百笔，先从瞎试到有序穷举。带旁白讲解，四个环节走完一遍。</p>
@@ -376,6 +376,48 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
     apply(next);
     try { localStorage.setItem('lantu-theme', next); } catch (e) {}
   });
+
+  // ---- 常用度统计：记录每个作品的打开次数（仅存本机） ----
+  var HKEY = 'lantu-hits';
+  var hits = {};
+  try { hits = JSON.parse(localStorage.getItem(HKEY) || '{}') || {}; } catch (e) { hits = {}; }
+
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest ? ev.target.closest('a[href]') : null;
+    if (!a) return;
+    var hr = a.getAttribute('href') || '';
+    if (!hr || hr.charAt(0) === '#') return;
+    hits[hr] = (hits[hr] || 0) + 1;
+    try { localStorage.setItem(HKEY, JSON.stringify(hits)); } catch (e) {}
+  });
+
+  var quickG = document.querySelector('.quick-g');
+  var quickH = document.querySelector('.quick-h');
+  function buildQuick() {
+    if (!quickG) return;
+    var list = [].slice.call(document.querySelectorAll('.card')).map(function (c, i) {
+      return {
+        href: c.getAttribute('href'),
+        short: c.getAttribute('data-short') || '',
+        ic: (c.querySelector('.ic') || {}).textContent || '',
+        n: hits[c.getAttribute('href')] || 0,
+        i: i
+      };
+    });
+    var used = list.filter(function (x) { return x.n > 0; })
+                   .sort(function (a, b) { return b.n - a.n || a.i - b.i; });
+    var rest = list.filter(function (x) { return x.n === 0; });
+    var top = used.concat(rest).slice(0, 6);
+    quickG.innerHTML = top.map(function (x) {
+      return '<a href="' + x.href + '"><i>' + x.ic.trim() + '</i><span>' + x.short + '</span></a>';
+    }).join('');
+    if (quickH && used.length && quickG.parentNode) {
+      quickH.textContent = '\u26a1 \u4f60\u6700\u5e38\u7528\u7684 \u00b7 \u81ea\u52a8\u6392\u5e8f';
+      var t = quickG.parentNode.querySelector('.quick-t');
+      if (t) t.innerHTML = '\u6309\u672c\u673a\u6253\u5f00\u6b21\u6570\u6392\u5e8f \u00b7 <a href="#learn">\u5168\u90e8 12 \u4ef6 \u2192</a>';
+    }
+  }
+  buildQuick();
 
   var q = document.getElementById('q');
   var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
