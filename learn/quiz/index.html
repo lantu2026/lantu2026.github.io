@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课堂知识竞赛 - 稳定版</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50c878;
+            --accent-color: #ff9f43;
+            --error-color: #e74c3c;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 { color: var(--primary-color); margin-bottom: 30px; }
+        h2 { font-size: 1.5rem; margin-bottom: 20px; }
+
+        /* 表单样式 */
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.1rem; }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--primary-color); outline: none; }
+
+        /* 按钮样式 */
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .btn:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .btn-secondary { background: var(--secondary-color); margin-top: 10px; }
+        .btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); margin-top: 20px; font-size: 1rem; }
+
+        /* 答题界面样式 */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .option-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 20px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .option-btn:hover:not([disabled]) { border-color: var(--primary-color); background: #eef6fc; }
+        .correct { background-color: var(--secondary-color) !important; color: white; border-color: var(--secondary-color); }
+        .wrong { background-color: var(--error-color) !important; color: white; border-color: var(--error-color); animation: shake 0.5s; }
+
+        /* 进度条 */
+        .timer-bar { height: 8px; background: #eee; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+        .timer-fill { height: 100%; width: 100%; background: var(--primary-color); transition: width 1s linear; }
+
+        /* 页面切换 */
+        .screen { display: none; animation: fadeIn 0.5s; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+        /* 结果页 */
+        .score-circle {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: var(--primary-color); color: white;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 2.5rem; font-weight: bold; margin: 20px auto;
+        }
+        .status-msg { margin-top: 15px; font-size: 0.9rem; color: #666; }
+        
+        /* 隐藏表单，用于提交 */
+        #submit-form { display: none; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <!-- 1. 登录/信息录入页 -->
+    <div id="login-screen" class="screen active">
+        <h1>🎓 课堂知识竞赛</h1>
+        <div class="form-group">
+            <label>班级</label>
+            <select id="class-select">
+                <option value="四年级1班">四年级1班</option>
+                <option value="四年级2班">四年级2班</option>
+                <option value="四年级3班">四年级3班</option>
+                <option value="四年级4班">四年级4班</option>
+                <option value="四年级5班">四年级5班</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>学号</label>
+            <input type="number" id="student-id" placeholder="请输入你的学号">
+        </div>
+        <div class="form-group">
+            <label>姓名</label>
+            <input type="text" id="student-name" placeholder="请输入你的姓名">
+        </div>
+        <button class="btn" onclick="startQuiz()">开始竞赛</button>
+        <button class="btn btn-outline" onclick="showCustomQuestionForm()">我是老师 (出题)</button>
+    </div>
+
+    <!-- 2. 答题页 -->
+    <div id="quiz-screen" class="screen">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #7f8c8d;">
+            <span id="user-info-display"></span>
+            <span id="score-display">得分：0</span>
+        </div>
+        <div class="timer-bar"><div id="timer-fill" class="timer-fill"></div></div>
+        
+        <h2 id="question-text">题目加载中...</h2>
+        
+        <div id="options-container" class="options-grid"></div>
+    </div>
+
+    <!-- 3. 结果页 -->
+    <div id="result-screen" class="screen">
+        <h1>🏁 竞赛结束</h1>
+        <div class="score-circle" id="final-score">0</div>
+        <h3 id="feedback-text">表现不错！</h3>
+        <div id="submit-status" class="status-msg">准备上传数据...</div>
+        <button class="btn btn-secondary" onclick="location.reload()">返回主页</button>
+    </div>
+
+    <!-- 4. 自定义题目页 (教师用) -->
+    <div id="custom-screen" class="screen">
+        <h2>📝 自定义题目设置</h2>
+        <div class="form-group">
+            <label>题目内容</label>
+            <input type="text" id="custom-q-text" placeholder="输入问题">
+        </div>
+        <div class="form-group">
+            <label>选项 A</label>
+            <input type="text" id="custom-opt-a" placeholder="选项A">
+        </div>
+        <div class="form-group">
+            <label>选项 B</label>
+            <input type="text" id="custom-opt-b" placeholder="选项B">
+        </div>
+        <div class="form-group">
+            <label>选项 C</label>
+            <input type="text" id="custom-opt-c" placeholder="选项C">
+        </div>
+        <div class="form-group">
+            <label>选项 D</label>
+            <input type="text" id="custom-opt-d" placeholder="选项D">
+        </div>
+        <div class="form-group">
+            <label>正确答案 (输入 A, B, C 或 D)</label>
+            <input type="text" id="custom-answer" placeholder="例如: A" style="text-transform: uppercase;">
+        </div>
+        <button class="btn" onclick="saveCustomQuestion()">保存并返回</button>
+        <button class="btn btn-outline" onclick="location.reload()">取消</button>
+    </div>
+
+    <!-- 隐藏的真实提交表单 (用于绕过跨域限制) -->
+    <form id="submit-form" action="https://quickform.cn/api/wcbatlgwcg" method="POST" target="_blank">
+        <input type="hidden" name="class" id="form-class">
+        <input type="hidden" name="studentId" id="form-id">
+        <input type="hidden" name="name" id="form-name">
+        <input type="hidden" name="score" id="form-score">
+        <input type="hidden" name="date" id="form-date">
+    </form>
+</div>
+
+<script>
+    // --- 默认题库 ---
+    let questions = [
+        { question: "计算机的“大脑”指的是？", options: ["内存", "CPU", "硬盘", "显卡"], answer: 1 },
+        { question: "下列哪个是浏览器？", options: ["Chrome", "Word", "Excel", "PPT"], answer: 0 },
+        { question: "1 Byte = ? bits", options: ["2", "4", "8", "16"], answer: 2 },
+        { question: "键盘上最长的键是？", options: ["Enter", "Space", "Shift", "Backspace"], answer: 1 },
+        { question: "JPG 是什么格式？", options: ["音频", "视频", "图片", "文档"], answer: 2 },
+        { question: "鼠标右键通常用于？", options: ["确认", "打开菜单", "关闭窗口", "刷新"], answer: 1 },
+        { question: "下列属于输入设备的是？", options: ["显示器", "打印机", "键盘", "音箱"], answer: 2 },
+        { question: "WWW 代表什么？", options: ["万维网", "互联网", "局域网", "宽带"], answer: 0 }
+    ];
+
+    // --- 状态变量 ---
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timer;
+    let timeLeft = 15;
+    let isAnswering = false;
+    
+    // 用户信息对象
+    let userInfo = {
+        class: "",
+        id: "",
+        name: ""
+    };
+
+    // --- 页面导航逻辑 ---
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // --- 登录与验证 ---
+    function startQuiz() {
+        const classSelect = document.getElementById('class-select').value;
+        const idInput = document.getElementById('student-id').value;
+        const nameInput = document.getElementById('student-name').value;
+
+        if (!idInput || !nameInput) {
+            alert("请填写完整的学号和姓名！");
+            return;
+        }
+
+        // 保存信息
+        userInfo.class = classSelect;
+        userInfo.id = idInput;
+        userInfo.name = nameInput;
+
+        // 更新界面显示
+        document.getElementById('user-info-display').innerText = `${userInfo.class} ${userInfo.name}`;
+        
+        showScreen('quiz-screen');
+        loadQuestion();
+    }
+
+    // --- 答题核心逻辑 ---
+    function loadQuestion() {
+        isAnswering = false;
+        timeLeft = 15;
+        updateTimerUI();
+
+        const currentQ = questions[currentQuestionIndex];
+        document.getElementById('question-text').innerText = currentQ.question;
+        document.getElementById('score-display').innerText = `得分：${score}`;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        currentQ.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = `${String.fromCharCode(65 + index)}. ${opt}`;
+            btn.onclick = () => checkAnswer(index);
+            optionsContainer.appendChild(btn);
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            timeLeft--;
+            updateTimerUI();
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                handleTimeout();
+            }
+        }, 1000);
+    }
+
+    function updateTimerUI() {
+        const fill = document.getElementById('timer-fill');
+        fill.style.width = `${(timeLeft / 15) * 100}%`;
+        fill.style.background = timeLeft <= 5 ? '#e74c3c' : '#4a90e2';
+    }
+
+    function checkAnswer(selectedIndex) {
+        if (isAnswering) return;
+        isAnswering = true;
+        clearInterval(timer);
+
+        const correctIndex = questions[currentQuestionIndex].answer;
+        const buttons = document.querySelectorAll('.option-btn');
+
+        if (selectedIndex === correctIndex) {
+            buttons[selectedIndex].classList.add('correct');
+            score += 10;
+        } else {
+            buttons[selectedIndex].classList.add('wrong');
+            buttons[correctIndex].classList.add('correct');
+        }
+
+        setTimeout(() => {
+            nextQuestion();
+        }, 1500);
+    }
+
+    function handleTimeout() {
+        isAnswering = true;
+        const buttons = document.querySelectorAll('.option-btn');
+        const correctIndex = questions[currentQuestionIndex].answer;
+        buttons[correctIndex].classList.add('correct');
+        
+        setTimeout(() => {
+            nextQuestion();
+        }, 2000);
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            finishQuiz();
+        }
+    }
+
+    // --- 结束与数据提交 (已修复) ---
+    function finishQuiz() {
+        showScreen('result-screen');
+        document.getElementById('final-score').innerText = score;
+        
+        // 简单的评语
+        const feedback = document.getElementById('feedback-text');
+        if (score === 80) feedback.innerText = "🌟 满分！太棒了！";
+        else if (score >= 60) feedback.innerText = "👍 成绩优秀！";
+        else feedback.innerText = "💪 继续加油！";
+
+        // 准备提交数据
+        const statusEl = document.getElementById('submit-status');
+        
+        // 填充隐藏表单的数据
+        document.getElementById('form-class').value = userInfo.class;
+        document.getElementById('form-id').value = userInfo.id;
+        document.getElementById('form-name').value = userInfo.name;
+        document.getElementById('form-score').value = score;
+        document.getElementById('form-date').value = new Date().toISOString();
+
+        // 模拟上传延迟，提升体验
+        statusEl.innerText = "正在上传成绩到服务器...";
+        
+        setTimeout(() => {
+            // 使用原生表单提交，这通常能绕过 CORS 限制
+            // target="_blank" 会让提交在新窗口打开，不打断当前页面的显示
+            document.getElementById('submit-form').submit();
+            statusEl.innerText = "✅ 数据已发送（请检查新窗口）";
+            statusEl.style.color = "green";
+        }, 1500);
+    }
+
+    // --- 教师/自定义功能 ---
+    function showCustomQuestionForm() {
+        showScreen('custom-screen');
+    }
+
+    function saveCustomQuestion() {
+        const qText = document.getElementById('custom-q-text').value;
+        const optA = document.getElementById('custom-opt-a').value;
+        const optB = document.getElementById('custom-opt-b').value;
+        const optC = document.getElementById('custom-opt-c').value;
+        const optD = document.getElementById('custom-opt-d').value;
+        const ans = document.getElementById('custom-answer').value.trim().toUpperCase();
+
+        if (!qText || !optA || !ans) {
+            alert("请至少填写题目、选项A和正确答案");
+            return;
+        }
+
+        // 映射答案 A->0, B->1...
+        let answerIndex = 0;
+        if (ans === 'A') answerIndex = 0;
+        else if (ans === 'B') answerIndex = 1;
+        else if (ans === 'C') answerIndex = 2;
+        else if (ans === 'D') answerIndex = 3;
+
+        // 替换默认题库的第一题
+        questions[0] = {
+            question: qText,
+            options: [optA, optB, optC, optD],
+            answer: answerIndex
+        };
+
+        alert("题目已设置！请返回主页开始。");
+        location.reload();
+    }
+</script>
+
+</body>
+</html>

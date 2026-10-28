@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学信息老师 WorkBuddy 应用全指南</title>
+<style>
+/* ===== 基础 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 16px; line-height: 1.85; color: #1C2B3A;
+  background: #F6FAFF;
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(30, 111, 255, 0.07), transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(15, 191, 143, 0.06), transparent 55%);
+  background-attachment: fixed;
+}
+/* ===== 布局 ===== */
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 22px 80px; }
+/* ===== 变量 ===== */
+:root {
+  --ink: #1C2B3A; --muted: #5B6B7C; --rule: #DCE7F5;
+  --accent: #1E6FFF; --accent2: #0FBF8F;
+  --accent-light: rgba(30, 111, 255, 0.08);
+  --accent2-light: rgba(15, 191, 143, 0.10);
+  --grad: linear-gradient(135deg, #1E6FFF 0%, #0FBF8F 100%);
+  --card: #FFFFFF; --radius: 14px; --shadow: 0 2px 10px rgba(28, 62, 112, 0.06);
+  --shadow-lg: 0 10px 36px rgba(28, 62, 112, 0.12);
+}
+/* ===== Hero ===== */
+.hero {
+  position: relative; overflow: hidden; border-radius: 0 0 18px 18px;
+  background: var(--grad); margin-bottom: 36px;
+  padding: 54px 30px 46px; color: #fff;
+}
+.hero::after {
+  content: ""; position: absolute; right: -60px; top: -60px; width: 260px; height: 260px;
+  background: rgba(255,255,255,0.10); border-radius: 50%;
+}
+.hero::before {
+  content: ""; position: absolute; right: 70px; bottom: -90px; width: 200px; height: 200px;
+  background: rgba(255,255,255,0.07); border-radius: 50%;
+}
+.hero .tag {
+  display: inline-block; padding: 4px 16px; background: rgba(255,255,255,0.22);
+  border-radius: 20px; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 18px;
+  backdrop-filter: blur(6px);
+}
+.hero h1 { font-size: 2.15rem; font-weight: 800; line-height: 1.35; margin-bottom: 12px; letter-spacing: 0.5px; }
+.hero .subtitle { font-size: 1.08rem; color: rgba(255,255,255,0.92); max-width: 720px; font-weight: 400; }
+.hero .chips { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 2; }
+.hero .chip {
+  padding: 5px 14px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 18px; font-size: 0.82rem; color: #fff;
+}
+/* ===== TOC ===== */
+.toc {
+  position: sticky; top: 14px; z-index: 100;
+  background: rgba(255,255,255,0.88); backdrop-filter: blur(14px);
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: 14px 20px; margin-bottom: 40px; box-shadow: var(--shadow);
+}
+.toc-title { font-size: 0.78rem; font-weight: 800; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
+.toc-list { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+.toc-list a {
+  display: inline-block; padding: 4px 13px; font-size: 0.84rem; color: var(--muted);
+  text-decoration: none; border-radius: 18px; transition: all .18s ease;
+}
+.toc-list a:hover { background: var(--accent-light); color: var(--accent); }
+.toc-list .n { font-weight: 800; color: var(--accent2); margin-right: 3px; }
+/* ===== 章节 ===== */
+section.block { margin-bottom: 52px; }
+.sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.sec-no {
+  flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px; background: var(--grad);
+  color: #fff; font-weight: 800; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(30,111,255,0.28);
+}
+.sec-head h2 { font-size: 1.45rem; font-weight: 800; color: var(--ink); }
+.sec-head .en { font-size: 0.8rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
+.lead { color: var(--muted); margin-bottom: 22px; font-size: 0.98rem; }
+/* ===== 卡片 ===== */
+.card {
+  background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: 24px 26px; margin-bottom: 18px; box-shadow: var(--shadow);
+}
+.card h3 { font-size: 1.08rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card h3 .ic { font-size: 1.2rem; }
+.card p { margin-bottom: 10px; color: #33465A; }
+.card ul, .card ol { padding-left: 22px; margin-bottom: 10px; }
+.card li { margin-bottom: 6px; color: #33465A; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } .hero h1 { font-size: 1.6rem; } }
+/* ===== 对比 mock ===== */
+.mock { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .mock { grid-template-columns: 1fr; } }
+.mock-box { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--rule); background: #fff; box-shadow: var(--shadow); }
+.mock-head { padding: 10px 16px; font-size: 0.86rem; font-weight: 700; border-bottom: 1px solid var(--rule); }
+.mock-head.old { background: #F3F5F8; color: #6A7686; }
+.mock-head.new { background: var(--grad); color: #fff; }
+.mock-body { padding: 16px 18px; font-size: 0.92rem; }
+.bubble { background: #F0F4FA; border-radius: 12px; padding: 10px 14px; margin-bottom: 10px; color: #2A3B4E; }
+.bubble.ai { background: var(--accent-light); border-left: 3px solid var(--accent); }
+.bubble.ai2 { background: var(--accent2-light); border-left: 3px solid var(--accent2); }
+.file-pill {
+  display: inline-flex; align-items: center; gap: 6px; margin: 4px 6px 4px 0;
+  padding: 4px 12px; border-radius: 8px; font-size: 0.8rem;
+  background: var(--accent2-light); color: #0B7A5C; border: 1px solid rgba(15,191,143,0.35);
+}
+/* ===== 高亮 / 引用 / 提示词 ===== */
+.prompt-box {
+  background: #101C2E; color: #DCEBFF; border-radius: 10px; padding: 14px 18px;
+  font-family: "Consolas", "Courier New", monospace; font-size: 0.88rem;
+  line-height: 1.7; margin: 10px 0; white-space: pre-wrap; word-break: break-all;
+}
+.prompt-box .lb { display:block; font-size:0.72rem; letter-spacing:1.5px; color:#7FA8E8; margin-bottom:6px; font-weight:700; }
+.step-num {
+  display: inline-flex; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent-light); color: var(--accent); font-weight: 800; font-size: 0.8rem;
+  align-items: center; justify-content: center; margin-right: 6px;
+}
+.tip { background: #FFF8E6; border: 1px solid #F2DFA8; border-radius: 10px; padding: 10px 16px; font-size: 0.88rem; color: #7A5B12; margin-top: 8px; }
+.tip b { color: #5C4409; }
+.warn { background: #FDEEEE; border: 1px solid #F3C4C4; border-radius: 10px; padding: 10px 16px; font-size: 0.88rem; color: #8A2A2A; margin-top: 8px; }
+/* ===== 案例卡片 ===== */
+.case-card { border: 1px solid var(--rule); border-radius: var(--radius); background: #fff; overflow: hidden; margin-bottom: 20px; box-shadow: var(--shadow); }
+.case-head { display: flex; gap: 14px; padding: 18px 22px; cursor: pointer; align-items: center; }
+.case-head:hover { background: #FBFDFF; }
+.case-ic { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+.c1 { background: #E8F1FF; } .c2 { background: #E4F8F1; } .c3 { background: #FFF3E0; } .c4 { background: #F0EBFF; } .c5 { background: #FFE9EE; } .c6 { background: #E6F7FA; }
+.case-head h3 { font-size: 1.04rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.case-head .meta { font-size: 0.82rem; color: var(--muted); }
+.case-head .arrow { margin-left: auto; color: var(--muted); font-size: 0.9rem; transition: transform .2s; }
+details[open] .arrow { transform: rotate(90deg); }
+.case-body { padding: 4px 24px 22px; border-top: 1px dashed var(--rule); }
+.case-body .kw { display: inline-block; font-size: 0.78rem; color: var(--accent); background: var(--accent-light); padding: 2px 10px; border-radius: 12px; margin: 12px 6px 4px 0; }
+.case-body .eff { background: #F4FAF8; border-left: 3px solid var(--accent2); border-radius: 6px; padding: 10px 14px; font-size: 0.88rem; color: #14543F; margin-top: 12px; }
+/* ===== 表格 ===== */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: #fff; }
+th, td { padding: 10px 14px; text-align: left; border: 1px solid var(--rule); vertical-align: top; }
+th { background: #EFF5FF; color: var(--accent); font-weight: 700; white-space: nowrap; }
+tr:nth-child(even) td { background: #FAFCFF; }
+/* ===== 小标签 ===== */
+.pill { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.78rem; margin-right: 6px; }
+.pill.b { background: var(--accent-light); color: var(--accent); }
+.pill.g { background: var(--accent2-light); color: #0B7A5C; }
+/* ===== 行动清单 ===== */
+.action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 760px) { .action-grid { grid-template-columns: 1fr; } }
+.action { background: #fff; border: 1px solid var(--rule); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.action .d { width: 38px; height: 38px; border-radius: 10px; background: var(--grad); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 12px; }
+.action h4 { font-size: 1rem; margin-bottom: 8px; }
+.action p { font-size: 0.88rem; color: var(--muted); }
+.footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 30px 0 10px; border-top: 1px dashed var(--rule); margin-top: 30px; }
+b, strong { color: #152C4E; }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <span class="tag">🤖 巴迪陪学版 · 2026年9月</span>
+  <h1>小学信息老师的<br>WorkBuddy 应用全指南</h1>
+  <p class="subtitle">别的 AI 陪你聊天，WorkBuddy 帮你把活干完。<br>备课、出题、评语、成绩、论文、社团、处室管理……一句话下达，它真去执行，还给你可验收的成果文件。</p>
+  <div class="chips">
+    <span class="chip">📄 文档/表格/PPT 直接产出</span>
+    <span class="chip">🔁 定时自动化 · 无人值守</span>
+    <span class="chip">🧩 零代码做互动网页学件</span>
+    <span class="chip">📊 成绩一键分析与可视化</span>
+    <span class="chip">🎓 100+ 领域专家</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ TOC ============ -->
+<nav class="toc">
+  <div class="toc-title">📋 本指南导航</div>
+  <ul class="toc-list">
+    <li><a href="#s0"><span class="n">0</span>先搞懂：它和普通AI差在哪</a></li>
+    <li><a href="#s1"><span class="n">1</span>三分钟上手：界面与第一个任务</a></li>
+    <li><a href="#s2"><span class="n">2</span>高手心法：一句话把任务说清楚</a></li>
+    <li><a href="#s3"><span class="n">3</span>功能地图：12个会常用的能力</a></li>
+    <li><a href="#s4"><span class="n">4</span>教学实战案例库（10例）</a></li>
+    <li><a href="#s5"><span class="n">5</span>学习与生活应用</a></li>
+    <li><a href="#s6"><span class="n">6</span>避坑指南</a></li>
+    <li><a href="#s7"><span class="n">7</span>行动清单：本周就干这三件事</a></li>
+  </ul>
+</nav>
+
+<!-- ============ 第0章 ============ -->
+<section class="block" id="s0">
+  <div class="sec-head"><div class="sec-no">0</div><div><h2>先搞懂：WorkBuddy 和普通 AI 差在哪</h2><div class="en">Why WorkBuddy is different</div></div></div>
+  <p class="lead">你平时用的网页版大模型（DeepSeek、豆包、Kimi…）是"顾问"——只给建议，活还得你自己干。WorkBuddy 是"员工"——你说要求，它自己拆解步骤、操作电脑上的文件，最后把成品交给你。</p>
+
+  <div class="mock">
+    <div class="mock-box">
+      <div class="mock-head old">💬 传统 AI 对话（只出主意）</div>
+      <div class="mock-body">
+        <div class="bubble">"帮我把学生评语填进 Excel"</div>
+        <div class="bubble ai">好的！您可以这样操作：先打开 Excel，找到综合素质评价栏，然后逐个复制粘贴……（500字操作说明）</div>
+        <div class="bubble">😩 然后呢？还得我自己干两小时……</div>
+      </div>
+    </div>
+    <div class="mock-box">
+      <div class="mock-head new">⚡ WorkBuddy（直接执行）</div>
+      <div class="mock-body">
+        <div class="bubble">"帮我把《六（4）班学生评语.docx》按姓名填入《六4毕业成绩等级.xlsx》的综合素质评价栏，先扫描确认再执行"</div>
+        <div class="bubble ai2">✅ 已读取两个文件，匹配到 42 名学生；写入完成，0 条漏填，给你校验报告：</div>
+        <div><span class="file-pill">📄 六4毕业成绩等级（已填好）.xlsx</span><span class="file-pill">📋 校验报告.md</span></div>
+        <div class="bubble" style="margin-bottom:0">😄 两小时变两分钟，还不会漏！</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3><span class="ic">🧭</span>一句话理解它的定位</h3>
+    <p><b>WorkBuddy = 腾讯出品的全场景 AI 办公工作台</b>，核心就八个字：<b>理解语言 → 实际执行 → 交付成果</b>。它四样本事最值钱：</p>
+    <ul>
+      <li><b>会操作你的电脑文件</b>——能读 D 盘里的 Word、Excel、PPT、PDF，批量处理、自动填写；</li>
+      <li><b>能多步骤自主干活</b>——不用你一步步指挥，它会自己列计划、执行、检查；</li>
+      <li><b>多模态产出</b>——文档、表格、PPT、网页学件、图片、视频都能生成；</li>
+      <li><b>能定时自动跑</b>——设定好后到点自动执行，比如每周五自动汇总值日反馈。📌 这正是你要的"完全自动化、零手动干预"。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 第1章 ============ -->
+<section class="block" id="s1">
+  <div class="sec-head"><div class="sec-no">1</div><div><h2>三分钟上手：界面与第一个任务</h2><div class="en">First 3 minutes</div></div></div>
+
+  <div class="card">
+    <h3><span class="ic">🖥️</span>界面速览（打开就认识）</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th style="width:120px">区域</th><th>在哪 / 长什么样</th><th>是干什么的</th></tr>
+      <tr><td>🏠 左侧边栏</td><td>一排图标：新建任务、项目、专家、技能、自动化、记忆、我的邮箱、设置…</td><td>所有功能入口。点"专家"进专家中心，点"技能"管工具包</td></tr>
+      <tr><td>💬 对话区（中间）</td><td>底部一个输入框，顶部可带文件/附件</td><td>你下达任务的地方，像聊天一样持续追问、改要求</td></tr>
+      <tr><td>📦 结果区（右侧）</td><td>任务跑完后出现的文件卡片、预览窗</td><td>展示产出的成果文件、过程变更，可点开预览</td></tr>
+      <tr><td>🔄 模式开关</td><td>输入框上方：Craft / Plan / Ask 等</td><td>控"AI 的胆子"：直接干 / 先报方案再干 / 只答不做</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🚀</span>第一个任务（照着做就会）</h3>
+    <p><span class="step-num">1</span>打开 WorkBuddy，在输入框里直接打字；</p>
+    <p><span class="step-num">2</span>需要文件时，直接把文件拖进输入框，或写清楚路径（如 <code>D:\WorkBuddy_Output\</code>）；</p>
+    <p><span class="step-num">3</span>按回车 → AI 会先告诉你打算怎么做，然后自动执行；</p>
+    <p><span class="step-num">4</span>完成后在右侧结果区查看产物，点开预览、下载，或用"回传小程序"发到自己手机。</p>
+    <div class="prompt-box"><span class="lb">✍️ 试试这个（你的第一个任务）</span>帮我写一份六年级信息科技《用算法描述生活》的 40 分钟教学设计，
+包含教学目标、重难点、情境导入、三个探究活动、分层作业，
+输出为 Word 文档，风格清新、适合小学生。</div>
+    <div class="tip"><b>💡 小贴士：</b>它会真的生成一个 <b>.docx 文件</b>给你，而不是只吐一段文字——这就是"执行型 AI"和"聊天型 AI"最直观的区别。</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">🎛️</span>三种模式怎么选（重要！）</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>模式</th><th>含义</th><th>什么时候用</th></tr>
+      <tr><td><b>Craft（你说我做）</b></td><td>拿到任务直接开干，边做边汇报</td><td>日常 80% 场景：生成文档、填表格、做分析……<br>你熟悉它之后，默认就用这个</td></tr>
+      <tr><td><b>Plan（先想后做）</b></td><td>先出方案给你审，确认后才动手</td><td>大工程、要改你重要文件前：先看它计划靠不靠谱</td></tr>
+      <tr><td><b>Ask（只问不做）</b></td><td>只回答、只分析，不碰文件</td><td>纯咨询："这两份文件结构有啥区别？"</td></tr>
+    </table>
+    </div>
+    <p style="margin-top:10px">🛡️ 另外它自带<b>安全沙箱</b>：涉及删除、覆盖、批量改你个人文件时，会先征求你同意，你随时可以喊停。</p>
+  </div>
+</section>
+
+<!-- ============ 第2章 ============ -->
+<section class="block" id="s2">
+  <div class="sec-head"><div class="sec-no">2</div><div><h2>高手心法：一句话把任务说清楚</h2><div class="en">The Prompt Formula</div></div></div>
+  <p class="lead">你已经在做"提示词工程"研究，这一节就是把它用在 WorkBuddy 上。下任务时心里默念这个公式：</p>
+
+  <div class="card">
+    <h3><span class="ic">🧪</span>任务公式 = 角色 + 任务 + 对象 + 要求 + 格式</h3>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>要素</th><th>问自己</th><th>示例</th></tr>
+      <tr><td>🎭 角色</td><td>它该站在什么视角？</td><td>"你是一位有 20 年经验的小学信息科技教研员"</td></tr>
+      <tr><td>🛠️ 任务</td><td>要它做什么动作？</td><td>"设计 / 改写 / 分析 / 填入 / 汇总 / 生成"</td></tr>
+      <tr><td>📎 对象</td><td>基于什么材料？</td><td>"读取 D:\某某.docx""参考新课标 2022 版"</td></tr>
+      <tr><td>📏 要求</td><td>有什么约束？</td><td>"难度 7:2:1""语句温暖有画面感""避免 AI 腔"</td></tr>
+      <tr><td>📦 格式</td><td>交付成什么？</td><td>"输出 Word 文档""做成 Excel""生成 HTML 学件"</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="ic">💬</span>好例子 vs 坏例子</h3>
+    <div class="prompt-box"><span class="lb">❌ 太模糊（效果打折）</span>帮我做个 PPT</div>
+    <div class="prompt-box" style="background:#12291F;color:#D9F5E9"><span class="lb">✅ 够具体（直接可用）</span>你是一位小学信息科技教研员，为三年级家长会做一份 8 页 PPT：
+主题《数字时代，如何帮孩子用好屏幕》，内容含：①现状数据 ②屏幕使用的
+利与弊 ③家庭屏幕公约模板 ④给家长的 5 条建议。风格清新童趣，
+每页文字不超过 6 行，用 .pptx 格式输出。</div>
+    <div class="tip"><b>💡 小贴士：</b>先给角色、再讲任务、最后补细节。写得越像"交代给一位靠谱的新同事"，它干得越漂亮。不满意就直接说："第三部分改活泼点"——它会接着改，不用重开。</div>
+  </div>
+</section>
+
+<!-- ============ 第3章 ============ -->
+<section class="block" id="s3">
+  <div class="sec-head"><div class="sec-no">3</div><div><h2>功能地图：12 个你会常用的能力</h2><div class="en">Feature Map</div></div></div>
+
+  <div class="grid2">
+    <div class="card"><h3><span class="ic">📄</span>1. 文档三件套</h3><p>教学设计、学习单、论文、总结、告家长书……直接产出 <b>Word</b>；成绩表、台账、问卷 CSV 直接产出 <b>Excel</b>；讲座课件直接产出 <b>PPT</b>。也可以反过来：读懂你已有的文件再改。</p></div>
+    <div class="card"><h3><span class="ic">🔁</span>2. 定时自动化</h3><p>把重复活交给"闹钟"：设定 <b>每周五 16:30 自动汇总值日反馈</b>、<b>每月 1 号自动整理处室台账</b>。到点它自己跑，你只管收结果。这就是你说的"完全自动化"。</p></div>
+    <div class="card"><h3><span class="ic">🧩</span>3. 零代码网页学件</h3><p>用嘴描述，它就生成 <b>HTML 互动学件</b>：情景判断题、闯关游戏、拖拽配对、闯关计分……双击就能在教室电脑/希沃白板打开，无需任何编程。你的《智慧校园及系统安全》就是这么来的。</p></div>
+    <div class="card"><h3><span class="ic">📊</span>4. 数据分析可视化</h3><p>把成绩 Excel 丢给它：自动算平均分、优秀率、及格率、分数段分布，直接画成图表并解读，输出分析报告。期末质量分析能省一个晚上。</p></div>
+    <div class="card"><h3><span class="ic">📚</span>5. 专家中心（100+）</h3><p>左侧栏"专家"入口：教学专家、课题专家、省级评审专家、心理专家……跨学科问题找对口专家请教，比通用对话更专业。</p></div>
+    <div class="card"><h3><span class="ic">🧰</span>6. 技能市场 + 自建技能</h3><p>"技能"是给 AI 装的"专业工具箱"：docx/xlsx/pptx/pdf 处理、<b>中文去 AI 味写作（论文必备）</b>、PPT 设计等。你还能把反复做的事（如"评语迁移流程"）存成<b>自定义技能</b>，下次一句话复用。</p></div>
+    <div class="card"><h3><span class="ic">🎨</span>7. 多模态生成</h3><p>文生图（课件插图、海报、绘本场景）、文生视频、文生 3D。做课件再也不用全网找图，描述即所得。</p></div>
+    <div class="card"><h3><span class="ic">🖥️</span>8. 本地文件批量处理</h3><p>授权文件夹后：批量重命名学生作品（"IMG_001 → 三(1)班_王小明_科幻画"）、按规则归档、批量转 PDF、清理重复文件（它先列清单你确认）。</p></div>
+    <div class="card"><h3><span class="ic">🌐</span>9. 联网搜索与研究</h3><p>自动上网查资料并附来源：查最新教育政策、搜获奖案例、调研某个软件功能，输出带引用的调研报告。</p></div>
+    <div class="card"><h3><span class="ic">🔌</span>10. 连接器生态</h3><p>可接腾讯文档、QQ 邮箱、金山文档、ima 知识库、腾讯会议等——在 WorkBuddy 里一句话管理云文档、发邮件、约会议。</p></div>
+    <div class="card"><h3><span class="ic">🧠</span>11. 长期记忆</h3><p>它记得你是谁、在做什么、偏好什么。你上次说"成果要 Word"，下次它默认就给 Word。跨会话不失忆，越用越懂你。</p></div>
+    <div class="card"><h3><span class="ic">📱</span>12. 产物回传小程序 / 多端助理</h3><p>电脑上干完活，一键把文件回传到手机小程序；还能接入微信/QQ/企微，手机上也能派活。</p></div>
+  </div>
+</section>
+
+<!-- ============ 第4章 ============ -->
+<section class="block" id="s4">
+  <div class="sec-head"><div class="sec-no">4</div><div><h2>教学实战案例库：10 个拿来就用的场景</h2><div class="en">Teaching in Action</div></div></div>
+  <p class="lead">每个案例都是"一句话提示词 → 它能给你什么"。点开卡片看详情，提示词可直接复制改改用。</p>
+
+  <!-- 案例1 -->
+  <details class="case-card" open>
+    <summary class="case-head">
+      <div class="case-ic c1">📐</div>
+      <div><h3>案例 1 · 数学备课：从"教学设计"到"学习单+分层作业"一条龙</h3><div class="meta">学科教学 · 日常备课 · 输出 docx</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">角色设定</span><span class="kw">课标对齐</span><span class="kw">三件套联动</span>
+      <div class="prompt-box"><span class="lb">✍️ 第一句（先出教学设计）</span>你是有 20 年经验的小学六年级数学骨干教师。请为苏教版
+《圆的认识》第 1 课时设计 40 分钟教学设计：教学目标对应 2022 版课标
+"图形与几何"领域，含重难点、情境导入（从校园圆形花坛引入）、
+三个探究活动（画圆→认识各部分→半径直径关系）、课堂练习与小结。
+输出 Word 文档，活动设计体现"教学评一体化"。</div>
+      <div class="prompt-box" style="background:#12291F;color:#D9F5E9"><span class="lb">✍️ 第二句（接着做学习单）</span>继续：把刚才设计里的探究活动与练习部分，做成一张
+A4 学生学习单 Word 文档：标题区（班级/姓名/日期）、
+探究记录表、3 道分层练习（基础/提升/挑战），版面留白充足、适合打印。</div>
+      <div class="eff">✅ <b>效果：</b>40 分钟完成"教案+学习单"成套初稿，你只做个性化微调。同法可批量产出整个单元——你六年级 59 个教学设计就是这么积累起来的。</div>
+    </div>
+  </details>
+
+  <!-- 案例2 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c2">✏️</div>
+      <div><h3>案例 2 · 出题组卷 + 问卷星 CSV：测评定卷一条龙</h3><div class="meta">评测练习 · 问卷回收 · 输出 docx + CSV</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">难度配比</span><span class="kw">问卷星导入</span><span class="kw">答案解析</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>请以小学六年级数学"分数四则混合运算"为范围出一份单元评测卷：
+共 29 题、满分 100 分，基础:提高:拓展 ≈ 7:2:1，
+含填空、选择、计算、解决问题四种题型，附答案与简要解析，
+输出 Word 文档，排版紧凑、可打印。</div>
+      <div class="prompt-box" style="background:#12291F;color:#D9F5E9"><span class="lb">✍️ 接着转问卷星</span>继续：请把这份卷子改造成问卷星可导入的 CSV（32 题 / 115 分），
+字段包含题干、选项、正确答案、分值，题型用问卷星支持的
+单选/多选/填空格式。</div>
+      <div class="eff">✅ <b>效果：</b>"Word 纸质卷"与"问卷星线上测"一键双形态。上机课用线上版，直接拿到全班数据分析。</div>
+    </div>
+  </details>
+
+  <!-- 案例3 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c3">💻</div>
+      <div><h3>案例 3 · 信息科技课：零代码互动学件（你的代表作路径）</h3><div class="meta">信息科技 · 课堂互动 · 输出 HTML</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">零代码</span><span class="kw">即时反馈</span><span class="kw">希沃/浏览器可用</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>请帮我做一个小学信息科技课堂互动网页学件《智慧校园与信息安全》：
+① 开头 30 秒动画式标题页；② 10 道校园安全情景判断题，每题点击
+"对/错"后立即显示解析；③ 答完显示得分与星级评价（鼓励性语言）；
+④ 配色清新、字体大、按钮适合触摸屏，全屏自适应。保存为单个
+HTML 文件，我双击就能在教室电脑和希沃白板上用。</div>
+      <div class="eff">✅ <b>效果：</b>这就是"提示词工程 + AI + Web"的课堂产品化路径——你已经用它做出了《智慧校园及系统安全》《数智赋能》。把它沉淀为自定义技能后，换主题一句话就能再生成一个新学件。</div>
+      <div class="tip"><b>💡 进阶：</b>还能让学生 <b>用语言描述自己的创意</b>，你现场生成学件，全班即兴试玩——把 AI 变成课堂上的"即时教具生成器"。</div>
+    </div>
+  </details>
+
+  <!-- 案例4 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c4">📋</div>
+      <div><h3>案例 4 · 评语批量迁移：Word → Excel 精准填入（你的活跃项目）</h3><div class="meta">班主任/教务 · 批量处理 · xlsx</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">按姓名匹配</span><span class="kw">先扫描后写入</span><span class="kw">校验报告</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词（谨慎分步版）</span>请处理两个文件：D:\...\六（4）班学生评语.docx 和
+D:\...\六4毕业成绩等级.xlsx。
+第一步：先只读扫描两边数据，把每个学生按姓名对应关系列出来，
+确认评语能准确对号入座后再告诉我，不要写入；
+第二步：确认无误后，把每位学生的评语填入 Excel 对应行
+"综合素质评价"栏，保持原有格式；
+第三步：写入完成后输出校验报告：共填多少条、哪些学生没匹配上。</div>
+      <div class="eff">✅ <b>效果：</b>两小时逐条复制粘贴 → 两分钟自动完成 + 零漏填。这个"先扫描 → 确认 → 执行 → 校验"的流程，是处理一切"两表对账"型任务的模板。</div>
+      <div class="tip"><b>💡 建议：</b>把该流程存成自定义技能"评语迁移助手"，明年 6 班变 5 班，一句话复用。</div>
+    </div>
+  </details>
+
+  <!-- 案例5 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c5">📈</div>
+      <div><h3>案例 5 · 期末成绩分析：统计 + 图表 + 报告一次给齐</h3><div class="meta">质量分析 · 数据可视化 · xlsx/docx</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">分数段</span><span class="kw">优秀率/及格率</span><span class="kw">关注名单</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>请分析附件《六4班期末数学成绩.xlsx》：计算总分、平均分、
+优秀率(≥90)、及格率(≥60)、各分数段人数分布；
+指出进步明显和需要重点关注的学生（列出名单）；
+生成 2-3 张图表（分数段柱状图、分数对比图）；
+最后输出一份期末质量分析报告 Word 文档：含数据概览、
+典型问题归因（结合题目类型）、下阶段教学建议。</div>
+      <div class="eff">✅ <b>效果：</b>质量分析会材料半小时成型。图表直接可用，归因建议还能帮你把"分析"写出教研深度。</div>
+    </div>
+  </details>
+
+  <!-- 案例6 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c6">✍️</div>
+      <div><h3>案例 6 · 论文写作与"去 AI 味"：AIGC 检测率压到 20%</h3><div class="meta">教海探航 · 教科研 · 用"去AI味"技能</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">保留个人风格</span><span class="kw">省级评审视角</span><span class="kw">AIGC检测</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>这是我参加省"教海探航"的论文初稿（附件 docx），主题是
+AI 零代码网页学件的小学课堂教学实践。请你用"中文去 AI 味写作"
+技能改写：消除排比堆砌、万能金句、模板化小标题等 AI 痕迹；
+保留我本人温暖、有画面感、逻辑清晰的写作风格和真实课例细节；
+目标把 AIGC 检测率降到 20% 左右；输出一份 Word 对比稿
+（原文/改写并排或标注改动处），并附一份改写说明。</div>
+      <div class="prompt-box" style="background:#12291F;color:#D9F5E9"><span class="lb">✍️ 第二句（省级专家视角把关）</span>接下来请你切换到"省级教科研评审专家"视角（我兼任省级评审专家，
+想用同样的标准反查自己）：审读这份论文，指出选题价值、论证逻辑、
+课例呈现、成果表达四方面的硬伤与改进点，按优先级列出，逐条给修改建议。</div>
+      <div class="eff">✅ <b>效果：</b>把"写得像人 + 经得起评审"两件事拆给 AI 把关，你自己专注在思想和课例的独特性上——这是评审视角下 AI 辅助写作的正确姿势。</div>
+    </div>
+  </details>
+
+  <!-- 案例7 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c1">⏰</div>
+      <div><h3>案例 7 · 周五值日反馈：从半自动到全自动（定时任务）</h3><div class="meta">学校管理 · 定时自动化 · 全链路无人值守</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">定时触发</span><span class="kw">QQ群→Word→PNG→回传</span><span class="kw">无人值守</span>
+      <div class="prompt-box"><span class="lb">✍️ 设定自动化时这样说</span>建立一个每周五下午 16:30 自动执行的任务（本学期有效）：
+① 汇总本周 QQ 群里各年级组发来的值日反馈消息；
+② 按"总体情况→亮点表扬→问题提醒→下周建议"整理成一份
+排版美观的值日反馈 Word 文档；
+③ 用 WPS 把文档转成 PNG 图片；
+④ 把图片发回 QQ 群。
+执行完把结果简报发给我确认。</div>
+      <div class="eff">✅ <b>效果：</b>你现有的周五流程已经做到"消息收集→Word→PNG→回群"；挂上<b>定时自动化</b>后，连"记得启动"这一步都省了——到点自己跑，真正零手动干预。</div>
+      <div class="tip"><b>💡 同类延伸：</b>每周一国旗下讲话稿初稿、每月教学六认真检查汇总、每次活动后新闻稿初稿……凡是"固定时间+固定模板"的活，都能交给自动化。</div>
+    </div>
+  </details>
+
+  <!-- 案例8 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c2">🏫</div>
+      <div><h3>案例 8 · 教师发展处：四大工程台账 + 总结材料</h3><div class="meta">处室管理 · 数据整合 · docx/xlsx</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">青蓝携手</span><span class="kw">城乡牵手</span><span class="kw">规划引领</span><span class="kw">名师培育</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>基于我提供的《教师发展处数据台账.xlsx》（含教科研获奖、课题、
+四大工程结对等原始数据），请整理输出两份材料：
+①《2025-2026 学年第一学期教科研获奖统计表》Excel，按
+级别(国家级/省级/市级/区级)、类别(论文/赛课/辅导/荣誉)分类统计；
+②《校本培训工作总结》Word 框架：按"青蓝携手、城乡牵手、
+规划引领、名师培育"四大工程为线索组织，把台账里的真实数据
+填进对应位置，数据处留高亮标记供我核对。</div>
+      <div class="eff">✅ <b>效果：</b>台账数据 → 统计表 + 总结初稿，一次生成。你只需核对高亮数据、润色"人味"表达——正好配合案例 6 的去 AI 味技能使用。</div>
+    </div>
+  </details>
+
+  <!-- 案例9 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c3">📣</div>
+      <div><h3>案例 9 · 家校沟通：告家长书 / 活动通知 / 温馨提示</h3><div class="meta">德育 · 班主任 · docx</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">语气亲切</span><span class="kw">要点齐全</span><span class="kw">一页A4</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>写一份"国庆假期安全告家长书"，适用小学中高年级：
+语气亲切像班主任口吻，包含交通安全、防溺水、居家用电、
+网络防沉迷（给具体时长建议）、假期学习生活建议五个部分；
+开头有学校问候语、结尾有回执栏（家长签字）；
+控制在 1 页 A4，输出 Word 文档，学校名称用"汤庄桥小学"占位。</div>
+      <div class="eff">✅ <b>效果：</b>30 秒初稿，改一改就能发。心理辅导、体质健康、研学提示……模板库一次建好全年复用。</div>
+    </div>
+  </details>
+
+  <!-- 案例10 -->
+  <details class="case-card">
+    <summary class="case-head">
+      <div class="case-ic c4">🤖</div>
+      <div><h3>案例 10 · 创客社团：课程设计 + 代码诊断双助手</h3><div class="meta">社团 · 编程教学 · 课例/排错</div></div>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="case-body">
+      <span class="kw">Python入门</span><span class="kw">15分钟讲练</span><span class="kw">作品导向</span>
+      <div class="prompt-box"><span class="lb">✍️ 提示词 A（课程设计）</span>为小学创客社团设计 10 次 Python 入门课程：
+每课 60 分钟 = 15 分钟知识讲解 + 25 分钟编程练习 + 20 分钟
+小作品创作；难度螺旋上升，第 10 课做综合作品《智能问答小助手》；
+每课附一个学生作品样例和常见报错提示。输出课程总表 Excel +
+前 3 课的详细教案 Word。</div>
+      <div class="prompt-box" style="background:#12291F;color:#D9F5E9"><span class="lb">✍️ 提示词 B（课堂实时排错）</span>学生这段 Python 代码运行报错（把代码贴给它）：
+请用小学生能听懂的话解释错在哪、为什么错，
+并给出"先自己检查 3 个地方"的引导式提示，最后才给正确代码。</div>
+      <div class="eff">✅ <b>效果：</b>课程体系 1 小时成型；课堂上学生卡壳时，你 10 秒拿到"引导式解答"，既教知识又培养调试思维——比赛辅导效率翻倍。</div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ 第5章 ============ -->
+<section class="block" id="s5">
+  <div class="sec-head"><div class="sec-no">5</div><div><h2>学习与生活应用：不止工作</h2><div class="en">Beyond Work</div></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3><span class="ic">🌱</span>个人学习进修</h3>
+      <ul>
+        <li><b>政策速读</b>：把新课标 PDF 丢进去："总结 2022 版信息科技课标相对旧版的主要变化，用表格对比"。省去啃长文的时间。</li>
+        <li><b>专家私教</b>：进专家中心找对应领域专家，讲课题申报、论文框架、课堂观察量表设计……随时有人把关。</li>
+        <li><b>深度调研</b>："调研国内小学 AI 启蒙教育的 5 种典型模式，附学校案例与可借鉴做法，输出 2000 字报告。"</li>
+        <li><b>知识复利</b>：你的教学资源、讲座稿都可以让它整理进个人知识库（ima 等），随用随取，越攒越值钱。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="ic">🏠</span>生活杂务</h3>
+      <ul>
+        <li><b>表格化生活</b>："做一个家庭月记账 Excel：分类=餐饮/交通/教育/医疗/其他，含预算列和超支提醒，再用它分析我上个月哪类花超了。"</li>
+        <li><b>出行规划</b>："帮我做一张常州→西安 5 日家庭游计划表：每天行程+预算+带娃注意事项，输出 Excel 和一张行李清单。"</li>
+        <li><b>清单与提醒</b>："每周日上午提醒我整理下周要交的材料清单"——定时自动化连生活琐事都管。</li>
+        <li><b>本地小工具</b>：像你的"教师工作台·通讯录"一样，任何生活里的小需求都能让它在本地生成小网页/小工具，自己用、家人用，隐私不外泄。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 第6章 ============ -->
+<section class="block" id="s6">
+  <div class="sec-head"><div class="sec-no">6</div><div><h2>避坑指南：老司机的 6 条经验</h2><div class="en">Watch Out</div></div></div>
+  <div class="card">
+    <ol>
+      <li><b>涉及"删、移、批量改"文件时别嫌它啰嗦</b>——它会先列清单等你确认，这是保护你的设计。⚠️ 千万别对它说"把桌面清理干净"这种模糊指令，务必指明目录、文件类型、处理规则。</li>
+      <li><b>隐私信息要主动声明</b>——涉及学生电话、身份证号等敏感数据，可要求"查询时用姓名+密码门控才显示"（就像你的通讯录 tx2000 方案）。私人文件不外传、不回传公网。</li>
+      <li><b>格式要提前说</b>——默认产物按场景来，但正式材料一定写明"输出 Word 文档/Excel 表格"，避免它给 Markdown 或网页。</li>
+      <li><b>大活分步走</b>——一次只交代一个大任务；牵一发动全身的操作（改原表）先让它"只读扫描 → 给你确认 → 再执行"。</li>
+      <li><b>别删 .workbuddy 文件夹</b>——那是它的"记忆"所在，删了它就"失忆"了，你们之间的默契要从头培养。</li>
+      <li><b>手机端接收产物</b>——记得打开连接设置里的<b>"产物回传到小程序"</b>开关，电脑上生成的文件才能发到你手机。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 第7章 ============ -->
+<section class="block" id="s7">
+  <div class="sec-head"><div class="sec-no">7</div><div><h2>行动清单：本周就干这三件事</h2><div class="en">Start This Week</div></div></div>
+  <div class="action-grid">
+    <div class="action">
+      <div class="d">1</div>
+      <h4>🔥 热身：升级一份旧教案</h4>
+      <p>找一份你以前写的教学设计丢给 WorkBuddy："请按教学评一体化理念升级它，补评价任务与评价量表，输出 Word。"感受从"建议"到"成品"的差别。</p>
+    </div>
+    <div class="action">
+      <div class="d">2</div>
+      <h4>⏰ 建第一个自动化</h4>
+      <p>选一个每周固定做的活（值日反馈/国旗下讲话/材料汇总），跟它说"每周五 16:30 自动……"，跑通一次全自动流程，你就再也回不去手动时代了。</p>
+    </div>
+    <div class="action">
+      <div class="d">3</div>
+      <h4>🧩 沉淀一个自定义技能</h4>
+      <p>把"评语迁移"或"互动学件生成"存成技能，给它起个名字。下次一句话唤起整套流程——这就是把 AI 经验变成你的"数字资产"。</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px;background:linear-gradient(135deg,#EFF5FF,#E9FAF5);border-color:transparent">
+    <h3><span class="ic">🤝</span>巴迪的话</h3>
+    <p style="margin-bottom:0">蓝兔，你已经走在这条路前面了——提示词工程、互动学件、全自动化流程，这些正是 WorkBuddy 最擅长的战场。这份指南不是让你从头学，而是帮你把手里已有的绝活<b>系统化、自动化、可复用</b>。从第一个任务开始，有什么想试的直接说："巴迪，帮我……" 剩下的交给我。🤖</p>
+  </div>
+
+  <div class="footer">小学信息老师 WorkBuddy 应用全指南 · 巴迪陪你一起用 🤖 2026-09-03</div>
+</div>
+
+</body>
+</html>

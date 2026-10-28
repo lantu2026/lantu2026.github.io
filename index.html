@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>符京雷 · 数字教学作品集</title>
+<meta name="description" content="常州市新北区汤庄桥小学 符京雷（蓝兔）的数字教学作品集：专业成果与学生学件。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --green:#3C6653; --green-2:#4F8368; --green-3:#E3F0E8;
+  --bg:#F5F8F5; --card:#FFFFFF; --text:#1F2A24; --muted:#6B7A72;
+  --line:#E2E9E4; --sh:0 1px 2px rgba(31,42,36,.04),0 6px 18px rgba(31,42,36,.05);
+  --sh-h:0 2px 6px rgba(31,42,36,.07),0 14px 34px rgba(31,42,36,.10);
+  --r:14px;
+}
+html[data-theme="dark"]{
+  --green:#7FBF9E; --green-2:#6FB08F; --green-3:#22322A;
+  --bg:#141815; --card:#1B211D; --text:#E6EDE8; --muted:#93A29A;
+  --line:#2A332D; --sh:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+  --sh-h:0 2px 6px rgba(0,0,0,.35),0 14px 34px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC","Hiragino Sans GB",sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* ---------- 顶栏 ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:56px}
+.brand{font-weight:700;font-size:15px;letter-spacing:.2px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand i{font-style:normal;font-size:17px}
+.topnav{margin-left:auto;display:flex;align-items:center;gap:6px}
+.topnav a{font-size:13.5px;color:var(--muted);text-decoration:none;padding:6px 11px;border-radius:9px;transition:.18s}
+.topnav a:hover{color:var(--green);background:var(--green-3)}
+.tbtn{border:1px solid var(--line);background:var(--card);color:var(--text);width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:15px;line-height:1;display:grid;place-items:center;transition:.18s}
+.tbtn:hover{border-color:var(--green);color:var(--green)}
+
+/* ---------- 头部 ---------- */
+.hero{padding:56px 0 30px}
+.eyebrow{margin:0 0 10px;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--green);font-weight:600}
+.hero h1{margin:0 0 12px;font-size:37px;line-height:1.22;letter-spacing:-.5px;font-weight:760}
+.hero h1 span{color:var(--green-2)}
+.lede{margin:0 0 18px;font-size:15.5px;color:var(--muted);max-width:640px}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:9px 15px;font-size:13px;color:var(--muted);box-shadow:var(--sh)}
+.stat b{color:var(--text);font-size:16px;margin-right:4px;font-weight:700}
+
+/* ---------- 工具条 ---------- */
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:34px 0 4px;padding-top:26px;border-top:1px solid var(--line)}
+.search{position:relative;flex:1;min-width:220px;max-width:340px}
+.search input{width:100%;padding:10px 14px 10px 36px;border:1px solid var(--line);background:var(--card);border-radius:11px;font-size:14px;color:var(--text);outline:none;transition:.18s;font-family:inherit}
+.search input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-3)}
+.search span{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.5;pointer-events:none}
+.count{margin-left:auto;font-size:13px;color:var(--muted)}
+
+/* ---------- 分区 ---------- */
+section{padding:26px 0 8px}
+.sechead{display:flex;align-items:baseline;gap:12px;margin:0 0 4px;flex-wrap:wrap}
+.sechead h2{margin:0;font-size:22px;letter-spacing:-.2px;font-weight:730}
+.sechead .en{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.sechead .n{font-size:12.5px;color:var(--muted);background:var(--green-3);color:var(--green);padding:2px 9px;border-radius:7px;font-weight:600}
+.secdesc{margin:6px 0 20px;font-size:14px;color:var(--muted);max-width:660px}
+
+/* ---------- 卡片 ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(244px,1fr));gap:15px}
+.card{
+  display:flex;flex-direction:column;gap:9px;padding:19px 19px 16px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  text-decoration:none;color:inherit;box-shadow:var(--sh);
+  transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .2s,border-color .2s;
+  position:relative;overflow:hidden;
+}
+.card::after{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--green);opacity:0;transition:opacity .2s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-h);border-color:color-mix(in srgb,var(--green) 34%,var(--line))}
+.card:hover::after{opacity:1}
+.card .ic{font-size:22px;line-height:1;height:38px;width:38px;display:grid;place-items:center;background:var(--green-3);border-radius:11px}
+.card h3{margin:2px 0 0;font-size:16px;font-weight:700;letter-spacing:-.1px;line-height:1.4}
+.card p{margin:0;font-size:13.4px;color:var(--muted);line-height:1.62;flex:1}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.tags span{font-size:11.5px;color:var(--green);background:var(--green-3);padding:2.5px 8px;border-radius:6px;font-weight:600}
+.slug{font-size:11px;color:var(--muted);opacity:.65;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.empty{display:none;padding:40px 0;text-align:center;color:var(--muted);font-size:14px}
+.empty.on{display:block}
+
+/* ---------- 页脚 ---------- */
+footer{margin-top:46px;padding:26px 0 44px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+footer .cols{display:flex;gap:26px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+footer b{color:var(--text)}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
+
+@media (max-width:640px){
+  .hero{padding:38px 0 22px}
+  .hero h1{font-size:28px}
+  .grid{grid-template-columns:1fr}
+  .topnav a{padding:6px 8px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="./"><i>🌱</i>符京雷 · 数字教学作品集</a>
+    <nav class="topnav">
+      <a href="#works">专业成果</a>
+      <a href="#learn">学生学件</a>
+      <button class="tbtn" id="themeBtn" title="切换深浅色" aria-label="切换深浅色">🌙</button>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Digital Teaching Portfolio</p>
+    <h1>把课堂做成一页页<span>能用的网页</span></h1>
+    <p class="lede">常州市新北区汤庄桥小学 · 信息科技教师 · 教师发展处。这里放我在数字化教学上真正做出来的东西——能上课、能扫码、能给学生用的那种。</p>
+    <div class="stats">
+      <div class="stat"><b>16</b>件作品</div>
+      <div class="stat"><b>4</b>件专业成果</div>
+      <div class="stat"><b>12</b>件学生学件</div>
+      <div class="stat"><b>免登录</b>直接打开</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="toolbar">
+    <div class="search">
+      <span>🔍</span>
+      <input type="search" id="q" placeholder="搜索作品：算法、测评、打字…" autocomplete="off">
+    </div>
+    <div class="count" id="count">共 16 件</div>
+  </div>
+
+  <section id="works">
+    <div class="sechead">
+      <h2>专业成果</h2>
+      <span class="en">Works</span>
+      <span class="n">4</span>
+    </div>
+    <p class="secdesc">给老师看的：培训讲座、工具手册、学校共建平台。用来推广方法，不只是展示成品。</p>
+    <div class="grid">
+
+      <a class="card" href="works/shuzhi-funeng/" data-k="数智赋能 网页学件 制作实战 讲座 校本培训 AI 零代码 全学科">
+        <div class="ic">🧭</div>
+        <h3>数智赋能 · 网页学件制作实战</h3>
+        <p>校本培训讲座：不讲原理，直接带着老师用 AI 做出能上课的跨学科网页学件。</p>
+        <div class="tags"><span>校本培训</span><span>讲座</span></div>
+        <div class="slug">works/shuzhi-funeng</div>
+      </a>
+
+      <a class="card" href="works/workbuddy-2/" data-k="WorkBuddy 教师 数字化 实战 培训 2.0 AI 工具链 教师发展">
+        <div class="ic">🛠️</div>
+        <h3>WorkBuddy 教师数字化实战 2.0</h3>
+        <p>教师 AI 工具链培训第二版，把备课、命题、统计、发布串成一条可复制的路径。</p>
+        <div class="tags"><span>教师发展</span><span>培训</span></div>
+        <div class="slug">works/workbuddy-2</div>
+      </a>
+
+      <a class="card" href="works/it-teacher-guide/" data-k="信息老师 指南 手册 WorkBuddy 信息科技 课堂 落地">
+        <div class="ic">📘</div>
+        <h3>小学信息老师 WorkBuddy 应用全指南</h3>
+        <p>面向信息科技教师的手册，按真实课堂场景给做法，不堆概念。</p>
+        <div class="tags"><span>手册</span><span>信息科技</span></div>
+        <div class="slug">works/it-teacher-guide</div>
+      </a>
+
+      <a class="card" href="works/qinmei-wiki/" data-k="勤美 汤小 wiki 学校 手册 共建 投稿 数据汇聚 云端 教师端">
+        <div class="ic">🏫</div>
+        <h3>勤美汤小 wiki</h3>
+        <p>师生家长共建的学校实用手册。教师端可投稿，数据走云端汇总，投稿墙实时回显。</p>
+        <div class="tags"><span>共建</span><span>数据汇聚</span></div>
+        <div class="slug">works/qinmei-wiki</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="learn">
+    <div class="sechead">
+      <h2>学生学件</h2>
+      <span class="en">Learn</span>
+      <span class="n">12</span>
+    </div>
+    <p class="secdesc">给学生用的：单个学件即开即用，适配电脑和平板。所有学件不含学生姓名、学号、成绩等个人信息。</p>
+    <div class="grid">
+
+      <a class="card" href="learn/photosynthesis/" data-k="光合作用 实验室 科学 变量控制 实验 跨学科 六年级">
+        <div class="ic">🌿</div>
+        <h3>光合作用探索实验室</h3>
+        <p>调光照、调水分，看植物怎么长。练的是变量控制与实验记录。</p>
+        <div class="tags"><span>科学跨学科</span><span>变量控制</span></div>
+        <div class="slug">learn/photosynthesis</div>
+      </a>
+
+      <a class="card" href="learn/planting/" data-k="种植 体验 自动 定时 增湿 过程 控制 自动化">
+        <div class="ic">🌱</div>
+        <h3>种植体验 · 自动定时增湿</h3>
+        <p>用定时控制模拟养护流程，让学生看见自动化的边界和漏洞。</p>
+        <div class="tags"><span>过程与控制</span></div>
+        <div class="slug">learn/planting</div>
+      </a>
+
+      <a class="card" href="learn/thermos/" data-k="保温水壶 闭环 控制 流程图 拖拽 比较器 反馈 传感器">
+        <div class="ic">♨️</div>
+        <h3>保温水壶 · 闭环控制流程图</h3>
+        <p>拖拽拼装闭环控制流程，把比较器、执行器、反馈讲清楚。</p>
+        <div class="tags"><span>过程与控制</span><span>拖拽</span></div>
+        <div class="slug">learn/thermos</div>
+      </a>
+
+      <a class="card" href="learn/lamp/" data-k="组装 台灯 过程 控制 输入 处理 输出 六年级 拆解">
+        <div class="ic">💡</div>
+        <h3>组装台灯 · 过程与控制</h3>
+        <p>六年级过程与控制单元学件，把一件日用品拆成输入、处理、输出。</p>
+        <div class="tags"><span>六年级</span><span>过程与控制</span></div>
+        <div class="slug">learn/lamp</div>
+      </a>
+
+      <a class="card" href="learn/algorithm-flow/" data-k="算法 流程图 教学工具 多场景 顺序 分支 循环 画图">
+        <div class="ic">🔀</div>
+        <h3>多场景 · 算法流程图教学工具</h3>
+        <p>换场景就能画流程图，练顺序、分支、循环三种结构。</p>
+        <div class="tags"><span>算法</span><span>流程图</span></div>
+        <div class="slug">learn/algorithm-flow</div>
+      </a>
+
+      <a class="card" href="learn/ai-literacy/" data-k="AI 素养 测评 护眼 评价 限时 课堂">
+        <div class="ic">👁️</div>
+        <h3>小学 AI 素养测评（护眼版）</h3>
+        <p>测评加护眼提醒，适合课堂限时用，做完就知道薄弱点在哪。</p>
+        <div class="tags"><span>评价</span><span>AI 素养</span></div>
+        <div class="slug">learn/ai-literacy</div>
+      </a>
+
+      <a class="card" href="learn/ai-literacy-dash/" data-k="AI 素养 测评 数据 大屏 可视化 班级 讲评">
+        <div class="ic">📊</div>
+        <h3>小学 AI 素养测评（数据大屏）</h3>
+        <p>测评结果可视化大屏，全班一起看，讲评时有据可依。</p>
+        <div class="tags"><span>评价</span><span>数据可视化</span></div>
+        <div class="slug">learn/ai-literacy-dash</div>
+      </a>
+
+      <a class="card" href="learn/it-park/" data-k="信息科技 乐园 综合 练习 多模块 入口">
+        <div class="ic">🎡</div>
+        <h3>小学生信息科技乐园</h3>
+        <p>多个信息科技练习模块的合体入口，适合早读或社团自由练。</p>
+        <div class="tags"><span>综合</span></div>
+        <div class="slug">learn/it-park</div>
+      </a>
+
+      <a class="card" href="learn/task-arena/" data-k="课堂 任务 大闯关 互动 即时 反馈">
+        <div class="ic">🎯</div>
+        <h3>课堂任务大闯关</h3>
+        <p>把一节课的任务拆成关卡，闯一关给一次即时反馈。</p>
+        <div class="tags"><span>课堂互动</span></div>
+        <div class="slug">learn/task-arena</div>
+      </a>
+
+      <a class="card" href="learn/quiz/" data-k="课堂 知识 竞赛 出题 版 互动 抢答">
+        <div class="ic">🏆</div>
+        <h3>课堂知识竞赛（出题版）</h3>
+        <p>自己出题自己办比赛，题目换起来不用改代码。</p>
+        <div class="tags"><span>课堂互动</span><span>出题</span></div>
+        <div class="slug">learn/quiz</div>
+      </a>
+
+      <a class="card" href="learn/typing/" data-k="打字 乐园 年级 闯关 指法 速度 分层">
+        <div class="ic">⌨️</div>
+        <h3>打字乐园 · 年级闯关</h3>
+        <p>指法与速度分层闯关，练准不练快，每天十分钟就够。</p>
+        <div class="tags"><span>指法</span><span>分层</span></div>
+        <div class="slug">learn/typing</div>
+      </a>
+
+      <a class="card" href="learn/enumeration/" data-k="小智 采购 任务 枚举 算法 初探 百元 买百笔 旁白 六年级">
+        <div class="ic">🔍</div>
+        <h3>小智的采购任务 · 枚举算法</h3>
+        <p>百元买百笔，先从瞎试到有序穷举。带旁白讲解，四个环节走完一遍。</p>
+        <div class="tags"><span>算法</span><span>六年级</span></div>
+        <div class="slug">learn/enumeration</div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="empty" id="empty">没有匹配的作品，换个词试试。</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <b>符京雷（蓝兔）</b> · 常州市新北区汤庄桥小学<br>
+        信息科技教师 · 教师发展处
+      </div>
+      <div>
+        内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a><br>
+        欢迎同行取用改造，注明出处、非商业用途
+      </div>
+    </div>
+    <p class="note">
+      <b>隐私说明</b>：本站所有学件均不含学生姓名、学号、成绩、家长联系方式等个人信息；校内通讯录类工具不对外发布。
+      含真实学生数据的教学工具仅在校内网使用。
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+
+  function apply(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('lantu-theme'); } catch (e) {}
+  if (!saved) {
+    saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
+  apply(saved);
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try { localStorage.setItem('lantu-theme', next); } catch (e) {}
+  });
+
+  var q = document.getElementById('q');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var countEl = document.getElementById('count');
+  var emptyEl = document.getElementById('empty');
+
+  function filter() {
+    var kw = (q.value || '').trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function (c) {
+      var hay = (c.getAttribute('data-k') || '') + c.textContent.toLowerCase();
+      var hit = !kw || hay.toLowerCase().indexOf(kw) >= 0;
+      c.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    countEl.textContent = kw ? ('找到 ' + shown + ' 件') : ('共 ' + cards.length + ' 件');
+    emptyEl.className = 'empty' + (shown === 0 ? ' on' : '');
+  }
+  q.addEventListener('input', filter);
+})();
+</script>
+</body>
+</html>

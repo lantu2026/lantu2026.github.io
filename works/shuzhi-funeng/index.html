@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>数智赋能，中小学全学科网页学件制作实战</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0A0A1A;
+            color: #ffffff;
+        }
+
+        /* 页面容器 */
+        .page {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 4.5rem 2.5rem 4rem;
+            text-align: center;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            transition: opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
+        }
+
+        .page.active {
+            display: flex;
+            animation: pageReveal 0.6s ease-out;
+        }
+
+        @keyframes pageReveal {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* 背景主题 */
+        .bg1  { background: radial-gradient(circle at 15% 20%, #0f0c29 0%, #302b63 70%, #24243e 100%); }
+        .bg2  { background: linear-gradient(135deg, #0b1120 0%, #19284d 50%, #1e3a6b 100%); }
+        .bg3  { background: radial-gradient(ellipse at 80% 30%, #2c0a3e 0%, #0f0c1f 100%); }
+        .bg4  { background: linear-gradient(145deg, #071a0b 0%, #0d3320 50%, #1a4d2e 100%); }
+        .bg5  { background: linear-gradient(145deg, #1a0e0e 0%, #3d1a1a 50%, #5a2222 100%); }
+        .bg6  { background: linear-gradient(135deg, #0f1a2e 0%, #1e3a5f 50%, #2a5298 100%); }
+        .bg7  { background: radial-gradient(ellipse at 20% 70%, #1a0b2e 0%, #2d1b69 60%, #11052c 100%); }
+        .bg8  { background: linear-gradient(145deg, #0a1628 0%, #162844 50%, #1e3a6b 100%); }
+        .bg9  { background: radial-gradient(circle at 70% 40%, #0d2818 0%, #071a0b 100%); }
+        .bg10 { background: linear-gradient(145deg, #0f0c29 0%, #302b63 100%); }
+        .bg11 { background: linear-gradient(145deg, #1a0a0a 0%, #3d1515 60%, #5a1f1f 100%); }
+        .bg12 { background: linear-gradient(135deg, #060d1f 0%, #0d2137 50%, #1a3a5c 100%); }
+        .bg13 { background: radial-gradient(ellipse at 30% 60%, #0a1a10 0%, #162e1e 60%, #0a0f08 100%); }
+        .bg14 { background: linear-gradient(145deg, #050707 0%, #0d1a1a 50%, #102020 100%); }
+
+        /* 核心文本 */
+        h1 {
+            font-size: clamp(2rem, 7vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFE6A3 50%, #FFD966 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4.5vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #FFD966;
+            padding-left: 1rem;
+            text-align: left;
+            width: 100%;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #fff;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 3vw, 1.3rem);
+            color: #FFE6A3;
+            font-weight: 500;
+            letter-spacing: 2px;
+            background: rgba(255,255,210,0.15);
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+            line-height: 1.75;
+            color: rgba(255,255,240,0.85);
+            max-width: 880px;
+            margin: 0 auto 0.8rem;
+        }
+
+        /* 入场动画 */
+        @keyframes floatUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0)  scale(1);    }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .anim-up { opacity: 0; animation: floatUp 0.7s cubic-bezier(0.15, 0.85, 0.3, 1.05) forwards; }
+        .anim-in { opacity: 0; animation: fadeIn 0.9s ease forwards; }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.45s; }
+        .delay-4 { animation-delay: 0.65s; }
+        .delay-5 { animation-delay: 0.85s; }
+
+        /* 玻璃卡片 */
+        .row {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin-top: 0.8rem;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(20, 30, 55, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 1.5rem;
+            padding: 1.6rem 1.5rem;
+            min-width: 220px;
+            flex: 1;
+            max-width: 320px;
+            transition: all 0.35s ease;
+            box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4);
+            text-align: left;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(45, 55, 95, 0.75);
+            border-color: #FFD966;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.6);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+            color: #FFE3A4;
+        }
+
+        .card p {
+            font-size: 0.88rem;
+            margin-bottom: 0;
+            text-align: left;
+            color: #ddd;
+            max-width: none;
+        }
+
+        /* 进度条 */
+        .bar-bg {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,210,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 0.6rem;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD966, #FFB347);
+            border-radius: 12px;
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.22, 0.97, 0.36, 1);
+        }
+        .page.active .bar-fill { width: var(--w); }
+
+        /* 时间轴 */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 900px;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            margin-top: 0.5rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 12px;
+            bottom: 12px;
+            width: 2px;
+            background: linear-gradient(to bottom, #FFD966, #FF9A5E, rgba(255,215,0,0.2));
+        }
+        .tl-item {
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+            background: rgba(15, 20, 40, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 0.9rem 1.1rem;
+            border-radius: 1.2rem;
+            transition: all 0.25s;
+        }
+        .tl-item:hover { background: rgba(30,40,70,0.7); transform: translateX(6px); }
+        .tl-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #FFD966;
+            box-shadow: 0 0 10px #FFC107;
+            flex-shrink: 0;
+            margin-top: 4px;
+            z-index: 2;
+        }
+        .tl-content h3 { font-size: 1.15rem; font-weight: 700; color: #FFE3A4; margin-bottom: 0.2rem; }
+        .tl-content p  { margin: 0; font-size: 0.88rem; color: rgba(240,240,250,0.8); max-width: none; }
+
+        /* 列表样式 */
+        .list-items {
+            max-width: 900px;
+            width: 100%;
+            text-align: left;
+            margin-top: 0.5rem;
+        }
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.7rem 1.1rem;
+            background: rgba(15, 22, 45, 0.5);
+            border-radius: 1rem;
+            margin-bottom: 0.6rem;
+            border-left: 3px solid rgba(255,217,102,0.5);
+            transition: all 0.25s;
+        }
+        .list-item:hover { background: rgba(30,40,70,0.7); border-left-color: #FFD966; }
+        .list-num {
+            background: linear-gradient(135deg, #FFD966, #FFB347);
+            color: #0F0E17;
+            font-weight: 800;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .list-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .list-text h4 { font-size: 1rem; font-weight: 700; color: #FFE3A4; margin-bottom: 0.15rem; }
+        .list-text p  { font-size: 0.85rem; color: rgba(240,240,250,0.8); max-width: none; margin: 0; }
+
+        /* 高亮框 */
+        .highlight-box {
+            background: rgba(255, 217, 102, 0.12);
+            border: 1px solid rgba(255, 217, 102, 0.45);
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.6rem;
+            max-width: 900px;
+            width: 100%;
+            text-align: left;
+            margin-top: 1rem;
+        }
+        .highlight-box .label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #FFD966;
+            letter-spacing: 2px;
+            margin-bottom: 0.4rem;
+        }
+        .highlight-box p { font-size: 0.92rem; color: rgba(255,255,220,0.9); max-width: none; margin: 0; line-height: 1.7; }
+
+        /* 代码框 */
+        .code-box {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255,217,102,0.3);
+            border-radius: 1rem;
+            padding: 1rem 1.3rem;
+            max-width: 880px;
+            width: 100%;
+            text-align: left;
+            font-family: 'Consolas', 'Source Code Pro', monospace;
+            font-size: 0.82rem;
+            color: #b8e994;
+            line-height: 1.6;
+            margin-top: 0.8rem;
+            overflow-x: auto;
+        }
+        .code-box .code-label {
+            color: #FFD966;
+            font-weight: 700;
+            font-family: 'Microsoft YaHei', sans-serif;
+            font-size: 0.78rem;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        /* 标签徽章 */
+        .badge {
+            display: inline-block;
+            background: rgba(255,217,102,0.18);
+            border: 1px solid rgba(255,217,102,0.45);
+            color: #FFE3A4;
+            font-size: 0.78rem;
+            padding: 3px 10px;
+            border-radius: 30px;
+            margin: 2px;
+            font-weight: 600;
+        }
+        .badge.green { background: rgba(80,200,120,0.18); border-color: rgba(80,200,120,0.45); color: #90EE90; }
+        .badge.blue  { background: rgba(100,160,255,0.18); border-color: rgba(100,160,255,0.45); color: #aac8ff; }
+        .badge.red   { background: rgba(255,100,100,0.18); border-color: rgba(255,100,100,0.45); color: #ffaaaa; }
+
+        /* 两列布局 */
+        .two-col {
+            display: flex;
+            gap: 1.5rem;
+            max-width: 1100px;
+            width: 100%;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .col-half {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(15,22,45,0.5);
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid rgba(255,217,102,0.2);
+            text-align: left;
+        }
+        .col-half h3 { font-size: 1.1rem; font-weight: 700; color: #FFE3A4; margin-bottom: 0.6rem; }
+        .col-half p  { font-size: 0.86rem; color: rgba(240,240,250,0.8); max-width: none; margin-bottom: 0.4rem; }
+
+        /* 底部提示 & 页码 */
+        .hint {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,245,180,0.5);
+            font-size: 0.75rem;
+            background: rgba(0,0,0,0.3);
+            padding: 4px 12px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .page-num {
+            position: fixed;
+            bottom: 18px;
+            right: 24px;
+            color: rgba(255,235,160,0.5);
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(0,0,0,0.25);
+            padding: 3px 10px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            letter-spacing: 1px;
+        }
+
+        /* 导航栏 */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 4px;
+            padding: 10px 16px;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.35), transparent);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-bar::-webkit-scrollbar { display: none; }
+        .nav-dot {
+            flex-shrink: 0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: rgba(255,245,180,0.6);
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .nav-dot:hover { color: #FFE3A4; background: rgba(255,217,102,0.15); }
+        .nav-dot.active { background: rgba(255,217,102,0.25); border-color: rgba(255,217,102,0.5); color: #FFD966; font-weight: 700; }
+
+        /* 大标题强调 */
+        .chapter-label {
+            font-size: 0.8rem;
+            color: #FFB347;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+        .big-quote {
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-weight: 700;
+            color: #FFE6A3;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0.5rem auto;
+            font-style: italic;
+        }
+
+        /* 结语按钮 */
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(105deg, #FFD966, #FFB347);
+            color: #0F0E17;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 60px;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: 0 6px 20px rgba(255,200,0,0.3);
+            cursor: pointer;
+            border: none;
+        }
+        .contact-btn:hover { transform: scale(1.04); box-shadow: 0 10px 24px rgba(255,200,0,0.5); background: #FFE27A; }
+
+        /* 表格样式 */
+        .info-table {
+            width: 100%;
+            max-width: 900px;
+            border-collapse: separate;
+            border-spacing: 0 6px;
+            margin-top: 0.8rem;
+        }
+        .info-table th {
+            background: rgba(255,217,102,0.2);
+            color: #FFD966;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            text-align: left;
+        }
+        .info-table td {
+            background: rgba(15,22,45,0.55);
+            color: rgba(240,240,250,0.85);
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+        }
+        .info-table tr th:first-child, .info-table tr td:first-child { border-radius: 8px 0 0 8px; }
+        .info-table tr th:last-child, .info-table tr td:last-child { border-radius: 0 8px 8px 0; }
+
+        /* 响应式 */
+        @media (max-width: 780px) {
+            .page { padding: 4rem 1.2rem 3.5rem; }
+            h2 { font-size: 1.4rem; margin-bottom: 1rem; }
+            .card { max-width: 100%; }
+            .two-col { flex-direction: column; }
+        }
+
+        /* 自定义滚动条 */
+        .page::-webkit-scrollbar { width: 3px; }
+        .page::-webkit-scrollbar-track { background: #1a1a2e; }
+        .page::-webkit-scrollbar-thumb { background: #ffd966; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<div class="nav-bar" id="navBar"></div>
+<div class="hint" id="hintBar">🎯 键盘 → ← / 点击 / 滑动翻页</div>
+<div class="page-num" id="pageNum">1 / 14</div>
+
+<!-- ============================
+     PAGE 0: 封面
+============================= -->
+<div class="page active bg1" data-title="封面">
+    <span class="subtitle anim-up delay-1">🌟 教育信息化 · 实战分享</span>
+    <h1 class="anim-up delay-2">AI+Web赋能<br>中小学数字化教学的<br>实践与思考</h1>
+    <p class="anim-up delay-3" style="font-size:1rem; letter-spacing:1px; margin-top:0.5rem;">
+        符京雷 · 汤庄桥小学 &nbsp;|&nbsp; 分享时长：45–50 分钟
+    </p>
+    <p class="anim-up delay-4" style="font-size:0.85rem; color:rgba(255,235,160,0.6); margin-top:0.3rem;">
+        玩转AI提示词，赋能信科新课堂；数智赋能中小学全学科网页学件制作实战
+    </p>
+    <div class="anim-up delay-5" style="margin-top:1.5rem; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <span class="badge">豆包 / Kimi / DeepSeek</span>
+        <span class="badge green">纯HTML · 零代码</span>
+        <span class="badge blue">全学科适用</span>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 2: 时间分配
+============================= -->
+<div class="page bg2" data-title="内容概览">
+    <h2 class="anim-up">📋 分享内容一览</h2>
+    <div class="timeline anim-in delay-1">
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>一、分享缘起 <span class="badge" style="font-size:0.7rem;">4 min</span></h3>
+                <p>从一次调研课说起——AI工具如何让课堂焕发新生机</p>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>二、网页学件的价值 <span class="badge" style="font-size:0.7rem;">6 min</span></h3>
+                <p>为什么要学？五大特点 + 调研课学件现场演示</p>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>三、怎样制作网页学件 <span class="badge" style="font-size:0.7rem;">24 min</span></h3>
+                <p>原创 / 获取 / 修改 三维度 × 三个实操任务</p>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>四、怎样应用网页学件 <span class="badge" style="font-size:0.7rem;">10 min</span></h3>
+                <p>本地应用 + 在线应用，打通教学数据闭环</p>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>五、延伸思考与结语 <span class="badge" style="font-size:0.7rem;">6 min</span></h3>
+                <p>从教到"教学评研管"，AI赋能的无限可能</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 3: 分享缘起
+============================= -->
+<div class="page bg3" data-title="分享缘起">
+    <div class="chapter-label anim-up">PART 01 · 分享缘起</div>
+    <h2 class="anim-up delay-1">🎯 为什么做这次分享？</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half">
+            <h3>📖 起因：一次调研课</h3>
+            <p>苏科版六上《智慧校园及系统安全》——尝试用豆包、Kimi等AI工具，以<strong style="color:#FFD966;">提示词零代码</strong>制作了 <strong style="color:#FFD966;">4 个课堂网页学件</strong>。</p>
+            <p style="margin-top:0.5rem;">课后，教研员黄老师认可并邀约本次分享。</p>
+        </div>
+        <div class="col-half">
+            <h3>🌱 三个核心理念</h3>
+            <p>🤝 <strong style="color:#b8e994;">人文技术</strong> — 基于人的需求，促进人的发展</p>
+            <p>💡 <strong style="color:#aac8ff;">TED精神</strong> — 科技 + 教育 + 创新</p>
+            <p>🔥 <strong style="color:#ffaaaa;">创客理念</strong> — 激发师生的创新光芒</p>
+        </div>
+    </div>
+    <div class="highlight-box anim-up delay-3">
+        <div class="label">💬 新的可能性</div>
+        <p>新工具涌现（飞象老师、扣子Coze、Workbuddy、DeepSeek）· 新平台支持（QuickForm、bukeng.ai）· 新场景拓展（从信息科技到全学科，从课堂到教学评研管全场景）</p>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 4: 网页学件价值
+============================= -->
+<div class="page bg4" data-title="学件价值">
+    <div class="chapter-label anim-up">PART 02 · 网页学件的价值</div>
+    <h2 class="anim-up delay-1">💎 为什么要学习制作网页学件？</h2>
+    <div class="row">
+        <div class="card anim-up delay-1">
+            <h3>😩 传统痛点</h3>
+            <p>做 PPT 慢，调格式费半天；互动学件需懂 HTML/CSS，技术门槛高；学生被动听，走神是常态。</p>
+            <div class="bar-bg"><div class="bar-fill" style="--w:85%"></div></div>
+            <p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">参与度痛点</p>
+        </div>
+        <div class="card anim-up delay-2">
+            <h3>🚀 AI 时代解法</h3>
+            <p><strong style="color:#FFD966;">不会代码也能做</strong>专业课堂网页工具！核心关键不是会多少AI软件，而是会说多少精准的<strong style="color:#b8e994;">提示词</strong>。</p>
+            <div class="bar-bg"><div class="bar-fill" style="--w:96%"></div></div>
+            <p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">效率提升</p>
+        </div>
+        <div class="card anim-up delay-3">
+            <h3>✨ 五大特点</h3>
+            <p>零代码生成 · 跨平台运行 · 实时互动 · 数据可收集 · 美观易用——让课堂从"教师讲"变成"学生做"。</p>
+            <div class="bar-bg"><div class="bar-fill" style="--w:93%"></div></div>
+            <p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">课堂体验</p>
+        </div>
+    </div>
+    <p class="anim-up delay-4" style="margin-top:1.2rem; font-size:0.9rem; color:#FFE6A3;">
+        💡 一句话总结：让我们的课堂从"教师讲、学生听"变成"学生做、教师导"
+    </p>
+</div>
+
+<!-- ============================
+     PAGE 5: 调研课演示
+============================= -->
+<div class="page bg5" data-title="学件展示">
+    <div class="chapter-label anim-up">PART 02 · 学件演示</div>
+    <h2 class="anim-up delay-1">🔗 调研课 & 精美学件展示</h2>
+    <div class="two-col">
+        <div class="col-half anim-up delay-1">
+            <h3>📱 调研课 4 个学件</h3>
+            <p>苏科版六上《智慧校园及系统安全》</p>
+            <p style="margin-top:0.5rem; color:#FFD966; font-weight:600;">每个学件：构思到成品仅需 3~5 分钟！</p>
+        </div>
+        <div class="col-half anim-up delay-2">
+            <h3>🎮 精美网页学件</h3>
+            <p>🔤 <strong>单词消消乐</strong>（英语）——词汇配对消除</p>
+            <p>📊 <strong>课堂签到积分</strong>（通用）——签到+积分+PK</p>
+            <p>⚗️ <strong>科学实验模拟</strong>（科学）——抽象变直观</p>
+            <p>🔢 <strong>数学闯关游戏</strong>（数学）——寓教于乐</p>
+        </div>
+    </div>
+    <div class="highlight-box anim-up delay-3" style="margin-top:1rem;">
+        <div class="label">📌 三步法预告</div>
+        <p>这些学件有些是<strong style="color:#FFD966;">原创的</strong>，有些是从平台<strong style="color:#b8e994;">获取的</strong>，有些是<strong style="color:#aac8ff;">修改别人的</strong>。接下来系统讲讲"原创、获取、修改"三步法。</p>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 6: 原创 - 万能提示词
+============================= -->
+<div class="page bg6" data-title="方法一：原创制作">
+    <div class="chapter-label anim-up">PART 03 · 怎样制作 · 原创篇</div>
+    <h2 class="anim-up delay-1">✍️ 方法一：提示词 + AIGC 原创制作</h2>
+    <div class="highlight-box anim-in delay-2" style="background:rgba(100,160,255,0.1); border-color:rgba(100,160,255,0.4);">
+        <div class="label" style="color:#aac8ff;">🧩 万能提示词公式</div>
+        <p style="font-size:1rem; font-weight:600; color:#fff; line-height:2;">
+            <span class="badge blue">身份定位</span> +
+            <span class="badge blue">教学场景</span> +
+            <span class="badge blue">适用对象</span> +
+            <span class="badge blue">功能要求</span> +
+            <span class="badge blue">页面风格</span> +
+            <span class="badge blue">输出格式</span>
+        </p>
+    </div>
+    <div class="code-box anim-in delay-5">
+        <span class="code-label">📋 中小学教师通用提示词模板（可直接复制）</span>
+        你是专业的前端工程师 + 中小学课件设计师，擅长制作简洁易用的课堂互动式网页学件。
+请为【学科】学科【年级】年级【课题】制作一个【功能类型】网页学件，适配学生使用。
+要求实现【核心互动】功能，页面简洁大方、配色柔和、字大清晰，适合课堂投影展示。
+纯HTML+CSS+JS代码，无需后端，直接输出完整代码，我要直接保存使用。（务必提供详实内容）
+<p class="code-label" delay-4>校园扩音系统: ["扩音音箱", "麦克风", "广播控制终端"],</p>
+<p class="code-label" delay-4>校园安防系统: ["摄像头", "监控平台", "红外报警器"],</p>
+<p class="code-label" delay-4>人员管理系统: ["学籍管理平台", "请假考勤平台", "师生信息数据库"],</p>
+<p class="code-label" delay-4>智慧教室系统: ["智能黑板", "课堂录播设备", "智能照明、空调控制"],</p>
+<p class="code-label" delay-4>校园一卡系统: ["一卡通终端(门禁/食堂)", "充值管理平台", "消费记录数据库"],</p>
+<p class="code-label" delay-4>图书管理系统: ["自助借阅机", "图书检索平台", "图书库存数据库"]</p>
+    </div>
+    <p class="anim-up delay-4" style="font-size:0.85rem; color:#aac8ff; margin-top:0.8rem;">
+        推荐工具：豆包 / Kimi / 通义千问 / DeepSeek &nbsp;|&nbsp; 提示词网站：AiShort · Prompt123.cn
+    </p>
+</div>
+
+<!-- ============================
+     PAGE 7: 任务一
+============================= -->
+<div class="page bg7" data-title="任务一">
+    <div class="chapter-label anim-up">⭐ 实操任务一</div>
+    <h2 class="anim-up delay-1">🛠️ 【任务一】通过提示词制作网页学件</h2>
+    <div class="list-items anim-in delay-2">
+        <div class="list-item">
+            <div class="list-num">1</div>
+            <div class="list-text"><h4>打开 AI 工具</h4><p>豆包 / Kimi 任选，推荐豆包</p></div>
+        </div>
+        <div class="list-item">
+            <div class="list-num">2</div>
+            <div class="list-text"><h4>复制提示词模板，快速替换</h4><p>学科选自己的学科、年级选常教年级、功能选"知识竞赛"最简单</p></div>
+        </div>
+        <div class="list-item">
+            <div class="list-num">3</div>
+            <div class="list-text"><h4>发送给 AI，等待代码输出</h4><p>复制全部代码</p></div>
+        </div>
+        <div class="list-item">
+            <div class="list-num">4</div>
+            <div class="list-text"><h4>桌面新建文本文档 → 粘贴代码 → 保存</h4><p>右键重命名：把 .txt 改成 .html</p></div>
+        </div>
+        <div class="list-item">
+            <div class="list-num">5</div>
+            <div class="list-text"><h4>双击打开，查看效果</h4><p>完成！</p></div>
+        </div>
+    </div>
+    <div class="highlight-box anim-up delay-3" style="background:rgba(255,183,71,0.1); border-color:rgba(255,183,71,0.4);">
+        <div class="label" style="color:#FFB347;">⏱️ 时间：4 分钟，完成一个即可</div>
+        <p>还可以使用飞象老师（feixiang.cn）——预设模板，可视化编辑，更简单！</p>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 8: 获取学件
+============================= -->
+<div class="page bg8" data-title="方法二：获取学件">
+    <div class="chapter-label anim-up">PART 03 · 怎样制作 · 获取篇</div>
+    <h2 class="anim-up delay-1">🔍 方法二：找到并使用现成学件</h2>
+    <div class="row anim-in delay-2">
+        <div class="card">
+            <h3>🏫 飞象老师</h3>
+            <p>feixiang.cn — 专业课堂互动学件平台，按学科分类，丰富资源</p>
+        </div>
+        <div class="card">
+            <h3>📝 QuickForm</h3>
+            <p>quickform.cn — 表单收集 + 学件展示，支持数据统计</p>
+        </div>
+        <div class="card">
+            <h3>👩‍🏫 老师帮</h3>
+            <p>laoshibang.com — 教学资源共享，多学科覆盖</p>
+        </div>
+    </div>
+    <div class="highlight-box anim-up delay-3" style="margin-top:1rem;">
+        <div class="label">📌 获取原则</div>
+        <p>优先选择适配自己课堂的学件 · 注意版权，注明来源 · 感谢分享者，形成良性循环</p>
+    </div>
+    <div class="highlight-box anim-up delay-4" style="background:rgba(255,183,71,0.1); border-color:rgba(255,183,71,0.4); margin-top:0.6rem;">
+        <div class="label" style="color:#FFB347;">⭐ 任务二：浏览并另存精美学件（3 分钟）</div>
+        <p>打开分发文件夹体验学件 → 访问飞象网 / QuickForm → 找到自己学科 → 选一个学件另存或收藏</p>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 9: 修改三招
+============================= -->
+<div class="page bg9" data-title="方法三：修改学件">
+    <div class="chapter-label anim-up">PART 03 · 怎样制作 · 修改篇</div>
+    <h2 class="anim-up delay-1">🔧 方法三：让别人的学件变成自己的</h2>
+    <div class="timeline anim-in delay-2">
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>招式一：记事本简单修改 <span class="badge green">零门槛</span></h3>
+                <p>右键 HTML → 记事本 → Ctrl+F 搜索关键词 → 替换内容 → 保存。改题库、改颜色(color/background)、改字号(font-size)统统可以！</p>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>招式二：DeepSeek 复刻在线版 <span class="badge blue">进阶</span></h3>
+                <p>复制飞象网在线链接 → 发给 DeepSeek："请访问这个链接，复刻离线版本，数据改为可编辑 JSON 格式" → 保存本地修改，完全自主可控</p>
+            </div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+                <h3>招式三：扣子 / Workbuddy 打通数据流 <span class="badge red">高阶</span></h3>
+                <p>上传 HTML 学件 → 配置数据收集 → 学生提交答案 → 实时统计 → 大屏展示；教师看全班答题情况，学生获即时反馈</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 10: 本地应用
+============================= -->
+<div class="page bg10" data-title="本地应用">
+    <div class="chapter-label anim-up">PART 04 · 怎样应用 · 本地篇</div>
+    <h2 class="anim-up delay-1">💻 4.1 本地应用：单机版、线下</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half">
+            <h3>🎯 适用场景</h3>
+            <p>日常教学、公开课、调研课——无需网络，即开即用</p>
+            <p style="margin-top:0.5rem;">将 HTML 文件拷贝到教室电脑 → 双击打开 → 配合投影仪/电子白板使用</p>
+        </div>
+        <div class="col-half">
+            <h3>✅ 核心优势</h3>
+            <p>⚡ 零网络依赖，断网也能用</p>
+            <p>🚀 启动速度快，即点即用</p>
+            <p>🎨 可结合 PPT 原有演示方式</p>
+            <p>📦 单文件分发，简单轻便</p>
+        </div>
+    </div>
+    <div class="highlight-box anim-up delay-3" style="margin-top:1rem; text-align:center;">
+        <p style="font-size:1.1rem; color:#FFD966; font-weight:700;">
+            本地版 = 最简单的起点，<br>今天学完就能立刻用！
+        </p>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 11: 在线应用
+============================= -->
+<div class="page bg11" data-title="在线应用">
+    <div class="chapter-label anim-up">PART 04 · 怎样应用 · 在线篇</div>
+    <h2 class="anim-up delay-1">🌐 4.2 在线应用：数字化、双向互动</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half">
+            <h3>📊 QuickForm</h3>
+            <p style="color:#FFD966; font-weight:600;">打通 AI 赋能教育的"最后一公里"</p>
+            <p>注册账号 → 创建任务 → 获取 API 地址 → 学件中添加提交代码 → 数据自动汇集 → 实时查看导出分析</p>
+            <p style="margin-top:0.5rem; color:#b8e994;">让学件从"单向展示"变成"双向互动"！</p>
+        </div>
+        <div class="col-half">
+            <h3>🐾 Bukeng.ai</h3>
+            <p style="color:#FFD966; font-weight:600;">班宠乐园，让评价更有趣</p>
+            <p>用"电子宠物养成"激励学生，适合小学课堂行为管理。学生答对题目，宠物成长进化！</p>
+        </div>
+    </div>
+    <div class="highlight-box anim-up delay-3" style="background:rgba(255,183,71,0.1); border-color:rgba(255,183,71,0.4); margin-top:0.8rem;">
+        <div class="label" style="color:#FFB347;">⭐ 任务三：体验 QuickForm 与 Bukeng.ai（4 分钟）</div>
+        <p>quickform.cn 注册账号 → 浏览热榜学件 → 了解数据收集流程 | 访问 bukeng.ai 体验班宠乐园</p>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 12: 延伸思考
+============================= -->
+<div class="page bg12" data-title="延伸思考">
+    <div class="chapter-label anim-up">PART 05 · 延伸思考</div>
+    <h2 class="anim-up delay-1">🌟 从"教"到"教学评研管"全场景</h2>
+    <div class="row anim-in delay-2">
+        <div class="card">
+            <h3>📚 教学场景</h3>
+            <p>知识讲解 · 互动练习 · 随堂测验 · 课堂签到 · 小组竞赛</p>
+        </div>
+        <div class="card">
+            <h3>📐 教研场景</h3>
+            <p>调研问卷 · 数据可视化 · 学情分析 · 教学反思工具</p>
+        </div>
+        <div class="card">
+            <h3>🏫 管理场景</h3>
+            <p>德育闯关 · 体测记录 · 家校互动 · 劳动任务打卡</p>
+        </div>
+    </div>
+    <div class="two-col anim-up delay-3" style="margin-top:1rem;">
+        <div class="col-half" style="background:rgba(80,200,120,0.08); border-color:rgba(80,200,120,0.3);">
+            <h3 style="color:#90EE90;">🤖 扣子 Coze</h3>
+            <p>创建学科智能体，24小时答疑 · 设计工作流，自动化教学 · 集成知识库，打造学科资源中心</p>
+        </div>
+        <div class="col-half" style="background:rgba(100,160,255,0.08); border-color:rgba(100,160,255,0.3);">
+            <h3 style="color:#aac8ff;">🛠️ Workbuddy</h3>
+            <p>AI辅助备课出题 · 数据收集与可视化 · 智能推荐学习资源 · 自动化教学工作流</p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 13: 常用资源
+============================= -->
+<div class="page bg13" data-title="资源汇总">
+    <div class="chapter-label anim-up">附录 · 常用资源汇总</div>
+    <h2 class="anim-up delay-1">🗂️ 常用工具 & 平台速查</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half">
+            <h3>🤖 AI 工具</h3>
+            <p>💬 <strong>豆包</strong> — doubao.com （推荐）</p>
+            <p>🔍 <strong>DeepSeek</strong> — deepseek.com</p>
+            <p>✨ <strong>Kimi</strong> — kimi.moonshot.cn</p>
+            <p>🧠 <strong>通义千问</strong> — qianwen.aliyun.com</p>
+            <br>
+            <h3>💡 提示词资源</h3>
+            <p>🔖 <strong>AiShort</strong> — aishort.top</p>
+            <p>📚 <strong>Prompt123.cn</strong> — 课件教案类丰富</p>
+        </div>
+        <div class="col-half">
+            <h3>🎓 学件平台</h3>
+            <p>🦅 <strong>飞象老师</strong> — feixiang.cn</p>
+            <p>👩‍🏫 <strong>老师帮</strong> — laoshibang.com</p>
+            <p>📝 <strong>QuickForm</strong> — quickform.cn</p>
+            <p>🐾 <strong>Bukeng.ai</strong> — bukeng.ai</p>
+            <br>
+            <h3>⚙️ AI 应用平台</h3>
+            <p>🤖 <strong>扣子 Coze</strong> — coze.cn</p>
+            <p>🛠️ <strong>Workbuddy</strong> — WorkBuddy IDE</p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================
+     PAGE 14: 结语
+============================= -->
+<div class="page bg14" data-title="结语">
+    <h1 class="anim-up">🙏 感谢聆听</h1>
+    <p class="anim-up delay-1" style="font-size:1rem; max-width:700px; color:#FFE6A3; line-height:1.8;">
+        教育信息化，从来不是少数人的"技术秀"，<br>而是每一位老师都能上手的"教学工具"。
+    </p>
+    <div class="list-items anim-in delay-2" style="max-width:640px; margin-top:1rem;">
+        <div class="list-item" style="border-left-color:#FFD966;">
+            <div class="list-icon">🚀</div>
+            <div class="list-text"><h4>大胆尝试</h4><p>用万能提示词做一个学件，今天就能完成</p></div>
+        </div>
+        <div class="list-item" style="border-left-color:#b8e994;">
+            <div class="list-icon">🔍</div>
+            <div class="list-text"><h4>善于获取</h4><p>到飞象网、QuickForm 找好资源，站在巨人肩上</p></div>
+        </div>
+        <div class="list-item" style="border-left-color:#aac8ff;">
+            <div class="list-icon">💡</div>
+            <div class="list-text"><h4>创新应用</h4><p>本地用、在线用、全场景用，让技术服务教学</p></div>
+        </div>
+    </div>
+    <p class="anim-up delay-3" style="margin-top:1rem; font-size:0.85rem; color:rgba(255,235,160,0.6);">
+        "自由平等协作分享" · 多交流、多碰撞、多创新 · 一起在教育信息化路上前行！
+    </p>
+    <p class="anim-up delay-4" style="font-size:0.8rem; color:rgba(255,255,255,0.35); margin-top:0.4rem;">
+        符京雷 · 汤庄桥小学 · 2026
+    </p>
+</div>
+
+<script>
+(function() {
+    const pages = document.querySelectorAll('.page');
+    const total = pages.length;
+    let currentIdx = 0;
+    let isAnimating = false;
+
+    // 构建导航栏
+    const navBar = document.getElementById('navBar');
+    pages.forEach((page, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+        dot.textContent = (i + 1) + '. ' + (page.dataset.title || '');
+        dot.addEventListener('click', (e) => { e.stopPropagation(); goToPage(i); });
+        navBar.appendChild(dot);
+    });
+
+    function updateUI() {
+        document.getElementById('pageNum').textContent = (currentIdx + 1) + ' / ' + total;
+        document.querySelectorAll('.nav-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === currentIdx);
+        });
+        // 滚动导航到可见
+        const activeDot = navBar.querySelectorAll('.nav-dot')[currentIdx];
+        if (activeDot) activeDot.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    function goToPage(index) {
+        if (isAnimating) return;
+        if (index === currentIdx) return;
+        if (index < 0 || index >= total) return;
+        isAnimating = true;
+        pages[currentIdx].classList.remove('active');
+        currentIdx = index;
+        pages[currentIdx].classList.add('active');
+        updateUI();
+        // 触发进度条动画
+        setTimeout(() => {
+            pages[currentIdx].querySelectorAll('.bar-fill').forEach(bar => {
+                const w = getComputedStyle(bar).getPropertyValue('--w').trim();
+                if (w) bar.style.width = w;
+            });
+        }, 100);
+        setTimeout(() => { isAnimating = false; }, 700);
+    }
+
+    // 键盘
+    window.addEventListener('keydown', (e) => {
+        const fwd = ['ArrowRight','ArrowDown',' ','Enter','PageDown'];
+        const bwd = ['ArrowLeft','ArrowUp','PageUp'];
+        if (fwd.includes(e.key)) { e.preventDefault(); goToPage(currentIdx + 1); }
+        else if (bwd.includes(e.key)) { e.preventDefault(); goToPage(currentIdx - 1); }
+    });
+
+    // 点击翻页
+    document.body.addEventListener('click', (e) => {
+        if (e.target.closest('.nav-dot')) return;
+        if (e.target.closest('.contact-btn')) return;
+        const x = e.clientX;
+        if (x > window.innerWidth * 0.25 && x < window.innerWidth * 0.75) {
+            goToPage(currentIdx + 1);
+        } else if (x <= window.innerWidth * 0.25) {
+            goToPage(currentIdx - 1);
+        } else {
+            goToPage(currentIdx + 1);
+        }
+    });
+
+    // 滚轮
+    let wheelTimer = null;
+    window.addEventListener('wheel', (e) => {
+        if (wheelTimer) return;
+        wheelTimer = setTimeout(() => { wheelTimer = null; }, 600);
+        if (e.deltaY > 0) goToPage(currentIdx + 1);
+        else if (e.deltaY < 0) goToPage(currentIdx - 1);
+    }, { passive: true });
+
+    // 触摸
+    let touchStartY = 0, touchStartX = 0;
+    window.addEventListener('touchstart', (e) => {
+        touchStartY = e.changedTouches[0].clientY;
+        touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+        const dy = touchStartY - e.changedTouches[0].clientY;
+        const dx = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
+            if (dy > 0) goToPage(currentIdx + 1);
+            else goToPage(currentIdx - 1);
+        } else if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+            if (dx > 0) goToPage(currentIdx + 1);
+            else goToPage(currentIdx - 1);
+        }
+    }, { passive: true });
+
+    // 初始化进度条
+    setTimeout(() => {
+        pages[0].querySelectorAll('.bar-fill').forEach(bar => {
+            const w = getComputedStyle(bar).getPropertyValue('--w').trim();
+            if (w) bar.style.width = w;
+        });
+    }, 150);
+
+    updateUI();
+})();
+</script>
+</body>
+</html>

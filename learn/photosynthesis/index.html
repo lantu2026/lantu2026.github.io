@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="LfyepU9l0ddZUZF87PKeWz">
+<head data-page-node-id="YTHHCcvBrKOCCBpKvR7Sbx">
+<meta charset="UTF-8" data-page-node-id="NxbLxUoCJ7eWIpVbVDg14P">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="vWthrJPd4CKZFUUrfkb416">
+<title>光合作用探索实验室 · 小学科学互动学件</title>
+<style>
+  :root{
+    --green:#2e7d32;
+    --green-2:#43a047;
+    --green-soft:#e8f5e9;
+    --sun:#f9a825;
+    --water:#039be5;
+    --co2:#607d8b;
+    --ink:#1f2a24;
+    --ink-2:#546158;
+    --card:#ffffff;
+    --line:#dbe7dc;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif;
+    background:linear-gradient(160deg,#f7fbf5 0%,#eef7ee 45%,#e9f4ef 100%);
+    color:var(--ink);
+    line-height:1.7;
+    padding:22px 16px 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;}
+
+  /* ---------- 头部 ---------- */
+  header.hero{
+    background:linear-gradient(135deg,#2e7d32,#5aa85e 60%,#8bc34a);
+    color:#fff;border-radius:26px;padding:30px 32px;position:relative;overflow:hidden;
+    box-shadow:0 14px 34px rgba(46,125,50,.28);
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(255,255,255,.28),transparent 65%);border-radius:50%;
+  }
+  header.hero h1{font-size:30px;letter-spacing:1px;}
+  header.hero p{margin-top:8px;font-size:15px;opacity:.94;}
+  .badge-row{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;}
+  .badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);
+    padding:5px 14px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px);}
+
+  /* ---------- 导航 ---------- */
+  nav.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 18px;}
+  nav.tabs button{
+    border:1px solid var(--line);background:#fff;color:var(--ink-2);
+    padding:10px 20px;border-radius:999px;cursor:pointer;font-size:15px;
+    font-family:inherit;transition:all .2s;font-weight:600;
+  }
+  nav.tabs button:hover{border-color:var(--green-2);color:var(--green);transform:translateY(-1px);}
+  nav.tabs button.active{background:var(--green);color:#fff;border-color:var(--green);
+    box-shadow:0 6px 16px rgba(46,125,50,.3);}
+
+  /* ---------- 面板 ---------- */
+  section.panel{display:none;animation:fade .35s ease;}
+  section.panel.show{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;margin-bottom:16px;box-shadow:0 4px 16px rgba(31,42,36,.05);
+  }
+  .card h2{font-size:20px;color:var(--green);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .card h3{font-size:16px;color:var(--ink);margin:14px 0 6px;}
+  .card p{color:var(--ink-2);font-size:15px;}
+  .hint{background:#fff8e1;border-left:4px solid var(--sun);padding:10px 14px;border-radius:8px;
+    font-size:14px;color:#6d4c00;margin-top:12px;}
+
+  /* ---------- 配方卡 ---------- */
+  .recipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px;}
+  .flip{perspective:900px;height:160px;cursor:pointer;}
+  .flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;}
+  .flip.on .flip-in{transform:rotateY(180deg);}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    border:1.5px solid var(--line);text-align:center;padding:12px;}
+  .face.front{background:#fff;}
+  .face.back{background:var(--green-soft);transform:rotateY(180deg);border-color:#bfe0c2;}
+  .face .ico{font-size:38px;}
+  .face .nm{font-weight:700;font-size:16px;}
+  .face .desc{font-size:13px;color:var(--ink-2);line-height:1.5;}
+
+  /* ---------- 演示台 ---------- */
+  .stage-box{background:linear-gradient(#eaf6ff,#f2fbf3);border-radius:16px;border:1px solid var(--line);
+    padding:8px;overflow:hidden;}
+  svg#scene{width:100%;height:auto;display:block;border-radius:12px;}
+  .ctrl{display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;border:none;
+    padding:10px 22px;border-radius:999px;transition:.2s;
+  }
+  .btn-main{background:var(--green);color:#fff;box-shadow:0 6px 14px rgba(46,125,50,.28);}
+  .btn-main:hover{background:#256428;transform:translateY(-1px);}
+  .btn-ghost{background:#fff;color:var(--ink-2);border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--green-2);color:var(--green);}
+  .speed{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-2);}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;
+    background:#dfeade;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--green);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);}
+
+  /* SVG 粒子动画 */
+  .pt{opacity:0;}
+  .playing .pt{animation-iteration-count:infinite;}
+  .playing .p-water{animation:flowW 3.2s linear infinite;}
+  .playing .p-co2{animation:flowC 3.6s linear infinite;}
+  .playing .p-o2{animation:flowO 3.4s linear infinite;}
+  .playing .p-sugar{animation:pop 3.2s ease-in-out infinite;}
+  .playing .ray{animation:blink 1.6s ease-in-out infinite;}
+  @keyframes flowW{
+    0%{transform:translate(0,0);opacity:0;}
+    12%{opacity:1;}
+    85%{opacity:1;}
+    100%{transform:translate(44px,-150px);opacity:0;}
+  }
+  @keyframes flowC{
+    0%{transform:translate(0,0);opacity:0;}
+    12%{opacity:1;}
+    85%{opacity:1;}
+    100%{transform:translate(250px,32px);opacity:0;}
+  }
+  @keyframes flowO{
+    0%{transform:translate(0,0);opacity:0;}
+    12%{opacity:1;}
+    85%{opacity:1;}
+    100%{transform:translate(210px,-76px);opacity:0;}
+  }
+  @keyframes pop{
+    0%{transform:scale(.2);opacity:0;}
+    25%{transform:scale(1);opacity:1;}
+    75%{transform:scale(1);opacity:1;}
+    100%{transform:scale(.4);opacity:0;}
+  }
+  @keyframes blink{0%,100%{opacity:.35;}50%{opacity:1;}}
+
+  /* ---------- 实验室 ---------- */
+  .lab{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;}
+  @media(max-width:760px){.lab{grid-template-columns:1fr;}}
+  .sliders{display:flex;flex-direction:column;gap:16px;}
+  .sl label{display:flex;justify-content:space-between;font-size:14.5px;font-weight:600;color:var(--ink);}
+  .sl label span.val{color:var(--green);font-variant-numeric:tabular-nums;}
+  .sl input[type=range]{width:100%;margin-top:8px;}
+  .sl.s1 input[type=range]{background:linear-gradient(90deg,#f9a825 var(--bg,50%),#e6e6e6 0);}
+  .readout{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap;}
+  .chip{background:var(--green-soft);border:1px solid #bfe0c2;border-radius:12px;padding:10px 16px;text-align:center;flex:1;min-width:110px;}
+  .chip b{display:block;font-size:22px;color:var(--green);font-variant-numeric:tabular-nums;}
+  .chip small{color:var(--ink-2);font-size:12.5px;}
+  .verdict{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:14.5px;font-weight:600;
+    background:#eef7ee;border:1px dashed #a5d6a7;color:#2e7d32;}
+  .verdict.warn{background:#fff4e5;border-color:#ffcc80;color:#a35b00;}
+  .verdict.stop{background:#fdecea;border-color:#f5b7b1;color:#b3261e;}
+  canvas#beaker{width:100%;height:300px;display:block;border-radius:14px;
+    background:linear-gradient(#f2fbff,#e3f4ff);border:1px solid var(--line);}
+
+  /* ---------- 测验 ---------- */
+  .quiz{margin-top:10px;}
+  .q{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px;background:#fff;}
+  .q .txt{font-weight:600;margin-bottom:10px;font-size:15.5px;}
+  .opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;cursor:pointer;
+    background:#f7faf7;border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:8px;
+    transition:.18s;color:var(--ink);}
+  .opt:hover{border-color:var(--green-2);background:#f0f8f0;}
+  .opt.right{background:#e6f6e7;border-color:#66bb6a;color:#1b5e20;font-weight:600;}
+  .opt.wrong{background:#fdecea;border-color:#e57373;color:#b3261e;}
+  .opt:disabled{cursor:default;}
+  .fb{font-size:14px;margin-top:4px;padding-left:2px;}
+  .fb.ok{color:#2e7d32;}
+  .fb.no{color:#b3261e;}
+  .score{text-align:center;font-size:17px;font-weight:700;color:var(--green);padding:14px;
+    background:var(--green-soft);border-radius:14px;margin-top:6px;}
+  .eq{background:#0f2417;color:#c8f7c5;border-radius:14px;padding:18px;text-align:center;
+    font-size:19px;letter-spacing:.5px;font-family:"Cambria Math",Georgia,"Microsoft YaHei",serif;}
+  .eq b{color:#ffe082;}
+  .eq .tag{display:block;font-size:12.5px;color:#9bcf9b;margin-top:8px;letter-spacing:1px;}
+  footer{text-align:center;color:var(--ink-2);font-size:13px;margin-top:26px;}
+</style>
+</head>
+<body data-page-node-id="ZRoXUj4EAnlRGYGq7lSXD7">
+<div class="wrap" data-page-node-id="QnWoCTr4ZsBbTEFmawu44Z">
+
+  <header class="hero" data-page-node-id="Ehi8xKikvndFSdSLoRB0HP">
+    <h1 data-page-node-id="BUHZOHDc4WF1CEGgLqzUYH">🌿 光合作用探索实验室</h1>
+    <p data-page-node-id="xWC70rBmCPdr4aA1xgdRrr">植物的“绿色食品加工厂”——看看一片叶子是怎样把阳光变成食物的</p>
+    <div class="badge-row" data-page-node-id="27cMtFrus7FNAtEz1BgFnx">
+      <span class="badge" data-page-node-id="bNdizYYyWZwHVGncfrJ4ul">小学科学 · 五、六年级</span>
+      <span class="badge" data-page-node-id="ADbfcjIg50tkVWEtD7f8mZ">动画演示</span>
+      <span class="badge" data-page-node-id="bF9ahkqbLeCcuM17xRyAiD">虚拟实验</span>
+      <span class="badge" data-page-node-id="f8UwDBacIRrEKg5JoNhI4N">随堂闯关</span>
+    </div>
+  </header>
+
+  <nav class="tabs" data-page-node-id="D8Y6qBR7DrM2yJSZjCQGkT">
+    <button class="active" data-tab="p1" data-page-node-id="NSi4ngDhwZAPWkqUMKtCD5">① 配料表</button>
+    <button data-tab="p2" data-page-node-id="8KHOJBwQQRE0nZ8ynJJscj">② 过程动画</button>
+    <button data-tab="p3" data-page-node-id="O6oJeggQedvnY2qHxEH7TY">③ 虚拟实验室</button>
+    <button data-tab="p4" data-page-node-id="D2Zz1dzUyPIZv0NiTPqMkG">④ 知识小结</button>
+    <button data-tab="p5" data-page-node-id="4d7thwAGNyDQYWSE6v9spS">⑤ 闯关测试</button>
+  </nav>
+
+  <!-- ① 配料表 -->
+  <section class="panel show" id="p1" data-page-node-id="Xapxb5NjKHm1HsuSi8h3cc">
+    <div class="card" data-page-node-id="iZ9w65hHAoF8k9niOrfJyw">
+      <h2 data-page-node-id="eU94UwiVG2Ujfh7gNmmqkH">🧪 光合作用的“配料表”</h2>
+      <p data-page-node-id="IAlIiVNxI1Bbapt2p5QVlW">就像做蛋糕需要鸡蛋、面粉和糖，植物制造自己的“食物”，也需要几样必备原料。点击卡片，看看每一份配料的作用。</p>
+      <div class="recipe" id="recipe" data-page-node-id="Pz2H3cVU7EKUMm932Kwyzo">
+        <div class="flip" data-page-node-id="5sj1mheq6LLUgJueP0jPiA"><div class="flip-in" data-page-node-id="BBuXx64EOMoQAGkoxl7laz">
+          <div class="face front" data-page-node-id="ZqbPl4iNnOIKQsrFjB2EDN"><div class="ico" data-page-node-id="ahgMEEdmefBSf7UYim5FMy">☀️</div><div class="nm" data-page-node-id="IuH0BZBlYDnWLveUlHn8ea">阳光</div><div class="desc" data-page-node-id="oJ4BJXuxclME2DAGLFEhzZ">点击查看</div></div>
+          <div class="face back" data-page-node-id="0EbIKCjq0p95F2Q2WkD58H"><div class="ico" data-page-node-id="xTee4fZUwmOaVG7ghdtkdd">⚡</div><div class="nm" data-page-node-id="josOnl8GeXcaZ5gUoP6GFk">能量来源</div><div class="desc" data-page-node-id="UwR7Zw49R3Cg1keL9wr5nY">阳光是光合作用的“动力”。没有光，机器就开不动。灯光其实也可以哦！</div></div>
+        </div></div>
+        <div class="flip" data-page-node-id="VmeySDTqhqLFVD6EhePfzr"><div class="flip-in" data-page-node-id="F3Kjrx3L9qwfT9zdLJfXKk">
+          <div class="face front" data-page-node-id="3hIAehMPn8z4ck15wAY91o"><div class="ico" data-page-node-id="KJwfURv9yyl7jK3ZPMzB4U">💧</div><div class="nm" data-page-node-id="k2iRecoXAV2g0doxyKp0jh">水</div><div class="desc" data-page-node-id="zleJTgw73EjtKHXDNfsXOl">点击查看</div></div>
+          <div class="face back" data-page-node-id="K2cj3BysOR5AmdtUTE7Ttj"><div class="ico" data-page-node-id="BBSf72NfJaX6tUe7WVawjq">🌱</div><div class="nm" data-page-node-id="k231uYDwxVXVCuQ538ZnHC">来自根部</div><div class="desc" data-page-node-id="HMoIqZDps4hzQ60A6o4sSP">根从土壤里吸水，再通过茎里的“水管”运到叶片。</div></div>
+        </div></div>
+        <div class="flip" data-page-node-id="AkoyNgiFSuRlwEcreH04jP"><div class="flip-in" data-page-node-id="bDXrHtXYy3SRoR9qnjfOya">
+          <div class="face front" data-page-node-id="oCD80wKoGLCjSqCwFE5gtz"><div class="ico" data-page-node-id="y1IRMJ4NOfnzqCBLTrHNR6">🌬️</div><div class="nm" data-page-node-id="eDuyCAQc8JaApyB0uqFfl2">二氧化碳</div><div class="desc" data-page-node-id="E67u996IpITZlLEx4cqTr4">点击查看</div></div>
+          <div class="face back" data-page-node-id="9MO6Ikrg0AYJ2S08dDihsf"><div class="ico" data-page-node-id="pxGrAz6f6nG20n9RxKaIfH">🕳️</div><div class="nm" data-page-node-id="L1COOuBmLDZ8a9DIWxt3Qg">来自气孔</div><div class="desc" data-page-node-id="vYsELOkAGjZBmDTsYGewlf">空气中的二氧化碳，从叶片背面小小的“气孔”钻进叶子里。</div></div>
+        </div></div>
+        <div class="flip" data-page-node-id="ZgQ1iwY4Zt6gEudCw21VPS"><div class="flip-in" data-page-node-id="lhl8isM3LA11oslg4pZXYm">
+          <div class="face front" data-page-node-id="1IKGZfRe1FCQglfmwWYXi3"><div class="ico" data-page-node-id="MAukwaXbJ5ylNVW2y4yZ6G">🌿</div><div class="nm" data-page-node-id="mYCjpWKnoUIHItlzExl1nA">叶绿体</div><div class="desc" data-page-node-id="Nv8rFaib97r9yowqKa69mt">点击查看</div></div>
+          <div class="face back" data-page-node-id="EogcqHRBizQUlkdnZHwsWE"><div class="ico" data-page-node-id="ziM8vjPZx8nvFjql3wtUoq">🏭</div><div class="nm" data-page-node-id="dHxZ5gDwFs4cDGV7MAnAHV">加工车间</div><div class="desc" data-page-node-id="AvDbfP9vttbG2DDC4hEmHS">绿叶细胞里的小颗粒，是真正干活的“绿色食品加工厂”。</div></div>
+        </div></div>
+      </div>
+      <div class="hint" data-page-node-id="oCubLl9FFFUKzmSREBJsHU">💡 想一想：如果把这四样中的任何一样拿走，植物还能制造出食物吗？到“虚拟实验室”试试看！</div>
+    </div>
+  </section>
+
+  <!-- ② 过程动画 -->
+  <section class="panel" id="p2" data-page-node-id="dTIwBKWuxctFyvITrQUnkw">
+    <div class="card" data-page-node-id="NSMvLAYoeFDy5xVpo498Oq">
+      <h2 data-page-node-id="CgRMyerlifj0F4ChBkUiRl">🎬 一片叶子里的“生产流水线”</h2>
+      <p data-page-node-id="qf1NSfmWcRL0HsTTskFxFS">点击“开始演示”，观察水、二氧化碳怎样进入叶片，氧气和糖分又是怎样出来的。</p>
+      <div class="stage-box" style="margin-top:12px;" data-page-node-id="rVczc0KzqHxINpzuk48wgH">
+        <svg id="scene" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" data-page-node-id="wTIzAQ5Iena8kiPyfNDFBa">
+          <defs data-page-node-id="AxStpfGQX8wJBP5XTjCKpL">
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1" data-page-node-id="WHCKzqBqo7327o1CLfflit">
+              <stop offset="0%" stop-color="#e3f3ff" data-page-node-id="9G12kwnPsSHSfxrS33nrZc"/><stop offset="100%" stop-color="#f4fbf2" data-page-node-id="fgB1P1jO8eqfCkT76FoduB"/>
+            </linearGradient>
+            <radialGradient id="sunGlow" data-page-node-id="wMptGQQGIJt98deO9fvU5A">
+              <stop offset="0%" stop-color="#fff3c4" data-page-node-id="UJrayV1c6uYa4yXVWrI3P4"/><stop offset="70%" stop-color="#ffe082" stop-opacity=".6" data-page-node-id="s3WkHRu7L9oJy4QQY0oPRf"/>
+              <stop offset="100%" stop-color="#ffe082" stop-opacity="0" data-page-node-id="qLuLjfPjclUitwXilVpEKy"/>
+            </radialGradient>
+            <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1" data-page-node-id="A5OFEie11Z3ppYuCGCBrRx">
+              <stop offset="0%" stop-color="#81c784" data-page-node-id="CVdIINVeBLq4WDvJFfbwfz"/><stop offset="100%" stop-color="#388e3c" data-page-node-id="DJSYYCklTaH8qgaSqhcdb8"/>
+            </linearGradient>
+            <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1" data-page-node-id="RCYcSIoP7B3Z93HWFLDaUx">
+              <stop offset="0%" stop-color="#8d6e63" data-page-node-id="qTVav49aARh8cpAdNVjAgl"/><stop offset="100%" stop-color="#5d4037" data-page-node-id="txCxdqXA8FyZ3FEKnJfZjG"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="800" height="400" fill="url(#sky)" data-page-node-id="b3dmCljchGH29STStim8Na"/>
+          <!-- 太阳 -->
+          <circle cx="96" cy="86" r="86" fill="url(#sunGlow)" data-page-node-id="qaZAhTrER1lUFTzyNlWTJj"/>
+          <circle cx="96" cy="86" r="38" fill="#ffca28" data-page-node-id="UCxS7pbbh6D7aoV6azKtn2"/>
+          <!-- 光线 -->
+          <g class="rays" stroke="#ffd54f" stroke-width="5" stroke-linecap="round" data-page-node-id="FZcixglbRAHDwXjbbnkh0K">
+            <line class="ray" x1="140" y1="118" x2="330" y2="170" data-page-node-id="OwrnXLT2y5gPrfuMfsrXHu"/>
+            <line class="ray" x1="148" y1="150" x2="360" y2="205" style="animation-delay:.3s" data-page-node-id="N1hpePPpdStOCcqeNZwAEH"/>
+            <line class="ray" x1="150" y1="184" x2="350" y2="240" style="animation-delay:.6s" data-page-node-id="D5AC3pyvgSS4exOLSkKAmn"/>
+          </g>
+          <!-- 土壤 -->
+          <rect x="0" y="342" width="800" height="58" fill="url(#soil)" data-page-node-id="jF306Q3VQGGuD8Hcfx2hAP"/>
+          <!-- 根与茎 -->
+          <path d="M470 300 C 470 330, 430 336, 410 352" stroke="#8d6e63" stroke-width="7" fill="none" stroke-linecap="round" data-page-node-id="S6GIU5StBy7JQrl2I88hZB"/>
+          <path d="M470 300 C 470 330, 510 338, 530 354" stroke="#8d6e63" stroke-width="6" fill="none" stroke-linecap="round" data-page-node-id="wn9az2AQaoTt6IyE96Jdve"/>
+
+          <!-- 叶片 -->
+          <ellipse cx="470" cy="215" rx="180" ry="105" fill="url(#leafG)" stroke="#2e7d32" stroke-width="3" data-page-node-id="LaFDC22Dms0AHrk4TjBvpj"/>
+          <path d="M300 215 C 400 200, 540 200, 645 214" stroke="#a5d6a7" stroke-width="3" fill="none" data-page-node-id="MLzU31T2BCCtyBTd5RifGu"/>
+          <path d="M470 112 L470 300" stroke="#a5d6a7" stroke-width="2" fill="none" opacity=".7" data-page-node-id="mGE2XleY5Fct5Azzsj3Tp8"/>
+          <!-- 叶绿体 -->
+          <g fill="#1b5e20" opacity=".55" data-page-node-id="dUmqAGfz9XBqQHRA3B4Sh9">
+            <ellipse cx="400" cy="180" rx="16" ry="9" transform="rotate(-18 400 180)" data-page-node-id="eIja50CKDaqQGrpm6c0XCg"/>
+            <ellipse cx="450" cy="245" rx="16" ry="9" transform="rotate(12 450 245)" data-page-node-id="WDXyBYP4b9vmplU8qEKXU8"/>
+            <ellipse cx="530" cy="190" rx="16" ry="9" transform="rotate(-8 530 190)" data-page-node-id="HIrvOkmB2HHiYUy8YTHUgU"/>
+            <ellipse cx="560" cy="250" rx="15" ry="8" transform="rotate(20 560 250)" data-page-node-id="PQiCYEgfZqMv3iBKlQA8oe"/>
+            <ellipse cx="370" cy="242" rx="15" ry="8" transform="rotate(-14 370 242)" data-page-node-id="V7GOiRE93OoxAwkSDaEd20"/>
+          </g>
+          <text x="470" y="222" text-anchor="middle" font-size="17" fill="#ffffff" font-weight="bold" opacity=".92" data-page-node-id="kBgqtyyUyIj1WkVkx5sxWN">叶 绿 体</text>
+
+          <!-- 标签 -->
+          <text x="120" y="250" font-size="15" fill="#0277bd" font-weight="bold" data-page-node-id="YeBhQ5rSxQ7jTRvXUuh1b7">二氧化碳 CO₂</text>
+          <text x="120" y="30" font-size="15" fill="#0277bd" font-weight="bold" data-page-node-id="u4ljeJmzz83Z4mgq7pbxwP">水 H₂O</text>
+          <text x="628" y="96" font-size="15" fill="#2e7d32" font-weight="bold" data-page-node-id="nVz0eCPYSbbx7Uw3oBvcHS">氧气 O₂</text>
+          <text x="636" y="330" font-size="15" fill="#ef6c00" font-weight="bold" data-page-node-id="JwPRuBCIRDUuK6ECPgnl9L">糖分（养料）</text>
+
+          <!-- 粒子 -->
+          <g id="layer" data-page-node-id="eR4z38Qc3GwWMalVneQEIq">
+            <!-- 水：由根部向上 -->
+            <g class="pt p-water" data-page-node-id="MKrzIS39vKVFsjgfbgLjwk"><circle cx="452" cy="345" r="6" fill="#039be5" data-page-node-id="o6FHgH8WpAxJ2XgranuHkh"/></g>
+            <g class="pt p-water" style="animation-delay:1.1s" data-page-node-id="jQnlCfi5HjKCfT2wg9gA0i"><circle cx="452" cy="345" r="6" fill="#039be5" data-page-node-id="VNlavj0C99QQfQSHgTJUgu"/></g>
+            <g class="pt p-water" style="animation-delay:2.2s" data-page-node-id="FxhT1KVABbtRvVS7casioz"><circle cx="452" cy="345" r="6" fill="#039be5" data-page-node-id="s7FN73pc7GRP5K4pvCqa20"/></g>
+            <!-- 二氧化碳：左侧进入 -->
+            <g class="pt p-co2" data-page-node-id="fKmKeJLoSvpUYdzgzAEvuY"><circle cx="150" cy="200" r="6" fill="#78909c" data-page-node-id="Gl1L8ogTyw07cxCVoUDSoJ"/></g>
+            <g class="pt p-co2" style="animation-delay:1.3s" data-page-node-id="tyu1YqOWrKM36gRBK5zkLf"><circle cx="150" cy="220" r="6" fill="#78909c" data-page-node-id="6w9I80Uj8i6k9Ii54H2Yg5"/></g>
+            <g class="pt p-co2" style="animation-delay:2.5s" data-page-node-id="jvNdmnZfNAtFSVuGrr5RXv"><circle cx="150" cy="185" r="6" fill="#78909c" data-page-node-id="R1GR3xgrjdBEvqUSr17Oe4"/></g>
+            <!-- 氧气：右上出去 -->
+            <g class="pt p-o2" data-page-node-id="EH7BQIhag3zLJ1IqNuUK74"><circle cx="480" cy="200" r="6" fill="#66bb6a" data-page-node-id="uWHBcRWoPTzfmpEdt4KLde"/></g>
+            <g class="pt p-o2" style="animation-delay:1.2s" data-page-node-id="0Ptt7SMuvdwcZ5LpbMnThI"><circle cx="500" cy="215" r="6" fill="#66bb6a" data-page-node-id="zoAmkYVfkprbiIZM0ZyY5V"/></g>
+            <g class="pt p-o2" style="animation-delay:2.3s" data-page-node-id="j8o4AeMgqxrBochg9g9QJQ"><circle cx="490" cy="185" r="6" fill="#66bb6a" data-page-node-id="CS4n64JVACpkAKA6qCDgct"/></g>
+            <!-- 糖分：叶内生成 -->
+            <g class="pt p-sugar" data-page-node-id="TWh5fUNKK1Ckec098mx5Py"><polygon points="470,205 480,210 480,222 470,227 460,222 460,210" fill="#ffb300" data-page-node-id="2zdT6hlZ4Q2L9l7V4Fin3Z"/></g>
+            <g class="pt p-sugar" style="animation-delay:1.1s" data-page-node-id="oEr1Su6LwGrOPfAWeyKuV2"><polygon points="545,230 555,235 555,247 545,252 535,247 535,235" fill="#ffb300" data-page-node-id="X7SgIzh1YlaNFAZ1NpnQUn"/></g>
+            <g class="pt p-sugar" style="animation-delay:2.2s" data-page-node-id="SR3OfOYzENGChJA7pmAvsS"><polygon points="415,235 425,240 425,252 415,257 405,252 405,240" fill="#ffb300" data-page-node-id="QBFCSK8578OegzPRnXF1dO"/></g>
+          </g>
+        </svg>
+      </div>
+      <div class="ctrl" data-page-node-id="ohGBKghvpciBd7anRuvAYm">
+        <button class="btn btn-main" id="playBtn" data-page-node-id="evQDhcT1L5A52SVFdI4aQ3">▶ 开始演示</button>
+        <button class="btn btn-ghost" id="resetBtn" data-page-node-id="4FAWYLQGznTpwms5wsblTI">↺ 重来</button>
+        <div class="speed" data-page-node-id="LTEOZhHcRMRwpciUfFSywJ">动画速度
+          <input type="range" id="speed" min="0.5" max="2" step="0.25" value="1" style="width:130px;" data-page-node-id="pe9Miaw8m6oSR8JRDDq99N">
+          <span id="speedVal" data-page-node-id="5tqUUY2fJbeH32Ji686w38">1.0×</span>
+        </div>
+      </div>
+      <div class="hint" data-page-node-id="RmYRjsdrHSIkL0T0GcpESM">🔍 观察要点：水从下往上走、二氧化碳从左边进、氧气从上面出去——叶片就像一个“双向进气、一边出气”的小工厂。</div>
+    </div>
+  </section>
+
+  <!-- ③ 虚拟实验室 -->
+  <section class="panel" id="p3" data-page-node-id="xtoZnePShecbKDKZolk8c1">
+    <div class="card" data-page-node-id="WBFEgDhHRHQ5kwCtJESI9L">
+      <h2 data-page-node-id="pOssBtUuNL874oAQCHvR9H">🔬 虚拟实验室：什么会影响光合作用？</h2>
+      <p data-page-node-id="0jekbQ0MQfqfVKtqn7Rh47">拖动三个滑块，改变光照、二氧化碳和水分，观察烧杯里金鱼藻冒出的氧气气泡有什么变化。</p>
+      <div class="lab" style="margin-top:16px;" data-page-node-id="lVosNPQShRQic2VD2RDEAA">
+        <div class="sliders" data-page-node-id="p3veyp62JDlVgHgXGz1MPT">
+          <div class="sl" data-page-node-id="REygYQbISeX0IAZ5aLYLE0">
+            <label data-page-node-id="A1R3Q1vGdUa8MmmGfxMOnC">光照强度 <span class="val" id="v1" data-page-node-id="HxTAbz6dcsnyDKOcUUCH89">70</span></label>
+            <input type="range" id="r1" min="0" max="100" value="70" data-page-node-id="jcCkw6oHckr7Tck86V4b6S">
+          </div>
+          <div class="sl" data-page-node-id="Ogj6y8QU8cZEGcg0lVUaRy">
+            <label data-page-node-id="6AuQ3S5QOVbSQMXMCOjGg5">二氧化碳浓度 <span class="val" id="v2" data-page-node-id="YIhViEuCD2aBPkot4bF4Xn">70</span></label>
+            <input type="range" id="r2" min="0" max="100" value="70" data-page-node-id="9VC2tNzFxbAHk8lJhpRtdn">
+          </div>
+          <div class="sl" data-page-node-id="D6qcqhGM4dZOUSAnqZq85D">
+            <label data-page-node-id="PsNabYM0fGNAyrqQ65GhV3">水分供应 <span class="val" id="v3" data-page-node-id="RtCOQUPI8UcM6UCZh3HmpG">70</span></label>
+            <input type="range" id="r3" min="0" max="100" value="70" data-page-node-id="mLICsgtmf6I7RL0DsQy30M">
+          </div>
+
+          <div class="readout" data-page-node-id="JdwNqQrk3DEmeZJY84IQtF">
+            <div class="chip" data-page-node-id="7XiTz64TQUS6oFP5THKdPx"><b id="rateTxt" data-page-node-id="zVFC7i9dGWJEW2pNiyLU74">70</b><small data-page-node-id="QFDEzhbSYyh2yBh2ZQieMt">光合作用强度</small></div>
+            <div class="chip" data-page-node-id="HIq42EmkNqCE0wrEEO2Cb8"><b id="bubbleTxt" data-page-node-id="bG6EA1Cm9oBwVVlCbk8CIg">0</b><small data-page-node-id="DzqrP6yrqeeEbUIp6t1oBp">氧气气泡 / 10秒</small></div>
+          </div>
+          <div class="verdict" id="verdict" data-page-node-id="4mJMs8jfu71oIVnvF57xM1">条件都不错，金鱼藻正在努力制造氧气～</div>
+        </div>
+        <div data-page-node-id="BkHQvciVF0YH65K8FWQYAW">
+          <canvas id="beaker" width="900" height="600" data-page-node-id="FsipjlOsyXXf08j6tW8Bna"></canvas>
+        </div>
+      </div>
+      <div class="hint" data-page-node-id="xHWMKBBMdUBGTMUBSjUxw0">💡 小提示：把任意一个滑块拉到 0，看看会发生什么？这就是“缺一不可”。</div>
+    </div>
+  </section>
+
+  <!-- ④ 知识小结 -->
+  <section class="panel" id="p4" data-page-node-id="vMsiFk4fks1mKdYwkGvwUS">
+    <div class="card" data-page-node-id="Jp5LakN9onwNK3E1sYCcyi">
+      <h2 data-page-node-id="uQnLPOLfBEFmXBR2lCUw3A">📒 一句话记住光合作用</h2>
+      <div class="eq" style="margin-top:14px;" data-page-node-id="KdRAMqqJt0oPfCwUYAD1Ik">
+        二氧化碳 + 水 &nbsp;<b data-page-node-id="wyxsovw1pZPeePgqKY6CEP">—— 光 · 叶绿体 ——&gt;</b>&nbsp; 养料（糖）+ 氧气
+        <span class="tag" data-page-node-id="l8qSZWtbB9WHgl1KAdKTFR">6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</span>
+      </div>
+      <h3 data-page-node-id="6NuyXxGyuo18PTOdkyTOVE">✅ 记忆四条</h3>
+      <p data-page-node-id="i88HLajW6beHZBmpb6xKMu">
+        <b data-page-node-id="XSMdEpbNoatu4D1HgN8WH8">条件</b>：光和叶绿体 &nbsp;|&nbsp;
+        <b data-page-node-id="D4trV4D8GrtsjiHVA9DjTP">原料</b>：二氧化碳、水 &nbsp;|&nbsp;
+        <b data-page-node-id="KcJay4Gks7YHhRmKBJhISB">产物</b>：养料（糖类/淀粉）、氧气 &nbsp;|&nbsp;
+        <b data-page-node-id="Z7KR32FjtBha8JOZRGSJCb">场所</b>：绿叶中的叶绿体
+      </p>
+      <h3 data-page-node-id="LJimgbi81GMBk3oHIjM0MC">🌾 农业生产中的运用</h3>
+      <p data-page-node-id="FCFviOM3c3lYoCJDSXE9PC">
+        ① <b data-page-node-id="HxEGNPP0UYbBhNoFLLAYdA">合理密植</b>——让每片叶子都能晒到太阳；<br data-page-node-id="uni29FIlmjSjmBLNqUOEeH">
+        ② <b data-page-node-id="Yk7tECoqYBRsRBwFnXqiEo">适当增加二氧化碳浓度</b>——给“加工厂”多送原料（如温室通风、施有机肥）；<br data-page-node-id="sCe58PAFJWBra2mFDSygMw">
+        ③ <b data-page-node-id="d7V5BUb2cFTjhQKAIjY3ES">延长光照时间</b>——让“机器”多运转（如大棚补光）；<br data-page-node-id="pPfiXvVZqEUIQhwlFKAUDD">
+        ④ <b data-page-node-id="0okx91OCkHBloVJFsLW7nO">合理浇水</b>——保证原料供应。
+      </p>
+      <h3 data-page-node-id="BFOCFsTxkroBrl2XrSaSAQ">🌍 为什么光合作用很重要？</h3>
+      <p data-page-node-id="BpQdxZZ9nY7v9SdFzEPeVs">它为植物自己制造食物，是几乎所有食物链的起点；同时不断释放氧气，让包括我们在内的动物能够呼吸。保护森林、多种绿植，其实就是在保护这个“地球大工厂”。</p>
+      <div class="hint" data-page-node-id="APmeCkS6WzKw0WeBzMS5Yd">🔗 联系生活：为什么说“大树底下好乘凉”？为什么教室里放几盆绿植会让人感觉更舒服？</div>
+    </div>
+  </section>
+
+  <!-- ⑤ 闯关测试 -->
+  <section class="panel" id="p5" data-page-node-id="t6vAuUToVUY8ErREfq8FSX">
+    <div class="card" data-page-node-id="h9OOjeu7BRyEpyUxkzNYU2">
+      <h2 data-page-node-id="zNiQJaNsbpfbaVV7EaxB5O">🏁 闯关测试（5 题）</h2>
+      <p data-page-node-id="ZXu1MjnnCqxAI1riQuHGFh">选择你认为正确的答案，系统会立刻告诉你对错。</p>
+      <div class="quiz" id="quiz" data-page-node-id="oxbKQ5XLhL6DNDolN3npp9"></div>
+      <div class="score" id="score" style="display:none;" data-page-node-id="utTo61ffaqHLRScIJkAVkX"></div>
+      <div style="margin-top:14px;" data-page-node-id="4EowrVE7urvSxk3q0Lpiwy">
+        <button class="btn btn-ghost" id="againBtn" data-page-node-id="LNhbMK0auhSIknBfGSEN6A">↺ 再测一次</button>
+      </div>
+    </div>
+  </section>
+
+  <footer data-page-node-id="kpkiZCUQ62yD3dDcJQrZWO">© 汤庄桥小学 · 光合作用互动学件 ｜ 可离线使用，建议用 Chrome / Edge 打开</footer>
+</div>
+
+<script>
+/* ============ ① Tab 切换 ============ */
+document.querySelectorAll('nav.tabs button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('nav.tabs button').forEach(function(x){x.classList.remove('active');});
+    document.querySelectorAll('section.panel').forEach(function(x){x.classList.remove('show');});
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab).classList.add('show');
+    if(b.dataset.tab==='p3'){ resizeCanvas(); }
+  });
+});
+
+/* ============ ② 配方卡翻转 ============ */
+document.querySelectorAll('#recipe .flip').forEach(function(c){
+  c.addEventListener('click',function(){ c.classList.toggle('on'); });
+});
+
+/* ============ ③ 过程动画 ============ */
+var scene=document.getElementById('scene');
+var playBtn=document.getElementById('playBtn');
+var speedEl=document.getElementById('speed');
+var speedVal=document.getElementById('speedVal');
+var particles=scene.querySelectorAll('.pt');
+
+function applySpeed(){
+  var s=parseFloat(speedEl.value);
+  speedVal.textContent=s.toFixed(1)+'×';
+  particles.forEach(function(p){
+    var base=3.2; // 基准时长近似值
+    p.style.animationDuration=(base/s).toFixed(2)+'s';
+  });
+}
+speedEl.addEventListener('input',applySpeed);
+
+playBtn.addEventListener('click',function(){
+  if(scene.classList.contains('playing')){
+    scene.classList.remove('playing');
+    playBtn.textContent='▶ 继续演示';
+  }else{
+    applySpeed();
+    scene.classList.add('playing');
+    playBtn.textContent='⏸ 暂停演示';
+  }
+});
+document.getElementById('resetBtn').addEventListener('click',function(){
+  scene.classList.remove('playing');
+  particles.forEach(function(p){ p.style.animation='none'; });
+  void scene.offsetWidth; // 强制重排，重置动画
+  particles.forEach(function(p){ p.style.animation=''; });
+  playBtn.textContent='▶ 开始演示';
+});
+
+/* ============ ④ 虚拟实验室 ============ */
+var r1=document.getElementById('r1'), r2=document.getElementById('r2'), r3=document.getElementById('r3');
+var v1=document.getElementById('v1'), v2=document.getElementById('v2'), v3=document.getElementById('v3');
+var rateTxt=document.getElementById('rateTxt');
+var bubbleTxt=document.getElementById('bubbleTxt');
+var verdict=document.getElementById('verdict');
+var canvas=document.getElementById('beaker');
+var ctx=canvas.getContext('2d');
+
+var bubbles=[];
+var rate=0;      // 0-100 光合强度
+var spawned=0;   // 累计气泡
+var spawnAcc=0;
+
+function calcRate(){
+  var a=+r1.value, b=+r2.value, c=+r3.value;
+  // 木桶效应：取最小值，直观体现“缺一不可”
+  var m=Math.min(a,b,c);
+  // 让结果更有区分度：其他条件越均衡，发挥越充分
+  var avg=(a+b+c)/3;
+  rate=Math.round(m*0.75 + avg*0.25);
+  return {a:a,b:b,c:c};
+}
+function updateLab(){
+  var o=calcRate();
+  v1.textContent=o.a; v2.textContent=o.b; v3.textContent=o.c;
+  rateTxt.textContent=rate;
+  if(rate===0){
+    verdict.className='verdict stop';
+    verdict.textContent='❌ 少了必需条件，光合作用几乎停止，几乎看不到气泡。';
+  }else if(rate<35){
+    verdict.className='verdict warn';
+    verdict.textContent='⚠️ 条件不足，气泡又少又慢——光合作用进行得很微弱。';
+  }else if(rate<75){
+    verdict.className='verdict';
+    verdict.textContent='🙂 条件还不错，金鱼藻冒出了一些气泡。';
+  }else{
+    verdict.className='verdict';
+    verdict.textContent='🌟 条件充足！金鱼藻正在大量制造氧气，气泡接连不断。';
+  }
+}
+[r1,r2,r3].forEach(function(r){
+  r.addEventListener('input',function(){
+    updateLab();
+    r.style.background='linear-gradient(90deg,#43a047 '+r.value+'%,#e6e6e6 0)';
+  });
+});
+
+function resizeCanvas(){
+  var dpr=window.devicePixelRatio||1;
+  var rect=canvas.getBoundingClientRect();
+  var w=rect.width||450, h=300;
+  canvas.width=w*dpr; canvas.height=h*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  canvas._w=w; canvas._h=h;
+}
+window.addEventListener('resize',resizeCanvas);
+
+function drawBeaker(){
+  var w=canvas._w||450, h=canvas._h||300;
+  ctx.clearRect(0,0,w,h);
+
+  // 烧杯
+  var bx=w*0.16, bw=w*0.68, by=h*0.10, bh=h*0.74;
+  ctx.save();
+  ctx.fillStyle='rgba(179,229,252,.55)';
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  ctx.lineTo(bx, by+bh);
+  ctx.quadraticCurveTo(bx, by+bh+16, bx+22, by+bh+16);
+  ctx.lineTo(bx+bw-22, by+bh+16);
+  ctx.quadraticCurveTo(bx+bw, by+bh+16, bx+bw, by+bh);
+  ctx.lineTo(bx+bw, by);
+  ctx.strokeStyle='#81d4fa'; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='rgba(129,212,250,.22)'; ctx.fill();
+  // 水面
+  ctx.beginPath();
+  ctx.moveTo(bx+3, by+30); ctx.lineTo(bx+bw-3, by+30);
+  ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=2; ctx.stroke();
+  ctx.restore();
+
+  // 金鱼藻（水草）
+  var baseX=bx+bw/2, baseY=by+bh;
+  ctx.strokeStyle='#43a047'; ctx.lineWidth=4; ctx.lineCap='round';
+  for(var i=-2;i<=2;i++){
+    ctx.beginPath();
+    ctx.moveTo(baseX+i*14, baseY-4);
+    ctx.quadraticCurveTo(baseX+i*26, baseY-bh*0.5, baseX+i*16+(i%2?9:-9), baseY-bh*0.82);
+    ctx.stroke();
+  }
+  ctx.fillStyle='#2e7d32';
+  for(var k=-2;k<=2;k++){
+    for(var j=1;j<5;j++){
+      ctx.beginPath();
+      ctx.ellipse(baseX+k*18+Math.sin(j)*6, baseY-j*(bh*0.19), 7, 4, Math.sin(j)*0.6, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  // 气泡
+  for(var b=0;b<bubbles.length;b++){
+    var p=bubbles[b];
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,.82)';
+    ctx.fill();
+    ctx.strokeStyle='rgba(129,212,250,.95)'; ctx.lineWidth=1.4; ctx.stroke();
+  }
+
+  // 标签
+  ctx.fillStyle='#0277bd'; ctx.font='bold 14px "Microsoft YaHei",sans-serif';
+  ctx.fillText('氧气 O₂ ↑', bx+bw-92, by-8);
+  ctx.fillStyle='#2e7d32';
+  ctx.fillText('金鱼藻', bx-52, by+bh-6);
+}
+
+var lastT=performance.now();
+function loop(t){
+  var dt=Math.min((t-lastT)/1000, .05); lastT=t;
+  var w=canvas._w||450, h=canvas._h||300;
+  var bx=w*0.16, bw=w*0.68, by=h*0.10, bh=h*0.74;
+  var baseX=bx+bw/2, baseY=by+bh;
+
+  // 生成气泡：速率越高，气泡越多越快
+  if(rate>0){
+    spawnAcc += dt * (rate/100) * 14; // 每秒最多约14个
+    while(spawnAcc>=1){
+      spawnAcc-=1;
+      bubbles.push({
+        x: baseX + (Math.random()*40-20),
+        y: baseY-8,
+        r: 2 + Math.random()*3.2,
+        v: 26 + Math.random()*46 + rate*0.5,
+        sway: Math.random()*Math.PI*2
+      });
+      spawned++;
+    }
+  }
+
+  // 更新
+  for(var i=bubbles.length-1;i>=0;i--){
+    var p=bubbles[i];
+    p.y -= p.v*dt;
+    p.sway += dt*3.2;
+    p.x += Math.sin(p.sway)*0.7;
+    if(p.y < by+30){ bubbles.splice(i,1); }
+  }
+  // 控制数量
+  if(bubbles.length>260) bubbles.splice(0, bubbles.length-260);
+
+  // 每10秒折算一次显示值（用简化速率表示：约 rate/100*8 个/10秒）
+  bubbleTxt.textContent = Math.round(rate/100*9);
+
+  drawBeaker();
+  requestAnimationFrame(loop);
+}
+
+/* ============ ⑤ 测验 ============ */
+var QS=[
+  {q:'植物进行光合作用、制造养料的“加工车间”主要在（　　）',
+   o:['根','绿叶中的叶绿体','茎','花'],a:1,
+   e:'叶绿体是光合作用的场所，绿叶是植物的“绿色食品加工厂”。'},
+  {q:'光合作用需要用到的两种“原料”是（　　）',
+   o:['氧气和水','二氧化碳和水','氮气和水','二氧化碳和氧气'],a:1,
+   e:'二氧化碳由气孔进入，水由根吸收后运到叶片。'},
+  {q:'光合作用制造出来的“产品”是（　　）',
+   o:['二氧化碳和水','养料（糖类/淀粉）和氧气','氮气和氧气','只有水'],a:1,
+   e:'植物把光能储存在糖类等养料里，同时释放氧气。'},
+  {q:'下列说法正确的是（　　）',
+   o:['只有阳光能引起光合作用，灯光不行','植物只制造氧气，不制造养料','光合作用制造的养料可以变成淀粉','植物没有光也能正常生长'],a:2,
+   e:'灯光同样可以进行光合作用（如大棚补光）；光合作用既制造养料又释放氧气。'},
+  {q:'农业生产中，下列做法<b>不能</b>提高产量的是（　　）',
+   o:['合理密植','适当增加二氧化碳浓度','适当延长光照时间','把植物长期放在完全黑暗的环境里'],a:3,
+   e:'光合作用必须有光。长期黑暗会让植物无法制造养料，甚至死亡。'}
+];
+var answered=0, correct=0;
+var quizBox=document.getElementById('quiz');
+var scoreBox=document.getElementById('score');
+
+function renderQuiz(){
+  answered=0; correct=0;
+  quizBox.innerHTML=''; scoreBox.style.display='none';
+  QS.forEach(function(item,qi){
+    var d=document.createElement('div'); d.className='q';
+    var t=document.createElement('div'); t.className='txt';
+    t.innerHTML=(qi+1)+'. '+item.q;
+    d.appendChild(t);
+    var fb=document.createElement('div'); fb.className='fb';
+    item.o.forEach(function(txt,oi){
+      var btn=document.createElement('button');
+      btn.className='opt'; btn.type='button';
+      btn.innerHTML=String.fromCharCode(65+oi)+'. '+txt;
+      btn.addEventListener('click',function(){
+        if(d.dataset.done) return;
+        d.dataset.done='1';
+        d.querySelectorAll('.opt').forEach(function(b){ b.disabled=true; });
+        if(oi===item.a){
+          btn.classList.add('right'); correct++;
+          fb.className='fb ok'; fb.textContent='✅ 答对了！'+item.e;
+        }else{
+          btn.classList.add('wrong');
+          d.querySelectorAll('.opt')[item.a].classList.add('right');
+          fb.className='fb no'; fb.textContent='❌ 再想想～'+item.e;
+        }
+        answered++;
+        if(answered===QS.length){ showScore(); }
+      });
+      d.appendChild(btn);
+    });
+    d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+}
+function showScore(){
+  scoreBox.style.display='block';
+  var msg=correct===QS.length?'🏆 全对！你已经是光合作用小专家了！'
+        :correct>=3?'👍 不错！再回顾一下知识小结就更棒了。'
+        :'💪 别灰心，回到前面几个板块再看一遍吧！';
+  scoreBox.textContent='得分：'+correct+' / '+QS.length+'　'+msg;
+}
+document.getElementById('againBtn').addEventListener('click',renderQuiz);
+
+/* ============ 初始化 ============ */
+(function init(){
+  updateLab();
+  [r1,r2,r3].forEach(function(r){
+    r.style.background='linear-gradient(90deg,#43a047 '+r.value+'%,#e6e6e6 0)';
+  });
+  resizeCanvas();
+  requestAnimationFrame(function(t){ lastT=t; loop(t); });
+  renderQuiz();
+})();
+</script>
+</body>
+</html>

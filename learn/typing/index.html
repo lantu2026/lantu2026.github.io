@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<!-- saved from url=(0165)https://quickform.cn/static/uploads/c4660161-63f0-41fa-8fe2-7eae742231cc_%E6%89%93%E5%AD%97%E7%B3%BB%E7%BB%9F%5B%E5%B1%80%E5%9F%9F%E7%BD%91%E7%89%88%E6%9C%AC%5D.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐼 新北打字乐园 · 年级闯关 🎹 —— by Laodi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft YaHei', 微软雅黑, cursive, sans-serif;
+        }
+
+        body {
+            background: #b8e1fc url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" fill="%23ffffff40"/><circle cx="45" cy="30" r="12" fill="%23ffffff30"/><circle cx="25" cy="50" r="10" fill="%23ffffff20"/></svg>');
+            min-height: 100vh;
+            padding: 15px;
+            position: relative;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255,255,255,0.5);
+            border-radius: 80px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .cloud1 { width: 180px; height: 60px; top: 20px; left: 5%; }
+        .cloud1::before, .cloud1::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+        .cloud1::before { width: 70px; height: 70px; top: -30px; left: 15px; }
+        .cloud1::after { width: 90px; height: 90px; top: -45px; left: 70px; }
+        .cloud2 { width: 220px; height: 70px; bottom: 40px; right: 3%; }
+        .cloud2::before, .cloud2::after {
+            content:'';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+        .cloud2::before { width: 90px; height: 90px; top: -40px; left: 20px; }
+        .cloud2::after { width: 70px; height: 70px; top: -25px; left: 110px; }
+
+        .header {
+            background: linear-gradient(145deg, #ffb347, #ff8c42);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            border-radius: 60px 60px 30px 30px;
+            box-shadow: 0 10px 0 #c56c2c, 0 8px 15px rgba(0,0,0,0.2);
+            border: 3px solid #ffe68f;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 5;
+        }
+        .header h1 {
+            font-size: 32px;
+            text-shadow: 3px 3px 0 #b85e1e;
+            letter-spacing: 2px;
+        }
+        .header h1::before {
+            content: '🐧';
+            font-size: 48px;
+            margin-right: 10px;
+        }
+        .header h1::after {
+            content: '🐻‍❄️';
+            font-size: 48px;
+            margin-left: 10px;
+        }
+        .header p {
+            font-size: 18px;
+            background: #fef9d7;
+            color: #b45f2a;
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 40px;
+            box-shadow: inset 0 -3px 0 #e2c28b;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 信息面板 —— 积木风格 */
+        .info-panel {
+            background: #fffdeb;
+            border: 5px solid #f9b83c;
+            border-radius: 50px;
+            padding: 20px 18px;
+            box-shadow: 0 12px 0 #e08e2b, 0 10px 20px rgba(0,0,0,0.15);
+            backdrop-filter: blur(2px);
+        }
+        .info-panel h2 {
+            background: #ffd966;
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 40px;
+            font-size: 22px;
+            color: #a34f0e;
+            margin-top: -40px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 0 #b87428;
+            border: 2px solid #ffe39c;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #9b5e2e;
+            display: block;
+            margin-bottom: 6px;
+            padding-left: 10px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 18px;
+            border: 3px solid #f0b27a;
+            border-radius: 50px;
+            font-size: 16px;
+            background: #fffef7;
+            outline: none;
+            transition: all 0.2s;
+            box-shadow: inset 0 2px 5px #e6c5a8, 0 3px 0 #bb7640;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #ff8c42;
+            box-shadow: 0 0 0 4px #ffe28c;
+        }
+
+        .mode-select {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 12px 0;
+            border: 3px solid #fdba60;
+            border-radius: 50px;
+            background-color: #ffeaca;
+            font-size: 20px;
+            font-weight: bold;
+            color: #965d2a;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.1s ease;
+            box-shadow: 0 6px 0 #b76a2b;
+        }
+        .mode-btn.active {
+            background-color: #fd9e3e;
+            color: white;
+            border-color: #fff0b5;
+            box-shadow: 0 4px 0 #974b1a;
+            transform: translateY(2px);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 60px;
+            background-color: #f3b33d;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 9px 0 #b1611a, 0 5px 15px #f9cf8b;
+            transition: 0.08s linear;
+            border: 2px solid #ffda93;
+            letter-spacing: 2px;
+        }
+        .btn:hover { background-color: #ffa726; }
+        .btn:active {
+            transform: translateY(7px);
+            box-shadow: 0 2px 0 #b1611a;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            transform: translateY(0);
+            box-shadow: 0 6px 0 #7e4f27;
+            pointer-events: none;
+        }
+
+        .typing-panel {
+            background: #fef9e4;
+            border: 6px solid #84a6d4;
+            border-radius: 70px 70px 40px 40px;
+            padding: 25px;
+            box-shadow: 0 15px 0 #537bad, 0 15px 25px #a3c6ed;
+        }
+        .typing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #bdd9ff;
+            padding: 10px 20px;
+            border-radius: 60px;
+            margin-bottom: 25px;
+            border: 3px solid white;
+        }
+        .typing-header h2 {
+            color: #254d7c;
+            font-size: 26px;
+            text-shadow: 2px 2px 0 #c7dcff;
+        }
+        .timer {
+            background: #2e405b;
+            color: #f6ffb3;
+            font-size: 32px;
+            font-family: 'Courier New', monospace;
+            padding: 10px 25px;
+            border-radius: 60px;
+            border: 3px solid #a7c5eb;
+            letter-spacing: 5px;
+            box-shadow: inset 0 -3px 0 #121e30;
+        }
+
+        .text-display {
+            background: #f4f0d1;
+            border: 5px dashed #94b7e5;
+            border-radius: 50px;
+            padding: 25px;
+            font-size: 22px;
+            line-height: 1.8;
+            min-height: 160px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 0 4px #fefefe, 0 8px 0 #b2ccec;
+            white-space: pre-wrap;
+            color: #2b4f7b;
+            font-weight: bold;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 20px;
+            border: 6px solid #84bcff;
+            border-radius: 40px;
+            font-size: 22px;
+            min-height: 150px;
+            background: #fffffa;
+            box-shadow: inset 0 0 15px #b0d2ff, 0 8px 0 #5482b5;
+            resize: none;
+            line-height: 1.8;
+            color: #1d3f64;
+        }
+        .text-input:focus {
+            outline: none;
+            border-color: #fea73f;
+            background-color: #fffae7;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0 20px;
+        }
+        .stat-card {
+            background: #c1e0fe;
+            border-radius: 50px;
+            padding: 18px 8px;
+            border: 4px solid white;
+            box-shadow: 0 8px 0 #6495c7;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 18px;
+            color: #274873;
+            background: #fef7b6;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 40px;
+            margin-bottom: 12px;
+            border: 2px solid white;
+        }
+        .stat-card .value {
+            font-size: 40px;
+            font-weight: bold;
+            color: #143059;
+            line-height: 1;
+            text-shadow: 2px 2px 0 #b3d4ff;
+        }
+
+        .ranking-panel {
+            grid-column: 1 / 3;
+            background: #fcf2c1;
+            border: 8px solid #ffaa5e;
+            border-radius: 90px 90px 40px 40px;
+            padding: 25px 15px;
+            box-shadow: 0 20px 0 #c2732a, 0 10px 25px #fdba6a;
+        }
+        .ranking-panel h2 {
+            background: #e6853a;
+            color: white;
+            padding: 18px 35px;
+            display: inline-block;
+            border-radius: 80px;
+            font-size: 32px;
+            margin-top: -50px;
+            margin-bottom: 30px;
+            border: 4px solid #ffe59b;
+            box-shadow: 0 8px 0 #9c521a;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            padding: 5px;
+        }
+        th {
+            background: #fec77e;
+            color: #481f00;
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 40px 40px 8px 8px;
+            border: 2px solid #ffe39c;
+        }
+        td {
+            background: #fff7dd;
+            padding: 14px;
+            text-align: center;
+            border-radius: 30px;
+            font-weight: bold;
+            border: 3px solid #ffb779;
+            font-size: 18px;
+        }
+        .rank-1 td:first-child { background: #ffd966; font-size: 24px; }
+        .rank-2 td:first-child { background: #c9e4ff; }
+        .rank-3 td:first-child { background: #e3d6b5; }
+        tr:hover td { background: #ffeecc; transform: scale(1.01); transition: 0.1s; }
+
+        .footer-note {
+            text-align: center;
+            font-size: 22px;
+            color: #b45f2a;
+            margin-top: 30px;
+            background: #fef9ae;
+            padding: 12px;
+            border-radius: 80px;
+        }
+        
+        /* 新增版权信息条 */
+        .copyright-bar {
+            text-align: center;
+            font-size: 18px;
+            color: #6b4226;
+            background: #ffecb3;
+            padding: 15px;
+            border-radius: 60px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border: 3px solid #f9b83c;
+            box-shadow: 0 6px 0 #d49b5a;
+            font-weight: bold;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .copyright-bar span {
+            background: white;
+            padding: 5px 20px;
+            border-radius: 40px;
+            display: inline-block;
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .ranking-panel { grid-column: 1; }
+            .stats { grid-template-columns: repeat(2,1fr); }
+        }
+    </style>
+<style>.Po4BvhR1CK2tJaywJ6AN path {
+  fill: var(--icon-path-fill);
+}
+.Oz4yDjua3Qe6thqkZYf_ path {
+  transition: 0.2s all;
+}
+.Oz4yDjua3Qe6thqkZYf_:hover path {
+  fill: var(--icon-hover-fill);
+}
+</style><style>/* ！！！切勿直接改动该文件，该文件由 generator.ts 自动生成！！！ */
+/* !!! DONT MODIFY THIS FILE DIRECTLY, THIS FILE IS GENERATED BY generator.ts AUTOMATICALLY !!! */
+.ibW4Oa5B7s2zJKKZ4pCg {
+  user-select: none;
+}
+.AtqKyJetjrG4smuk35Np {
+  max-width: 346px;
+  width: auto;
+  height: 36px;
+  background-color: var(--quark-style-white-color, #fff);
+  padding-left: 10px;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid var(--quark-style-gray-20-color, rgba(6, 10, 38, 0.12));
+  box-shadow: 0 12px 32px -6px var(--quark-style-gray-30-fixed-color, rgba(6, 10, 38, 0.24));
+  border-radius: 10px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .g6iGsZa_KHMeW2yICzQQ {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 28px;
+  padding: 0 6px;
+  margin-right: 2px;
+  border-radius: 6px;
+  column-gap: 4px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0:hover:not(.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8) {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8 {
+  cursor: default;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8 .Va3czASiR9Zztyl_lD4M {
+  color: var(--quark-style-gray-40-color, rgba(6, 10, 38, 0.4)) !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0 .Va3czASiR9Zztyl_lD4M {
+  font-size: 12px;
+  color: var(--quark-style-gray-color, #060A26);
+  line-height: 16px;
+  white-space: nowrap;
+  position: relative;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .llw0qsmiI_08u93bFdNg {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  overflow: visible !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .LEo8kpqIERehkv8AhAfG {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: visible !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .LEo8kpqIERehkv8AhAfG:hover {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .zoNmooxAnbLEJSN8m1Jg {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  max-height: 136px;
+  height: auto;
+  top: 36px;
+  right: -5px;
+  padding: 4px 0;
+  background-color: var(--quark-style-white-color, #fff);
+  border: 1px solid var(--quark-style-gray-20-color, rgba(6, 10, 38, 0.12));
+  box-shadow: 0 4px 16px -6px var(--quark-style-gray-20-fixed-color, rgba(6, 10, 38, 0.12));
+  border-radius: 8px;
+  overflow: visible !important;
+  row-gap: 4px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .O1imPofna4elG_8NcQnR {
+  top: -77px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .mdH0IY7jS3Swn5vdX6tz {
+  width: 102px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  column-gap: 8px;
+  border-radius: 6px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .mdH0IY7jS3Swn5vdX6tz:hover:not(.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt) {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt {
+  cursor: default;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt .zEraruudgjR2MToGu4Kw {
+  color: var(--quark-style-gray-40-color, rgba(6, 10, 38, 0.4)) !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .XfCMwvO0DsqFCeyzPYP2 {
+  width: 16px;
+  height: 16px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .zEraruudgjR2MToGu4Kw {
+  font-size: 12px;
+  color: var(--quark-style-gray-color, #060A26);
+}
+.ibW4Oa5B7s2zJKKZ4pCg .KZeoAuXbMIkWzOT4PcH5 {
+  width: 100%;
+  height: 1px;
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ZL32C_XdLL8UQRZ3zObd {
+  display: flex;
+  align-items: center;
+}
+.u5llx7cIQZLdrjP5Vag1 {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-right: 12px;
+  background: var(--quark-style-gray-60-color, rgba(6, 10, 38, 0.6));
+}
+.ZL32C_XdLL8UQRZ3zObd .LEo8kpqIERehkv8AhAfG {
+  border-radius: 16px !important;
+  background: var(--quark-style-gray-60-color, rgba(6, 10, 38, 0.6)) !important;
+}
+.ZL32C_XdLL8UQRZ3zObd .zoNmooxAnbLEJSN8m1Jg {
+  right: 0 !important;
+}
+.ZL32C_XdLL8UQRZ3zObd {
+  overflow: visible !important;
+}
+</style></head>
+<body>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <div class="header">
+        <h1>常州新北学校信息素养大赛·指法录入竞技平台</h1>
+        <p>🐘 年级难度阶梯 · 越敲越聪明 🦒</p>
+    </div>
+
+    <div class="container">
+        <!-- 学生信息面板 加上年级难度提示 -->
+        <div class="info-panel">
+            <h2>✏️ 我是小选手 ✏️</h2>
+            <div class="form-group">
+                <label>📚 年级 (难度不同哦)</label>
+                <select id="grade" required="">
+                    <option value="">-- 请选择 --</option>
+                    <option value="1">一年级 🐣 (短句·简单)</option>
+                    <option value="2">二年级 🐥 (短诗)</option>
+                    <option value="3">三年级 🦊 (中篇)</option>
+                    <option value="4">四年级 🐨 (长篇)</option>
+                    <option value="5">五年级 🐼 (挑战)</option>
+                    <option value="6">六年级 🐸 (小达人)</option>
+                </select>
+                <small style="color:#b45f2a;">✨ 文字长度/难度随年级升高 ✨</small>
+            </div>
+            <div class="form-group">
+                <label>🏫 班级</label>
+                <select id="class" required="">
+                    <option value="">-- 请选择 --</option>
+                    <option value="1">1班 🍎</option><option value="2">2班 🍊</option><option value="3">3班 🍇</option>
+                    <option value="4">4班 🍉</option><option value="5">5班 🥝</option><option value="6">6班 🥑</option>
+                    <option value="7">7班 🍒</option><option value="8">8班 🥥</option><option value="9">9班 🫐</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>👧🏻👦🏻 姓名</label>
+                <input type="text" id="name" placeholder="你的名字" required="">
+            </div>
+            
+            <div class="form-group">
+                <label>🎤 打字模式</label>
+                <div class="mode-select">
+                    <div class="mode-btn active" id="chineseMode">🔤 中文</div>
+                    <div class="mode-btn" id="englishMode">🅰️ 英文</div>
+                </div>
+            </div>
+            <button class="btn" id="startBtn">🚀 开始大冒险</button>
+        </div>
+
+        <!-- 打字测试区 -->
+        <div class="typing-panel">
+            <div class="typing-header">
+                <h2 id="typingTitle">✨ 中文唐诗 ✨</h2>
+                <div class="timer" id="timer">🐢 00:00</div>
+            </div>
+            <div class="text-display" id="textDisplay">
+                选择年级和模式，点“开始”生成适合你的文字~
+            </div>
+            <textarea class="text-input" id="textInput" placeholder="在这里噼里啪啦打字吧..." disabled=""></textarea>
+
+            <div class="stats">
+                <div class="stat-card"><h3>⚡速度</h3><div class="value" id="speed">0</div></div>
+                <div class="stat-card"><h3>✅正确率</h3><div class="value" id="accuracy">0</div></div>
+                <div class="stat-card"><h3>❌错误率</h3><div class="value" id="errorRate">0</div></div>
+                <div class="stat-card"><h3>🏆得分</h3><div class="value" id="score">0</div></div>
+            </div>
+
+            <button class="btn" id="submitBtn" disabled="">🎉 提交成绩 🎉</button>
+        </div>
+
+        <!-- 排名面板 -->
+        <div class="ranking-panel">
+            <h2>🏅 年级荣誉榜 🏅</h2>
+            <table id="rankingTable">
+                <thead><tr><th>名次</th><th>年级</th><th>班级</th><th>姓名</th><th>模式</th><th>速度</th><th>正确率</th><th>得分</th></tr></thead>
+                <tbody id="rankingBody"><tr><td colspan="8">✨ 还没有小勇士完成～ ✨</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- 底部版权信息 - 按照要求添加 -->
+    <div class="copyright-bar">
+        <span>🌐 本站由豆包 &amp; DEEPSEEK AI大模型生成 · 数据分析：QuickForm · 版权自由🎈</span>
+    </div>
+    
+    <div class="footer-note">💖 每个年级有专属文字长度，加油！ 💖</div>
+
+    <script>
+        (function() {
+            // ---------- 中文分年级语料库 (难度/长度逐级递增) ----------
+            const chineseByGrade = {
+                1: [ // 一年级：非常简单，单句或两句
+                    "静夜思\n李白\n床前明月光",  // 短小
+                    "春晓\n孟浩然\n春眠不觉晓",
+                    "咏鹅\n骆宾王\n鹅，鹅，鹅",
+                    "悯农\n李绅\n锄禾日当午",
+                    "登鹳雀楼\n王之涣\n白日依山尽"
+                ],
+                2: [ // 二年级：四句短诗，带题目作者
+                    "静夜思\n李白\n床前明月光，疑是地上霜。\n举头望明月，低头思故乡。",
+                    "春晓\n孟浩然\n春眠不觉晓，处处闻啼鸟。\n夜来风雨声，花落知多少。",
+                    "相思\n王维\n红豆生南国，春来发几枝。\n愿君多采撷，此物最相思。",
+                    "江雪\n柳宗元\n千山鸟飞绝，万径人踪灭。\n孤舟蓑笠翁，独钓寒江雪。",
+                    "鹿柴\n王维\n空山不见人，但闻人语响。\n返景入深林，复照青苔上。"
+                ],
+                3: [ // 三年级：四句+稍微扩展
+                    "登鹳雀楼\n王之涣\n白日依山尽，黄河入海流。\n欲穷千里目，更上一层楼。",
+                    "望庐山瀑布\n李白\n日照香炉生紫烟，遥看瀑布挂前川。\n飞流直下三千尺，疑是银河落九天。",
+                    "山行\n杜牧\n远上寒山石径斜，白云深处有人家。\n停车坐爱枫林晚，霜叶红于二月花。",
+                    "清明\n杜牧\n清明时节雨纷纷，路上行人欲断魂。\n借问酒家何处有？牧童遥指杏花村。",
+                    "枫桥夜泊\n张继\n月落乌啼霜满天，江枫渔火对愁眠。\n姑苏城外寒山寺，夜半钟声到客船。"
+                ],
+                4: [ // 四年级：四句+更多或五言律诗
+                    "送孟浩然之广陵\n李白\n故人西辞黄鹤楼，烟花三月下扬州。\n孤帆远影碧空尽，唯见长江天际流。",
+                    "绝句\n杜甫\n两个黄鹂鸣翠柳，一行白鹭上青天。\n窗含西岭千秋雪，门泊东吴万里船。",
+                    "赠汪伦\n李白\n李白乘舟将欲行，忽闻岸上踏歌声。\n桃花潭水深千尺，不及汪伦送我情。",
+                    "早发白帝城\n李白\n朝辞白帝彩云间，千里江陵一日还。\n两岸猿声啼不住，轻舟已过万重山。",
+                    "凉州词\n王之涣\n黄河远上白云间，一片孤城万仞山。\n羌笛何须怨杨柳，春风不度玉门关。"
+                ],
+                5: [ // 五年级：包含更长七言或两首组合
+                    "出塞\n王昌龄\n秦时明月汉时关，万里长征人未还。\n但使龙城飞将在，不教胡马度阴山。",
+                    "芙蓉楼送辛渐\n王昌龄\n寒雨连江夜入吴，平明送客楚山孤。\n洛阳亲友如相问，一片冰心在玉壶。",
+                    "九月九日忆山东兄弟\n王维\n独在异乡为异客，每逢佳节倍思亲。\n遥知兄弟登高处，遍插茱萸少一人。",
+                    "题西林壁\n苏轼\n横看成岭侧成峰，远近高低各不同。\n不识庐山真面目，只缘身在此山中。",
+                    "饮湖上初晴后雨\n苏轼\n水光潋滟晴方好，山色空蒙雨亦奇。\n欲把西湖比西子，淡妆浓抹总相宜。"
+                ],
+                6: [ // 六年级：最长，甚至两首或长律
+                    "将进酒·君不见（节选）\n李白\n君不见黄河之水天上来，奔流到海不复回。\n君不见高堂明镜悲白发，朝如青丝暮成雪。\n人生得意须尽欢，莫使金樽空对月。",
+                    "春江花月夜（节选）\n张若虚\n春江潮水连海平，海上明月共潮生。\n滟滟随波千万里，何处春江无月明。",
+                    "茅屋为秋风所破歌（节选）\n杜甫\n安得广厦千万间，大庇天下寒士俱欢颜，风雨不动安如山。\n呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足。",
+                    "琵琶行（节选）\n白居易\n大弦嘈嘈如急雨，小弦切切如私语。\n嘈嘈切切错杂弹，大珠小珠落玉盘。",
+                    "长恨歌（节选）\n白居易\n天生丽质难自弃，一朝选在君王侧。\n回眸一笑百媚生，六宫粉黛无颜色。"
+                ]
+            };
+
+            // ---------- 英文分年级语料库 (难度/长度递增) ----------
+            const englishByGrade = {
+                1: [ // 一年级：单句或简单两句
+                    "Twinkle, twinkle, little star!",
+                    "Row, row, row your boat.",
+                    "Happy birthday to you!",
+                    "Rain, rain, go away.",
+                    "Baa, baa, black sheep."
+                ],
+                2: [ // 二年级：两到三行短诗
+                    "Twinkle, twinkle, little star,\nHow I wonder what you are!",
+                    "Row, row, row your boat,\nGently down the stream.",
+                    "Happy birthday to you,\nHappy birthday to you!",
+                    "Rain, rain, go away,\nCome again another day.",
+                    "Baa, baa, black sheep,\nHave you any wool?"
+                ],
+                3: [ // 三年级：一小节
+                    "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky.",
+                    "Row, row, row your boat,\nGently down the stream.\nMerrily, merrily, merrily, merrily,\nLife is but a dream.",
+                    "Happy birthday to you,\nHappy birthday to you,\nHappy birthday dear friend,\nHappy birthday to you!",
+                    "Rain, rain, go away,\nCome again another day.\nLittle Johnny wants to play,\nRain, rain, go away."
+                ],
+                4: [ // 四年级：完整短诗或两段
+                    "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky.\nTwinkle, twinkle, little star,\nHow I wonder what you are!",
+                    "Row, row, row your boat,\nGently down the stream.\nMerrily, merrily, merrily, merrily,\nLife is but a dream.\nRow, row, row your boat,\nGently down the stream.",
+                    "Baa, baa, black sheep,\nHave you any wool?\nYes, sir, yes, sir,\nThree bags full!\nOne for the master,\nOne for the dame,\nAnd one for the little boy."
+                ],
+                5: [ // 五年级：更长童谣
+                    "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king's horses and all the king's men\nCouldn't put Humpty together again.",
+                    "Jack and Jill went up the hill\nTo fetch a pail of water.\nJack fell down and broke his crown,\nAnd Jill came tumbling after.",
+                    "Mary had a little lamb,\nIts fleece was white as snow;\nAnd everywhere that Mary went,\nThe lamb was sure to go.\nIt followed her to school one day,\nWhich was against the rules;"
+                ],
+                6: [ // 六年级：复杂一点的小诗
+                    "Mary had a little lamb,\nIts fleece was white as snow;\nAnd everywhere that Mary went,\nThe lamb was sure to go.\nIt followed her to school one day,\nWhich was against the rules;\nIt made the children laugh and play,\nTo see a lamb at school.",
+                    "The itsy bitsy spider\nClimbed up the water spout.\nDown came the rain\nAnd washed the spider out.\nOut came the sun\nAnd dried up all the rain,\nAnd the itsy bitsy spider\nClimbed up the spout again.",
+                    "Five little ducks went out one day,\nOver the hills and far away.\nMother duck said, 'Quack, quack, quack, quack!'\nBut only four little ducks came back.\nFour little ducks went out one day,\nOver the hills and far away.\nMother duck said..."
+                ]
+            };
+
+            // 全局变量
+            let timer = null;
+            let startTime = 0;
+            let isTesting = false;
+            let testText = "";
+            let studentData = [];
+            let currentMode = "chinese";
+
+            const gradeSelect = document.getElementById('grade');
+            const classSelect = document.getElementById('class');
+            const nameInput = document.getElementById('name');
+            const startBtn = document.getElementById('startBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const textDisplay = document.getElementById('textDisplay');
+            const textInput = document.getElementById('textInput');
+            const timerEl = document.getElementById('timer');
+            const speedEl = document.getElementById('speed');
+            const accuracyEl = document.getElementById('accuracy');
+            const errorRateEl = document.getElementById('errorRate');
+            const scoreEl = document.getElementById('score');
+            const rankingBody = document.getElementById('rankingBody');
+            const chineseModeBtn = document.getElementById('chineseMode');
+            const englishModeBtn = document.getElementById('englishMode');
+            const typingTitle = document.getElementById('typingTitle');
+
+            // 键盘音效
+            let audioCtx = null;
+            function playKeySound() {
+                try {
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 500 + Math.random() * 200;
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                } catch (e) {}
+            }
+
+            textInput.addEventListener('keydown', (e) => {
+                if (isTesting && !e.ctrlKey && !e.metaKey && !e.altKey) playKeySound();
+            });
+            textInput.addEventListener('paste', (e) => { e.preventDefault(); alert('🚫 自己打字才厉害！'); });
+            textInput.addEventListener('copy', (e) => e.preventDefault());
+            textInput.addEventListener('cut', (e) => e.preventDefault());
+            textDisplay.addEventListener('copy', (e) => e.preventDefault());
+            textDisplay.addEventListener('contextmenu', (e) => e.preventDefault());
+
+            function formatTime(seconds) {
+                let min = Math.floor(seconds / 60).toString().padStart(2,'0');
+                let sec = (seconds % 60).toString().padStart(2,'0');
+                return `${min}:${sec}`;
+            }
+            function startTimer() {
+                startTime = Date.now();
+                let seconds = 0;
+                timer = setInterval(() => {
+                    seconds++;
+                    timerEl.textContent = formatTime(seconds);
+                }, 1000);
+            }
+            function stopTimer() { clearInterval(timer); timer = null; isTesting = false; }
+
+            // 根据年级、模式获取随机文本
+            function getRandomTextByGrade(grade, mode) {
+                let gradeNum = parseInt(grade, 10);
+                if (isNaN(gradeNum) || gradeNum < 1 || gradeNum > 6) gradeNum = 1; // 默认一年级
+                if (mode === 'chinese') {
+                    let pool = chineseByGrade[gradeNum] || chineseByGrade[1];
+                    return pool[Math.floor(Math.random() * pool.length)];
+                } else {
+                    let pool = englishByGrade[gradeNum] || englishByGrade[1];
+                    return pool[Math.floor(Math.random() * pool.length)];
+                }
+            }
+
+            function calculateStats() {
+                const endTime = Date.now();
+                const duration = (endTime - startTime) / 1000;
+                const inputText = textInput.value;
+                const originalText = testText;
+
+                const charCount = inputText.length;
+                const speed = duration > 0 ? Math.floor((charCount / duration) * 60) : 0;
+
+                let correctChars = 0;
+                const maxLen = Math.max(originalText.length, inputText.length);
+                for (let i=0; i<maxLen; i++) {
+                    if (i < originalText.length && i < inputText.length && inputText[i] === originalText[i]) correctChars++;
+                }
+                const accuracy = originalText.length ? Math.floor((correctChars / originalText.length)*100) : 0;
+                const errorRate = 100 - accuracy;
+                const score = Math.min(Math.floor((speed * accuracy)/100), 100);
+
+                speedEl.textContent = speed;
+                accuracyEl.textContent = accuracy;
+                errorRateEl.textContent = errorRate;
+                scoreEl.textContent = score;
+
+                return {
+                    grade: gradeSelect.value,
+                    className: classSelect.value,
+                    name: nameInput.value.trim(),
+                    mode: currentMode === "chinese" ? "中文" : "英文",
+                    speed, accuracy, errorRate, score,
+                    duration
+                };
+            }
+
+            function updateRanking() {
+                studentData.sort((a,b)=> (b.score - a.score) || (b.speed - a.speed));
+                rankingBody.innerHTML = "";
+                if (!studentData.length) {
+                    rankingBody.innerHTML = `<tr><td colspan="8">🎈 等你来上榜！ 🎈</td></tr>`;
+                    return;
+                }
+                studentData.forEach((s,idx) => {
+                    let tr = document.createElement('tr');
+                    if (idx===0) tr.classList.add('rank-1');
+                    if (idx===1) tr.classList.add('rank-2');
+                    if (idx===2) tr.classList.add('rank-3');
+                    tr.innerHTML = `<td>${idx+1}</td><td>${s.grade}年级</td><td>${s.className}班</td>
+                        <td>${s.name}</td><td>${s.mode}</td><td>${s.speed}</td><td>${s.accuracy}%</td><td>${s.score}</td>`;
+                    rankingBody.appendChild(tr);
+                });
+            }
+
+            function switchMode(mode) {
+                currentMode = mode;
+                chineseModeBtn.classList.remove('active');
+                englishModeBtn.classList.remove('active');
+                if (mode === 'chinese') {
+                    chineseModeBtn.classList.add('active');
+                    typingTitle.textContent = '🔤 中文唐诗';
+                } else {
+                    englishModeBtn.classList.add('active');
+                    typingTitle.textContent = '🅰️ 英文童诗';
+                }
+                textDisplay.textContent = `选择年级后点"开始"，会生成适合你的文字哦~`;
+            }
+
+            chineseModeBtn.addEventListener('click', ()=>switchMode('chinese'));
+            englishModeBtn.addEventListener('click', ()=>switchMode('english'));
+
+            startBtn.addEventListener('click', ()=>{
+                if (!gradeSelect.value || !classSelect.value || !nameInput.value.trim()) {
+                    alert('请完整填写年级、班级和姓名哟！');
+                    return;
+                }
+                // 根据年级生成文本
+                testText = getRandomTextByGrade(gradeSelect.value, currentMode);
+                textDisplay.textContent = testText;
+
+                isTesting = true;
+                textInput.disabled = false;
+                submitBtn.disabled = false;
+                startBtn.disabled = true;
+                textInput.value = "";
+                speedEl.textContent = accuracyEl.textContent = errorRateEl.textContent = scoreEl.textContent = "0";
+                timerEl.textContent = "00:00";
+                startTimer();
+                textInput.focus();
+            });
+
+            submitBtn.addEventListener('click', ()=>{
+                if (!isTesting) return;
+                stopTimer();
+                let stats = calculateStats();
+                studentData.push(stats);
+                updateRanking();
+
+                fetch("https://www.quickform.cn/api/c94glvezwt", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        年级: stats.grade + "年级",
+                        班级: stats.className + "班",
+                        姓名: stats.name,
+                        打字模式: stats.mode,
+                        速度: stats.speed,
+                        正确率: stats.accuracy,
+                        错误率: stats.errorRate,
+                        得分: stats.score,
+                        用时: Math.round(stats.duration) + "秒"
+                    })
+                }).then(res => console.log("提交成功", res)).catch(err => console.log("提交失败", err));
+
+                textInput.disabled = true;
+                submitBtn.disabled = true;
+                startBtn.disabled = false;
+
+                alert(`🎉 太厉害了！ ${stats.name} 得 ${stats.score} 分！ 🎉`);
+            });
+        })();
+    </script>
+
+</body></html>

@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学生信息科技乐园 🖥️</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        * { font-family: 'Noto Sans SC', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .module-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .star { animation: twinkle 1.5s infinite alternate; }
+        @keyframes twinkle {
+            0% { opacity: 0.5; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .bounce-in {
+            animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            0% { transform: translateY(40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 40px rgba(99, 102, 241, 0.3); }
+        }
+
+        .progress-fill {
+            transition: width 0.8s ease-in-out;
+        }
+
+        .option-btn {
+            transition: all 0.2s;
+        }
+        .option-btn:hover {
+            transform: scale(1.02);
+        }
+        .option-btn.correct {
+            background: #10b981 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+        }
+        .option-btn.wrong {
+            background: #ef4444 !important;
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+
+        .typing-cursor {
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .drag-item {
+            cursor: grab;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .drag-item:active { cursor: grabbing; }
+        .drag-item:hover { transform: scale(1.05); }
+
+        .drop-zone {
+            transition: all 0.3s;
+        }
+        .drop-zone.drag-over {
+            background: #dbeafe !important;
+            border-color: #3b82f6 !important;
+            transform: scale(1.02);
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confettiFall 3s ease-in forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .piano-key {
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+        .piano-key:active, .piano-key.active {
+            transform: scaleY(0.95);
+            filter: brightness(0.85);
+        }
+
+        /* 画板样式 */
+        #drawCanvas {
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .nav-tab {
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+
+        .mascot {
+            font-size: 4rem;
+            animation: mascotBounce 2s ease-in-out infinite;
+        }
+        @keyframes mascotBounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- 主应用容器 -->
+    <div id="app">
+        <!-- 顶部导航栏 -->
+        <nav class="bg-white/10 backdrop-blur-lg border-b border-white/20 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
+                    <span class="text-3xl">🖥️</span>
+                    <h1 class="text-white font-bold text-xl hidden sm:block">信息科技乐园</h1>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <div class="bg-yellow-400/20 text-yellow-300 px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-1">
+                        <span>⭐</span>
+                        <span id="totalStars">0</span>
+                    </div>
+                    <div class="bg-green-400/20 text-green-300 px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-1">
+                        <span>🏆</span>
+                        <span id="totalBadges">0</span>
+                    </div>
+                    <button onclick="showAchievements()" class="text-white/80 hover:text-white text-2xl" title="成就">🎖️</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 内容区域 -->
+        <div id="content" class="max-w-7xl mx-auto px-4 py-6">
+            <!-- 由 JavaScript 动态填充 -->
+        </div>
+    </div>
+
+    <script>
+    // ==================== 全局状态 ====================
+    const state = {
+        stars: parseInt(localStorage.getItem('stars') || '0'),
+        badges: JSON.parse(localStorage.getItem('badges') || '[]'),
+        completedQuizzes: JSON.parse(localStorage.getItem('completedQuizzes') || '[]'),
+        completedLessons: JSON.parse(localStorage.getItem('completedLessons') || '[]'),
+        typingBestWPM: parseInt(localStorage.getItem('typingBestWPM') || '0'),
+    };
+
+    function saveState() {
+        localStorage.setItem('stars', state.stars);
+        localStorage.setItem('badges', JSON.stringify(state.badges));
+        localStorage.setItem('completedQuizzes', JSON.stringify(state.completedQuizzes));
+        localStorage.setItem('completedLessons', JSON.stringify(state.completedLessons));
+        localStorage.setItem('typingBestWPM', state.typingBestWPM);
+        updateTopBar();
+    }
+
+    function addStars(n) {
+        state.stars += n;
+        saveState();
+        showStarAnimation(n);
+    }
+
+    function addBadge(badge) {
+        if (!state.badges.includes(badge)) {
+            state.badges.push(badge);
+            saveState();
+            showBadgeNotification(badge);
+        }
+    }
+
+    function updateTopBar() {
+        document.getElementById('totalStars').textContent = state.stars;
+        document.getElementById('totalBadges').textContent = state.badges.length;
+    }
+
+    // ==================== 动画效果 ====================
+    function showStarAnimation(n) {
+        for (let i = 0; i < Math.min(n * 2, 15); i++) {
+            setTimeout(() => {
+                const star = document.createElement('div');
+                star.className = 'confetti';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                star.textContent = '⭐';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 4000);
+            }, i * 100);
+        }
+    }
+
+    function showConfetti() {
+        const emojis = ['🎉', '🎊', '✨', '🌟', '💫', '🎈', '🎁'];
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 4000);
+            }, i * 80);
+        }
+    }
+
+    function showBadgeNotification(badge) {
+        const badgeInfo = BADGES[badge];
+        if (!badgeInfo) return;
+        const div = document.createElement('div');
+        div.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-[9999] bg-white rounded-2xl shadow-2xl p-6 text-center bounce-in';
+        div.innerHTML = `
+            <div class="text-5xl mb-3">${badgeInfo.icon}</div>
+            <div class="text-lg font-bold text-gray-800">🎉 获得新成就！</div>
+            <div class="text-indigo-600 font-bold text-xl mt-1">${badgeInfo.name}</div>
+            <div class="text-gray-500 text-sm mt-1">${badgeInfo.desc}</div>
+        `;
+        document.body.appendChild(div);
+        showConfetti();
+        setTimeout(() => { div.style.transition = 'all 0.5s'; div.style.opacity = '0'; div.style.transform = 'translateX(-50%) translateY(-30px)'; }, 3000);
+        setTimeout(() => div.remove(), 3500);
+    }
+
+    // ==================== 成就系统 ====================
+    const BADGES = {
+        'first_lesson': { icon: '📖', name: '初学者', desc: '完成第一个知识学习' },
+        'quiz_master': { icon: '🧠', name: '答题达人', desc: '完成所有知识问答' },
+        'first_quiz': { icon: '✅', name: '首次答题', desc: '完成第一次知识问答' },
+        'typing_star': { icon: '⌨️', name: '打字之星', desc: '打字速度超过20WPM' },
+        'artist': { icon: '🎨', name: '小画家', desc: '使用画板创作作品' },
+        'binary_master': { icon: '🔢', name: '二进制大师', desc: '完成二进制转换练习' },
+        'puzzle_solver': { icon: '🧩', name: '拼图高手', desc: '完成硬件认知拼图' },
+        'star_50': { icon: '🌟', name: '闪耀之星', desc: '累计获得50颗星' },
+        'star_100': { icon: '💎', name: '钻石学员', desc: '累计获得100颗星' },
+        'music_maker': { icon: '🎵', name: '音乐家', desc: '使用音乐键盘演奏' },
+        'safe_surfer': { icon: '🛡️', name: '安全卫士', desc: '完成网络安全学习' },
+        'algo_thinker': { icon: '🤖', name: '算法思维家', desc: '完成算法思维训练' },
+    };
+
+    function showAchievements() {
+        const content = document.getElementById('content');
+        content.innerHTML = `
+            <div class="slide-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                    <h2 class="text-white text-2xl font-bold">🎖️ 我的成就</h2>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    ${Object.entries(BADGES).map(([key, badge]) => {
+                        const earned = state.badges.includes(key);
+                        return `
+                            <div class="bg-white/90 backdrop-blur rounded-2xl p-5 text-center ${earned ? '' : 'opacity-50 grayscale'}">
+                                <div class="text-4xl mb-2">${badge.icon}</div>
+                                <div class="font-bold text-gray-800 text-sm">${badge.name}</div>
+                                <div class="text-xs text-gray-500 mt-1">${badge.desc}</div>
+                                ${earned ? '<div class="text-green-500 text-xs mt-2 font-medium">✅ 已获得</div>' : '<div class="text-gray-400 text-xs mt-2">🔒 未解锁</div>'}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                <div class="mt-6 bg-white/10 backdrop-blur rounded-2xl p-5 text-white text-center">
+                    <p class="text-lg">已获得 <span class="text-yellow-300 font-bold text-2xl">${state.badges.length}</span> / <span class="font-bold">${Object.keys(BADGES).length}</span> 个成就</p>
+                    <div class="w-full bg-white/20 rounded-full h-3 mt-3">
+                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full progress-fill" style="width: ${(state.badges.length / Object.keys(BADGES).length * 100)}%"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==================== 模块数据 ====================
+    const MODULES = [
+        { id: 'hardware', icon: '🖥️', title: '认识电脑硬件', desc: '了解电脑的各个组成部分', color: 'from-blue-400 to-blue-600', type: 'learn' },
+        { id: 'software', icon: '💿', title: '软件小百科', desc: '认识操作系统和常用软件', color: 'from-purple-400 to-purple-600', type: 'learn' },
+        { id: 'network', icon: '🌐', title: '网络世界', desc: '了解互联网的基础知识', color: 'from-cyan-400 to-cyan-600', type: 'learn' },
+        { id: 'safety', icon: '🛡️', title: '网络安全', desc: '学习安全上网的知识', color: 'from-red-400 to-red-600', type: 'learn' },
+        { id: 'quiz', icon: '❓', title: '知识问答', desc: '挑战信息科技知识题目', color: 'from-amber-400 to-orange-500', type: 'game' },
+        { id: 'typing', icon: '⌨️', title: '打字练习', desc: '提高键盘输入速度', color: 'from-green-400 to-emerald-600', type: 'game' },
+        { id: 'binary', icon: '🔢', title: '二进制探秘', desc: '学习计算机的数字语言', color: 'from-indigo-400 to-indigo-600', type: 'game' },
+        { id: 'puzzle', icon: '🧩', title: '硬件拼图', desc: '拖拽组装电脑硬件', color: 'from-pink-400 to-rose-600', type: 'game' },
+        { id: 'draw', icon: '🎨', title: '像素画板', desc: '用画笔创作像素艺术', color: 'from-fuchsia-400 to-fuchsia-600', type: 'creative' },
+        { id: 'music', icon: '🎵', title: '音乐键盘', desc: '用键盘演奏美妙音乐', color: 'from-teal-400 to-teal-600', type: 'creative' },
+        { id: 'algorithm', icon: '🤖', title: '算法思维', desc: '学习排序和搜索的基本思想', color: 'from-violet-400 to-violet-600', type: 'game' },
+        { id: 'data', icon: '📊', title: '数据与编码', desc: '了解信息是如何表示的', color: 'from-sky-400 to-sky-600', type: 'learn' },
+    ];
+
+    // ==================== 首页 ====================
+    function showHome() {
+        const content = document.getElementById('content');
+        content.innerHTML = `
+            <div class="text-center mb-8 slide-up">
+                <div class="mascot inline-block">🤖</div>
+                <h2 class="text-white text-3xl sm:text-4xl font-bold mt-2">欢迎来到信息科技乐园！</h2>
+                <p class="text-white/70 text-lg mt-2">选择一个模块开始学习吧 📚</p>
+            </div>
+
+            <!-- 分类标签 -->
+            <div class="flex justify-center gap-3 mb-6 flex-wrap">
+                <button onclick="filterModules('all')" class="filter-btn bg-white/20 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-white/30 transition" data-filter="all">🌈 全部</button>
+                <button onclick="filterModules('learn')" class="filter-btn bg-white/10 text-white/70 px-5 py-2 rounded-full text-sm font-medium hover:bg-white/30 transition" data-filter="learn">📖 知识学习</button>
+                <button onclick="filterModules('game')" class="filter-btn bg-white/10 text-white/70 px-5 py-2 rounded-full text-sm font-medium hover:bg-white/30 transition" data-filter="game">🎮 趣味练习</button>
+                <button onclick="filterModules('creative')" class="filter-btn bg-white/10 text-white/70 px-5 py-2 rounded-full text-sm font-medium hover:bg-white/30 transition" data-filter="creative">🎨 创意工坊</button>
+            </div>
+
+            <div id="modulesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                ${MODULES.map((m, i) => `
+                    <div class="module-card bg-white/90 backdrop-blur rounded-2xl overflow-hidden shadow-lg" data-type="${m.type}" onclick="openModule('${m.id}')" style="animation-delay: ${i * 0.05}s">
+                        <div class="bg-gradient-to-br ${m.color} p-5 text-center">
+                            <span class="text-5xl block float">${m.icon}</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 text-lg">${m.title}</h3>
+                            <p class="text-gray-500 text-sm mt-1">${m.desc}</p>
+                            <div class="flex items-center justify-between mt-3">
+                                <span class="text-xs px-2 py-1 rounded-full ${m.type === 'learn' ? 'bg-blue-100 text-blue-600' : m.type === 'game' ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'}">
+                                    ${m.type === 'learn' ? '📖 学习' : m.type === 'game' ? '🎮 练习' : '🎨 创意'}
+                                </span>
+                                ${state.completedLessons.includes(m.id) ? '<span class="text-green-500 text-sm">✅ 已学</span>' : '<span class="text-indigo-500 text-sm font-medium">开始 →</span>'}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- 学习进度 -->
+            <div class="mt-8 bg-white/10 backdrop-blur rounded-2xl p-6 text-white slide-up">
+                <h3 class="font-bold text-xl mb-3">📈 学习进度</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-yellow-300">${state.stars}</div>
+                        <div class="text-white/60 text-sm">累计星星</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-300">${state.completedLessons.length}</div>
+                        <div class="text-white/60 text-sm">已学模块</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-300">${state.badges.length}</div>
+                        <div class="text-white/60 text-sm">获得成就</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-pink-300">${state.typingBestWPM}</div>
+                        <div class="text-white/60 text-sm">最佳打字WPM</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function filterModules(type) {
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('bg-white/20', 'text-white');
+            btn.classList.add('bg-white/10', 'text-white/70');
+        });
+        document.querySelector(`[data-filter="${type}"]`).classList.remove('bg-white/10', 'text-white/70');
+        document.querySelector(`[data-filter="${type}"]`).classList.add('bg-white/20', 'text-white');
+
+        document.querySelectorAll('.module-card').forEach(card => {
+            if (type === 'all' || card.dataset.type === type) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // ==================== 模块路由 ====================
+    function openModule(id) {
+        const handlers = {
+            hardware: showHardware,
+            software: showSoftware,
+            network: showNetwork,
+            safety: showSafety,
+            quiz: showQuiz,
+            typing: showTyping,
+            binary: showBinary,
+            puzzle: showPuzzle,
+            draw: showDraw,
+            music: showMusic,
+            algorithm: showAlgorithm,
+            data: showData,
+        };
+        if (handlers[id]) handlers[id]();
+    }
+
+    function markComplete(moduleId) {
+        if (!state.completedLessons.includes(moduleId)) {
+            state.completedLessons.push(moduleId);
+            addStars(5);
+            if (state.completedLessons.length === 1) addBadge('first_lesson');
+            saveState();
+        }
+    }
+
+    // ==================== 通用学习页面模板 ====================
+    function showLearnPage(title, icon, sections, moduleId) {
+        const content = document.getElementById('content');
+        let currentSection = 0;
+
+        function renderSection() {
+            const s = sections[currentSection];
+            const isLast = currentSection === sections.length - 1;
+            content.innerHTML = `
+                <div class="slide-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                        <h2 class="text-white text-2xl font-bold">${icon} ${title}</h2>
+                        <span class="text-white/60 text-sm ml-auto">${currentSection + 1} / ${sections.length}</span>
+                    </div>
+
+                    <!-- 进度条 -->
+                    <div class="w-full bg-white/20 rounded-full h-2 mb-6">
+                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full progress-fill" style="width: ${((currentSection + 1) / sections.length) * 100}%"></div>
+                    </div>
+
+                    <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl overflow-hidden">
+                        <div class="bg-gradient-to-r ${s.color || 'from-indigo-500 to-purple-600'} p-6 text-white">
+                            <div class="text-4xl mb-2">${s.icon}</div>
+                            <h3 class="text-2xl font-bold">${s.title}</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-gray-700 text-base leading-relaxed space-y-4">
+                                ${s.content}
+                            </div>
+                            ${s.interactive || ''}
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <button onclick="window._prevSection()" class="bg-white/20 text-white px-6 py-3 rounded-xl font-medium hover:bg-white/30 transition ${currentSection === 0 ? 'opacity-30 pointer-events-none' : ''}">
+                            ← 上一节
+                        </button>
+                        ${isLast ? `
+                            <button onclick="window._finishLesson('${moduleId}')" class="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg transition pulse-glow">
+                                ✅ 完成学习 +5⭐
+                            </button>
+                        ` : `
+                            <button onclick="window._nextSection()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg transition">
+                                下一节 →
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+            if (s.onLoad) setTimeout(s.onLoad, 100);
+        }
+
+        window._prevSection = () => { if (currentSection > 0) { currentSection--; renderSection(); } };
+        window._nextSection = () => { if (currentSection < sections.length - 1) { currentSection++; renderSection(); } };
+        window._finishLesson = (id) => { markComplete(id); showHome(); };
+
+        renderSection();
+    }
+
+    // ==================== 认识电脑硬件 ====================
+    function showHardware() {
+        const sections = [
+            {
+                icon: '🖥️', title: '什么是电脑？', color: 'from-blue-500 to-blue-700',
+                content: `
+                    <p>电脑，也叫<strong class="text-blue-600">计算机</strong>，是一种能够自动、高速处理信息的电子设备。</p>
+                    <p>电脑就像一个超级聪明的助手，它可以帮助我们：</p>
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div class="bg-blue-50 rounded-xl p-3 text-center">📝 写作业</div>
+                        <div class="bg-green-50 rounded-xl p-3 text-center">🎮 玩游戏</div>
+                        <div class="bg-purple-50 rounded-xl p-3 text-center">🎬 看视频</div>
+                        <div class="bg-orange-50 rounded-xl p-3 text-center">🌐 上网</div>
+                    </div>
+                    <p class="mt-3">电脑由<strong>硬件</strong>和<strong>软件</strong>两部分组成。硬件是我们能看到和摸到的部分。</p>
+                `
+            },
+            {
+                icon: '🧠', title: 'CPU - 电脑的大脑', color: 'from-red-500 to-red-700',
+                content: `
+                    <p><strong class="text-red-600">CPU（中央处理器）</strong>是电脑的"大脑"，负责处理所有的计算和指令。</p>
+                    <div class="bg-red-50 rounded-xl p-4 mt-3">
+                        <p class="font-bold text-red-700">🧠 CPU 的特点：</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li>运算速度极快，每秒可以进行数十亿次计算</li>
+                            <li>控制电脑的所有工作</li>
+                            <li>常见品牌：Intel（英特尔）、AMD</li>
+                            <li>体积很小，但功能强大</li>
+                        </ul>
+                    </div>
+                    <p class="mt-3 text-gray-500 text-sm">💡 小知识：CPU越强大，电脑运行速度越快哦！</p>
+                `
+            },
+            {
+                icon: '💾', title: '内存和硬盘', color: 'from-green-500 to-green-700',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <p class="font-bold text-green-700">💾 内存（RAM）- 临时记忆</p>
+                            <p class="mt-1">就像你的<strong>短期记忆</strong>，电脑工作时暂时存放数据的地方。关机后数据就会消失。</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-4">
+                            <p class="font-bold text-blue-700">📁 硬盘 - 永久存储</p>
+                            <p class="mt-1">就像你的<strong>笔记本</strong>，用来永久保存文件、照片、视频等。关机后数据不会消失。</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <p class="font-bold text-yellow-700">🤔 它们的区别：</p>
+                            <p class="mt-1">内存像<strong>书桌</strong>（快但小），硬盘像<strong>书柜</strong>（慢但大）</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                icon: '🖱️', title: '输入和输出设备', color: 'from-purple-500 to-purple-700',
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-indigo-50 rounded-xl p-4">
+                            <p class="font-bold text-indigo-700">📥 输入设备 - 告诉电脑做什么</p>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">⌨️ 键盘</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🖱️ 鼠标</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🎤 麦克风</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">📷 摄像头</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">📱 触摸屏</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🎮 游戏手柄</div>
+                            </div>
+                        </div>
+                        <div class="bg-pink-50 rounded-xl p-4">
+                            <p class="font-bold text-pink-700">📤 输出设备 - 电脑给我们看结果</p>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🖥️ 显示器</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🔊 音箱</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🖨️ 打印机</div>
+                                <div class="bg-white rounded-lg p-2 text-center text-sm">🎧 耳机</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+        showLearnPage('认识电脑硬件', '🖥️', sections, 'hardware');
+    }
+
+    // ==================== 软件小百科 ====================
+    function showSoftware() {
+        const sections = [
+            {
+                icon: '💿', title: '什么是软件？', color: 'from-purple-500 to-purple-700',
+                content: `
+                    <p><strong class="text-purple-600">软件</strong>是一系列指令的集合，告诉电脑硬件该做什么。</p>
+                    <p class="mt-2">如果说硬件是电脑的"身体"，那软件就是电脑的"灵魂"！</p>
+                    <div class="bg-purple-50 rounded-xl p-4 mt-3">
+                        <p class="font-bold text-purple-700">软件分为两大类：</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>系统软件</strong>：管理电脑的"大管家"（如 Windows、macOS）</li>
+                            <li><strong>应用软件</strong>：帮我们完成具体任务的工具（如微信、浏览器）</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                icon: '🪟', title: '操作系统', color: 'from-blue-500 to-cyan-600',
+                content: `
+                    <p><strong class="text-blue-600">操作系统</strong>是最重要的系统软件，它管理着电脑的所有资源。</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                        <div class="bg-blue-50 rounded-xl p-4 text-center">
+                            <div class="text-3xl">🪟</div>
+                            <p class="font-bold mt-2">Windows</p>
+                            <p class="text-sm text-gray-500">最常用的电脑系统</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4 text-center">
+                            <div class="text-3xl">🍎</div>
+                            <p class="font-bold mt-2">macOS</p>
+                            <p class="text-sm text-gray-500">苹果电脑系统</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4 text-center">
+                            <div class="text-3xl">🐧</div>
+                            <p class="font-bold mt-2">Linux</p>
+                            <p class="text-sm text-gray-500">开源免费系统</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm text-gray-500">💡 手机也有操作系统：Android（安卓）和 iOS（苹果）</p>
+                `
+            },
+            {
+                icon: '📱', title: '常用应用软件', color: 'from-green-500 to-emerald-600',
+                content: `
+                    <p>应用软件是帮助我们完成各种具体工作的程序：</p>
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div class="bg-blue-50 rounded-xl p-3">
+                            <p class="font-bold text-blue-600">🌐 浏览器</p>
+                            <p class="text-sm">上网冲浪、搜索信息</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-3">
+                            <p class="font-bold text-green-600">📝 文字处理</p>
+                            <p class="text-sm">写文章、做作业</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-3">
+                            <p class="font-bold text-purple-600">📊 电子表格</p>
+                            <p class="text-sm">处理数据、做统计</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-3">
+                            <p class="font-bold text-orange-600">🎨 画图工具</p>
+                            <p class="text-sm">绘画、图片编辑</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-3">
+                            <p class="font-bold text-red-600">📽️ 演示文稿</p>
+                            <p class="text-sm">做幻灯片演示</p>
+                        </div>
+                        <div class="bg-cyan-50 rounded-xl p-3">
+                            <p class="font-bold text-cyan-600">💬 通讯工具</p>
+                            <p class="text-sm">聊天、视频通话</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+        showLearnPage('软件小百科', '💿', sections, 'software');
+    }
+
+    // ==================== 网络世界 ====================
+    function showNetwork() {
+        const sections = [
+            {
+                icon: '🌐', title: '什么是互联网？', color: 'from-cyan-500 to-blue-600',
+                content: `
+                    <p><strong class="text-cyan-600">互联网（Internet）</strong>是将全世界的电脑连接在一起的巨大网络。</p>
+                    <p class="mt-2">想象一下，全世界的电脑就像一个个小点，互联网就是把这些点连起来的无数条线。</p>
+                    <div class="bg-cyan-50 rounded-xl p-4 mt-3">
+                        <p class="font-bold text-cyan-700">🌍 互联网能做什么？</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li>📧 发送电子邮件</li>
+                            <li>🔍 搜索各种信息</li>
+                            <li>🎬 看视频、听音乐</li>
+                            <li>🛒 网上购物</li>
+                            <li>💬 和朋友聊天</li>
+                            <li>📚 在线学习</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                icon: '📡', title: '网络是怎么连接的？', color: 'from-blue-500 to-indigo-600',
+                content: `
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 rounded-xl p-4">
+                            <p class="font-bold text-blue-700">📶 WiFi 无线网络</p>
+                            <p class="text-sm mt-1">通过无线信号连接，在家里、学校、咖啡店都可以用</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <p class="font-bold text-green-700">🔌 有线网络</p>
+                            <p class="text-sm mt-1">通过网线连接，速度更快更稳定</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <p class="font-bold text-purple-700">📱 移动网络（4G/5G）</p>
+                            <p class="text-sm mt-1">手机使用的网络，随时随地上网</p>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-50 rounded-xl p-4 mt-3">
+                        <p class="text-sm">💡 <strong>小知识：</strong>互联网的数据通过海底光缆在各大洲之间传输，海底光缆总长度超过100万公里！</p>
+                    </div>
+                `
+            },
+            {
+                icon: '🔗', title: 'IP地址和域名', color: 'from-indigo-500 to-violet-600',
+                content: `
+                    <p>每台上网的电脑都有一个唯一的"地址"，就像每个家都有门牌号一样。</p>
+                    <div class="space-y-3 mt-3">
+                        <div class="bg-indigo-50 rounded-xl p-4">
+                            <p class="font-bold text-indigo-700">🔢 IP地址</p>
+                            <p class="text-sm mt-1">电脑的"门牌号"，由数字组成，如 <code class="bg-white px-2 py-0.5 rounded">192.168.1.1</code></p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <p class="font-bold text-green-700">🏷️ 域名</p>
+                            <p class="text-sm mt-1">IP地址不好记，所以我们用域名代替，如 <code class="bg-white px-2 py-0.5 rounded">www.baidu.com</code></p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <p class="font-bold text-orange-700">📖 DNS</p>
+                            <p class="text-sm mt-1">域名系统，就像"电话簿"，帮我们把域名翻译成IP地址</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+        showLearnPage('网络世界', '🌐', sections, 'network');
+    }
+
+    // ==================== 网络安全 ====================
+    function showSafety() {
+        const sections = [
+            {
+                icon: '🛡️', title: '为什么要注意网络安全？', color: 'from-red-500 to-red-700',
+                content: `
+                    <p>互联网虽然很方便，但也存在一些<strong class="text-red-600">危险</strong>。就像在马路上要遵守交通规则一样，上网也要注意安全！</p>
+                    <div class="bg-red-50 rounded-xl p-4 mt-3">
+                        <p class="font-bold text-red-700">⚠️ 网络上的常见危险：</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li>🦠 电脑病毒和恶意软件</li>
+                            <li>🎣 网络诈骗和钓鱼</li>
+                            <li>👤 个人信息泄露</li>
+                            <li>🚫 不良信息</li>
+                            <li>😈 网络欺凌</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                icon: '🔑', title: '密码安全', color: 'from-orange-500 to-amber-600',
+                content: `
+                    <p>密码就像保险箱的钥匙，一定要保管好！</p>
+                    <div class="space-y-3 mt-3">
+                        <div class="bg-green-50 rounded-xl p-3 flex items-start gap-3">
+                            <span class="text-2xl">✅</span>
+                            <div>
+                                <p class="font-bold text-green-700">好的密码习惯</p>
+                                <ul class="text-sm mt-1 space-y-0.5">
+                                    <li>• 密码至少8位，包含字母、数字和符号</li>
+                                    <li>• 不同网站用不同的密码</li>
+                                    <li>• 定期更换密码</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-3 flex items-start gap-3">
+                            <span class="text-2xl">❌</span>
+                            <div>
+                                <p class="font-bold text-red-700">坏的密码习惯</p>
+                                <ul class="text-sm mt-1 space-y-0.5">
+                                    <li>• 用生日、123456做密码</li>
+                                    <li>• 把密码告诉别人</li>
+                                    <li>• 所有网站用同一个密码</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                icon: '🧒', title: '小学生上网守则', color: 'from-green-500 to-green-700',
+                content: `
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 rounded-xl p-3 flex items-center gap-3">
+                            <span class="text-2xl">1️⃣</span>
+                            <p><strong>不随便透露个人信息</strong>（姓名、地址、学校、电话）</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-3 flex items-center gap-3">
+                            <span class="text-2xl">2️⃣</span>
+                            <p><strong>不随意点击陌生链接</strong>，可能是病毒或诈骗</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-3 flex items-center gap-3">
+                            <span class="text-2xl">3️⃣</span>
+                            <p><strong>遇到不良信息立刻告诉家长老师</strong></p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-3 flex items-center gap-3">
+                            <span class="text-2xl">4️⃣</span>
+                            <p><strong>控制上网时间</strong>，保护视力和健康</p>
+                        </div>
+                        <div class="bg-pink-50 rounded-xl p-3 flex items-center gap-3">
+                            <span class="text-2xl">5️⃣</span>
+                            <p><strong>文明上网</strong>，不说伤害别人的话</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-3 flex items-center gap-3">
+                            <span class="text-2xl">6️⃣</span>
+                            <p><strong>不在网上约见陌生人</strong></p>
+                        </div>
+                    </div>
+                `,
+                onLoad: () => { addBadge('safe_surfer'); }
+            }
+        ];
+        showLearnPage('网络安全', '🛡️', sections, 'safety');
+    }
+
+    // ==================== 数据与编码 ====================
+    function showData() {
+        const sections = [
+            {
+                icon: '📊', title: '信息与数据', color: 'from-sky-500 to-sky-700',
+                content: `
+                    <p>在日常生活中，我们接收到各种各样的<strong class="text-sky-600">信息</strong>：文字、图片、声音、视频……</p>
+                    <p class="mt-2">电脑只能理解<strong class="text-sky-600">0和1</strong>，所以所有的信息都要转换成0和1才能被电脑处理，这就是<strong>"编码"</strong>。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 mt-3">
+                        <p class="font-bold text-sky-700">📦 数据的单位：</p>
+                        <div class="grid grid-cols-2 gap-2 mt-2">
+                            <div class="bg-white rounded-lg p-2 text-center text-sm"><strong>位 (bit)</strong><br>最小单位，0或1</div>
+                            <div class="bg-white rounded-lg p-2 text-center text-sm"><strong>字节 (Byte)</strong><br>= 8 bit</div>
+                            <div class="bg-white rounded-lg p-2 text-center text-sm"><strong>KB</strong><br>= 1024 Byte</div>
+                            <div class="bg-white rounded-lg p-2 text-center text-sm"><strong>MB</strong><br>= 1024 KB</div>
+                            <div class="bg-white rounded-lg p-2 text-center text-sm"><strong>GB</strong><br>= 1024 MB</div>
+                            <div class="bg-white rounded-lg p-2 text-center text-sm"><strong>TB</strong><br>= 1024 GB</div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                icon: '🔤', title: 'ASCII编码', color: 'from-teal-500 to-teal-700',
+                content: `
+                    <p><strong class="text-teal-600">ASCII码</strong>是一种将英文字母、数字和符号用数字表示的编码方式。</p>
+                    <div class="bg-teal-50 rounded-xl p-4 mt-3">
+                        <p class="font-bold text-teal-700">部分ASCII码对照：</p>
+                        <div class="grid grid-cols-3 gap-2 mt-2 text-sm text-center">
+                            <div class="bg-white rounded-lg p-2"><strong>A</strong> = 65</div>
+                            <div class="bg-white rounded-lg p-2"><strong>B</strong> = 66</div>
+                            <div class="bg-white rounded-lg p-2"><strong>C</strong> = 67</div>
+                            <div class="bg-white rounded-lg p-2"><strong>a</strong> = 97</div>
+                            <div class="bg-white rounded-lg p-2"><strong>b</strong> = 98</div>
+                            <div class="bg-white rounded-lg p-2"><strong>c</strong> = 99</div>
+                            <div class="bg-white rounded-lg p-2"><strong>0</strong> = 48</div>
+                            <div class="bg-white rounded-lg p-2"><strong>1</strong> = 49</div>
+                            <div class="bg-white rounded-lg p-2"><strong>空格</strong> = 32</div>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm text-gray-500">💡 中文使用<strong>Unicode/GB2312</strong>等编码，一个中文字通常需要2-3个字节。</p>
+                `
+            },
+            {
+                icon: '🖼️', title: '图片和声音的编码', color: 'from-pink-500 to-rose-600',
+                content: `
+                    <div class="space-y-3">
+                        <div class="bg-pink-50 rounded-xl p-4">
+                            <p class="font-bold text-pink-700">🖼️ 图片的秘密 - 像素</p>
+                            <p class="text-sm mt-1">图片由很多很多小点（像素）组成，每个像素都有自己的颜色。颜色用<strong>RGB</strong>三种颜色的数字来表示（红、绿、蓝）。</p>
+                            <div class="flex gap-2 mt-2">
+                                <span class="bg-red-500 text-white px-3 py-1 rounded text-sm">红 R</span>
+                                <span class="bg-green-500 text-white px-3 py-1 rounded text-sm">绿 G</span>
+                                <span class="bg-blue-500 text-white px-3 py-1 rounded text-sm">蓝 B</span>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <p class="font-bold text-purple-700">🔊 声音的秘密 - 采样</p>
+                            <p class="text-sm mt-1">声音是振动产生的波，电脑通过<strong>"采样"</strong>把声波变成一串数字，采样越频繁，声音越真实。</p>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+        showLearnPage('数据与编码', '📊', sections, 'data');
+    }
+
+    // ==================== 知识问答 ====================
+    const QUIZ_QUESTIONS = [
+        { q: 'CPU是电脑的什么？', options: ['眼睛', '大脑', '手', '脚'], answer: 1, explain: 'CPU是中央处理器，是电脑的"大脑"，负责处理所有计算。' },
+        { q: '下面哪个是输入设备？', options: ['显示器', '打印机', '键盘', '音箱'], answer: 2, explain: '键盘是输入设备，用来向电脑输入信息。' },
+        { q: '1个字节(Byte)等于多少位(bit)？', options: ['2位', '4位', '8位', '16位'], answer: 2, explain: '1 Byte = 8 bit，这是计算机存储的基本单位。' },
+        { q: '以下哪个是操作系统？', options: ['微信', 'Word', 'Windows', '浏览器'], answer: 2, explain: 'Windows是操作系统，是管理电脑硬件和软件的系统软件。' },
+        { q: '互联网上电脑的"门牌号"叫什么？', options: ['域名', 'IP地址', 'WiFi', '蓝牙'], answer: 1, explain: 'IP地址是每台电脑在网络上的唯一标识，就像门牌号。' },
+        { q: '二进制数 1010 等于十进制的多少？', options: ['8', '10', '12', '14'], answer: 1, explain: '1×8 + 0×4 + 1×2 + 0×1 = 10' },
+        { q: '下面哪个密码最安全？', options: ['123456', 'abcabc', 'password', 'Kx9#mP2!'], answer: 3, explain: '好密码应该包含大小写字母、数字和特殊符号，且长度足够。' },
+        { q: 'RAM是什么？', options: ['硬盘', '内存', '显卡', '电源'], answer: 1, explain: 'RAM是随机存取存储器（内存），用于临时存储电脑工作时的数据。' },
+        { q: '1KB等于多少字节？', options: ['100', '512', '1000', '1024'], answer: 3, explain: '1KB = 1024 Byte，计算机使用二进制，所以是2的10次方。' },
+        { q: '以下哪种行为是安全的？', options: ['随意点击链接', '告诉陌生人密码', '用复杂密码', '下载未知软件'], answer: 2, explain: '使用复杂密码是保护账号安全的好方法。' },
+        { q: '哪个不是计算机病毒的传播途径？', options: ['电子邮件', 'U盘', '正版软件', '网页下载'], answer: 2, explain: '正版软件是安全的。病毒通常通过邮件附件、U盘或不安全的下载传播。' },
+        { q: '显示器属于什么设备？', options: ['输入设备', '输出设备', '存储设备', '通信设备'], answer: 1, explain: '显示器是输出设备，用来把电脑处理的结果展示给我们看。' },
+    ];
+
+    function showQuiz() {
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+        const questions = [...QUIZ_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 8);
+
+        function renderQuestion() {
+            answered = false;
+            const q = questions[currentQ];
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="slide-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                        <h2 class="text-white text-2xl font-bold">❓ 知识问答</h2>
+                        <span class="text-white/60 text-sm ml-auto">第 ${currentQ + 1} / ${questions.length} 题</span>
+                    </div>
+
+                    <div class="w-full bg-white/20 rounded-full h-2 mb-6">
+                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full progress-fill" style="width: ${((currentQ + 1) / questions.length) * 100}%"></div>
+                    </div>
+
+                    <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-indigo-100 text-indigo-600 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg">${currentQ + 1}</span>
+                            <h3 class="text-xl font-bold text-gray-800">${q.q}</h3>
+                        </div>
+
+                        <div class="space-y-3" id="optionsContainer">
+                            ${q.options.map((opt, i) => `
+                                <button onclick="window._selectAnswer(${i})" class="option-btn w-full text-left px-5 py-4 rounded-xl border-2 border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 font-medium text-gray-700 transition" data-index="${i}">
+                                    <span class="inline-block w-8 h-8 rounded-full bg-gray-100 text-center leading-8 mr-3 font-bold text-sm">${'ABCD'[i]}</span>
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div id="explanation" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-6">
+                        <div class="text-white/80">
+                            得分：<span class="text-yellow-300 font-bold text-xl">${score}</span> / ${questions.length}
+                        </div>
+                        <button id="nextBtn" onclick="window._nextQuestion()" class="hidden bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg transition">
+                            ${currentQ < questions.length - 1 ? '下一题 →' : '查看结果 🎉'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        window._selectAnswer = (i) => {
+            if (answered) return;
+            answered = true;
+            const q = questions[currentQ];
+            const btns = document.querySelectorAll('.option-btn');
+            const expDiv = document.getElementById('explanation');
+
+            btns[q.answer].classList.add('correct');
+            if (i === q.answer) {
+                score++;
+                expDiv.className = 'mt-4 p-4 rounded-xl text-sm bg-green-50 text-green-800';
+                expDiv.innerHTML = `✅ <strong>回答正确！</strong> ${q.explain}`;
+            } else {
+                btns[i].classList.add('wrong');
+                expDiv.className = 'mt-4 p-4 rounded-xl text-sm bg-red-50 text-red-800';
+                expDiv.innerHTML = `❌ <strong>回答错误。</strong> ${q.explain}`;
+            }
+
+            btns.forEach(btn => btn.disabled = true);
+            document.getElementById('nextBtn').classList.remove('hidden');
+        };
+
+        window._nextQuestion = () => {
+            if (currentQ < questions.length - 1) {
+                currentQ++;
+                renderQuestion();
+            } else {
+                // 显示结果
+                const percent = score / questions.length;
+                const stars = Math.ceil(percent * 5);
+                addStars(stars);
+                addBadge('first_quiz');
+                if (percent === 1) addBadge('quiz_master');
+
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="slide-up max-w-lg mx-auto">
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-8 text-center">
+                            <div class="text-6xl mb-4">${percent >= 0.8 ? '🏆' : percent >= 0.5 ? '👍' : '💪'}</div>
+                            <h3 class="text-2xl font-bold text-gray-800">答题完成！</h3>
+                            <p class="text-gray-500 mt-2">你答对了 <strong class="text-indigo-600 text-3xl">${score}</strong> / ${questions.length} 题</p>
+                            <div class="flex justify-center gap-1 mt-3">
+                                ${Array(5).fill(0).map((_, i) => `<span class="text-3xl ${i < stars ? '' : 'opacity-20'}">${i < stars ? '⭐' : '☆'}</span>`).join('')}
+                            </div>
+                            <p class="text-yellow-600 font-bold mt-2">+${stars} 颗星星！</p>
+                            <p class="text-gray-600 mt-4 text-lg">${percent >= 0.8 ? '太棒了！你是信息科技小达人！🎉' : percent >= 0.5 ? '不错哦，继续加油！💪' : '再多学习一下，下次一定能做得更好！📚'}</p>
+                            <div class="flex gap-3 justify-center mt-6">
+                                <button onclick="showQuiz()" class="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-6 py-3 rounded-xl font-bold">🔄 再来一次</button>
+                                <button onclick="showHome()" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold">🏠 返回首页</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                showConfetti();
+            }
+        };
+
+        renderQuestion();
+    }
+
+    // ==================== 打字练习 ====================
+    function showTyping() {
+        const words = [
+            'hello', 'world', 'computer', 'mouse', 'apple', 'happy', 'school', 'book',
+            'music', 'water', 'green', 'blue', 'red', 'cat', 'dog', 'fish', 'bird',
+            'sun', 'moon', 'star', 'tree', 'rain', 'snow', 'game', 'play', 'read',
+            'love', 'good', 'fast', 'big', 'small', 'run', 'jump', 'swim', 'fly'
+        ];
+
+        let currentWord = '';
+        let inputText = '';
+        let startTime = null;
+        let wordsTyped = 0;
+        let correctChars = 0;
+        let totalChars = 0;
+        let isRunning = false;
+        let timerInterval = null;
+        let timeLeft = 60;
+
+        function pickWord() {
+            currentWord = words[Math.floor(Math.random() * words.length)];
+        }
+
+        function render() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="slide-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button onclick="window._stopTyping(); showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                        <h2 class="text-white text-2xl font-bold">⌨️ 打字练习</h2>
+                    </div>
+
+                    <div class="max-w-2xl mx-auto">
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                            <!-- 统计信息 -->
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center bg-blue-50 rounded-xl p-3">
+                                    <div class="text-2xl font-bold text-blue-600" id="typingTimer">${timeLeft}</div>
+                                    <div class="text-xs text-gray-500">剩余时间(秒)</div>
+                                </div>
+                                <div class="text-center bg-green-50 rounded-xl p-3">
+                                    <div class="text-2xl font-bold text-green-600" id="typingWPM">0</div>
+                                    <div class="text-xs text-gray-500">速度(WPM)</div>
+                                </div>
+                                <div class="text-center bg-purple-50 rounded-xl p-3">
+                                    <div class="text-2xl font-bold text-purple-600" id="typingAccuracy">100%</div>
+                                    <div class="text-xs text-gray-500">准确率</div>
+                                </div>
+                            </div>
+
+                            <!-- 当前单词 -->
+                            <div class="text-center py-8 bg-gray-50 rounded-2xl mb-4">
+                                <div id="wordDisplay" class="text-5xl font-bold text-gray-800 tracking-widest font-mono">${currentWord}</div>
+                                <div id="charFeedback" class="mt-3 text-3xl tracking-widest font-mono">&nbsp;</div>
+                            </div>
+
+                            <!-- 输入框 -->
+                            <input type="text" id="typingInput" class="w-full text-center text-2xl font-mono p-4 border-2 border-indigo-300 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                                   placeholder="在这里输入单词..." autocomplete="off" autocapitalize="off" spellcheck="false">
+
+                            <div class="text-center mt-4">
+                                ${!isRunning ? `
+                                    <p class="text-gray-500">输入第一个字母即开始计时！</p>
+                                    <p class="text-sm text-gray-400 mt-1">最佳记录：${state.typingBestWPM} WPM</p>
+                                ` : `
+                                    <p class="text-gray-500">输入完成后按空格或回车进入下一个单词</p>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const input = document.getElementById('typingInput');
+            input.focus();
+
+            input.addEventListener('input', (e) => {
+                if (!isRunning) {
+                    isRunning = true;
+                    startTime = Date.now();
+                    timerInterval = setInterval(updateTimer, 1000);
+                }
+                inputText = e.target.value;
+                updateCharFeedback();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    checkWord();
+                }
+            });
+        }
+
+        function updateCharFeedback() {
+            const fb = document.getElementById('charFeedback');
+            if (!fb) return;
+            let html = '';
+            for (let i = 0; i < currentWord.length; i++) {
+                if (i < inputText.length) {
+                    if (inputText[i] === currentWord[i]) {
+                        html += `<span class="text-green-500">${currentWord[i]}</span>`;
+                    } else {
+                        html += `<span class="text-red-500 bg-red-100 rounded">${currentWord[i]}</span>`;
+                    }
+                } else if (i === inputText.length) {
+                    html += `<span class="text-gray-400 border-b-2 border-indigo-500 typing-cursor">${currentWord[i]}</span>`;
+                } else {
+                    html += `<span class="text-gray-300">${currentWord[i]}</span>`;
+                }
+            }
+            fb.innerHTML = html || '&nbsp;';
+        }
+
+        function checkWord() {
+            if (!inputText.trim()) return;
+            totalChars += currentWord.length;
+            for (let i = 0; i < currentWord.length; i++) {
+                if (inputText[i] === currentWord[i]) correctChars++;
+            }
+            if (inputText.trim() === currentWord) wordsTyped++;
+
+            pickWord();
+            inputText = '';
+            const input = document.getElementById('typingInput');
+            if (input) { input.value = ''; }
+            const display = document.getElementById('wordDisplay');
+            if (display) display.textContent = currentWord;
+            updateCharFeedback();
+            updateStats();
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            const el = document.getElementById('typingTimer');
+            if (el) el.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endTyping();
+            }
+        }
+
+        function updateStats() {
+            const elapsed = (Date.now() - startTime) / 1000 / 60; // minutes
+            const wpm = Math.round(wordsTyped / Math.max(elapsed, 0.01));
+            const accuracy = totalChars > 0 ? Math.round(correctChars / totalChars * 100) : 100;
+
+            const wpmEl = document.getElementById('typingWPM');
+            const accEl = document.getElementById('typingAccuracy');
+            if (wpmEl) wpmEl.textContent = wpm;
+            if (accEl) accEl.textContent = accuracy + '%';
+        }
+
+        function endTyping() {
+            isRunning = false;
+            const elapsed = (Date.now() - startTime) / 1000 / 60;
+            const wpm = Math.round(wordsTyped / Math.max(elapsed, 0.01));
+            const accuracy = totalChars > 0 ? Math.round(correctChars / totalChars * 100) : 100;
+
+            if (wpm > state.typingBestWPM) {
+                state.typingBestWPM = wpm;
+                saveState();
+            }
+            if (wpm >= 20) addBadge('typing_star');
+            addStars(Math.max(1, Math.floor(wpm / 5)));
+            markComplete('typing');
+
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="slide-up max-w-lg mx-auto">
+                    <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-8 text-center">
+                        <div class="text-6xl mb-4">⌨️</div>
+                        <h3 class="text-2xl font-bold text-gray-800">打字练习完成！</h3>
+                        <div class="grid grid-cols-3 gap-4 mt-6">
+                            <div class="bg-blue-50 rounded-xl p-4">
+                                <div class="text-3xl font-bold text-blue-600">${wpm}</div>
+                                <div class="text-sm text-gray-500">WPM</div>
+                            </div>
+                            <div class="bg-green-50 rounded-xl p-4">
+                                <div class="text-3xl font-bold text-green-600">${wordsTyped}</div>
+                                <div class="text-sm text-gray-500">正确单词</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-xl p-4">
+                                <div class="text-3xl font-bold text-purple-600">${accuracy}%</div>
+                                <div class="text-sm text-gray-500">准确率</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 mt-4">最佳记录：${state.typingBestWPM} WPM</p>
+                        <div class="flex gap-3 justify-center mt-6">
+                            <button onclick="showTyping()" class="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-3 rounded-xl font-bold">🔄 再来一次</button>
+                            <button onclick="showHome()" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold">🏠 返回首页</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window._stopTyping = () => {
+            if (timerInterval) clearInterval(timerInterval);
+            isRunning = false;
+        };
+
+        pickWord();
+        timeLeft = 60;
+        wordsTyped = 0;
+        correctChars = 0;
+        totalChars = 0;
+        isRunning = false;
+        render();
+    }
+
+    // ==================== 二进制探秘 ====================
+    function showBinary() {
+        let score = 0;
+        let round = 0;
+        const totalRounds = 6;
+        let targetNumber = 0;
+        let bits = [0, 0, 0, 0, 0, 0, 0, 0];
+
+        function newRound() {
+            bits = [0, 0, 0, 0, 0, 0, 0, 0];
+            targetNumber = Math.floor(Math.random() * 256);
+            render();
+        }
+
+        function render() {
+            const currentValue = bits.reduce((sum, b, i) => sum + b * Math.pow(2, 7 - i), 0);
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="slide-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                        <h2 class="text-white text-2xl font-bold">🔢 二进制探秘</h2>
+                        <span class="text-white/60 text-sm ml-auto">第 ${round + 1} / ${totalRounds} 轮</span>
+                    </div>
+
+                    <div class="max-w-2xl mx-auto bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                        <div class="text-center mb-6">
+                            <p class="text-gray-600 text-lg">请拼出十进制数字：</p>
+                            <div class="text-6xl font-bold text-indigo-600 mt-2">${targetNumber}</div>
+                        </div>
+
+                        <!-- 位值标签 -->
+                        <div class="grid grid-cols-8 gap-2 mb-2 text-center text-xs text-gray-400 font-mono">
+                            ${[128, 64, 32, 16, 8, 4, 2, 1].map(v => `<div>${v}</div>`).join('')}
+                        </div>
+
+                        <!-- 二进制位 -->
+                        <div class="grid grid-cols-8 gap-2 mb-4">
+                            ${bits.map((b, i) => `
+                                <button onclick="window._toggleBit(${i})" class="aspect-square rounded-xl text-2xl font-bold flex items-center justify-center transition-all duration-200 ${b ? 'bg-indigo-500 text-white shadow-lg scale-105' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}">
+                                    ${b}
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <!-- 当前值 -->
+                        <div class="text-center py-4 bg-gray-50 rounded-xl">
+                            <p class="text-gray-500 text-sm">当前二进制值</p>
+                            <p class="text-3xl font-mono font-bold text-gray-800 mt-1">${bits.join('')}</p>
+                            <p class="text-gray-500 text-sm mt-1">= 十进制 <strong class="text-xl ${currentValue === targetNumber ? 'text-green-500' : 'text-orange-500'}">${currentValue}</strong></p>
+                        </div>
+
+                        <div class="flex justify-center gap-3 mt-4">
+                            <button onclick="window._resetBits()" class="bg-gray-200 text-gray-700 px-5 py-2 rounded-xl font-medium hover:bg-gray-300">🔄 重置</button>
+                            <button onclick="window._checkBinary()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-xl font-bold hover:shadow-lg transition ${currentValue === targetNumber ? 'pulse-glow' : ''}">✅ 确认</button>
+                        </div>
+
+                        <div class="text-center mt-3 text-sm text-gray-400">得分：${score} / ${round}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window._toggleBit = (i) => { bits[i] = bits[i] ? 0 : 1; render(); };
+        window._resetBits = () => { bits = [0, 0, 0, 0, 0, 0, 0, 0]; render(); };
+        window._checkBinary = () => {
+            const currentValue = bits.reduce((sum, b, i) => sum + b * Math.pow(2, 7 - i), 0);
+            if (currentValue === targetNumber) {
+                score++;
+                round++;
+                if (round >= totalRounds) {
+                    addStars(score);
+                    addBadge('binary_master');
+                    markComplete('binary');
+                    const content = document.getElementById('content');
+                    content.innerHTML = `
+                        <div class="slide-up max-w-lg mx-auto">
+                            <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-8 text-center">
+                                <div class="text-6xl mb-4">🔢</div>
+                                <h3 class="text-2xl font-bold text-gray-800">二进制挑战完成！</h3>
+                                <p class="text-gray-500 mt-2">你答对了 <strong class="text-indigo-600 text-3xl">${score}</strong> / ${totalRounds} 题</p>
+                                <p class="text-yellow-600 font-bold mt-2">+${score} ⭐</p>
+                                <div class="flex gap-3 justify-center mt-6">
+                                    <button onclick="showBinary()" class="bg-gradient-to-r from-indigo-400 to-indigo-600 text-white px-6 py-3 rounded-xl font-bold">🔄 再来一次</button>
+                                    <button onclick="showHome()" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-bold">🏠 返回首页</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    showConfetti();
+                } else {
+                    newRound();
+                }
+            } else {
+                // 显示错误提示
+                const btn = document.querySelector('[onclick="window._checkBinary()"]');
+                btn.textContent = '❌ 不对哦，再试试';
+                btn.className = 'bg-red-500 text-white px-6 py-2 rounded-xl font-bold';
+                setTimeout(() => { btn.textContent = '✅ 确认'; btn.className = 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-xl font-bold hover:shadow-lg transition'; }, 1000);
+            }
+        };
+
+        newRound();
+    }
+
+    // ==================== 硬件拼图 ====================
+    function showPuzzle() {
+        const parts = [
+            { id: 'cpu', name: 'CPU (处理器)', icon: '🧠', slot: 'slot-cpu', desc: '电脑的大脑，负责计算' },
+            { id: 'ram', name: '内存 (RAM)', icon: '💾', slot: 'slot-ram', desc: '临时存储数据' },
+            { id: 'hdd', name: '硬盘', icon: '📁', slot: 'slot-hdd', desc: '永久存储文件' },
+            { id: 'gpu', name: '显卡 (GPU)', icon: '🎮', slot: 'slot-gpu', desc: '处理图形显示' },
+            { id: 'psu', name: '电源', icon: '🔌', slot: 'slot-psu', desc: '提供电力' },
+            { id: 'fan', name: '散热风扇', icon: '🌀', slot: 'slot-fan', desc: '给电脑降温' },
+        ];
+
+        const shuffled = [...parts].sort(() => Math.random() - 0.5);
+        let placed = {};
+
+        function render() {
+            const allPlaced = Object.keys(placed).length === parts.length;
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="slide-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                        <h2 class="text-white text-2xl font-bold">🧩 硬件拼图</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- 零件栏 -->
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                            <h3 class="font-bold text-gray-800 text-lg mb-4">📦 零件箱（拖到右边对应位置）</h3>
+                            <div class="grid grid-cols-2 gap-3" id="partsBox">
+                                ${shuffled.filter(p => !placed[p.id]).map(p => `
+                                    <div class="drag-item bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-center" draggable="true" data-id="${p.id}"
+                                         ondragstart="window._onDragStart(event, '${p.id}')">
+                                        <div class="text-3xl">${p.icon}</div>
+                                        <div class="font-bold text-sm mt-1 text-gray-700">${p.name}</div>
+                                    </div>
+                                `).join('')}
+                                ${shuffled.filter(p => !placed[p.id]).length === 0 ? '<p class="col-span-2 text-center text-gray-400 py-4">所有零件已放置！ ✅</p>' : ''}
+                            </div>
+                        </div>
+
+                        <!-- 电脑主板 -->
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                            <h3 class="font-bold text-gray-800 text-lg mb-4">🖥️ 电脑主板</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                ${parts.map(p => `
+                                    <div class="drop-zone border-2 border-dashed ${placed[p.id] ? 'border-green-400 bg-green-50' : 'border-gray-300 bg-gray-50'} rounded-xl p-4 text-center min-h-[100px] flex flex-col items-center justify-center"
+                                         data-slot="${p.slot}" data-expect="${p.id}"
+                                         ondragover="window._onDragOver(event)" ondragleave="window._onDragLeave(event)" ondrop="window._onDrop(event)">
+                                        ${placed[p.id] ? `
+                                            <div class="text-3xl bounce-in">${p.icon}</div>
+                                            <div class="font-bold text-sm text-green-700 mt-1">${p.name}</div>
+                                            <div class="text-xs text-green-600">${p.desc}</div>
+                                        ` : `
+                                            <div class="text-gray-400 text-sm">🔲 ${p.name}</div>
+                                            <div class="text-xs text-gray-300 mt-1">拖放到这里</div>
+                                        `}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    ${allPlaced ? `
+                        <div class="mt-6 bg-green-500/20 backdrop-blur rounded-2xl p-6 text-center text-white bounce-in">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <h3 class="text-2xl font-bold">恭喜！电脑组装完成！</h3>
+                            <p class="text-white/80 mt-2">你已经认识了电脑的所有主要硬件组件！</p>
+                            <button onclick="showHome()" class="mt-4 bg-white text-green-600 px-6 py-3 rounded-xl font-bold hover:shadow-lg">🏠 返回首页</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            // 触摸设备支持
+            document.querySelectorAll('.drag-item').forEach(item => {
+                item.addEventListener('touchstart', (e) => {
+                    window._currentDragId = item.dataset.id;
+                    item.style.opacity = '0.5';
+                });
+                item.addEventListener('touchend', (e) => {
+                    item.style.opacity = '1';
+                    const touch = e.changedTouches[0];
+                    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const zone = dropTarget?.closest('.drop-zone');
+                    if (zone && window._currentDragId) {
+                        const expect = zone.dataset.expect;
+                        if (window._currentDragId === expect) {
+                            placed[window._currentDragId] = true;
+                            render();
+                            if (Object.keys(placed).length === parts.length) {
+                                addStars(5);
+                                addBadge('puzzle_solver');
+                                markComplete('puzzle');
+                                showConfetti();
+                            }
+                        }
+                    }
+                    window._currentDragId = null;
+                });
+            });
+        }
+
+        window._onDragStart = (e, id) => { e.dataTransfer.setData('text/plain', id); };
+        window._onDragOver = (e) => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); };
+        window._onDragLeave = (e) => { e.currentTarget.classList.remove('drag-over'); };
+        window._onDrop = (e) => {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+            const id = e.dataTransfer.getData('text/plain');
+            const expect = e.currentTarget.dataset.expect;
+            if (id === expect) {
+                placed[id] = true;
+                render();
+                if (Object.keys(placed).length === parts.length) {
+                    addStars(5);
+                    addBadge('puzzle_solver');
+                    markComplete('puzzle');
+                    showConfetti();
+                }
+            } else {
+                e.currentTarget.style.background = '#fee2e2';
+                setTimeout(() => { e.currentTarget.style.background = ''; }, 500);
+            }
+        };
+
+        render();
+    }
+
+    // ==================== 像素画板 ====================
+    function showDraw() {
+        const content = document.getElementById('content');
+        let color = '#6366f1';
+        let brushSize = 3;
+        let isDrawing = false;
+        let isEraser = false;
+
+        content.innerHTML = `
+            <div class="slide-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                    <h2 class="text-white text-2xl font-bold">🎨 像素画板</h2>
+                </div>
+
+                <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-4 sm:p-6">
+                    <!-- 工具栏 -->
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm text-gray-600 font-medium">颜色：</label>
+                            <input type="color" id="colorPicker" value="#6366f1" class="w-10 h-10 rounded-lg cursor-pointer border-0">
+                        </div>
+
+                        <div class="flex gap-1">
+                            ${['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899', '#000000', '#ffffff'].map(c => `
+                                <button onclick="window._setColor('${c}')" class="w-8 h-8 rounded-full border-2 border-gray-200 hover:scale-110 transition" style="background:${c}"></button>
+                            `).join('')}
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm text-gray-600 font-medium">大小：</label>
+                            <input type="range" id="brushRange" min="1" max="20" value="3" class="w-20">
+                            <span id="brushSizeLabel" class="text-sm text-gray-500">3</span>
+                        </div>
+
+                        <button id="eraserBtn" onclick="window._toggleEraser()" class="px-3 py-2 rounded-lg bg-gray-100 text-sm hover:bg-gray-200">🧹 橡皮</button>
+                        <button onclick="window._clearCanvas()" class="px-3 py-2 rounded-lg bg-red-100 text-red-600 text-sm hover:bg-red-200">🗑️ 清空</button>
+                        <button onclick="window._saveCanvas()" class="px-3 py-2 rounded-lg bg-green-100 text-green-600 text-sm hover:bg-green-200">💾 保存</button>
+                    </div>
+
+                    <!-- 画布 -->
+                    <div class="flex justify-center bg-gray-50 rounded-xl p-2">
+                        <canvas id="drawCanvas" width="600" height="400" class="rounded-xl shadow-inner bg-white max-w-full" style="touch-action: none;"></canvas>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+        }
+
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+        canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; const p = getPos(e); ctx.strokeStyle = isEraser ? '#ffffff' : color; ctx.lineWidth = brushSize; ctx.lineTo(p.x, p.y); ctx.stroke(); });
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseleave', () => isDrawing = false);
+
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!isDrawing) return; const p = getPos(e); ctx.strokeStyle = isEraser ? '#ffffff' : color; ctx.lineWidth = brushSize; ctx.lineTo(p.x, p.y); ctx.stroke(); });
+        canvas.addEventListener('touchend', (e) => { e.preventDefault(); isDrawing = false; });
+
+        document.getElementById('colorPicker').addEventListener('input', (e) => { color = e.target.value; isEraser = false; updateEraserBtn(); });
+        document.getElementById('brushRange').addEventListener('input', (e) => { brushSize = parseInt(e.target.value); document.getElementById('brushSizeLabel').textContent = brushSize; });
+
+        window._setColor = (c) => { color = c; document.getElementById('colorPicker').value = c; isEraser = false; updateEraserBtn(); };
+        window._toggleEraser = () => { isEraser = !isEraser; updateEraserBtn(); };
+        window._clearCanvas = () => { ctx.fillStyle = 'white'; ctx.fillRect(0, 0, canvas.width, canvas.height); };
+        window._saveCanvas = () => {
+            const link = document.createElement('a');
+            link.download = '我的画作.png';
+            link.href = canvas.toDataURL();
+            link.click();
+            addBadge('artist');
+            addStars(3);
+            markComplete('draw');
+        };
+
+        function updateEraserBtn() {
+            const btn = document.getElementById('eraserBtn');
+            btn.className = `px-3 py-2 rounded-lg text-sm ${isEraser ? 'bg-indigo-500 text-white' : 'bg-gray-100 hover:bg-gray-200'}`;
+        }
+    }
+
+    // ==================== 音乐键盘 ====================
+    function showMusic() {
+        const content = document.getElementById('content');
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        const notes = [
+            { key: 'C', freq: 261.63, label: 'Do', keyBind: 'a', color: 'white' },
+            { key: 'C#', freq: 277.18, label: '', keyBind: 'w', color: 'black' },
+            { key: 'D', freq: 293.66, label: 'Re', keyBind: 's', color: 'white' },
+            { key: 'D#', freq: 311.13, label: '', keyBind: 'e', color: 'black' },
+            { key: 'E', freq: 329.63, label: 'Mi', keyBind: 'd', color: 'white' },
+            { key: 'F', freq: 349.23, label: 'Fa', keyBind: 'f', color: 'white' },
+            { key: 'F#', freq: 369.99, label: '', keyBind: 't', color: 'black' },
+            { key: 'G', freq: 392.00, label: 'Sol', keyBind: 'g', color: 'white' },
+            { key: 'G#', freq: 415.30, label: '', keyBind: 'y', color: 'black' },
+            { key: 'A', freq: 440.00, label: 'La', keyBind: 'h', color: 'white' },
+            { key: 'A#', freq: 466.16, label: '', keyBind: 'u', color: 'black' },
+            { key: 'B', freq: 493.88, label: 'Si', keyBind: 'j', color: 'white' },
+            { key: 'C2', freq: 523.25, label: 'Do', keyBind: 'k', color: 'white' },
+        ];
+
+        content.innerHTML = `
+            <div class="slide-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                    <h2 class="text-white text-2xl font-bold">🎵 音乐键盘</h2>
+                </div>
+
+                <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                    <p class="text-gray-600 text-center mb-4">点击琴键或使用键盘 <span class="font-mono bg-gray-100 px-2 py-0.5 rounded">A S D F G H J K</span> 来演奏音乐 🎶</p>
+
+                    <div class="flex justify-center overflow-x-auto pb-4">
+                        <div class="relative flex" style="height: 220px;">
+                            ${notes.filter(n => n.color === 'white').map((n, i) => `
+                                <div class="piano-key bg-white border-2 border-gray-300 rounded-b-xl flex flex-col items-center justify-end pb-3 hover:bg-gray-50"
+                                     style="width: 60px; height: 200px; z-index: 1;"
+                                     data-note="${n.key}"
+                                     onmousedown="window._playNote('${n.key}')" onmouseup="window._stopNote('${n.key}')"
+                                     ontouchstart="window._playNote('${n.key}')" ontouchend="window._stopNote('${n.key}')">
+                                    <div class="text-sm font-bold text-gray-600">${n.label}</div>
+                                    <div class="text-xs text-gray-400 font-mono mt-1">${n.keyBind.toUpperCase()}</div>
+                                </div>
+                            `).join('')}
+                            <!-- 黑键覆盖 -->
+                            ${(() => {
+                                const whitePositions = [0, 1, 2, 3, 4, 5, 6, 7]; // C D E F G A B C2
+                                const blackKeys = notes.filter(n => n.color === 'black');
+                                const blackPositions = [0, 1, 3, 4, 5]; // relative to white keys
+                                return blackKeys.map((n, i) => `
+                                    <div class="piano-key bg-gray-800 rounded-b-lg flex flex-col items-center justify-end pb-2 absolute"
+                                         style="width: 36px; height: 130px; z-index: 2; left: ${blackPositions[i] * 60 + 42}px; top: 0;"
+                                         data-note="${n.key}"
+                                         onmousedown="window._playNote('${n.key}')" onmouseup="window._stopNote('${n.key}')"
+                                         ontouchstart="window._playNote('${n.key}')" ontouchend="window._stopNote('${n.key}')">
+                                        <div class="text-xs text-gray-400 font-mono">${n.keyBind.toUpperCase()}</div>
+                                    </div>
+                                `).join('');
+                            })()}
+                        </div>
+                    </div>
+
+                    <!-- 示范曲目 -->
+                    <div class="mt-6 bg-indigo-50 rounded-xl p-4">
+                        <h4 class="font-bold text-indigo-700 mb-2">🎶 试试弹这些简单的曲子：</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-white rounded-lg p-3">
+                                <strong>小星星：</strong>
+                                <span class="font-mono text-indigo-600">Do Do Sol Sol La La Sol - Fa Fa Mi Mi Re Re Do</span>
+                            </div>
+                            <div class="bg-white rounded-lg p-3">
+                                <strong>两只老虎：</strong>
+                                <span class="font-mono text-indigo-600">Do Re Mi Do - Do Re Mi Do - Mi Fa Sol - Mi Fa Sol</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const activeOscillators = {};
+
+        window._playNote = (key) => {
+            const note = notes.find(n => n.key === key);
+            if (!note || activeOscillators[key]) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = note.freq;
+            gain.gain.value = 0.3;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            activeOscillators[key] = { osc, gain };
+
+            const el = document.querySelector(`[data-note="${key}"]`);
+            if (el) el.classList.add('active');
+
+            addBadge('music_maker');
+        };
+
+        window._stopNote = (key) => {
+            if (activeOscillators[key]) {
+                const { osc, gain } = activeOscillators[key];
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                setTimeout(() => osc.stop(), 300);
+                delete activeOscillators[key];
+            }
+            const el = document.querySelector(`[data-note="${key}"]`);
+            if (el) el.classList.remove('active');
+        };
+
+        // 键盘支持
+        const keyHandler = (e) => {
+            const note = notes.find(n => n.keyBind === e.key.toLowerCase());
+            if (note) {
+                if (e.type === 'keydown' && !e.repeat) window._playNote(note.key);
+                if (e.type === 'keyup') window._stopNote(note.key);
+            }
+        };
+
+        document.addEventListener('keydown', keyHandler);
+        document.addEventListener('keyup', keyHandler);
+
+        // 清理事件监听
+        const origShowHome = showHome;
+        window._musicCleanup = () => {
+            document.removeEventListener('keydown', keyHandler);
+            document.removeEventListener('keyup', keyHandler);
+            Object.keys(activeOscillators).forEach(key => window._stopNote(key));
+        };
+    }
+
+    // ==================== 算法思维 ====================
+    function showAlgorithm() {
+        let currentLevel = 0;
+        const levels = [
+            {
+                title: '🔢 冒泡排序',
+                desc: '冒泡排序就像水中的气泡一样，大的数字会一步一步"浮"到最上面。每次比较相邻的两个数字，如果顺序不对就交换它们。',
+                type: 'bubble'
+            },
+            {
+                title: '🔍 线性搜索',
+                desc: '线性搜索就像在一排人中找朋友，从第一个人开始，一个一个地看，直到找到为止。',
+                type: 'search'
+            },
+            {
+                title: '🧮 规律找数',
+                desc: '找出数字序列中的规律，预测下一个数字是什么。',
+                type: 'pattern'
+            }
+        ];
+
+        function render() {
+            const level = levels[currentLevel];
+            const content = document.getElementById('content');
+
+            if (level.type === 'bubble') {
+                renderBubbleSort();
+            } else if (level.type === 'search') {
+                renderLinearSearch();
+            } else {
+                renderPattern();
+            }
+        }
+
+        // 冒泡排序可视化
+        function renderBubbleSort() {
+            let arr = Array.from({ length: 8 }, () => Math.floor(Math.random() * 50) + 1);
+            let comparing = -1;
+            let sorted = false;
+            let steps = 0;
+
+            function drawBubble() {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="slide-up">
+                        <div class="flex items-center gap-3 mb-6">
+                            <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                            <h2 class="text-white text-2xl font-bold">🤖 算法思维 - 冒泡排序</h2>
+                        </div>
+
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                            <p class="text-gray-600 mb-4">比较相邻的两个数字，如果左边比右边大就交换。点击"下一步"观察排序过程！</p>
+
+                            <!-- 柱状图 -->
+                            <div class="flex items-end justify-center gap-2 h-48 bg-gray-50 rounded-xl p-4 mb-4">
+                                ${arr.map((v, i) => `
+                                    <div class="flex flex-col items-center gap-1" style="flex: 1; max-width: 60px;">
+                                        <span class="text-xs font-bold text-gray-600">${v}</span>
+                                        <div class="w-full rounded-t-lg transition-all duration-300 ${i === comparing || i === comparing + 1 ? 'bg-orange-400' : sorted ? 'bg-green-400' : 'bg-indigo-400'}"
+                                             style="height: ${v * 3}px;"></div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="flex justify-center gap-3">
+                                <button onclick="window._bubbleStep()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg transition" ${sorted ? 'disabled' : ''}>
+                                    ${sorted ? '✅ 排序完成！' : '▶️ 下一步'}
+                                </button>
+                                <button onclick="window._bubbleAuto()" class="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg transition" ${sorted ? 'disabled' : ''}>
+                                    ⏩ 自动排序
+                                </button>
+                                <button onclick="showAlgorithm()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold">🔄 重新开始</button>
+                            </div>
+
+                            <div class="mt-4 text-center text-sm text-gray-500">步骤数：${steps}</div>
+
+                            <!-- 切换其他算法 -->
+                            <div class="flex justify-center gap-3 mt-6 border-t pt-4">
+                                <button onclick="window._switchAlgo(0)" class="px-4 py-2 rounded-lg ${currentLevel === 0 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">冒泡排序</button>
+                                <button onclick="window._switchAlgo(1)" class="px-4 py-2 rounded-lg ${currentLevel === 1 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">线性搜索</button>
+                                <button onclick="window._switchAlgo(2)" class="px-4 py-2 rounded-lg ${currentLevel === 2 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">规律找数</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let i = 0, j = 0;
+            window._bubbleStep = () => {
+                if (sorted) return;
+                if (j < arr.length - 1 - i) {
+                    comparing = j;
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                    }
+                    j++;
+                    steps++;
+                } else {
+                    j = 0;
+                    i++;
+                    if (i >= arr.length - 1) {
+                        sorted = true;
+                        comparing = -1;
+                        addBadge('algo_thinker');
+                        addStars(3);
+                        markComplete('algorithm');
+                    }
+                }
+                drawBubble();
+            };
+
+            window._bubbleAuto = () => {
+                const interval = setInterval(() => {
+                    window._bubbleStep();
+                    if (sorted) clearInterval(interval);
+                }, 300);
+            };
+
+            drawBubble();
+        }
+
+        // 线性搜索
+        function renderLinearSearch() {
+            const arr = Array.from({ length: 10 }, () => Math.floor(Math.random() * 99) + 1);
+            const target = arr[Math.floor(Math.random() * arr.length)];
+            let current = -1;
+            let found = false;
+
+            function drawSearch() {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="slide-up">
+                        <div class="flex items-center gap-3 mb-6">
+                            <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                            <h2 class="text-white text-2xl font-bold">🤖 算法思维 - 线性搜索</h2>
+                        </div>
+
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                            <p class="text-gray-600 mb-2">从左到右逐个查找目标数字。</p>
+                            <p class="text-center text-xl mb-4">🔍 要找的数字：<strong class="text-indigo-600 text-3xl">${target}</strong></p>
+
+                            <div class="flex justify-center gap-2 mb-6">
+                                ${arr.map((v, i) => `
+                                    <div class="w-14 h-14 rounded-xl flex items-center justify-center font-bold text-lg transition-all duration-300 ${
+                                        found && i === current ? 'bg-green-500 text-white scale-110 shadow-lg' :
+                                        i === current ? 'bg-orange-400 text-white scale-105' :
+                                        i < current ? 'bg-gray-200 text-gray-400' :
+                                        'bg-indigo-100 text-indigo-700'
+                                    }">
+                                        ${v}
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="text-center">
+                                ${found ? `
+                                    <p class="text-green-600 font-bold text-lg">✅ 找到了！在第 ${current + 1} 个位置！</p>
+                                ` : current >= 0 ? `
+                                    <p class="text-orange-600">正在检查第 ${current + 1} 个位置... ${arr[current] === target ? '' : arr[current] + ' ≠ ' + target}</p>
+                                ` : `
+                                    <p class="text-gray-500">点击"下一步"开始搜索</p>
+                                `}
+                            </div>
+
+                            <div class="flex justify-center gap-3 mt-4">
+                                <button onclick="window._searchStep()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl font-bold" ${found ? 'disabled' : ''}>
+                                    ${found ? '✅ 已找到' : '▶️ 下一步'}
+                                </button>
+                                <button onclick="window._switchAlgo(1)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold">🔄 重来</button>
+                            </div>
+
+                            <div class="flex justify-center gap-3 mt-6 border-t pt-4">
+                                <button onclick="window._switchAlgo(0)" class="px-4 py-2 rounded-lg ${currentLevel === 0 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">冒泡排序</button>
+                                <button onclick="window._switchAlgo(1)" class="px-4 py-2 rounded-lg ${currentLevel === 1 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">线性搜索</button>
+                                <button onclick="window._switchAlgo(2)" class="px-4 py-2 rounded-lg ${currentLevel === 2 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">规律找数</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window._searchStep = () => {
+                if (found) return;
+                current++;
+                if (arr[current] === target) {
+                    found = true;
+                    addStars(2);
+                }
+                drawSearch();
+            };
+
+            drawSearch();
+        }
+
+        // 规律找数
+        function renderPattern() {
+            const patterns = [
+                { seq: [2, 4, 6, 8], answer: 10, rule: '每次加2' },
+                { seq: [1, 3, 5, 7], answer: 9, rule: '奇数序列，每次加2' },
+                { seq: [1, 2, 4, 8], answer: 16, rule: '每次乘2' },
+                { seq: [1, 1, 2, 3, 5], answer: 8, rule: '斐波那契数列，前两个数之和' },
+                { seq: [3, 6, 9, 12], answer: 15, rule: '每次加3' },
+                { seq: [100, 90, 80, 70], answer: 60, rule: '每次减10' },
+                { seq: [1, 4, 9, 16], answer: 25, rule: '完全平方数 1²,2²,3²,4²,5²...' },
+                { seq: [2, 6, 18, 54], answer: 162, rule: '每次乘3' },
+            ];
+            const p = patterns[Math.floor(Math.random() * patterns.length)];
+            let userAnswer = '';
+            let checked = false;
+            let isCorrect = false;
+
+            function drawPattern() {
+                const content = document.getElementById('content');
+                content.innerHTML = `
+                    <div class="slide-up">
+                        <div class="flex items-center gap-3 mb-6">
+                            <button onclick="showHome()" class="text-white/80 hover:text-white text-2xl">←</button>
+                            <h2 class="text-white text-2xl font-bold">🤖 算法思维 - 规律找数</h2>
+                        </div>
+
+                        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-xl p-6">
+                            <p class="text-gray-600 mb-4">观察数字序列的规律，找出下一个数字是什么？</p>
+
+                            <div class="flex justify-center items-center gap-3 mb-6 flex-wrap">
+                                ${p.seq.map(n => `
+                                    <div class="w-16 h-16 bg-indigo-500 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">${n}</div>
+                                `).join('')}
+                                <div class="w-16 h-16 bg-yellow-100 border-3 border-dashed border-yellow-400 rounded-xl flex items-center justify-center font-bold text-xl text-yellow-600">?</div>
+                            </div>
+
+                            <div class="max-w-xs mx-auto">
+                                <input type="number" id="patternInput" class="w-full text-center text-2xl font-bold p-4 border-2 border-indigo-300 rounded-xl focus:outline-none focus:border-indigo-500" placeholder="输入答案" ${checked ? 'disabled' : ''}>
+                                <button onclick="window._checkPattern()" class="w-full mt-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 rounded-xl font-bold text-lg" ${checked ? 'disabled' : ''}>
+                                    ✅ 确认答案
+                                </button>
+                            </div>
+
+                            ${checked ? `
+                                <div class="mt-4 p-4 rounded-xl text-center ${isCorrect ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}">
+                                    ${isCorrect ? '🎉 回答正确！太棒了！' : `❌ 答案是 <strong>${p.answer}</strong>`}
+                                    <p class="text-sm mt-1">规律：${p.rule}</p>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button onclick="window._switchAlgo(2)" class="bg-gradient-to-r from-violet-400 to-violet-600 text-white px-6 py-2 rounded-xl font-bold">🔄 下一题</button>
+                                </div>
+                            ` : ''}
+
+                            <div class="flex justify-center gap-3 mt-6 border-t pt-4">
+                                <button onclick="window._switchAlgo(0)" class="px-4 py-2 rounded-lg ${currentLevel === 0 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">冒泡排序</button>
+                                <button onclick="window._switchAlgo(1)" class="px-4 py-2 rounded-lg ${currentLevel === 1 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">线性搜索</button>
+                                <button onclick="window._switchAlgo(2)" class="px-4 py-2 rounded-lg ${currentLevel === 2 ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium">规律找数</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window._checkPattern = () => {
+                const input = document.getElementById('patternInput');
+                const val = parseInt(input.value);
+                if (isNaN(val)) return;
+                checked = true;
+                isCorrect = val === p.answer;
+                if (isCorrect) {
+                    addStars(3);
+                    addBadge('algo_thinker');
+                    markComplete('algorithm');
+                }
+                drawPattern();
+            };
+
+            drawPattern();
+        }
+
+        window._switchAlgo = (i) => { currentLevel = i; render(); };
+
+        render();
+    }
+
+    // ==================== 初始化 ====================
+    function init() {
+        updateTopBar();
+
+        // 检查星星成就
+        if (state.stars >= 50) addBadge('star_50');
+        if (state.stars >= 100) addBadge('star_100');
+
+        showHome();
+
+        // 音乐模块离开时清理
+        const origShowHome2 = showHome;
+        const origOpenModule = openModule;
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

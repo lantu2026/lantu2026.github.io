@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>勤美汤小 wiki · 师生家长实用手册</title>
+<meta name="description" content="常州市新北区汤庄桥小学师生家长共建共享的校园百科手册">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/emblem.png">
+
+<style>
+/* ============ 勤美汤小 wiki · 设计系统 ============ */
+:root{
+  /* 默认配色：草木绿（明快版） */
+  --g900:#0F5C3A;--g700:#157A4C;--g600:#199A5F;--g500:#22B26B;--g400:#4FC98D;
+  --g300:#96E2B9;--g200:#C6F0DA;--g100:#E2F9EC;--g50:#F1FCF6;
+  --bg:#F5FCF8;--card:#FFFFFF;--text:#1F3A2C;--muted:#63806F;--line:#DDEFE5;
+  --amber:#F5A623;--red:#F06B62;--blue:#3FA9F5;--purple:#B37BE8;
+  --sh:0 2px 12px rgba(21,122,76,.09);--sh2:0 8px 26px rgba(21,122,76,.16);
+  --r:14px;--maxw:1080px;
+  /* 首屏横幅：亮底深字，明快且对比足够 */
+  --hero1:#7FE9AE;--hero2:#2FC97D;--hero-ink:#08381F;--hero-glow:rgba(255,255,255,.30);
+  /* 实心按钮用色：深浅色下固定，保证白字对比度 */
+  --accent:#157A4C;--accent-ink:#FFFFFF;
+}
+/* ===== 配色方案 · 阳光橙 ===== */
+html[data-skin="orange"]{
+  --g900:#A6460A;--g700:#C25C12;--g600:#E07C1E;--g500:#F59A2E;--g400:#FFB960;
+  --g300:#FFD49A;--g200:#FFE6C4;--g100:#FFF3E1;--g50:#FFF9F1;
+  --bg:#FFF9F2;--card:#FFFFFF;--text:#3A2716;--muted:#8A7259;--line:#F6E7D2;
+  --amber:#F5A623;--red:#EF6B5E;--blue:#3FA9F5;--purple:#B37BE8;
+  --sh:0 2px 12px rgba(194,92,18,.10);--sh2:0 8px 26px rgba(194,92,18,.16);
+  --hero1:#FFCE84;--hero2:#FF9C31;--hero-ink:#4A2506;--hero-glow:rgba(255,255,255,.34);
+  --accent:#C25C12;--accent-ink:#FFFFFF;
+}
+/* ===== 配色方案 · 活力蓝 ===== */
+html[data-skin="blue"]{
+  --g900:#0E4E86;--g700:#1467A8;--g600:#1E82C8;--g500:#2F9CE0;--g400:#63BCEE;
+  --g300:#A6DBF7;--g200:#CDEBFA;--g100:#E4F5FE;--g50:#F2FAFF;
+  --bg:#F5FBFF;--card:#FFFFFF;--text:#17323F;--muted:#5C7C8E;--line:#DCEDF8;
+  --amber:#F5A623;--red:#EF6B5E;--blue:#2F9CE0;--purple:#B37BE8;
+  --sh:0 2px 12px rgba(20,103,168,.10);--sh2:0 8px 26px rgba(20,103,168,.16);
+  --hero1:#9FD8FF;--hero2:#45B0EE;--hero-ink:#08355C;--hero-glow:rgba(255,255,255,.34);
+  --accent:#1467A8;--accent-ink:#FFFFFF;
+}
+/* ===== 配色方案 · 童趣粉 ===== */
+html[data-skin="pink"]{
+  --g900:#A3235E;--g700:#C4377A;--g600:#DE4E96;--g500:#F068AE;--g400:#FF93C6;
+  --g300:#FFBFDC;--g200:#FFD8E9;--g100:#FDEBF4;--g50:#FFF5F9;
+  --bg:#FFF7FB;--card:#FFFFFF;--text:#3C2130;--muted:#8C6C7E;--line:#F7E1EC;
+  --amber:#F5A623;--red:#EF6B5E;--blue:#3FA9F5;--purple:#A96BE0;
+  --sh:0 2px 12px rgba(196,55,122,.10);--sh2:0 8px 26px rgba(196,55,122,.16);
+  --hero1:#FFBBD9;--hero2:#FF86BB;--hero-ink:#5C0F35;--hero-glow:rgba(255,255,255,.34);
+  --accent:#C4377A;--accent-ink:#FFFFFF;
+}
+/* ===== 深色底：各配色共用底板，只换色阶 ===== */
+html[data-theme="dark"]{
+  --g900:#C7F0DA;--g700:#8FE0B4;--g600:#5FD094;--g500:#3FBE7E;--g400:#2E9A66;
+  --g300:#285843;--g200:#224636;--g100:#1D392C;--g50:#183025;
+  --bg:#111A16;--card:#1A241F;--text:#DFEAE3;--muted:#8CA79A;--line:#293830;
+  --red:#F58C84;--blue:#6FC1F5;--purple:#C79BEE;--amber:#F0B65C;
+  --sh:0 2px 12px rgba(0,0,0,.4);--sh2:0 8px 26px rgba(0,0,0,.55);
+}
+html[data-theme="dark"][data-skin="orange"]{
+  --g900:#FFDDB4;--g700:#FFC07A;--g600:#FFA64D;--g500:#F5912F;--g400:#C4711F;
+  --g300:#5C3F1C;--g200:#48311A;--g100:#3B2A19;--g50:#312416;
+}
+html[data-theme="dark"][data-skin="blue"]{
+  --g900:#C6E7FF;--g700:#8FCCF3;--g600:#5EB4E8;--g500:#349EDC;--g400:#2478AE;
+  --g300:#22455C;--g200:#1E3A4D;--g100:#1B3141;--g50:#182B38;
+}
+html[data-theme="dark"][data-skin="pink"]{
+  --g900:#FFD2E7;--g700:#FFA6CE;--g600:#F87CB6;--g500:#E45FA0;--g400:#B4477E;
+  --g300:#5C2A44;--g200:#4A2437;--g100:#3C1F2E;--g50:#331B28;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif;
+  background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--g700);text-decoration:none}
+a:hover{color:var(--g500)}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:80;background:color-mix(in srgb,var(--card) 88%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.tb-in{max-width:var(--maxw);margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:14px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex:0 0 auto}
+.logo .mk-img{
+  width:38px;height:38px;border-radius:50%;object-fit:contain;flex:0 0 auto;background:#fff;
+  padding:2px;box-shadow:var(--sh);
+}
+/* ---------- 配色切换器 ---------- */
+.skinpop{
+  position:absolute;top:56px;right:0;width:232px;background:var(--card);border:1px solid var(--line);
+  border-radius:15px;box-shadow:var(--sh2);padding:14px;display:none;z-index:95;
+}
+.skinpop.show{display:block;animation:fi .18s ease}
+.skinpop .t{font-size:11.5px;color:var(--muted);letter-spacing:.6px;margin-bottom:10px}
+.skins{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sw{
+  width:100%;height:38px;border-radius:12px;border:2px solid transparent;cursor:pointer;position:relative;
+  transition:.15s;padding:0;display:block;
+}
+.sw:hover{transform:translateY(-2px)}
+.it.on .sw{border-color:var(--text)}
+.it.on .sw::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:15px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.45)}
+.skins .it{text-align:center}
+.skins .nm{font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.2}
+.skins .it.on .nm{color:var(--g700);font-weight:600}
+.logo b{font-size:15.5px;color:var(--g900);letter-spacing:.3px;white-space:nowrap}
+.logo small{display:block;font-size:10.5px;color:var(--muted);line-height:1.2;white-space:nowrap}
+.tb-space{flex:1}
+.search{
+  display:flex;align-items:center;gap:8px;background:var(--g50);border:1px solid var(--line);
+  border-radius:10px;padding:0 12px;width:min(300px,42vw);transition:.18s;
+}
+.search:focus-within{border-color:var(--g400);background:var(--card);box-shadow:var(--sh)}
+.search input{border:none;outline:none;background:transparent;flex:1;min-width:0;width:100%;padding:8px 0;font-size:13.5px;color:var(--text)}
+.search .k{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 5px}
+.iconbtn{
+  width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+  color:var(--text);display:grid;place-items:center;font-size:16px;transition:.15s;flex:0 0 auto;
+}
+.iconbtn:hover{background:var(--g50);border-color:var(--g300)}
+.btn{
+  border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 15px;border-radius:10px;
+  font-size:13.5px;transition:.15s;
+}
+.btn:hover{background:var(--g50);border-color:var(--g300)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(.9)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:5px 11px;font-size:12.5px;border-radius:8px}
+
+/* ---------- 布局 ---------- */
+main{max-width:var(--maxw);margin:0 auto;padding:26px 20px 70px}
+.crumb{font-size:12.8px;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.crumb a{color:var(--muted)}
+.crumb a:hover{color:var(--g500)}
+.crumb .sp{opacity:.5}
+
+/* ---------- Hero（紧凑横幅，约为原高度 1/3） ---------- */
+.hero{
+  border-radius:18px;padding:18px 24px;color:var(--hero-ink);position:relative;overflow:hidden;
+  background:linear-gradient(115deg,var(--hero1) 0%,var(--hero2) 100%);box-shadow:var(--sh2);
+}
+.hero::after{
+  content:"";position:absolute;right:-50px;top:-92px;width:210px;height:210px;border-radius:50%;
+  background:var(--hero-glow);
+}
+.hero::before{
+  content:"";position:absolute;left:34%;bottom:-120px;width:180px;height:180px;border-radius:50%;
+  background:var(--hero-glow);opacity:.65;
+}
+.hero-in{display:flex;align-items:center;gap:22px;position:relative;z-index:2;flex-wrap:wrap}
+.hero-brand{display:flex;align-items:center;gap:14px;flex:1 1 300px;min-width:0}
+.hero-emblem{
+  width:58px;height:58px;border-radius:50%;background:#fff;padding:4px;object-fit:contain;flex:0 0 auto;
+  box-shadow:0 5px 16px rgba(0,0,0,.16);
+}
+.hero-txt{min-width:0}
+.hero .tagline{font-size:11px;letter-spacing:1.6px;opacity:.82;line-height:1.4}
+.hero h1{font-size:23px;font-weight:700;letter-spacing:.6px;line-height:1.3}
+.hero .sub{font-size:12.8px;opacity:.9;margin-top:1px;line-height:1.5}
+.hero-side{flex:1 1 320px;min-width:250px;max-width:420px}
+.hero .bigsearch{
+  display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.96);
+  border-radius:11px;padding:0 13px;box-shadow:0 3px 12px rgba(0,0,0,.10);
+}
+.hero .bigsearch input{border:none;outline:none;background:transparent;flex:1;min-width:0;padding:10px 0;font-size:13.5px;color:#1F3A2C}
+.hero .bigsearch input::placeholder{color:#8CA79A}
+.hero .stats{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.hero .stats div{
+  font-size:10.5px;background:rgba(255,255,255,.52);border-radius:8px;padding:3px 9px;line-height:1.6;
+  white-space:nowrap;
+}
+.hero .stats b{font-weight:700;font-size:12px;margin-right:3px}
+
+/* ---------- 区块标题 ---------- */
+.sect{margin-top:30px}
+.sect-h{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.sect-h h2{font-size:18px;color:var(--g900);font-weight:700;letter-spacing:.4px}
+.sect-h .d{font-size:12.5px;color:var(--muted)}
+.sect-h .more{margin-left:auto;font-size:12.8px}
+
+/* ---------- 频道大卡 ---------- */
+.chans{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.chan{
+  background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);cursor:pointer;
+  border:1px solid var(--line);transition:.18s;position:relative;overflow:hidden;
+}
+.chan::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:linear-gradient(90deg,var(--g400),var(--g600))}
+.chan.s::before{background:linear-gradient(90deg,#63BCEE,#1E82C8)}
+.chan.p::before{background:linear-gradient(90deg,#FFB960,#E07C1E)}
+.chan.sc::before{background:linear-gradient(90deg,#F5836F,#C13B27)}
+.chan:hover{transform:translateY(-3px);box-shadow:var(--sh2);border-color:var(--g300)}
+.chan .top{display:flex;align-items:center;gap:11px}
+.chan .ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:22px;flex:0 0 auto}
+.chan.t .ic{background:var(--g100)}
+.chan.s .ic{background:#E4F5FE}
+.chan.p .ic{background:#FFF3E1}
+.chan.sc .ic{background:#FDECE8}
+html[data-theme="dark"] .chan.s .ic{background:#1B3141}
+html[data-theme="dark"] .chan.p .ic{background:#3B2A19}
+html[data-theme="dark"] .chan.sc .ic{background:#3A1E19}
+html[data-theme="dark"] .chan.t .ic{background:var(--g100)}
+.chan h3{font-size:15.5px;color:var(--g900)}
+.chan .cs{font-size:11.5px;color:var(--muted);margin-top:1px}
+.chan .desc{font-size:12.5px;color:var(--muted);margin:12px 0 13px;line-height:1.65;min-height:58px}
+.chan .chips{display:flex;gap:5px;flex-wrap:wrap}
+.chan .chip{
+  font-size:11px;padding:3px 8px;border-radius:7px;background:var(--g50);color:var(--g700);
+  border:1px solid var(--line);
+}
+.chan .go{margin-top:14px;font-size:12.5px;color:var(--g600);font-weight:600;display:flex;align-items:center;gap:5px}
+
+/* ---------- 快捷通道 ---------- */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.qcard{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 15px;cursor:pointer;
+  transition:.16s;box-shadow:var(--sh);display:flex;gap:11px;align-items:center;
+}
+.qcard:hover{border-color:var(--g400);transform:translateY(-2px);box-shadow:var(--sh2)}
+.qcard .qi{font-size:20px;flex:0 0 auto}
+.qcard b{display:block;font-size:13.8px;color:var(--g900);line-height:1.4}
+.qcard span{font-size:11.5px;color:var(--muted)}
+
+/* ---------- 列表卡 ---------- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--sh)}
+.upd{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.upd:last-child{border-bottom:none}
+.upd .dt{font-size:11.5px;color:var(--muted);flex:0 0 78px}
+.upd a{flex:1}
+.upd .ch{font-size:11px;color:var(--muted);flex:0 0 auto}
+.two{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+
+/* ---------- 共建条 ---------- */
+.join{
+  margin-top:34px;border-radius:18px;padding:26px 30px;color:var(--hero-ink);position:relative;overflow:hidden;
+  background:linear-gradient(115deg,var(--hero1),var(--hero2));box-shadow:var(--sh2);
+}
+.join h2{font-size:19px;margin-bottom:8px}
+.join p{font-size:13.5px;opacity:.9;max-width:640px;line-height:1.8}
+.join .ways{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:20px}
+.join .way{background:rgba(255,255,255,.55);border-radius:12px;padding:14px 16px}
+.join .way b{display:block;font-size:13.8px;margin-bottom:4px}
+.join .way span{font-size:12px;opacity:.88;line-height:1.6;display:block}
+
+/* ---------- 频道页 ---------- */
+.chhero{border-radius:18px;padding:26px 30px;color:var(--hero-ink);margin-bottom:24px;box-shadow:var(--sh2)}
+.chhero.t{background:linear-gradient(115deg,var(--hero1),var(--hero2))}
+.chhero.s{background:linear-gradient(115deg,#9FD8FF,#45B0EE);color:#08355C}
+.chhero.p{background:linear-gradient(115deg,#FFCE84,#FF9C31);color:#4A2506}
+.chhero.sc{background:linear-gradient(115deg,#FFC6BC,#EF6A52);color:#5A1107}
+.chhero h1{font-size:25px;font-weight:700}
+.chhero p{font-size:13.5px;opacity:.9;margin-top:7px;max-width:640px}
+.chhero .meta{margin-top:16px;font-size:12px;opacity:.82;display:flex;gap:18px;flex-wrap:wrap}
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.grp{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh)}
+.grp h3{font-size:14.8px;color:var(--g900);margin-bottom:11px;display:flex;align-items:center;gap:8px}
+.grp h3 .dot{width:7px;height:7px;border-radius:50%;background:var(--g400)}
+.grp h3 .n{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:400}
+.grp ul{list-style:none}
+.grp li{border-bottom:1px dashed var(--line)}
+.grp li:last-child{border-bottom:none}
+.grp li a{display:flex;align-items:center;gap:8px;padding:8px 2px;font-size:13.5px;color:var(--text);transition:.14s}
+.grp li a:hover{color:var(--g600);padding-left:6px}
+.grp li .st{margin-left:auto;font-size:10.5px;color:var(--muted);flex:0 0 auto}
+.grp li .st.todo{color:var(--amber)}
+
+/* ---------- 文章页 ---------- */
+.art-wrap{display:grid;grid-template-columns:210px 1fr;gap:30px;align-items:start}
+.toc{position:sticky;top:82px;font-size:12.8px;border-left:2px solid var(--line);padding-left:14px}
+.toc .tt{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:9px}
+.toc a{display:block;color:var(--muted);padding:3px 0;line-height:1.5}
+.toc a:hover{color:var(--g600)}
+.toc a.lv3{padding-left:12px;font-size:12.2px}
+.article{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:34px 38px;box-shadow:var(--sh);min-width:0}
+.article h1{font-size:25px;color:var(--g900);line-height:1.4;letter-spacing:.3px}
+.art-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:11px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.art-meta .tag{display:inline-block;padding:1px 9px;border-radius:7px;background:var(--g100);color:var(--g700);font-size:11.5px}
+.body{padding-top:22px;font-size:14.8px;line-height:1.9}
+.body h2{font-size:19px;color:var(--g900);margin:32px 0 12px;padding-left:12px;border-left:4px solid var(--g400);line-height:1.4}
+.body h3{font-size:16px;color:var(--g700);margin:22px 0 8px}
+.body p{margin:11px 0}
+.body ul,.body ol{margin:11px 0 11px 24px}
+.body li{margin:5px 0}
+.body b{color:var(--g900)}
+.body img{max-width:100%;height:auto}
+.body code{background:var(--g50);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:13px;color:var(--g700);font-family:Consolas,Monaco,monospace}
+.body table{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0}
+.body th,.body td{border:1px solid var(--line);padding:8px 11px;text-align:left}
+.body th{background:var(--g50);color:var(--g700);font-weight:600}
+.body tr:nth-child(even) td{background:color-mix(in srgb,var(--g50) 55%,transparent)}
+.note,.tip,.warn,.quote{border-radius:11px;padding:13px 17px;margin:16px 0;font-size:13.8px;line-height:1.8}
+.note{background:var(--g50);border-left:4px solid var(--g400)}
+.tip{background:#EAF4FD;border-left:4px solid var(--blue);color:#22323F}
+.warn{background:#FDF3E3;border-left:4px solid var(--amber);color:#4A3A1C}
+.quote{background:var(--g50);border-left:4px solid var(--g200);color:var(--muted);font-style:italic}
+html[data-theme="dark"] .tip{background:#1B2A38;color:#CFE3F5}
+html[data-theme="dark"] .warn{background:#332C1C;color:#EEDCB8}
+.note b,.tip b,.warn b{display:block;margin-bottom:3px;font-size:13px;letter-spacing:.5px}
+.steps{counter-reset:st;margin:16px 0}
+.steps .stp{position:relative;padding:0 0 16px 42px;border-left:2px dashed var(--g200);margin-left:13px}
+.steps .stp:last-child{border-left-color:transparent;padding-bottom:0}
+.steps .stp::before{
+  counter-increment:st;content:counter(st);position:absolute;left:-14px;top:-2px;width:26px;height:26px;
+  border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:12.5px;font-weight:700;
+}
+.steps .stp b{display:block;font-size:14.5px;color:var(--g900);margin-bottom:2px}
+.steps .stp span{font-size:13.5px;color:var(--muted);line-height:1.75}
+.art-foot{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:22px}
+.pager a{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;box-shadow:var(--sh);
+  transition:.16s;display:block;
+}
+.pager a:hover{border-color:var(--g400);transform:translateY(-2px)}
+.pager .lb{font-size:11px;color:var(--muted);margin-bottom:3px}
+.pager .tt{font-size:13.8px;color:var(--g900);font-weight:600}
+.pager a.next{text-align:right}
+
+/* ---------- 未完成条目 ---------- */
+.wip{text-align:center;padding:50px 20px;color:var(--muted)}
+.wip .e{font-size:44px;display:block;margin-bottom:14px;opacity:.6}
+.wip h2{font-size:19px;color:var(--g900);margin-bottom:9px}
+.wip p{font-size:13.8px;max-width:420px;margin:0 auto 20px;line-height:1.8}
+
+/* ---------- 搜索结果 ---------- */
+.res{padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:11px;box-shadow:var(--sh);display:block}
+.res:hover{border-color:var(--g400)}
+.res b{font-size:15px;color:var(--g900);display:block;margin-bottom:4px}
+.res .path{font-size:11.5px;color:var(--muted);margin-bottom:6px}
+.res .snip{font-size:13px;color:var(--muted);line-height:1.7}
+.res mark{background:#FDF0C8;color:var(--g900);border-radius:3px;padding:0 2px}
+html[data-theme="dark"] .res mark{background:#4A3F1C;color:#F0E3B8}
+
+/* ---------- 弹窗 ---------- */
+#modal{position:fixed;inset:0;background:rgba(20,35,28,.5);z-index:200;display:none;place-items:center;padding:18px;overflow:auto}
+#modal.show{display:grid}
+.modal{background:var(--card);border-radius:16px;width:min(560px,100%);box-shadow:0 22px 60px rgba(0,0,0,.3);max-height:88vh;display:flex;flex-direction:column}
+.mh{padding:16px 20px;border-bottom:1px solid var(--line);font-size:16px;font-weight:600;color:var(--g900);display:flex;align-items:center;gap:9px}
+.mh .x{margin-left:auto;cursor:pointer;color:var(--muted);font-size:19px;line-height:1}
+.mb{padding:18px 20px;overflow-y:auto;flex:1;font-size:14px;line-height:1.85}
+.mb h2{font-size:16.5px;color:var(--g900);margin:18px 0 8px;padding-left:11px;border-left:4px solid var(--g400);line-height:1.45}
+.mb h2:first-child{margin-top:0}
+.mb h3{font-size:15px;color:var(--g700);margin:14px 0 6px}
+.mb ul,.mb ol{margin:9px 0 9px 22px}
+.mb li{margin:4px 0}
+.mb table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+.mb th,.mb td{border:1px solid var(--line);padding:6px 9px;text-align:left}
+.mb th{background:var(--g50);color:var(--g700);font-weight:600}
+.mf{padding:13px 20px;border-top:1px solid var(--line);display:flex;gap:9px;justify-content:flex-end}
+
+/* ---------- 页脚 ---------- */
+footer{border-top:1px solid var(--line);background:var(--card);margin-top:20px}
+.ft-in{max-width:var(--maxw);margin:0 auto;padding:24px 20px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;font-size:12.3px;color:var(--muted)}
+.ft-in .l{flex:1;min-width:250px;line-height:1.8}
+.ft-in a{color:var(--muted)}
+.ft-in a:hover{color:var(--g600)}
+
+/* ---------- 投稿表单 ---------- */
+.form{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 28px;box-shadow:var(--sh)}
+.frow{margin-bottom:17px}
+.frow>label{display:block;font-size:13px;color:var(--g700);font-weight:600;margin-bottom:7px}
+.frow>label .req{color:var(--red);margin-left:3px}
+.frow input[type=text],.frow input[type=tel],.frow select,.frow textarea{
+  width:100%;font-family:inherit;font-size:14px;padding:10px 13px;border:1px solid var(--line);
+  border-radius:10px;background:var(--card);color:var(--text);outline:none;transition:.15s;
+}
+.frow input:focus,.frow select:focus,.frow textarea:focus{border-color:var(--g400);box-shadow:0 0 0 3px var(--g50)}
+.frow textarea{min-height:150px;resize:vertical;line-height:1.75}
+.frow .hintline{font-size:11.8px;color:var(--muted);margin-top:6px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{
+  padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+  color:var(--text);font-size:13.5px;transition:.15s;
+}
+.seg button:hover{border-color:var(--g400)}
+.seg button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.alert{padding:12px 16px;border-radius:11px;font-size:13.5px;line-height:1.75;margin-bottom:18px}
+.alert.ok{background:var(--g50);color:var(--g700);border-left:4px solid var(--g400)}
+.alert.err{background:#FDF3E3;color:#8A5A18;border-left:4px solid var(--amber)}
+.alert.info{background:#EAF4FD;color:#22415C;border-left:4px solid var(--blue)}
+html[data-theme="dark"] .alert.err{background:#332C1C;color:#EEDCB8}
+html[data-theme="dark"] .alert.info{background:#1B2A38;color:#CFE3F5}
+.wallcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh);margin-bottom:13px}
+.wallcard .wh{display:flex;align-items:center;gap:9px;margin-bottom:9px;flex-wrap:wrap}
+.wallcard .wh b{font-size:15px;color:var(--g900)}
+.wallcard .who{font-size:12px;color:var(--muted)}
+.wallcard .wc{font-size:13.8px;line-height:1.8;color:var(--text);white-space:pre-wrap}
+.rb{font-size:11px;padding:2px 9px;border-radius:7px;font-weight:600}
+.rb.teacher{background:#E3F0E8;color:#3C6653}
+.rb.student{background:#E8F1FB;color:#2E5F8E}
+.rb.parent{background:#FDF2E4;color:#8A5A18}
+.rb.guest{background:var(--g50);color:var(--muted)}
+html[data-theme="dark"] .rb.teacher{background:#25342D;color:#A9C9B8}
+html[data-theme="dark"] .rb.student{background:#1B2A38;color:#A8C6E2}
+html[data-theme="dark"] .rb.parent{background:#332C1C;color:#EFAE72}
+.loading{text-align:center;padding:36px;color:var(--muted);font-size:13.5px}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty .e{font-size:44px;display:block;margin-bottom:12px;opacity:.55}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- 响应式 ---------- */
+@media(max-width:960px){
+  .chans{grid-template-columns:repeat(2,1fr)}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .two{grid-template-columns:1fr}
+  .groups{grid-template-columns:1fr}
+  .join .ways{grid-template-columns:1fr}
+  .art-wrap{grid-template-columns:1fr}
+  .toc{display:none}
+}
+@media(max-width:640px){
+  body{font-size:14.5px}
+  .tb-in{padding:0 11px;gap:8px}
+  .logo small{display:none}
+  .logo b{font-size:14px}
+  .logo .mk-img{width:32px;height:32px}
+  .search{width:auto;flex:1 1 auto;min-width:0}
+  .iconbtn{width:33px;height:33px}
+  .search .k{display:none}
+  #joinBtn{display:none!important}
+  main{padding:18px 13px 60px}
+  .hero{padding:15px 16px;border-radius:14px}
+  .hero-in{gap:13px}
+  .hero-brand{gap:11px}
+  .hero-emblem{width:48px;height:48px;border-radius:50%}
+  .chans{grid-template-columns:1fr;gap:12px}
+  .chan .desc{min-height:0}
+  .hero h1{font-size:19.5px}
+  .hero .tagline{font-size:10px;letter-spacing:1px}
+  .hero .sub{font-size:11.8px}
+  .hero-side{flex:1 1 100%;max-width:none}
+  .hero .stats{gap:6px;margin-top:8px}
+  .hero .stats div{font-size:10px;padding:2px 8px}
+  .skinpop{right:-8px;width:214px}
+  .article{padding:22px 18px;border-radius:12px}
+  .body{font-size:14.8px}
+  .quick{grid-template-columns:1fr}
+  .pager{grid-template-columns:1fr}
+  .join{padding:22px 20px}
+}
+@media(max-width:400px){
+  .logo b{display:none}
+  .iconbtn{width:31px;height:31px}
+  .hero h1{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-in">
+    <div class="logo" onclick="go('#/')">
+      <img class="mk-img" src="assets/emblem.png" alt="汤庄桥小学校徽" onerror="this.outerHTML='<div class=&#39;mk-img&#39; style=&#39;display:grid;place-items:center;font-size:18px&#39;>🌿</div>'">
+      <div><b>勤美汤小 wiki</b><small>师生家长实用手册</small></div>
+    </div>
+    <div class="tb-space"></div>
+    <div class="search">
+      <span style="font-size:14px;color:var(--muted)">🔍</span>
+      <input id="q" type="search" placeholder="搜索条目、关键词…" autocomplete="off">
+      <span class="k">Enter</span>
+    </div>
+    <button class="iconbtn" id="skinBtn" title="切换配色">🎨</button>
+    <button class="iconbtn" id="themeBtn" title="切换深浅色">🌙</button>
+    <button class="btn primary sm" style="display:none" id="joinBtn" onclick="go('#/submit')">✍️ 投稿</button>
+    <div class="skinpop" id="skinPop">
+      <div class="t">🎨 挑一个配色，换换心情</div>
+      <div class="skins">
+        <div class="it" data-skin="green"><button class="sw" style="background:linear-gradient(135deg,#86EDB4,#199A5F)"></button><div class="nm">草木绿</div></div>
+        <div class="it" data-skin="orange"><button class="sw" style="background:linear-gradient(135deg,#FFD08A,#E07C1E)"></button><div class="nm">阳光橙</div></div>
+        <div class="it" data-skin="blue"><button class="sw" style="background:linear-gradient(135deg,#A8DDFF,#1E82C8)"></button><div class="nm">活力蓝</div></div>
+        <div class="it" data-skin="pink"><button class="sw" style="background:linear-gradient(135deg,#FFC2DE,#DE4E96)"></button><div class="nm">童趣粉</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main id="app"></main>
+
+<footer>
+  <div class="ft-in">
+    <div class="l">
+      <b style="color:var(--g900)">勤美汤小 wiki</b> · 常州市新北区汤庄桥小学<br>
+      内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 协议 ·
+      由全校师生家长共建共享 · 非商业用途
+    </div>
+    <div style="text-align:right;line-height:1.9">
+      版本 <b id="verText">v0.1</b> · 更新于 <span id="updText">2026-10-13</span><br>
+      <a href="#/c/school">学校频道</a> · <a href="#/about">关于本站</a> · <a href="#/join">共建指南</a> · <a href="#/updates">更新日志</a>
+    </div>
+  </div>
+</footer>
+
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mh"><span id="mIco">📣</span><span id="mTitle">标题</span><span class="x" onclick="closeModal()">✕</span></div>
+    <div class="mb" id="mBody"></div>
+    <div class="mf" id="mFoot"></div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   勤美汤小 wiki  ·  数据层
+   单文件应用：改内容只需改下面的 DB 对象
+   ========================================================== */
+var DB = {
+  site:{ name:'勤美汤小 wiki', version:'v0.5', updated:'2026-10-28', license:'CC BY-NC-SA 4.0' },
+
+  /* 四频道：教师 / 学生 / 家长 / 学校
+     —— 前三个按"你是谁"分（角色），学校频道按"学校是什么"分（机构），
+        承载校历作息、校务公开、招生入学等不属于任何单一角色的校级信息。 */
+  channels:[
+    { id:'teacher', key:'t', icon:'👩‍🏫', name:'教师频道',
+      sub:'教学常规 · 教研科研 · 专业发展',
+      desc:'备课上课的标准、课题论文的路子、四大工程怎么走、数字工具怎么用——给新老教师的一份操作地图。',
+      groups:[
+        { name:'教学常规', items:['tb-beike','tb-shangke','tb-zuoye','tb-fudao'] },
+        { name:'教研科研', items:['ky-keti','ky-lunwen','ky-gongkaike'] },
+        { name:'教师发展四大工程', items:['gc-qinglan','gc-chengxiang','gc-guihua','gc-mingshi'] },
+        { name:'数字工具', items:['sz-jiaowu','sz-banwu','sz-ai'] }
+      ] },
+    { id:'student', key:'s', icon:'🎒', name:'学生频道',
+      sub:'校园生活 · 学习方法 · 电脑小课堂',
+      desc:'学校哪里是哪里、怎么听讲写作业、电脑和编程怎么入门、社团怎么参加——小朋友自己的说明书。',
+      groups:[
+        { name:'校园生活', items:['xs-ditu','xs-zuoxi','xs-shitang'] },
+        { name:'学习方法', items:['xs-tingke','xs-zuoye','xs-fuxi'] },
+        { name:'电脑小课堂', items:['xs-wenjian','xs-dazi','xs-scratch'] },
+        { name:'社团与活动', items:['xs-chuangke','xs-biancheng','xs-jieri'] }
+      ] },
+    { id:'parent', key:'p', icon:'👨‍👩‍👧', name:'家长频道',
+      sub:'入学必读 · 家校沟通 · 家庭教育',
+      desc:'新生要准备什么、怎么和老师沟通、作业要不要陪、安全和心理怎么顾——家长最常问的那些事。',
+      groups:[
+        { name:'入学必读', items:['jz-zhunbei','jz-jiesong'] },
+        { name:'家校沟通', items:['jz-lianxi','jz-jiazhanghui'] },
+        { name:'家庭教育', items:['jz-zuoye','jz-yuedu'] },
+        { name:'安全与健康', items:['jz-anquan','jz-yinshi','jz-xinli'] }
+      ] },
+    { id:'school', key:'sc', icon:'🏫', name:'学校频道',
+      sub:'学校概况 · 校务公开 · 招生入学',
+      desc:'这是一所怎样的学校、校历作息怎么排、一周工作和午餐食谱在哪看、招生入学怎么办——校级信息集中在这里。',
+      groups:[
+        { name:'学校概况', items:['sc-jianjie','sc-linian','sc-rongyu'] },
+        { name:'校历与作息', items:['sc-xiaoli','sc-zuoxi'] },
+        { name:'校务公开', items:['sc-yizhou','sc-shipu','sc-zhidu'] },
+        { name:'招生入学', items:['sc-zhaosheng','sc-baoming'] },
+        { name:'校园风采', items:['sc-kejijie','sc-shetuan','sc-zhihui'] }
+      ] }
+  ],
+
+  /* 文章：body 为空表示「建设中」，可点击共建 */
+  articles:{
+    /* ============ 教师频道 ============ */
+    'tb-beike':{ title:'备课规范：勤美课堂的备课三问', upd:'2026-10-13', tags:['教学常规'],
+      body:`
+<p>备课是课堂教学的起点。勤美课堂讲"以学定教"，备课不只是把教案写满，而是要想清楚三件事——<b>学生要到哪里去、怎么去、到了没有</b>。</p>
+<h2>一、备目标：学生要到哪里去</h2>
+<p>先读课标，再读教材，最后读学生。目标要写得"可测量"，避免"理解""感受"这类说不清的动词。</p>
+<ul>
+<li>✅ 能说出…… / 能计算…… / 能举例说明……</li>
+<li>❌ 体会…… / 感受…… / 培养……（这类词要拆成可观察的行为）</li>
+</ul>
+<h2>二、备过程：怎么去</h2>
+<p>把一节课拆成 3–4 个有梯度的任务，每个任务回答一个问题：<b>学生做什么？老师做什么？怎么知道他会了？</b></p>
+<div class="note"><b>💡 勤美小提示</b>好的课堂不是老师讲得精彩，而是学生有事可做、有话可说、有错可改。</div>
+<h2>三、备评价：到了没有</h2>
+<p>每节课至少准备一道"出口题"——下课前三分钟，全班动笔做一遍，当堂看清谁会和谁不会。这比课后作业更快反馈。</p>
+<h2>四、教案的规范格式</h2>
+<table>
+<tr><th>板块</th><th>写什么</th><th>常见问题</th></tr>
+<tr><td>教学目标</td><td>可观测的行为动词</td><td>目标与活动不对应</td></tr>
+<tr><td>教学重难点</td><td>真正难在哪</td><td>照抄教参</td></tr>
+<tr><td>教学过程</td><td>任务链 + 时间分配</td><td>碎片、无梯度</td></tr>
+<tr><td>板书设计</td><td>一页纸的结构图</td><td>随手写、无结构</td></tr>
+<tr><td>作业与反思</td><td>分层作业 + 课后记</td><td>反思只写"效果良好"</td></tr>
+</table>
+<div class="tip"><b>📌 二次备课</b>集体备课之后，个体必须在教案上留下"我的改动"痕迹——那是属于你的教学理解。</div>
+`},
+    'tb-shangke':{ title:'上课：一堂勤美课的样子', upd:'2026-10-13', tags:['教学常规'],
+      body:`
+<p>"勤"是勤学、勤思、勤实践；"美"是美言、美行、美心灵。落到课堂上，就是让学生<b>动得起来、说得出来、听得进去</b>。</p>
+<h2>课堂的四个关键时刻</h2>
+<div class="steps">
+<div class="stp"><b>前 3 分钟·启动</b><span>用一个真实问题或小情境开场，把注意力收回来。不要一上来就"翻到第几页"。</span></div>
+<div class="stp"><b>中间 25 分钟·探究</b><span>给学生一个能动手的任务，老师走到学生中间去，看谁卡住了。</span></div>
+<div class="stp"><b>后 10 分钟·交流</b><span>让学生讲，老师追问。追问比讲解更能暴露理解。</span></div>
+<div class="stp"><b>最后 3 分钟·收口</b><span>出口题 + 一句话总结。让学生带着答案离开教室。</span></div>
+</div>
+<h2>几个容易踩的坑</h2>
+<ul>
+<li><b>提问只叫举手的人</b>——建议随机点名，让全班保持在"可能被叫到"的状态。</li>
+<li><b>小组讨论变闲聊</b>——讨论前先明确"每人要说一句"，并给 30 秒独立思考时间。</li>
+<li><b>拖堂</b>——把最后 3 分钟留给学生，比多讲一道题更值。</li>
+</ul>
+<div class="quote">一堂好课的标准，不是老师讲完了，而是学生学会了。</div>
+`},
+    'tb-zuoye':{ title:'作业：布置与批改的标准', upd:'2026-10-13', tags:['教学常规'],
+      body:`
+<p>作业是课堂的延伸，不是惩罚工具。汤小的作业管理遵循"<b>控量、分层、精批、快反馈</b>"四原则。</p>
+<h2>布置：三个"能不能"</h2>
+<ul>
+<li>能不能在 <b>课后服务时间</b> 内做完大部分？（小学书面作业总量按规定控制）</li>
+<li>能不能分出 <b>必做 + 选做</b> 两层，让不同速度的孩子都有奔头？</li>
+<li>能不能 <b>少抄写、多动脑</b>？机械抄写 10 遍不如精练 2 道。</li>
+</ul>
+<h2>批改：快反馈 > 全批全改</h2>
+<p>批改的价值在于"学生看到之后有反应"。建议：</p>
+<table>
+<tr><th>方式</th><th>适用</th><th>要点</th></tr>
+<tr><td>全批全改</td><td>核心练习</td><td>标注错误类型，不只打叉</td></tr>
+<tr><td>当堂面批</td><td>重点学生</td><td>每天 3–5 人，轮流覆盖</td></tr>
+<tr><td>同伴互批</td><td>基础题</td><td>先讲清标准，再交换</td></tr>
+<tr><td>二次批改</td><td>订正后</td><td>只盯错题，确认真的会了</td></tr>
+</table>
+<div class="warn"><b>⚠️ 注意</b>不得要求家长批改作业、不得给家长布置作业。作业的第一责任人是老师。</div>
+`},
+    'tb-fudao':{ title:'辅导：课后服务与个别指导', upd:'', tags:['教学常规'], body:'' },
+    'ky-keti':{ title:'课题研究：从选题到结题的全流程', upd:'2026-10-13', tags:['教研科研'],
+      body:`
+<p>做课题不是为了评职称，而是为了把"天天遇到的问题"变成"想清楚的问题"。一个完整的课题周期通常两年。</p>
+<h2>第一步：选题——从问题里长出来</h2>
+<p>好选题有三个特征：<b>真、小、能落地</b>。</p>
+<ul>
+<li><b>真</b>：是你自己课堂上真实存在的困惑，不是抄来的热点。</li>
+<li><b>小</b>：切口要小。"小学数学作业分层设计的研究"比"小学数学教学研究"好一万倍。</li>
+<li><b>能落地</b>：你有条件做，能收集到数据。</li>
+</ul>
+<div class="tip"><b>📌 参考方向</b>学校现有区级课题《数字化学习促教学评一体化的实践研究》、市级课题《人文技术视野下勤美课堂范式的实践研究》——新选题可从这两条主线上"接着往下长"。</div>
+<h2>第二步：申报——把想法写成方案</h2>
+<p>申报书核心是回答四问：研究什么？为什么研究？怎么研究？能研究出什么？</p>
+<h2>第三步：过程——留痕</h2>
+<table>
+<tr><th>材料</th><th>频率</th><th>说明</th></tr>
+<tr><td>研究课教案 + 反思</td><td>每学期 2 次</td><td>要有课题标识</td></tr>
+<tr><td>学生作品/数据</td><td>持续</td><td>前后对比最有说服力</td></tr>
+<tr><td>读书笔记</td><td>每学期 2 篇</td><td>理论支撑</td></tr>
+<tr><td>阶段性小结</td><td>每学年 1 次</td><td>中期报告</td></tr>
+</table>
+<h2>第四步：结题——用证据说话</h2>
+<p>结题报告不要写成"工作总结"。要有一条清晰的主线：<b>问题 → 做法 → 证据 → 结论</b>。最有价值的是那些"没成功但有发现"的部分。</p>
+<div class="quote">课题做完了，如果同事问"你这套方法我能不能用"，你能讲清楚——就算做成了。</div>
+`},
+    'ky-lunwen':{ title:'论文撰写与投稿：一线教师的实用路径', upd:'2026-10-13', tags:['教研科研'],
+      body:`
+<p>教师论文最容易犯的毛病是"<b>有做法没提炼，有经验没证据</b>"。下面是一条从素材到发表的完整路径。</p>
+<h2>一、素材从哪来</h2>
+<ul>
+<li>一节自己上得特别顺（或特别砸）的课</li>
+<li>一次课题研究中的意外发现</li>
+<li>一个反复出现、你终于找到办法的学生问题</li>
+</ul>
+<h2>二、结构：一线论文的通用骨架</h2>
+<div class="steps">
+<div class="stp"><b>摘要 + 关键词</b><span>200 字讲清"我做了什么、发现了什么"。写完最后再改。</span></div>
+<div class="stp"><b>问题的提出</b><span>用真实场景开头，别从"随着新课改的深入……"开头。</span></div>
+<div class="stp"><b>做法与过程</b><span>这是主体。要有具体例子、学生原话、课堂片段。</span></div>
+<div class="stp"><b>成效与反思</b><span>用数据或作品说话，并老实写清局限。</span></div>
+</div>
+<h2>三、投稿：别一稿多投</h2>
+<table>
+<tr><th>刊物类型</th><th>特点</th><th>建议</th></tr>
+<tr><td>省级教育类期刊</td><td>周期中等、重实践</td><td>一线教师主战场</td></tr>
+<tr><td>市区级论文评比</td><td>门槛低、有证书</td><td>先练手的绝佳机会</td></tr>
+<tr><td>核心期刊</td><td>要求理论深度</td><td>先放一放，积累后再投</td></tr>
+</table>
+<div class="warn"><b>⚠️ 避坑</b>不要去付费"版面费"野刊；也不要让 AI 代写整篇——现在查重和 AIGC 检测都很成熟，得不偿失。</div>
+<div class="tip"><b>💡 写作作弊小技巧</b>先对着录音把自己讲这节课的思路说一遍，再把口语转成书面语。这样写出来的文章一定有"人味"。</div>
+`},
+    'ky-gongkaike':{ title:'公开课与听评课流程', upd:'', tags:['教研科研'], body:'' },
+    'gc-qinglan':{ title:'青蓝携手工程：新教师的第一年', upd:'2026-10-13', tags:['四大工程','专业发展'],
+      body:`
+<p>"青蓝携手"是汤小教师发展四大工程之首——用骨干教师的"蓝"，带青年教师的"青"。目标很朴素：<b>让新老师第一年站稳讲台，第三年形成风格</b>。</p>
+<h2>结对之后做什么</h2>
+<table>
+<tr><th>时间</th><th>动作</th><th>频次</th></tr>
+<tr><td>第一月</td><td>师傅随堂听课 + 手把手改教案</td><td>每周 1 次</td></tr>
+<tr><td>第一学期</td><td>徒弟上"亮相课"，师傅上"示范课"</td><td>各 1 次</td></tr>
+<tr><td>每学期</td><td>互听互评不少于 8 节</td><td>持续</td></tr>
+<tr><td>每学年</td><td>师徒共读 1 本书、共写 1 篇小结</td><td>1 次</td></tr>
+</table>
+<h2>新教师最容易卡住的三件事</h2>
+<div class="steps">
+<div class="stp"><b>管不住课堂</b><span>先立规矩再谈感情。第一周把课堂口令、作业要求、发言规则定下来，之后温和但坚定地执行。</span></div>
+<div class="stp"><b>备课太慢</b><span>不要从零写教案。先找 3 份优秀教案对照看结构，再往里填自己的东西。</span></div>
+<div class="stp"><b>不会听课</b><span>听课时别记老师说了什么，记"学生在这一刻在干什么"。</span></div>
+</div>
+<div class="note"><b>🌿 勤美小提示</b>师徒关系不是"上级对下级"。年轻老师请大胆提问，师傅们最怕的是你不问。</div>
+`},
+    'gc-chengxiang':{ title:'城乡牵手工程：资源共享与联动', upd:'', tags:['四大工程'], body:'' },
+    'gc-guihua':{ title:'规划引领工程：教师专业发展路线图', upd:'', tags:['四大工程'], body:'' },
+    'gc-mingshi':{ title:'名师培育工程：从骨干到名师的台阶', upd:'', tags:['四大工程'], body:'' },
+    'sz-jiaowu':{ title:'教务智能工作台使用指南', upd:'2026-10-13', tags:['数字工具'],
+      body:`
+<p>教务智能工作台是学校自建的本地网页工具，用于成绩处理、数据分析等日常教务工作，<b>完全离线运行，数据不出本机</b>。</p>
+<h2>能做什么</h2>
+<ul>
+<li>成绩表批量导入与等级换算</li>
+<li>班级/年级数据统计与对比</li>
+<li>综合素质评价表批量填充</li>
+<li>各类名单的一键生成与导出</li>
+</ul>
+<h2>使用要点</h2>
+<div class="warn"><b>🔒 隐私提醒</b>工作台涉及学生姓名与成绩，属于敏感数据。请勿在公共电脑上登录，导出文件不要通过非工作渠道转发。</div>
+<div class="tip"><b>📌 入口</b>工作台为单文件网页，双击打开即可使用，无需安装。具体入口请咨询教师发展处。</div>
+`},
+    'sz-banwu':{ title:'班务工作台使用指南', upd:'', tags:['数字工具'], body:'' },
+    'sz-ai':{ title:'AI 辅助备课入门：从会用工具到用好工具', upd:'2026-10-13', tags:['数字工具','AI'],
+      body:`
+<p>AI 不是替你上课的，是替你干"体力活"的。把重复劳动交出去，把判断留给自己。</p>
+<h2>四类最省时间的用法</h2>
+<div class="steps">
+<div class="stp"><b>出题</b><span>给 AI 一份知识点清单和难度要求，让它生成练习。你再挑、再改——出题速度能快 3 倍。</span></div>
+<div class="stp"><b>改写</b><span>把一段教材语言丢进去："请改写成适合三年级学生阅读的语言。"</span></div>
+<div class="stp"><b>找思路</b><span>"这节课学生常见的 5 个错误理解是什么？"比 "帮我写教案"有用得多。</span></div>
+<div class="stp"><b>做学件</b><span>让 AI 生成互动网页小工具（如随机点名、计时器、知识闯关），直接用浏览器打开。</span></div>
+</div>
+<h2>提问的诀窍：给它一个"身份 + 场景 + 要求"</h2>
+<table>
+<tr><th>❌ 效果差</th><th>✅ 效果好</th></tr>
+<tr><td>帮我写教案</td><td>我是小学六年级信息科技老师，明天要讲《数据的收集与整理》，班里有 3 个基础较弱的学生，请设计 40 分钟的教学流程，包含一个动手活动和一个出口题。</td></tr>
+</table>
+<div class="warn"><b>⚠️ 三条红线</b>① 不要把学生姓名、成绩等隐私信息输入 AI；② AI 生成的内容必须自己核对；③ 学生作品要标注是否使用 AI。</div>
+<div class="quote">提示词工程的核心不是"话术"，而是"你有没有想清楚自己到底要什么"。</div>
+`},
+
+    /* ============ 学生频道 ============ */
+    'xs-ditu':{ title:'校园地图：我的学校哪里是哪里', upd:'2026-10-13', tags:['校园生活'],
+      body:`
+<p>刚来学校的同学，先跟着这张"脑内地图"走一遍，三天就能熟门熟路。</p>
+<h2>几个最常去的地方</h2>
+<table>
+<tr><th>地方</th><th>做什么</th><th>小提醒</th></tr>
+<tr><td>🏫 教学楼</td><td>上课、早读、午休</td><td>上下楼梯靠右走，不跑不闹</td></tr>
+<tr><td>🏃 操场</td><td>体育课、大课间、升旗</td><td>集合要快、静、齐</td></tr>
+<tr><td>🍚 食堂</td><td>午餐</td><td>排队打饭，餐盘归位</td></tr>
+<tr><td>📚 图书馆</td><td>借书、阅读课</td><td>借书记得按时还</td></tr>
+<tr><td>💻 计算机教室</td><td>信息科技课、社团</td><td>爱护设备，不带零食进去</td></tr>
+<tr><td>🛡️ 门卫室</td><td>找门卫叔叔帮忙</td><td>放学等家长可在这里</td></tr>
+</table>
+<div class="tip"><b>💡 迷路了怎么办</b>找最近的老师或者高年级同学问路，说清楚"我要去哪个楼、几年级几班"。</div>
+`},
+    'xs-zuoxi':{ title:'我的一天：校园作息时间表', upd:'', tags:['校园生活'], body:'' },
+    'xs-shitang':{ title:'食堂就餐：排队与餐桌礼仪', upd:'', tags:['校园生活'], body:'' },
+    'xs-tingke':{ title:'上课怎么听讲：把 40 分钟用好', upd:'2026-10-13', tags:['学习方法'],
+      body:`
+<p>同样坐 40 分钟，有的同学收获满满，有的同学什么也没记住。差别不在聪明，在<b>会不会听</b>。</p>
+<h2>三个小动作，听课效率翻倍</h2>
+<div class="steps">
+<div class="stp"><b>眼睛跟着老师走</b><span>老师讲到哪，你的眼睛跟到哪。这不是纪律要求，是让你的大脑别走神的物理开关。</span></div>
+<div class="stp"><b>手边放一支笔</b><span>不用抄满黑板，只记三样：老师重复两遍的话、板书上的图、你没听懂的疑问。</span></div>
+<div class="stp"><b>听不懂就做个记号</b><span>画个"？"，继续往下听。不要卡在一处，等下课或提问时间再解决。</span></div>
+</div>
+<h2>提问的正确姿势</h2>
+<ul>
+<li>❌ "老师，这道题我不会。"</li>
+<li>✅ "老师，我算到这一步卡住了，是不是这里符号错了？"</li>
+</ul>
+<p>说清楚<b>你做到哪一步、卡在哪</b>，老师才能一击命中。</p>
+<div class="quote">走神了怎么办？发现走神的那一刻，就是回到课堂的最好时刻。</div>
+`},
+    'xs-zuoye':{ title:'作业不拖拉的小妙招', upd:'2026-10-13', tags:['学习方法'],
+      body:`
+<p>写作业慢，很多时候不是不会，而是<b>没启动</b>。下面几招，挑一个试试。</p>
+<h2>招式一：番茄钟（25 + 5）</h2>
+<p>设定 25 分钟，只做作业，不做别的；铃响休息 5 分钟，站起来动一动。四个番茄钟之后休息久一点。</p>
+<div class="tip"><b>📌 关键</b>25 分钟里，手机、平板、玩具都要放远一点——不是关掉，是"看不见"。</div>
+<h2>招式二：先难后易，还是先易后难？</h2>
+<p>推荐 <b>先做中等难度的</b>。太难的会让你卡住失去信心，太简单的会让你放松警惕。中间那档最适合"热启动"。</p>
+<h2>招式三：写完一科，打个勾</h2>
+<p>在便签上写下今天所有科目，每完成一科打个 ✅。勾的视觉反馈会让你越来越想继续。</p>
+<div class="warn"><b>⚠️ 别做的事</b>不要边写边看电视；不要一遇到不会就立刻问爸妈——先把会做的全部做完，最后统一问。</div>
+`},
+    'xs-fuxi':{ title:'复习的黄金三步', upd:'', tags:['学习方法'], body:'' },
+    'xs-wenjian':{ title:'电脑第一课：文件和文件夹', upd:'2026-10-13', tags:['电脑小课堂'],
+      body:`
+<p>电脑里的东西为什么越来越多、越来越乱？因为你可能不知道——<b>文件和文件夹</b>就是电脑的收纳柜。</p>
+<h2>先搞懂三个概念</h2>
+<table>
+<tr><th>名词</th><th>像什么</th><th>举例</th></tr>
+<tr><td>文件</td><td>一张纸</td><td>我的作文.docx</td></tr>
+<tr><td>文件夹</td><td>一个文件袋</td><td>六年级作业</td></tr>
+<tr><td>磁盘（C盘/D盘）</td><td>一整个柜子</td><td>C盘、D盘</td></tr>
+</table>
+<h2>整理口诀：分层、命名、别放桌面</h2>
+<div class="steps">
+<div class="stp"><b>分层</b><span>大文件夹里放小文件夹：<code>六年级</code> → <code>语文</code> → <code>作文</code>。最多三层，别太深。</span></div>
+<div class="stp"><b>命名</b><span>文件名写清"是什么 + 什么时候"：<code>20261013 我的暑假计划.docx</code>。</span></div>
+<div class="stp"><b>别放桌面</b><span>桌面是"随手放"的地方，堆多了会找不到。文件统一放进 D 盘或文档文件夹。</span></div>
+</div>
+<h2>文件名的三个禁区</h2>
+<ul>
+<li>不要用 <code>/ \\ : * ? " &lt; &gt; |</code> 这些符号</li>
+<li>不要写成一长串：<code>新建文本文档(3)(最终版)(真的最终版).txt</code></li>
+<li>不要用"新建文件夹"当正式名字</li>
+</ul>
+<div class="note"><b>🌿 小练习</b>打开你的电脑，建一个文件夹叫"我的作品"，再在里面建三个子文件夹：作文、图片、编程。把散落在桌面的文件放进去——你就完成第一次整理了。</div>
+`},
+    'xs-dazi':{ title:'打字入门：从"一指禅"到盲打', upd:'2026-10-13', tags:['电脑小课堂'],
+      body:`
+<p>打字快，不是天生的，是<b>手指记住了位置</b>。目标很简单：不看键盘也能打。</p>
+<h2>第一步：把手指放到"家"的位置</h2>
+<p>左手食指放 <code>F</code>，右手食指放 <code>J</code>——这两个键上有一个小凸起，闭着眼睛也能摸到。这就是你的"家"。</p>
+<h2>第二步：每个手指管一列</h2>
+<table>
+<tr><th>手指</th><th>负责的键</th></tr>
+<tr><td>左手小指 / 无名指</td><td>Q A Z / W S X</td></tr>
+<tr><td>左手中指 / 食指</td><td>E D C / R F V T G B</td></tr>
+<tr><td>右手食指 / 中指</td><td>Y H N U J M</td></tr>
+<tr><td>右手无名指 / 小指</td><td>I K , / O L . P ; /</td></tr>
+</table>
+<h2>第三步：每天 10 分钟，练"准"不练"快"</h2>
+<p>慢一点，但保证每个手指都是对的。手指形成肌肉记忆之后，速度会自己上来。</p>
+<div class="tip"><b>💡 小技巧</b>打字时眼睛盯屏幕，不要盯键盘。打错没关系，用正确的手指出错、再正确的手指出对，才有意义。</div>
+`},
+    'xs-scratch':{ title:'编程第一步：用 Scratch 让小猫动起来', upd:'2026-10-13', tags:['电脑小课堂','创客'],
+      body:`
+<p>编程听起来很难，其实第一节课你只需要学会一件事：<b>让电脑听你的话</b>。</p>
+<h2>三分钟做一个"会走的小猫"</h2>
+<div class="steps">
+<div class="stp"><b>找到积木</b><span>左侧"运动"分类里，把 <code>移动 10 步</code> 拖到中间的脚本区。</span></div>
+<div class="stp"><b>按下绿旗</b><span>点一下舞台上的绿旗，小猫就往前走了一步。</span></div>
+<div class="stp"><b>让它一直走</b><span>把 <code>重复执行</code> 从"控制"里拖出来，把移动包进去——小猫就会一直走啦。</span></div>
+<div class="stp"><b>加点变化</b><span>再拖一个 <code>碰到边缘就反弹</code>，小猫就会在舞台上弹来弹去。</span></div>
+</div>
+<h2>编程的三个核心概念（小学生版）</h2>
+<table>
+<tr><th>概念</th><th>说人话</th><th>Scratch 里的样子</th></tr>
+<tr><td>顺序</td><td>一步一步来</td><td>积木从上往下拼</td></tr>
+<tr><td>循环</td><td>重复做很多次</td><td><code>重复执行</code> / <code>重复 10 次</code></td></tr>
+<tr><td>条件</td><td>如果……就……</td><td><code>如果 &lt;碰到边缘&gt; 那么</code></td></tr>
+</table>
+<div class="note"><b>🌿 挑战任务</b>让小猫在你按下空格键的时候跳一下。做出来了，你就已经会"事件 + 条件"了。</div>
+`},
+    'xs-chuangke':{ title:'创客社团：把想法变成作品', upd:'2026-10-13', tags:['社团','创客'],
+      body:`
+<p>创客社团的口号是：<b>先做出来，再做好</b>。在这里，没有人会因为你做得丑而笑你，大家只关心"你想做什么"。</p>
+<h2>我们玩什么</h2>
+<ul>
+<li>🧱 <b>积木搭建</b>：用乐高类积木做机械结构</li>
+<li>💡 <b>传感器实验</b>：让灯会亮、让小车会躲障碍</li>
+<li>🎨 <b>电子创作</b>：纸电路、灯光装置</li>
+<li>💻 <b>编程控制</b>：给作品装上"大脑"</li>
+</ul>
+<h2>一个作品是怎么诞生的</h2>
+<div class="steps">
+<div class="stp"><b>想</b><span>我要做一个能解决什么问题的小东西？比如"提醒我坐姿的笔筒"。</span></div>
+<div class="stp"><b>画</b><span>在纸上画出草图，标出哪里放传感器、哪里放灯。</span></div>
+<div class="stp"><b>做</b><span>动手搭，搭错了就拆，拆了再搭。失败是常态。</span></div>
+<div class="stp"><b>改</b><span>拿去用一用，发现哪里不好用，再改一版。</span></div>
+<div class="stp"><b>讲</b><span>向同学介绍你的作品：做了什么、为什么这样做。</span></div>
+</div>
+<div class="tip"><b>📌 参加活动</b>社团成员可参加区青少年创意编程大赛、中小学素养提升实践活动等，具体报名时间由指导老师通知。</div>
+<div class="quote">创客精神不是"会做"，而是"敢做、肯改"。</div>
+`},
+    'xs-biancheng':{ title:'编程社团：从图形化到代码', upd:'', tags:['社团'], body:'' },
+    'xs-jieri':{ title:'校园节日与活动日历', upd:'', tags:['校园生活'], body:'' },
+
+    /* ============ 家长频道 ============ */
+    'jz-zhunbei':{ title:'新生入学准备清单', upd:'2026-10-13', tags:['入学必读'],
+      body:`
+<p>孩子要上小学了，家长比孩子还紧张。这份清单帮你把该准备的都理清楚——<b>物品是小事，心态是大事</b>。</p>
+<h2>一、物品准备</h2>
+<table>
+<tr><th>类别</th><th>具体</th><th>提示</th></tr>
+<tr><td>书包</td><td>轻便、肩带宽、有侧袋</td><td>不要买拉杆箱书包，教室过道放不下</td></tr>
+<tr><td>文具</td><td>HB 铅笔 5 支、橡皮、直尺</td><td>铅笔在家削好，别带削笔刀到校</td></tr>
+<tr><td>水杯</td><td>带盖、易拧开、400–500ml</td><td>贴上姓名贴，避免拿错</td></tr>
+<tr><td>纸巾</td><td>小包纸巾 + 湿巾</td><td>放书包侧袋</td></tr>
+<tr><td>雨具</td><td>雨衣优于雨伞</td><td>小学生撑伞容易戳到同学</td></tr>
+</table>
+<h2>二、习惯准备（比物品重要）</h2>
+<ul>
+<li><b>作息</b>：开学前两周开始调整，晚 9 点前入睡</li>
+<li><b>自理</b>：会自己穿脱外套、系鞋带、整理书包</li>
+<li><b>表达</b>：能说清"我要上厕所""我肚子疼"</li>
+<li><b>专注</b>：能安静坐 20 分钟做一件事</li>
+</ul>
+<h2>三、心理准备</h2>
+<div class="tip"><b>💡 怎么说</b>不要讲"到学校要听老师话，不听话就……"。可以换成："学校会有很多小朋友，你可以认识新朋友，还能学很多有趣的东西。"——让它变成一件期待的事。</div>
+<div class="warn"><b>⚠️ 别做</b>不要用"老师"来吓孩子（"再不听话让老师管你"），这会让孩子对上学生出恐惧。</div>
+`},
+    'jz-jiesong':{ title:'作息与接送安排说明', upd:'', tags:['入学必读'], body:'' },
+    'jz-lianxi':{ title:'家校沟通：联系方式与沟通礼仪', upd:'2026-10-13', tags:['家校沟通'],
+      body:`
+<p>家校沟通的目标只有一个：<b>让孩子更好</b>。沟通顺了，孩子在学校和家里才是一套标准。</p>
+<h2>一、什么时候联系老师</h2>
+<table>
+<tr><th>情况</th><th>建议方式</th><th>时间</th></tr>
+<tr><td>孩子请假</td><td>班级群 / 电话</td><td>当天早上尽早上报</td></tr>
+<tr><td>学习上的疑问</td><td>私聊老师，说清具体问题</td><td>工作日 8:00–17:00</td></tr>
+<tr><td>孩子情绪异常</td><td>电话或当面沟通</td><td>随时，先约时间</td></tr>
+<tr><td>对学校工作的建议</td><td>家委会 / 学校教务处</td><td>工作日</td></tr>
+</table>
+<h2>二、三个沟通小原则</h2>
+<div class="steps">
+<div class="stp"><b>先说现象，再说感受</b><span>"孩子昨天作业写到十点"是现象；"你们作业太多了"是情绪。先讲现象，老师才好判断。</span></div>
+<div class="stp"><b>私下聊，不在群里吵</b><span>涉及自己孩子的问题，请私聊老师。班级群是通知群，不是辩论场。</span></div>
+<div class="stp"><b>尊重老师的时间</b><span>晚上 10 点后、周末非紧急情况，尽量不打扰。老师也需要休息。</span></div>
+</div>
+<h2>三、老师最希望家长知道的三件事</h2>
+<ul>
+<li>孩子在家的情况，请主动告诉老师——老师看不到孩子在家什么样。</li>
+<li>老师反映问题时，别急着解释或护短，先问一句"那我该怎么做？"</li>
+<li>孩子说"老师批评我了"，先了解全貌，再下判断。</li>
+</ul>
+<div class="quote">家校之间最好的状态，是"我们是一队的"，而不是"孩子在你那儿出问题了"。</div>
+`},
+    'jz-jiazhanghui':{ title:'家长会：怎么开、怎么听、怎么问', upd:'', tags:['家校沟通'], body:'' },
+    'jz-zuoye':{ title:'陪写作业的正确姿势', upd:'2026-10-13', tags:['家庭教育'],
+      body:`
+<p>陪作业陪到血压升高，是很多家庭的日常。问题的根源往往不是孩子，而是<b>角色错位</b>——家长变成了"第二个老师"。</p>
+<h2>先摆正位置：你是"环境提供者"，不是"监工"</h2>
+<table>
+<tr><th>❌ 少做</th><th>✅ 多做</th></tr>
+<tr><td>坐在旁边盯着每一笔</td><td>在同一个房间做自己的事（看书、工作）</td></tr>
+<tr><td>一发现错就立刻指出</td><td>等他做完一整段再一起看</td></tr>
+<tr><td>直接告诉答案</td><td>问"你觉得哪一步可能有问题？"</td></tr>
+<tr><td>拿别人家孩子比较</td><td>对比他自己的昨天</td></tr>
+</table>
+<h2>一套可复制的流程</h2>
+<div class="steps">
+<div class="stp"><b>开工前 2 分钟</b><span>一起看今天的作业清单，让他自己说先做哪科、大概要多久。</span></div>
+<div class="stp"><b>做的过程中</b><span>不打断。只在明显卡住超过 5 分钟时，问一句"要不要说说你卡在哪？"</span></div>
+<div class="stp"><b>做完后</b><span>让他自己先检查一遍，再交给你看。检查是他自己的责任。</span></div>
+<div class="stp"><b>收尾</b><span>打勾、收拾书包、说一句具体的肯定："今天数学比昨天快 10 分钟。"</span></div>
+</div>
+<div class="warn"><b>⚠️ 三个不要</b>不要替孩子检查对错（那是老师的活）；不要在孩子写作业时玩手机；不要因为作业发脾气——情绪一上来，学习就变成了对抗。</div>
+<div class="tip"><b>💡 时间参考</b>小学低年级书面作业应在校内课后服务时间基本完成。如果孩子每天写到很晚，请及时和老师沟通，而不是硬扛。</div>
+`},
+    'jz-yuedu':{ title:'亲子阅读：每天 15 分钟的改变', upd:'', tags:['家庭教育'], body:'' },
+    'jz-anquan':{ title:'上下学安全：家长必读', upd:'2026-10-13', tags:['安全健康'],
+      body:`
+<p>安全无小事。以下几件事，请和孩子一起做一遍。</p>
+<h2>一、上学路上</h2>
+<ul>
+<li>走人行道，过马路遵守信号灯，<b>不追逐、不闯红灯</b></li>
+<li>坐电动车必须佩戴头盔（家长和孩子都要戴）</li>
+<li>乘坐小汽车系好安全带，12 岁以下不坐副驾驶</li>
+<li>不乘坐无牌无证、超载车辆</li>
+</ul>
+<h2>二、接送约定</h2>
+<div class="tip"><b>📌 请和孩子约定三件事</b>① 接送地点固定在哪里；② 如果家长没到，在原地等还是回门卫室；③ 遇到"陌生人说是爸爸妈妈让来接"的，一律不跟走，先找老师或门卫。</div>
+<h2>三、防拐防骗</h2>
+<div class="steps">
+<div class="stp"><b>记住信息</b><span>让孩子背出家长手机号、家庭住址，至少一位家长的全名。</span></div>
+<div class="stp"><b>设定暗号</b><span>和亲友之间约定一个"接送暗号"，没有暗号就不跟走。</span></div>
+<div class="stp"><b>大声求助</b><span>教孩子遇到危险时朝最近的人或商店大声喊"我不认识他！"</span></div>
+</div>
+<h2>四、校园内安全</h2>
+<ul>
+<li>课间不追逐打闹，上下楼梯靠右、不推搡</li>
+<li>不带剪刀、美工刀、打火机等危险物品到校</li>
+<li>身体不舒服第一时间告诉老师，不要忍</li>
+</ul>
+<div class="warn"><b>⚠️ 紧急联系</b>孩子在校期间如有突发情况，学校会第一时间联系家长。请务必保持报名时登记的手机畅通，联系方式变更后及时告知班主任。</div>
+`},
+    'jz-yinshi':{ title:'饮食与睡眠：成长的两件大事', upd:'', tags:['安全健康'], body:'' },
+    'jz-xinli':{ title:'关注心理：孩子不想上学怎么办', upd:'2026-10-13', tags:['安全健康','家庭教育'],
+      body:`
+<p>孩子说"我不想上学"，通常不是懒，而是在发出一个信号：<b>我在某个地方遇到困难了</b>。</p>
+<h2>先别急着讲道理，按顺序做四件事</h2>
+<div class="steps">
+<div class="stp"><b>接住情绪</b><span>"听起来你今天挺难受的。"——先承认他的感受，而不是否定"这有什么好怕的"。</span></div>
+<div class="stp"><b>找具体的事</b><span>不问"为什么不想去"（太宽），问"今天哪节课最难熬？""课间你和谁一起玩？"</span></div>
+<div class="stp"><b>判断类型</b><span>是学业压力、同伴关系、还是身体不适？不同类型对策完全不同。</span></div>
+<div class="stp"><b>和老师通气</b><span>把孩子在家说的话如实告诉老师，请老师在校观察。两边信息合起来才好判断。</span></div>
+</div>
+<h2>常见信号，家长要留意</h2>
+<table>
+<tr><th>信号</th><th>可能含义</th></tr>
+<tr><td>突然不肯写作业、撕本子</td><td>学业挫败感 / 完美主义压力</td></tr>
+<tr><td>频繁说肚子疼、头疼</td><td>可能是情绪躯体化</td></tr>
+<tr><td>不愿提某个同学的名字</td><td>同伴矛盾 / 被排挤</td></tr>
+<tr><td>睡眠变差、食欲下降</td><td>整体情绪状态需要关注</td></tr>
+</table>
+<div class="warn"><b>⚠️ 什么时候需要专业帮助</b>如果孩子的情绪问题持续两周以上、明显影响吃饭睡觉和上学，建议联系学校心理老师，或到正规医院儿童心理科就诊。求助不是软弱，是对孩子负责。</div>
+<div class="quote">孩子愿意跟你说"我不想上学"，说明你还站在他的信任圈里。先别把这扇门关上。</div>
+`},
+
+    /* ============ 学校频道 ============ */
+    'sc-jianjie':{ title:'学校简介：一所叫"勤美"的小学', upd:'2026-10-13', tags:['学校概况'],
+      body:`
+<div style="text-align:center;margin:2px 0 22px">
+<img src="assets/emblem.png" alt="常州市新北区汤庄桥小学校徽" style="width:132px;height:132px;object-fit:contain" onerror="this.parentNode.style.display='none'">
+</div>
+<p><b>常州市新北区汤庄桥小学</b>，以「<b>勤美</b>」为办学品牌，把"勤"（勤学、勤思、勤实践）与"美"（美言、美行、美心灵）写进日常的每一节课、每一次活动里。</p>
+<p>学校是一所普通的乡镇小学，但"普通"不等于"将就"——这里的老师习惯把日常遇到的问题做成方法，再把方法沉淀下来给下一届用。这份手册本身就是这么来的。</p>
+
+<h2>一、五个品牌栏目</h2>
+<p>学校的课堂、教研、德育、教师成长与心理健康工作，各自有一个固定的品牌名。你在官网、通知和本手册里都会反复看到它们。</p>
+<table>
+<tr><th>品牌栏目</th><th>关注什么</th></tr>
+<tr><td>勤美课堂</td><td>课堂教学改革与实践，公开课、赛课、课堂研讨</td></tr>
+<tr><td>勤美教研</td><td>教研活动、集体备课、校本教研</td></tr>
+<tr><td>勤美德育</td><td>德育活动、班级建设、社会实践、红色寻访</td></tr>
+<tr><td>勤美教师</td><td>教师风采、榜样故事、专业成长</td></tr>
+<tr><td>勤美润心</td><td>心理健康教育、心理关怀与疏导</td></tr>
+</table>
+<div class="note"><b>🌿 给新老师的话</b>看到"勤美XX"就明白是哪条线的工作了。写材料、报课题时，把内容归到对应的品牌下，会更贴合学校的整体脉络。</div>
+
+<h2>二、办学特色</h2>
+<ul>
+<li><b>健康工程</b>——学校被评为<b>江苏省健康促进金牌学校</b>，常态化开展学生体质健康监测、眼保健操评比等。</li>
+<li><b>体育特色</b>——以田径、阳光体育为主线，组织跑操比赛、参加区跆拳道锦标赛等赛事。</li>
+<li><b>科技教育</b>——校园科技节已连续举办十届，开展航空模型、创客大赛、科学体验等活动。</li>
+<li><b>教育信息化</b>——围绕"巧用信息技术、打造智慧校园"推进数字化教学，教师自建教务、班务等智能工作台。</li>
+<li><b>课题研究</b>——先后开展"互联网+教育背景下学习方式创新""信息化教育背景下习作教学有效性"等方向的研究。</li>
+</ul>
+
+<h2>三、官网栏目对照</h2>
+<p>学校官网（www.tzqxx.xbjyfw.cn）目前设有这些栏目，可作为查找正式文件的入口：</p>
+<table>
+<tr><th>类别</th><th>栏目</th></tr>
+<tr><td>校务</td><td>校务安排 · 一周工作 · 大事记 · 装备督导</td></tr>
+<tr><td>资讯</td><td>新闻广角 · 一日动态 · 校园之星</td></tr>
+<tr><td>育人</td><td>德育经纬 · 平安校园 · 学生乐园 · 网上荐读</td></tr>
+<tr><td>教师</td><td>教师天地 · 校本培训 · 学校特色</td></tr>
+</table>
+<div class="tip"><b>📌 以官网为准</b>本站是"读起来更方便的版本"。涉及制度、通知、时间安排等正式信息时，请以学校官网与正式文件为准。</div>
+`},
+
+    'sc-linian':{ title:'勤美理念：勤与美，到底指什么', upd:'2026-10-13', tags:['学校概况'],
+      body:`
+<p>"勤美"两个字，一半讲做事的态度，一半讲做人的样子。</p>
+<table>
+<tr><th></th><th>勤</th><th>美</th></tr>
+<tr><td>指向</td><td>做事的姿态</td><td>做人的样子</td></tr>
+<tr><td>三句话</td><td>勤学 · 勤思 · 勤实践</td><td>美言 · 美行 · 美心灵</td></tr>
+<tr><td>落到哪</td><td>课堂、作业、教研、劳动</td><td>班级、活动、交往、礼仪</td></tr>
+</table>
+
+<h2>为什么不用"高大上"的词</h2>
+<p>小学生听得懂的理念才有用。"勤"不是苦熬，是"愿意多试一次"；"美"不是漂亮，是"说话让人舒服、做事让人放心"。这两个字小学生能记住，也能做到。</p>
+
+<h2>在校园里能看见的地方</h2>
+<ul>
+<li><b>课堂</b>——老师少讲一点，学生多动手一点，鼓励"有错可改"而不是"别出错"</li>
+<li><b>评价</b>——除了分数，还看合作、坚持、劳动、文明礼仪</li>
+<li><b>活动</b>——科技节、体育节、艺术展、劳动实践，人人有位置，不只挑尖子</li>
+<li><b>心理</b>——"勤美润心"专门负责情绪与心理关怀，孩子难受时有地方说</li>
+</ul>
+<div class="quote">把一个大词拆成孩子今天就能做到的一件小事，教育才真正开始。</div>
+`},
+
+    'sc-rongyu':{ title:'办学成果与荣誉', upd:'2026-10-13', tags:['学校概况'],
+      body:`
+<p>以下为本站在公开渠道可确认的办学成果，会持续补充。</p>
+<table>
+<tr><th>类别</th><th>成果</th></tr>
+<tr><td>健康促进</td><td><b>江苏省健康促进金牌学校</b></td></tr>
+<tr><td>科技教育</td><td>校园科技节已连续举办<b>十届</b></td></tr>
+<tr><td>社团竞赛</td><td>创客社团在新北区青少年创意编程大赛、中小学生素养提升实践活动中获奖</td></tr>
+<tr><td>体育</td><td>以田径、阳光体育为主线，参加区级跆拳道等赛事</td></tr>
+<tr><td>教育信息化</td><td>推进"智慧校园"建设，教师自主开发教务、班务等工作台并投入使用</td></tr>
+</table>
+<div class="tip"><b>📌 说明</b>完整的荣誉清单、获奖年份与颁奖单位，请以学校官网"学校特色"栏目及正式文件为准。本站只收录能核实的内容，不做过誉表述。</div>
+`},
+
+    'sc-kejijie':{ title:'校园科技节：已经办了十届', upd:'2026-10-13', tags:['校园风采'],
+      body:`
+<p>科技节是学校最有"响动"的一项传统活动，到今年已经<b>连续举办十届</b>。它不是一次表演，而是一周左右的"人人动手"。</p>
+
+<h2>一般会有哪些内容</h2>
+<table>
+<tr><th>板块</th><th>做什么</th></tr>
+<tr><td>航空模型</td><td>拼装、调试、放飞，比谁飞得稳、飞得久</td></tr>
+<tr><td>创客与编程</td><td>用图形化编程做小动画、小游戏，或结合器材做小装置</td></tr>
+<tr><td>科学体验</td><td>演示实验、动手实验，把课本里的原理"玩"一遍</td></tr>
+<tr><td>科普阅读</td><td>推荐科普书目，做读书卡与分享</td></tr>
+</table>
+
+<h2>学生怎么参与最划算</h2>
+<ul>
+<li><b>挑一个你真正好奇的问题</b>，比如"纸飞机怎么折才飞得远"，而不是抄一个高大上的题目</li>
+<li><b>自己动手，家长只做帮手</b>——作品可以不完美，但要是自己做的</li>
+<li><b>记录过程</b>：试了几次、失败在哪、改了什么，这比成品更值钱</li>
+</ul>
+<div class="note"><b>💡 给家长</b>科技节最怕变成"家长作业"。孩子问问题时别急着给答案，反问他"你觉得呢？要不要试试看？"——这句话比帮他做完有用得多。</div>
+`},
+
+    'sc-shetuan':{ title:'社团与特色课程一览', upd:'2026-10-13', tags:['校园风采'],
+      body:`
+<p>学校开设多种社团与特色课程，覆盖科技、体育、艺术等方向。下面按方向介绍，具体开设情况每学期会有调整。</p>
+<table>
+<tr><th>方向</th><th>代表社团 / 课程</th><th>适合什么样的孩子</th></tr>
+<tr><td>科技创客</td><td>创客社团、创意编程（曾获区级奖项）</td><td>喜欢动手拆装、爱问"为什么"</td></tr>
+<tr><td>航空模型</td><td>航模制作与放飞</td><td>坐得住、有耐心调试</td></tr>
+<tr><td>体育</td><td>田径、阳光体育、跆拳道</td><td>精力旺盛、喜欢跑跳</td></tr>
+<tr><td>艺术人文</td><td>艺术展演、阅读与荐读</td><td>爱表达、爱画画唱歌</td></tr>
+</table>
+
+<h2>怎么选社团</h2>
+<ol>
+<li><b>先看孩子自己想去哪个</b>，不要按"哪个对升学有用"选</li>
+<li><b>一次只报一个</b>——把一件事做久，比样样都沾一遍更有收获</li>
+<li><b>给一学期的时间</b>——任何技能前两个月都不好受，别急着换</li>
+</ol>
+<div class="tip"><b>📌 报名方式</b>每学期开学初由班主任或学校统一通知，具体社团名单、时间与名额以当期通知为准。</div>
+`},
+
+    'sc-zhihui':{ title:'智慧校园：学校的数字化家底', upd:'2026-10-13', tags:['校园风采'],
+      body:`
+<p>学校围绕"巧用信息技术、打造智慧校园"推进教育信息化，把数字化落到教学和日常管理里。</p>
+
+<h2>看得见的部分</h2>
+<ul>
+<li><b>课堂数字化</b>——使用交互式设备和数字资源辅助教学，让学生能"点一点、试一试"</li>
+<li><b>教师工作台</b>——教师自主开发教务、班务等信息化工具，把重复劳动交给程序</li>
+<li><b>校本数字资源</b>——把教学设计、学习单、练习等资源整理成可复用的形式</li>
+</ul>
+
+<h2>学生在校用电脑的规矩</h2>
+<table>
+<tr><th>可以</th><th>不可以</th></tr>
+<tr><td>按老师要求查资料、做作品</td><td>私自安装软件、改电脑设置</td></tr>
+<tr><td>用校园账号登录学习平台</td><td>把账号密码告诉别人</td></tr>
+<tr><td>遇到问题举手问老师</td><td>自己乱插 U 盘、乱删文件</td></tr>
+</table>
+<div class="note"><b>💡 小知识</b>电脑里的文件要放对文件夹——桌面堆满文件，找起来比丢了还麻烦。想学怎么整理，看学生频道的「电脑小课堂」。</div>
+`},
+
+    /* -------- 以下为「建设中」条目，欢迎认领 -------- */
+    'sc-xiaoli':{ title:'校历与学期安排', upd:'2026-10-13', tags:['校历与作息'] },
+    'sc-zuoxi':{ title:'学生在校一日作息', upd:'2026-10-13', tags:['校历与作息'] },
+    'sc-yizhou':{ title:'一周工作安排怎么看', upd:'2026-10-13', tags:['校务公开'] },
+    'sc-shipu':{ title:'午餐食谱公示在哪查', upd:'2026-10-13', tags:['校务公开'] },
+    'sc-zhidu':{ title:'常用制度与办事流程索引', upd:'2026-10-13', tags:['校务公开'] },
+    'sc-zhaosheng':{ title:'招生入学政策要点', upd:'2026-10-13', tags:['招生入学'] },
+    'sc-baoming':{ title:'报名流程与所需材料', upd:'2026-10-13', tags:['招生入学'] }
+  }
+};
+
+/* 附加页面：关于 / 共建 / 更新日志 */
+var PAGES = {
+  about:{ icon:'ℹ️', title:'关于本站',
+    body:`
+<p><b>勤美汤小 wiki</b> 是一份面向<b>教师、学生、家长、学校</b>四类视角的校园实用手册，由汤庄桥小学师生家长共同建设、共同维护。</p>
+<h2>为什么做这个</h2>
+<p>学校里的信息往往散落在通知、纸质材料、老教师的口口相传里。新人来了要问一圈，家长遇到问题不知道找谁。我们想把它们收拢到一处，<b>写得明白、查得方便、随时能更新</b>。</p>
+<h2>和别的网站有什么不同</h2>
+<table>
+<tr><th>对比</th><th>本项目</th></tr>
+<tr><td>内容来源</td><td>本校师生家长的真实经验，不是通用模板</td></tr>
+<tr><td>使用者</td><td>教师 / 学生 / 家长按角色分开，学校信息单列一频道</td></tr>
+<tr><td>共建方式</td><td>人人可投稿、可纠错，内容持续生长</td></tr>
+<tr><td>技术形态</td><td>单文件网页，零依赖、可离线、手机电脑都能看</td></tr>
+</table>
+<h2>内容原则</h2>
+<ul>
+<li><b>实用优先</b>：能解决问题，而不是堆砌道理</li>
+<li><b>隐私保护</b>：不公开学生姓名、成绩、家庭住址等个人信息；学校办公类联系方式与校本原创材料可公开</li>
+<li><b>持续更新</b>：每条内容标注更新日期，过时即改</li>
+<li><b>真实负责</b>：涉及制度、流程的内容以学校正式文件为准</li>
+</ul>
+<div class="note"><b>🌿 灵感来源</b>本站形态受到《上海交通大学生存手册》、Ac-Wiki 大学生百科、电子科技大学校园生活指南、《你缺失的那门计算机课》等优秀开源知识项目的启发。</div>
+`},
+  join:{ icon:'🤝', title:'共建指南',
+    body:`
+<p>这份手册不属于某个人，它属于每一个使用它的人。<b>你遇到过的坑，正是别人正需要的答案。</b></p>
+<h2>三种参与方式（按门槛从低到高）</h2>
+<div class="steps">
+<div class="stp"><b>方式一：站内投稿（2 分钟）</b><span>点页面右上角的「投稿」按钮，把经验填进表单直接提交——手机上就能写。这是最推荐的方式。</span></div>
+<div class="stp"><b>方式二：指出问题（1 分钟）</b><span>看到错别字、过时的说法、看不懂的句子，直接告诉教师发展处或本站维护者。不改内容，只提问题，也是贡献。</span></div>
+<div class="stp"><b>方式三：认领一个条目（长期）</b><span>挑一个你熟悉的方向（比如"社团活动"），成为它的维护者，负责跟进更新。</span></div>
+</div>
+<h2>写什么受欢迎</h2>
+<table>
+<tr><th>✅ 好内容</th><th>❌ 差内容</th></tr>
+<tr><td>具体做法 + 真实例子</td><td>空泛的"要加强重视"</td></tr>
+<tr><td>一线经验、踩过的坑</td><td>从别处复制粘贴的通用文章</td></tr>
+<tr><td>面向某一类读者写清楚</td><td>什么人都想照顾，结果谁也看不懂</td></tr>
+</table>
+<div class="warn"><b>⚠️ 隐私红线</b>不要写入学生姓名、成绩、家庭住址、家长个人手机号等个人信息；不要上传含学生肖像的照片。<br>反过来，<b>学校办公类联系方式</b>（办公室、门卫室、专用教室）和<b>校本原创材料</b>是可以公开的——只要不指向具体的某个孩子。</div>
+<div class="tip"><b>📌 内容规范</b>本站内容以学校正式制度、通知为准。若与正式文件表述不一致，以学校文件为准，并请及时告知维护者修正。</div>
+`},
+  updates:{ icon:'🕐', title:'更新日志',
+    body:`
+<h2>v0.5 · 2026-10-28</h2>
+<ul>
+<li>🔌 <b>换掉云服务后端</b>：投稿改接 quickform，纯 fetch、无外部 SDK。静态站真正能收集数据了</li>
+<li>🔒 <b>新增教师入口</b>：口令校验后才能投稿，本机 7 天内免重复输入</li>
+<li>🧱 <b>投稿墙改读云端汇总</b>：实时回显全部来稿，按时间倒序，带条数统计</li>
+<li>🗑 <b>表单减负</b>：去掉「身份选择」与「联系方式」——本期只开教师端；联系方式无法保证保密，宁可不收</li>
+<li>📐 <b>隐私口径</b>：投稿页明确提示不要写学生姓名、学号、成绩等个人信息</li>
+</ul>
+
+<h2>v0.4 · 2026-10-13</h2>
+<ul>
+<li>🏫 <b>新增「学校频道」</b>：由三个频道扩为四个。教师 / 学生 / 家长按"你是谁"分（角色），学校频道按"学校是什么"分（机构），承载校历作息、校务公开、招生入学等不属于任何单一角色的校级信息</li>
+<li>📚 学校频道下设 5 个栏目共 13 个条目：学校概况（学校简介 / 勤美理念 / 办学成果）、校历与作息、校务公开、招生入学、校园风采（科技节 / 社团 / 智慧校园）</li>
+<li>🔀 原「关于学校」独立页并入学校频道，避免两处内容打架——全站信息只留一个来源</li>
+<li>🎨 学校频道用<b>校徽红</b>作专属色（顶条 + 图标底 + 频道横幅），与前三个频道的绿 / 蓝 / 橙区分，一眼看出"这是校级信息"</li>
+<li>📐 频道卡改为四列排布（窄屏两列、手机单列），卡片尺寸与字号同步微调</li>
+<li>📊 首页「4 个频道」数字改为自动统计，以后加频道不用再手动改</li>
+</ul>
+
+<h2>v0.3.1 · 2026-10-13</h2>
+<ul>
+<li>🏛️ <b>换上官方圆形校徽</b>：由学校提供的标准校徽（外圈校名 + 三色"人"形图案），替换原先从官网扒取的横版标识</li>
+<li>✨ 校徽做了圆形透明化处理，深色模式下不再出现白色方块；顶栏、首屏、「关于学校」三处统一使用</li>
+<li>🎯 校徽位置改为正圆衬白底，像一枚校印，在四套配色下都清晰</li>
+<li>🔖 <b>补上网站图标</b>：浏览器标签页现在显示校徽里的三色"人"形图案（小尺寸下更清晰），另带高清圆章版</li>
+</ul>
+
+<h2>v0.3 · 2026-10-13</h2>
+<ul>
+<li>🎨 <b>四套配色方案</b>：草木绿 / 阳光橙 / 活力蓝 / 童趣粉，点顶栏 🎨 一键切换，深浅色下都做了适配——整体比原来明快活泼，更贴合小学气质</li>
+<li>🏫 <b>换上学校校徽</b>：顶栏与「关于学校」页使用学校标识</li>
+<li>📐 <b>首屏改造</b>：横幅高度压到原来约 1/3，右侧不再是空白——搜索框与数据统计归位，三个频道上移成为第一视觉</li>
+<li>🔧 频道卡加了配色顶条，图标底色随配色联动</li>
+</ul>
+
+<h2>v0.2 · 2026-10-13</h2>
+<ul>
+<li>🔌 <b>接入云服务后端</b>：投稿数据真正保存到云端，这份手册从"静态页面"变成"能长大"的站点</li>
+<li>✍️ 新增「我要投稿」：教师 / 学生 / 家长都可署名或匿名提交，手机端可用</li>
+<li>🧱 新增「投稿墙」：审核采纳的内容在这里公开展示</li>
+<li>🏫 新增「关于学校」：梳理勤美品牌矩阵、办学特色与官网栏目对照</li>
+<li>📐 隐私口径更新：校本原创材料、学校办公类联系方式可公开；学生个人信息仍不公开</li>
+</ul>
+
+<h2>v0.1 · 2026-10-13</h2>
+<ul>
+<li>🎉 站点框架搭建：首页、三频道（教师 / 学生 / 家长）、全文搜索、深浅色切换</li>
+<li>📚 首批条目上线：共 35 条，其中 20 条已完成正文</li>
+<li>🧭 已完成：备课、上课、作业、课题研究、论文撰写、青蓝携手、教务工作台、AI 辅助备课、校园地图、上课听讲、作业习惯、文件与文件夹、打字入门、Scratch 入门、创客社团、入学准备、家校沟通、陪写作业、上下学安全、心理关怀</li>
+<li>🔧 待补条目：15 条，已标注「建设中」，欢迎认领</li>
+</ul>
+<h2>下一步计划</h2>
+<ul>
+<li>补齐全部条目的正文内容</li>
+<li>增加"常见问题 FAQ"与"办事流程索引"</li>
+<li>接入投稿入口，实现真正的"人人可改"</li>
+<li>补充校园实景照片（需处理肖像与隐私）</li>
+</ul>
+`}
+};
+
+/* ==========================================================
+   渲染层
+   ========================================================== */
+/* ==========================================================
+   云端后端 · 共建投稿
+   endpoint / publishableKey 来自云服务激活时下发的 publicConfig
+   ========================================================== */
+/* ==========================================================
+   勤美汤小 wiki · 数据汇聚后端（quickform · 教师端 v0.5）
+   ----------------------------------------------------------
+   写入  POST https://quickform.cn/api/jf0v2dy0dm
+   读取  GET  https://quickform.cn/api/jf0v2dy0dm/all
+   计数  GET  https://quickform.cn/api/jf0v2dy0dm/count
+   ----------------------------------------------------------
+   本站是纯静态站，没有服务端。所以这里的「教师口令」是前端
+   校验门帘——挡住随手点开页面的人，不是严格的安全边界；真正
+   的数据在 quickform 后台，只有你能看到全量原始记录。
+   ========================================================== */
+var QF = {
+  submit: 'https://quickform.cn/api/jf0v2dy0dm',
+  all:    'https://quickform.cn/api/jf0v2dy0dm/all',
+  count:  'https://quickform.cn/api/jf0v2dy0dm/count',
+  source: 'qmtx-wiki-v0.5'
+};
+
+/* 口令指纹：源码里不出现明文
+   改口令：浏览器控制台执行 fp('新口令')，把结果替换下面的 TEACHER_FP */
+var TEACHER_FP = 'j317lf';
+var AUTH_KEY   = 'qmtx-teacher';
+var AUTH_DAYS  = 7;
+
+function qfHash(s){
+  var h = 5381, i;
+  s = 'qmtx!' + s + '!wiki';
+  for(i = 0; i < s.length; i++){
+    h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  }
+  return (h >>> 0).toString(36);
+}
+function fp(s){ return qfHash(s); }
+
+function isTeacher(){
+  try{
+    var t = parseInt(localStorage.getItem(AUTH_KEY) || '0', 10);
+    if(!t) return false;
+    if(Date.now() - t > AUTH_DAYS * 24 * 3600 * 1000){
+      localStorage.removeItem(AUTH_KEY);
+      return false;
+    }
+    return true;
+  }catch(e){ return false; }
+}
+function loginTeacher(pw){
+  if(!pw) return false;
+  if(qfHash(pw) !== TEACHER_FP) return false;
+  try{ localStorage.setItem(AUTH_KEY, String(Date.now())); }catch(e){}
+  return true;
+}
+function doLogout(){
+  try{ localStorage.removeItem(AUTH_KEY); }catch(e){}
+  go('#/');
+}
+
+/* 兼容旧调用点（已不再依赖外部云 SDK） */
+var cloud = null, cloudErr = '';
+function cloudReady(){ return true; }
+
+
+
+var ROLE_LABEL = { teacher:'教师', student:'学生', parent:'家长', guest:'访客' };
+
+var app = document.getElementById('app');
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function strip(h){ return (h||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(); }
+
+/* 建立索引 */
+var ART_INDEX = {};
+DB.channels.forEach(function(ch){
+  ch.groups.forEach(function(g){
+    g.items.forEach(function(id){
+      var a = DB.articles[id];
+      if(a) ART_INDEX[id] = { id:id, title:a.title, ch:ch, grp:g.name, upd:a.upd, tags:a.tags||[], body:a.body||'' };
+    });
+  });
+});
+function allArticles(){ return Object.keys(ART_INDEX).map(function(k){ return ART_INDEX[k]; }); }
+function countDone(){ return allArticles().filter(function(a){ return a.body; }).length; }
+
+function go(h){ if(location.hash===h){ route(); } else { location.hash=h; } }
+
+/* ---------- 首页 ---------- */
+function renderHome(){
+  var total = allArticles().length, done = countDone();
+  var h = '';
+  h += '<div class="hero fade"><div class="hero-in">'
+    + '<div class="hero-brand">'
+    + '<img class="hero-emblem" src="assets/emblem.png" alt="汤庄桥小学校徽" onerror="this.style.display=&#39;none&#39;">'
+    + '<div class="hero-txt">'
+    + '<div class="tagline">常州市新北区汤庄桥小学 · 勤美品牌</div>'
+    + '<h1>勤美汤小 wiki</h1>'
+    + '<div class="sub">师生家长共建共享的实用手册 · 教师怎么教、学生怎么学、家长怎么帮、学校有什么</div>'
+    + '</div></div>'
+    + '<div class="hero-side">'
+    + '<div class="bigsearch"><span style="font-size:15px;color:#8CA79A">🔍</span>'
+    + '<input id="hq" type="search" placeholder="试试搜索：备课、作业、Scratch、入学…"></div>'
+    + '<div class="stats">'
+    + '<div><b>'+DB.channels.length+'</b>个频道</div><div><b>'+total+'</b>个条目</div>'
+    + '<div><b>'+done+'</b>条已完成</div>'
+    + '<div><b>'+DB.site.version+'</b>当前版本</div>'
+    + '</div>'
+    + '</div></div></div>';
+
+  h += '<div class="sect"><div class="sect-h"><h2>选择你的频道</h2><span class="d">四个入口，各自清晰</span></div><div class="chans">';
+  DB.channels.forEach(function(ch){
+    var n = 0; ch.groups.forEach(function(g){ n += g.items.length; });
+    h += '<div class="chan '+ch.key+'" onclick="go(\'#/c/'+ch.id+'\')">'
+      + '<div class="top"><div class="ic">'+ch.icon+'</div><div><h3>'+ch.name+'</h3><div class="cs">'+ch.sub+'</div></div></div>'
+      + '<div class="desc">'+ch.desc+'</div>'
+      + '<div class="chips">'+ch.groups.map(function(g){ return '<span class="chip">'+g.name+'</span>'; }).join('')+'</div>'
+      + '<div class="go">进入频道 · 共 '+n+' 条 →</div>'
+      + '</div>';
+  });
+  h += '</div></div>';
+
+  /* 快捷通道 */
+  var quick = [
+    ['tb-beike','📝','备课规范','新教师第一站'],
+    ['jz-zhunbei','🎒','新生入学清单','家长必看'],
+    ['xs-wenjian','💻','电脑第一课','文件与文件夹'],
+    ['jz-anquan','🛡️','上下学安全','安全无小事'],
+    ['ky-keti','🔬','课题全流程','从选题到结题'],
+    ['xs-tingke','👂','上课怎么听讲','学习方法'],
+    ['sz-ai','🤖','AI 辅助备课','省时间的方法'],
+    ['jz-zuoye','✍️','陪写作业姿势','家庭教育']
+  ];
+  h += '<div class="sect"><div class="sect-h"><h2>高频入口</h2><span class="d">被用得最多的一些条目</span></div><div class="quick">';
+  quick.forEach(function(q){
+    h += '<div class="qcard" onclick="go(\'#/a/'+q[0]+'\')"><span class="qi">'+q[1]+'</span><div><b>'+q[2]+'</b><span>'+q[3]+'</span></div></div>';
+  });
+  h += '</div></div>';
+
+  /* 最近更新 + 共建 */
+  var ups = allArticles().filter(function(a){ return a.upd; }).sort(function(a,b){ return (b.upd||'').localeCompare(a.upd||''); }).slice(0,8);
+  h += '<div class="sect"><div class="two">';
+  h += '<div class="panel"><div class="sect-h" style="margin-bottom:8px"><h2 style="font-size:15.5px">📌 最近更新</h2><a class="more" href="#/updates">更新日志</a></div>';
+  ups.forEach(function(a){
+    h += '<div class="upd"><span class="dt">'+a.upd.slice(5)+'</span><a href="#/a/'+a.id+'">'+a.title+'</a><span class="ch">'+a.ch.name.replace('频道','')+'</span></div>';
+  });
+  h += '</div>';
+
+  h += '<div class="panel"><div class="sect-h" style="margin-bottom:12px"><h2 style="font-size:15.5px">🌱 建设进度</h2></div>';
+  DB.channels.forEach(function(ch){
+    var n=0, d=0;
+    ch.groups.forEach(function(g){ g.items.forEach(function(id){ n++; if(DB.articles[id] && DB.articles[id].body) d++; }); });
+    var pct = Math.round(d/n*100);
+    h += '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px"><span style="color:var(--g900);font-weight:600">'+ch.icon+' '+ch.name+'</span><span style="color:var(--muted)">'+d+' / '+n+'</span></div>'
+      + '<div style="height:7px;background:var(--g50);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--g400),var(--g600));border-radius:4px"></div></div></div>';
+  });
+  h += '<div class="note" style="font-size:12.5px;margin-bottom:0"><b>🌿 一起补全它</b>带「建设中」的条目正在等人认领，也许那正是你熟悉的方向。</div>';
+  h += '</div>';
+  h += '</div></div>';
+
+  /* 共建条 */
+  h += '<div class="join fade"><h2>🤝 这份手册，欢迎你也写一笔</h2>'
+    + '<p>这里的内容不是从别处抄来的，是汤小人自己踩过的坑、总结的办法。你的一条经验，可能正好解了另一个人的燃眉之急。</p>'
+    + '<div class="ways">'
+    + '<div class="way"><b>① 指出问题</b><span>发现错别字、过时说法，告诉我们即可。1 分钟也是贡献。</span></div>'
+    + '<div class="way"><b>② 投稿一段</b><span>把你的经验写成 200 字，投给教师发展处，我们帮你成稿。</span></div>'
+    + '<div class="way"><b>③ 认领条目</b><span>挑一个熟悉的方向做长期维护者，让它一直不过时。</span></div>'
+    + '</div>'
+    + '<div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">'
+    + '<button class="btn" style="background:#fff;color:var(--hero-ink);border:none" onclick="go(\'#/submit\')">✍️ 我要投稿</button>'
+    + '<button class="btn" style="background:rgba(255,255,255,.66);color:var(--hero-ink);border:none" onclick="go(\'#/wall\')">🧱 投稿墙</button>'
+    + '<button class="btn" style="background:transparent;color:var(--hero-ink);border:1px solid rgba(0,0,0,.22)" onclick="openJoin()">共建指南</button>'
+    + '</div>'
+    + '</div>';
+
+  app.innerHTML = h;
+  var hq = document.getElementById('hq');
+  if(hq){ hq.addEventListener('keydown', function(e){ if(e.key==='Enter'){ doSearch(this.value); } }); }
+  document.getElementById('joinBtn').style.display = 'inline-block';
+}
+
+/* ---------- 频道页 ---------- */
+function renderChannel(id){
+  var ch = DB.channels.filter(function(c){ return c.id===id; })[0];
+  if(!ch){ render404(); return; }
+  var n=0, d=0;
+  ch.groups.forEach(function(g){ g.items.forEach(function(i){ n++; if(DB.articles[i]&&DB.articles[i].body) d++; }); });
+
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><span>'+ch.name+'</span></div>';
+  h += '<div class="chhero '+ch.key+' fade"><h1>'+ch.icon+' '+ch.name+'</h1><p>'+ch.desc+'</p>'
+    + '<div class="meta"><span>📚 '+ch.groups.length+' 个栏目</span><span>📄 '+n+' 个条目</span><span>✅ 已完成 '+d+' 条</span></div></div>';
+
+  h += '<div class="groups">';
+  ch.groups.forEach(function(g){
+    h += '<div class="grp"><h3><span class="dot"></span>'+g.name+'<span class="n">'+g.items.length+' 条</span></h3><ul>';
+    g.items.forEach(function(id){
+      var a = DB.articles[id];
+      if(!a) return;
+      var todo = !a.body;
+      h += '<li><a href="#/a/'+id+'">'+a.title+(todo?'<span class="st todo">建设中</span>':'<span class="st">'+a.upd.slice(5)+'</span>')+'</a></li>';
+    });
+    h += '</ul></div>';
+  });
+  h += '</div>';
+  app.innerHTML = h;
+}
+
+/* ---------- 文章页 ---------- */
+function renderArticle(id){
+  var a = DB.articles[id];
+  if(!a){ render404(); return; }
+  var info = ART_INDEX[id];
+  var ch = info.ch, grp = info.grp;
+
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><a href="#/c/'+ch.id+'">'+ch.name+'</a><span class="sp">/</span><span>'+grp+'</span></div>';
+
+  /* 同组上/下篇 */
+  var flat = [];
+  ch.groups.forEach(function(g){ g.items.forEach(function(i){ flat.push(i); }); });
+  var idx = flat.indexOf(id);
+  var prev = idx>0 ? flat[idx-1] : null;
+  var next = idx>=0 && idx<flat.length-1 ? flat[idx+1] : null;
+
+  if(!a.body){
+    h += '<div class="article fade"><h1>'+a.title+'</h1>'
+      + '<div class="art-meta"><span>📍 '+ch.name+' · '+grp+'</span></div>'
+      + '<div class="wip"><span class="e">📝</span><h2>这个条目还在建设中</h2>'
+      + '<p>我们把它列了出来，但还没写完。如果你对这个话题有经验，欢迎来补上这一块——你的名字会留在这里。</p>'
+      + '<button class="btn primary" onclick="openJoin()">我来共建 →</button></div></div>';
+  } else {
+    h += '<div class="art-wrap fade">';
+    h += '<div class="toc"><div class="tt">本页目录</div>'+buildTOC(a.body)+'</div>';
+    h += '<div><div class="article"><h1>'+a.title+'</h1>'
+      + '<div class="art-meta"><span>📍 '+ch.name+' · '+grp+'</span>'
+      + (a.tags||[]).map(function(t){ return '<span class="tag">#'+t+'</span>'; }).join('')
+      + '<span>🕐 更新于 '+a.upd+'</span></div>'
+      + '<div class="body">'+a.body+'</div>'
+      + '<div class="art-foot">'
+      + '<button class="btn sm" onclick="openFix(\''+a.title+'\')">✏️ 发现错误 / 补充内容</button>'
+      + '<button class="btn sm" onclick="openJoin()">🤝 了解共建</button>'
+      + '<span style="font-size:12px;color:var(--muted);margin-left:auto">最后更新：'+a.upd+'</span>'
+      + '</div></div>';
+    h += '<div class="pager">'
+      + (prev ? '<a href="#/a/'+prev+'"><div class="lb">← 上一篇</div><div class="tt">'+DB.articles[prev].title+'</div></a>' : '<div></div>')
+      + (next ? '<a class="next" href="#/a/'+next+'"><div class="lb">下一篇 →</div><div class="tt">'+DB.articles[next].title+'</div></a>' : '<div></div>')
+      + '</div></div>';
+    h += '</div>';
+  }
+  app.innerHTML = h;
+  /* 为正文标题注入锚点，供右侧目录点击滚动 */
+  var heads = app.querySelectorAll('.body h2, .body h3');
+  for(var k = 0; k < heads.length; k++){ heads[k].id = 'toc' + (k + 1); }
+  document.getElementById('joinBtn').style.display = 'inline-block';
+}
+
+function buildTOC(body){
+  var re = /<h([23])[^>]*>([\s\S]*?)<\/h\1>/g, m, out = '', i = 0;
+  while((m = re.exec(body))){
+    i++;
+    var lv = m[1], txt = strip(m[2]);
+    out += '<a class="'+(lv==='3'?'lv3':'')+'" href="javascript:void(0)" onclick="scrollToHead('+i+')">'+txt+'</a>';
+  }
+  return out || '<span style="color:var(--muted);font-size:12px">（无小节）</span>';
+}
+function scrollToHead(i){
+  var el = document.getElementById('toc' + i);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---------- 搜索结果 ---------- */
+function doSearch(q){
+  q = (q||'').trim();
+  if(!q){ go('#/'); return; }
+  location.hash = '#/s/' + encodeURIComponent(q);
+}
+function renderSearch(q){
+  var key = q.toLowerCase();
+  var results = [];
+  allArticles().forEach(function(a){
+    var text = (a.title + ' ' + a.tags.join(' ') + ' ' + a.grp + ' ' + a.ch.name + ' ' + strip(a.body)).toLowerCase();
+    if(text.indexOf(key) >= 0){
+      var plain = strip(a.body) || '（本条内容建设中，暂无正文）';
+      var pos = plain.toLowerCase().indexOf(key);
+      var snip = pos >= 0 ? ('…' + plain.slice(Math.max(0,pos-40), pos+90) + '…') : plain.slice(0,110)+'…';
+      results.push({ a:a, snip:snip });
+    }
+  });
+
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><span>搜索</span></div>';
+  h += '<div class="hero fade" style="padding:24px 28px"><h1 style="font-size:21px">🔍 搜索「'+esc(q)+'」</h1>'
+    + '<div class="sub">共找到 <b>'+results.length+'</b> 个相关条目</div></div>';
+  h += '<div class="sect" style="margin-top:22px">';
+  if(!results.length){
+    h += '<div class="empty"><span class="e">🔎</span>没有找到与「'+esc(q)+'」相关的条目<br><span style="font-size:13px">换个关键词试试，或者 <a href="#/join">告诉我们你需要什么</a>。</span></div>';
+  } else {
+    results.forEach(function(r){
+      var t = r.a.title.replace(new RegExp('('+key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'), '<mark>$1</mark>');
+      h += '<a class="res" href="#/a/'+r.a.id+'"><b>'+t+'</b>'
+        + '<div class="path">'+r.a.ch.icon+' '+r.a.ch.name+' · '+r.a.grp+'</div>'
+        + '<div class="snip">'+esc(r.snip)+'</div></a>';
+    });
+  }
+  h += '</div>';
+  app.innerHTML = h;
+}
+
+/* ---------- 附加页 ---------- */
+function renderPage(k){
+  var p = PAGES[k];
+  if(!p){ render404(); return; }
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><span>'+p.title+'</span></div>';
+  h += '<div class="article fade"><h1>'+p.icon+' '+p.title+'</h1><div class="body">'+p.body+'</div></div>';
+  app.innerHTML = h;
+}
+
+/* ---------- 我要投稿（写入云端） ---------- */
+function pickRole(r){
+  var bs = document.querySelectorAll('#roleSeg button');
+  for(var i = 0; i < bs.length; i++){
+    bs[i].className = (bs[i].getAttribute('data-role') === r) ? 'on' : '';
+  }
+}
+function saySub(type, msg){
+  var el = document.getElementById('subAlert');
+  if(!el) return;
+  el.innerHTML = '<div class="alert ' + type + '">' + msg + '</div>';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function renderLogin(){
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><span>教师入口</span></div>';
+  h += '<div class="chhero t fade" style="margin-bottom:20px"><h1>🔒 教师入口</h1>'
+    + '<p>投稿需要教师口令。本期先开教师端试用，学生与家长端后续版本再放开。</p></div>';
+  h += '<div id="subAlert"></div>';
+  h += '<div class="form" style="max-width:430px">';
+  h += '<div class="frow"><label>教师口令<span class="req">*</span></label>'
+    + '<input type="password" id="fPw" maxlength="40" placeholder="请输入教师口令" autocomplete="current-password">'
+    + '<div class="hintline">验证一次，本机 7 天内免重复输入。</div></div>';
+  h += '<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    + '<button class="btn primary" onclick="doLogin()">进入投稿</button>'
+    + '<a class="btn" href="#/wall" style="text-decoration:none">先看看投稿墙 →</a>'
+    + '</div></div>';
+  app.innerHTML = h;
+  var el = document.getElementById('fPw');
+  if(el){
+    el.focus();
+    el.addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
+  }
+}
+
+function doLogin(){
+  var el = document.getElementById('fPw');
+  var v = el ? el.value : '';
+  if(!v){ saySub('err','请先输入教师口令。'); return; }
+  if(loginTeacher(v)){
+    saySub('ok','✅ 口令正确，正在进入投稿页…');
+    setTimeout(function(){ go('#/submit'); }, 350);
+  }else{
+    saySub('err','口令不对。忘记口令请找教师发展处。');
+    if(el){ el.value = ''; el.focus(); }
+  }
+}
+
+function renderSubmit(){
+  if(!isTeacher()){ renderLogin(); return; }
+  var cats = ['教师频道','学生频道','家长频道','其他建议'];
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><span>我要投稿</span></div>';
+  h += '<div class="chhero t fade" style="margin-bottom:20px"><h1>✍️ 我要投稿</h1>'
+    + '<p>把你的经验写下来，投给这份手册。写多写少都行——200 字也是好东西，我们帮你成稿。</p></div>';
+  h += '<div class="alert info" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'
+    + '<span>🔓 已登录教师端 · 测试版</span>'
+    + '<a href="javascript:void(0)" onclick="doLogout()" style="white-space:nowrap">退出登录</a></div>';
+  h += '<div id="subAlert"></div>';
+  h += '<div class="form">';
+  h += '<div class="frow"><label>怎么称呼你（选填）</label>'
+    + '<input type="text" id="fAuthor" maxlength="20" placeholder="如：三年级王老师">'
+    + '<div class="hintline">填了就会署名在投稿墙上；不填显示「匿名教师」。</div></div>';
+  h += '<div class="frow"><label>投给哪个频道<span class="req">*</span></label><select id="fCat">';
+  cats.forEach(function(c){ h += '<option value="' + c + '">' + c + '</option>'; });
+  h += '</select></div>';
+  h += '<div class="frow"><label>标题<span class="req">*</span></label>'
+    + '<input type="text" id="fTitle" maxlength="40" placeholder="一句话说清你写的是什么">'
+    + '<div class="hintline">不超过 40 字</div></div>';
+  h += '<div class="frow"><label>正文<span class="req">*</span></label>'
+    + '<textarea id="fContent" maxlength="2000" placeholder="把做法、经验、踩过的坑写下来。有具体例子最受欢迎。"></textarea>'
+    + '<div class="hintline">不超过 2000 字 · 当前 <span id="chCount">0</span> 字</div></div>';
+  h += '<div class="alert info">测试期说明：投稿会立即出现在投稿墙，本期不设人工审核。'
+    + '请勿写入学生姓名、学号、成绩等个人信息。</div>';
+  h += '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">'
+    + '<button class="btn primary" id="subBtn" onclick="submitForm()">提交投稿</button>'
+    + '<a class="btn" href="#/wall" style="text-decoration:none">看看别人投了什么 →</a>'
+    + '</div></div>';
+  app.innerHTML = h;
+  var ta = document.getElementById('fContent');
+  if(ta){
+    ta.addEventListener('input', function(){
+      var c = document.getElementById('chCount');
+      if(c) c.textContent = ta.value.length;
+    });
+  }
+}
+
+function submitForm(){
+  if(!isTeacher()){ renderLogin(); return; }
+  var author   = ((document.getElementById('fAuthor')  || {}).value || '').trim();
+  var category = ((document.getElementById('fCat')     || {}).value || '').trim();
+  var title    = ((document.getElementById('fTitle')   || {}).value || '').trim();
+  var content  = ((document.getElementById('fContent') || {}).value || '').trim();
+
+  if(title.length < 2){ saySub('err','标题至少要写 2 个字。'); return; }
+  if(content.length < 10){ saySub('err','正文太短了，至少写 10 个字吧。'); return; }
+  if(content.length > 2000){ saySub('err','正文超过 2000 字了，请精简一下。'); return; }
+
+  var btn = document.getElementById('subBtn');
+  if(btn){ btn.disabled = true; btn.textContent = '提交中…'; }
+
+  var payload = {
+    '频道': category,
+    '标题': title,
+    '正文': content,
+    '署名': author || '匿名教师',
+    '来源': QF.source
+  };
+
+  fetch(QF.submit, {
+    method: 'POST',
+    mode: 'cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function(r){
+    return r.json().catch(function(){ return {}; });
+  }).then(function(res){
+    if(btn){ btn.disabled = false; btn.textContent = '提交投稿'; }
+    if(res && res.status === 'success'){
+      saySub('ok','✅ 收到啦！已进入云端汇总表，去「投稿墙」看看 →');
+      ['fTitle','fContent','fAuthor'].forEach(function(id){
+        var el = document.getElementById(id);
+        if(el) el.value = '';
+      });
+      var c = document.getElementById('chCount');
+      if(c) c.textContent = '0';
+    }else{
+      saySub('err','提交失败：' + esc((res && res.message) || '服务暂时不可用') + '。请稍后重试。');
+    }
+  }).catch(function(){
+    if(btn){ btn.disabled = false; btn.textContent = '提交投稿'; }
+    saySub('err','网络异常，提交没有成功。请检查网络后重试。');
+  });
+}
+
+/* ---------- 投稿墙（读取 quickform 云端汇总） ---------- */
+function renderWall(){
+  var h = '<div class="crumb"><a href="#/">首页</a><span class="sp">/</span><span>投稿墙</span></div>';
+  h += '<div class="chhero t fade" style="margin-bottom:20px"><h1>🧱 投稿墙</h1>'
+    + '<p>全部来稿，按提交时间倒序。测试期暂不设审核，编辑整理后会沉淀成正式条目。</p></div>';
+  h += '<div id="wallMeta" style="margin-bottom:14px;font-size:13px;color:var(--muted)">正在加载…</div>';
+  h += '<div id="wallBox"><div class="loading">正在加载投稿…</div></div>';
+  h += '<div style="margin-top:24px;text-align:center"><a class="btn primary" href="#/submit" style="text-decoration:none">✍️ 我也来写一条</a></div>';
+  app.innerHTML = h;
+  loadWall();
+}
+
+function loadWall(){
+  var box = document.getElementById('wallBox');
+  if(!box) return;
+  fetch(QF.all + '?t=' + Date.now(), { mode: 'cors', cache: 'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      var box2 = document.getElementById('wallBox');
+      var meta = document.getElementById('wallMeta');
+      if(!box2) return;
+      var rows = (res && res.submissions) ? res.submissions.slice(0) : [];
+      rows = rows.filter(function(r){ return !r['测试标记']; });
+      rows.sort(function(a, b){
+        return String(b.submitted_at || '').localeCompare(String(a.submitted_at || ''));
+      });
+      if(meta){ meta.textContent = '共 ' + rows.length + ' 条来稿'; }
+      if(!rows.length){
+        box2.innerHTML = '<div class="empty"><span class="e">🌱</span>还没有来稿<br>'
+          + '<span style="font-size:13px">第一条，留给你？</span></div>';
+        return;
+      }
+      box2.innerHTML = rows.map(function(r){
+        var nm  = r['署名'] ? esc(r['署名']) : '匿名教师';
+        var dt  = String(r.submitted_at || '').slice(0, 10);
+        var cat = r['频道'] ? esc(r['频道']) : '来稿';
+        return '<div class="wallcard"><div class="wh">'
+          + '<span class="rb teacher">' + cat + '</span>'
+          + '<b>' + esc(r['标题'] || '（无标题）') + '</b>'
+          + '<span class="who" style="margin-left:auto">' + nm + ' · ' + dt + '</span></div>'
+          + '<div class="wc">' + esc(r['正文'] || '') + '</div>'
+          + '</div>';
+      }).join('');
+    })
+    .catch(function(){
+      var box3 = document.getElementById('wallBox');
+      if(box3) box3.innerHTML = '<div class="alert err">网络异常，投稿墙加载失败。请稍后重试。</div>';
+      var m = document.getElementById('wallMeta');
+      if(m) m.textContent = '';
+    });
+}
+
+function render404(){
+  app.innerHTML = '<div class="empty fade"><span class="e">🧭</span>没有找到这个页面<br><span style="font-size:13px"><a href="#/">回到首页</a></span></div>';
+}
+
+/* ---------- 路由 ---------- */
+var currentId = '';
+function route(){
+  var hash = location.hash || '#/';
+  var path = hash.replace(/^#/,'');
+  window.scrollTo({top:0,behavior:'instant'});
+  document.getElementById('joinBtn').style.display = 'inline-block';
+  var m;
+  if(path === '/' || path === ''){ renderHome(); }
+  else if((m = path.match(/^\/c\/(.+)$/))){ renderChannel(m[1]); }
+  else if((m = path.match(/^\/a\/(.+)$/))){ currentId = m[1]; renderArticle(m[1]); }
+  else if((m = path.match(/^\/s\/(.+)$/))){ renderSearch(decodeURIComponent(m[1])); }
+  else if(path === '/submit'){ renderSubmit(); }
+  else if(path === '/wall'){ renderWall(); }
+  else if(path === '/school'){ go('#/c/school'); }
+  else if(path === '/about'){ renderPage('about'); }
+  else if(path === '/join'){ renderPage('join'); }
+  else if(path === '/updates'){ renderPage('updates'); }
+  else { render404(); }
+}
+window.addEventListener('hashchange', route);
+
+/* 顶栏搜索 */
+document.getElementById('q').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ doSearch(this.value); this.blur(); }
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === '/' && document.activeElement.tagName !== 'INPUT'){ e.preventDefault(); document.getElementById('q').focus(); }
+});
+
+/* ---------- 主题 ---------- */
+var tb = document.getElementById('themeBtn');
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  tb.textContent = t === 'dark' ? '☀️' : '🌙';
+  try{ localStorage.setItem('qmtx-theme', t); }catch(e){}
+}
+tb.addEventListener('click', function(){
+  setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+try{
+  var saved = localStorage.getItem('qmtx-theme');
+  if(saved) setTheme(saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+}catch(e){}
+
+/* ---------- 配色方案 ---------- */
+var SKINS = ['green','orange','blue','pink'];
+var skinPop = document.getElementById('skinPop');
+var skinBtn = document.getElementById('skinBtn');
+function setSkin(s){
+  if(SKINS.indexOf(s) < 0) s = 'green';
+  document.documentElement.setAttribute('data-skin', s);
+  var its = document.querySelectorAll('.skins .it');
+  for(var i=0;i<its.length;i++){
+    if(its[i].getAttribute('data-skin') === s) its[i].classList.add('on');
+    else its[i].classList.remove('on');
+  }
+  try{ localStorage.setItem('qmtx-skin', s); }catch(e){}
+}
+skinBtn.addEventListener('click', function(e){
+  e.stopPropagation();
+  skinPop.classList.toggle('show');
+});
+var skinItems = document.querySelectorAll('.skins .it');
+for(var si=0;si<skinItems.length;si++){
+  skinItems[si].addEventListener('click', function(ev){
+    ev.stopPropagation();
+    setSkin(this.getAttribute('data-skin'));
+  });
+}
+document.addEventListener('click', function(e){
+  if(skinPop.classList.contains('show') && !skinPop.contains(e.target) && e.target !== skinBtn) skinPop.classList.remove('show');
+});
+var savedSkin = 'green';
+try{ savedSkin = localStorage.getItem('qmtx-skin') || 'green'; }catch(e){}
+setSkin(savedSkin);
+
+/* ---------- 弹窗 ---------- */
+function openModal(ico, title, body, foot){
+  document.getElementById('mIco').textContent = ico;
+  document.getElementById('mTitle').textContent = title;
+  document.getElementById('mBody').innerHTML = body;
+  document.getElementById('mFoot').innerHTML = foot || '<button class="btn" onclick="closeModal()">知道了</button>';
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+function openJoin(){
+  openModal('🤝','参与共建', PAGES.join.body,
+    '<a class="btn" href="#/join" onclick="closeModal()">查看完整共建指南</a><button class="btn primary" onclick="closeModal()">我明白了</button>');
+}
+function openFix(title){
+  openModal('✏️','纠错 / 补充：'+title,
+    '<p>感谢你愿意让这份手册更准确。请把下面的信息告诉教师发展处或本站维护者：</p>'
+    + '<ul><li>条目名称：<b>'+esc(title)+'</b></li><li>问题位置（哪一段/哪句话）</li><li>你的建议</li></ul>'
+    + '<div class="tip"><b>💡 一句话也行</b>「第三段的电话写错了」就已经是很棒的反馈。</div>',
+    '<a class="btn" href="#/join" onclick="closeModal()">共建指南</a><button class="btn primary" onclick="closeModal()">好的</button>');
+}
+
+/* ---------- 初始化 ---------- */
+document.getElementById('verText').textContent = DB.site.version;
+document.getElementById('updText').textContent = DB.site.updated;
+route();
+</script>
+</body>
+</html>

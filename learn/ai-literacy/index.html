@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://quickform.cn/static/uploads/83059e412e914009af217ee92554239f.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>小学AI素养测评·智能素养大挑战 | 护眼版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #eef3e6;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            padding: 1.2rem 0.8rem;
+            color: #1e2f3e;
+            line-height: 1.5;
+        }
+        .assessment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+        .hero-section {
+            background: linear-gradient(115deg, #2c5a2e 0%, #3c7840 100%);
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+            color: white;
+        }
+        .hero-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .hero-title span {
+            background: #ffdd99;
+            color: #2b5e2f;
+            font-size: 0.9rem;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .timer-card {
+            background: #fef9e6;
+            border-radius: 60px;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: bold;
+            color: #2c5a2e;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 12px;
+        }
+        .timer-clock {
+            font-size: 1.8rem;
+            font-family: monospace;
+            letter-spacing: 2px;
+            background: #2c3e2b;
+            color: #f9f3cf;
+            padding: 0.2rem 0.9rem;
+            border-radius: 48px;
+        }
+        .timer-label {
+            font-size: 0.9rem;
+        }
+        .policy-badge {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            background: rgba(255,255,220,0.2);
+            padding: 0.6rem 1rem;
+            border-radius: 1.5rem;
+        }
+        .exam-meta {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .quiz-body {
+            padding: 1.5rem 1.2rem 1.2rem;
+        }
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin: 1rem 0 1rem 0;
+            padding-left: 0.8rem;
+            border-left: 10px solid #6aa84f;
+            color: #2a5c2e;
+        }
+        .questions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e9d6;
+            transition: all 0.3s ease;
+        }
+        .question-card.answered {
+            border-left: 4px solid #6aa84f;
+        }
+        .missing-question {
+            border: 3px solid #ff6b6b !important;
+            background-color: #fff0f0 !important;
+            animation: pulse 0.6s ease-in-out 3;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 107, 107, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+        }
+        .q-header {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 0.8rem;
+        }
+        .q-num {
+            background: #eef3e0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            color: #3c6e3f;
+        }
+        .q-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #1f3b2c;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 0.5rem 0 0.4rem 0;
+        }
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #fafcf5;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 1rem;
+            border: 1px solid #cfdfc2;
+            flex: 0 0 auto;
+        }
+        .option-label:hover {
+            background: #eef5e5;
+            border-color: #8fc27c;
+        }
+        input[type="radio"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            accent-color: #4c8b4a;
+            margin: 0;
+            cursor: pointer;
+        }
+        .result-icon {
+            margin-left: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .explanation-area {
+            margin-top: 0.9rem;
+            padding-top: 0.6rem;
+            border-top: 1px dashed #d4e2ca;
+            font-size: 0.9rem;
+            color: #2c5e2e;
+            background: #fafaf0;
+            border-radius: 1rem;
+            padding: 0.6rem 0.9rem;
+            line-height: 1.4;
+            display: none;
+        }
+        .explanation-area.show-exp {
+            display: block;
+        }
+        .action-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 2rem 0 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            background: #4c8b4a;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-family: inherit;
+        }
+        .btn-reset {
+            background: #6f8f6c;
+        }
+        .btn-score {
+            background: #e28743;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .score-panel {
+            background: #eaf5e3;
+            border-radius: 1.8rem;
+            padding: 1.2rem;
+            text-align: center;
+            margin: 1rem 0 0.8rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 1px solid #cbe3be;
+        }
+        .score-value {
+            font-size: 2.5rem;
+            color: #c25100;
+            margin: 0 0.3rem;
+        }
+        .feedback-message {
+            font-size: 1rem;
+            font-weight: normal;
+            margin-top: 0.6rem;
+        }
+        /* 错题集弹窗样式 */
+        .modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.2s;
+        }
+        .modal-mask.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: #fffef7;
+            max-width: 85vw;
+            width: 800px;
+            max-height: 85vh;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            background: linear-gradient(115deg, #2c5a2e 0%, #3c7840 100%);
+            padding: 1rem 1.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            line-height: 1;
+        }
+        .modal-body {
+            padding: 1.2rem 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .wrong-item-summary {
+            background: #fef9e6;
+            border-left: 6px solid #e28743;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .wrong-item-summary p {
+            margin: 0.3rem 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .wrong-question-text {
+            font-weight: 700;
+            color: #1f3b2c;
+        }
+        .wrong-answer {
+            color: #c23d1c;
+        }
+        .wrong-correct {
+            color: #2c7a4a;
+        }
+        .wrong-explanation {
+            color: #5b6e53;
+            font-style: italic;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5b6e53;
+            padding: 1rem 0 0.8rem;
+            border-top: 1px solid #e2eace;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2e5c2b;
+            color: #fff9e0;
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: bold;
+            z-index: 999;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            animation: fadeUp 2s ease forwards;
+            pointer-events: none;
+        }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-15px); visibility: hidden; }
+        }
+        input[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+<style>.Po4BvhR1CK2tJaywJ6AN path {
+  fill: var(--icon-path-fill);
+}
+.Oz4yDjua3Qe6thqkZYf_ path {
+  transition: 0.2s all;
+}
+.Oz4yDjua3Qe6thqkZYf_:hover path {
+  fill: var(--icon-hover-fill);
+}
+</style><style>/* ！！！切勿直接改动该文件，该文件由 generator.ts 自动生成！！！ */
+/* !!! DONT MODIFY THIS FILE DIRECTLY, THIS FILE IS GENERATED BY generator.ts AUTOMATICALLY !!! */
+.ibW4Oa5B7s2zJKKZ4pCg {
+  user-select: none;
+}
+.AtqKyJetjrG4smuk35Np {
+  max-width: 346px;
+  width: auto;
+  height: 36px;
+  background-color: var(--quark-style-white-color, #fff);
+  padding-left: 10px;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid var(--quark-style-gray-20-color, rgba(6, 10, 38, 0.12));
+  box-shadow: 0 12px 32px -6px var(--quark-style-gray-30-fixed-color, rgba(6, 10, 38, 0.24));
+  border-radius: 10px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .g6iGsZa_KHMeW2yICzQQ {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 28px;
+  padding: 0 6px;
+  margin-right: 2px;
+  border-radius: 6px;
+  column-gap: 4px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0:hover:not(.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8) {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8 {
+  cursor: default;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8 .Va3czASiR9Zztyl_lD4M {
+  color: var(--quark-style-gray-40-color, rgba(6, 10, 38, 0.4)) !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0 .Va3czASiR9Zztyl_lD4M {
+  font-size: 12px;
+  color: var(--quark-style-gray-color, #060A26);
+  line-height: 16px;
+  white-space: nowrap;
+  position: relative;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .llw0qsmiI_08u93bFdNg {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  overflow: visible !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .LEo8kpqIERehkv8AhAfG {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: visible !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .LEo8kpqIERehkv8AhAfG:hover {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .zoNmooxAnbLEJSN8m1Jg {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  max-height: 136px;
+  height: auto;
+  top: 36px;
+  right: -5px;
+  padding: 4px 0;
+  background-color: var(--quark-style-white-color, #fff);
+  border: 1px solid var(--quark-style-gray-20-color, rgba(6, 10, 38, 0.12));
+  box-shadow: 0 4px 16px -6px var(--quark-style-gray-20-fixed-color, rgba(6, 10, 38, 0.12));
+  border-radius: 8px;
+  overflow: visible !important;
+  row-gap: 4px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .O1imPofna4elG_8NcQnR {
+  top: -77px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .mdH0IY7jS3Swn5vdX6tz {
+  width: 102px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  column-gap: 8px;
+  border-radius: 6px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .mdH0IY7jS3Swn5vdX6tz:hover:not(.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt) {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt {
+  cursor: default;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt .zEraruudgjR2MToGu4Kw {
+  color: var(--quark-style-gray-40-color, rgba(6, 10, 38, 0.4)) !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .XfCMwvO0DsqFCeyzPYP2 {
+  width: 16px;
+  height: 16px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .zEraruudgjR2MToGu4Kw {
+  font-size: 12px;
+  color: var(--quark-style-gray-color, #060A26);
+}
+.ibW4Oa5B7s2zJKKZ4pCg .KZeoAuXbMIkWzOT4PcH5 {
+  width: 100%;
+  height: 1px;
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ZL32C_XdLL8UQRZ3zObd {
+  display: flex;
+  align-items: center;
+}
+.u5llx7cIQZLdrjP5Vag1 {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-right: 12px;
+  background: var(--quark-style-gray-60-color, rgba(6, 10, 38, 0.6));
+}
+.ZL32C_XdLL8UQRZ3zObd .LEo8kpqIERehkv8AhAfG {
+  border-radius: 16px !important;
+  background: var(--quark-style-gray-60-color, rgba(6, 10, 38, 0.6)) !important;
+}
+.ZL32C_XdLL8UQRZ3zObd .zoNmooxAnbLEJSN8m1Jg {
+  right: 0 !important;
+}
+.ZL32C_XdLL8UQRZ3zObd {
+  overflow: visible !important;
+}
+</style></head>
+<body>
+<div class="assessment-container" id="appContainer">
+    <div class="hero-section">
+        <div class="hero-title">
+            🤖 人工智能素养测评 · 小学中高年级
+            <span>AI 未来之星</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div class="timer-card">
+                <span class="timer-label">⏳ 剩余时间</span>
+                <span class="timer-clock" id="timerDisplay">35:00</span>
+            </div>
+            <div class="exam-meta" style="margin-top:0; display: flex; align-items: center; gap: 1rem;">
+                <span>📋 总分100分 | 35分钟</span>
+                <a href="https://quickform.cn/static/uploads/83059e412e914009af217ee92554239f.html" target="_blank" style="color: white; text-decoration: none; font-weight: bold; padding: 0.3rem 0.8rem; border: 2px solid white; border-radius: 20px; background: rgba(255,255,255,0.1); transition: all 0.2s ease; font-size: 0.9rem;">查看数据大屏</a>
+            </div>
+        </div>
+        <div class="policy-badge">
+            📖 依据《中小学人工智能通识教育指南(2025)》构建阶梯式AI素养体系 · 深化《教育信息化2.0》培育AI思维<br>
+            🧠 工程思维 · 批判性思维 · 系统思维 · 问题解决能力
+        </div>
+        <div style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 1rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+                <div style="flex: 1; min-width: 150px;">
+                    <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem;">📝 用户名/昵称</label>
+                    <input type="text" id="studentName" style="width: 100%; padding: 0.5rem; border: 1px solid #d4e2ca; border-radius: 0.5rem; font-size: 1rem; background: white;">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <label style="display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem;">🏫 班级号</label>
+                    <input type="text" id="classNumber" placeholder="例如：四(3)班填写为403" style="width: 100%; padding: 0.5rem; border: 1px solid #d4e2ca; border-radius: 0.5rem; font-size: 1rem; background: white;">
+                </div>
+                <div>
+                    <button class="btn" id="startBtn" style="background: #ffdd99; color: #2b5e2f; padding: 0.5rem 1.5rem;">🚀 开始答题</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="quiz-body">
+        <div id="questions-container"><div class="section-title">📌 第一部分 · 选择题 (每题2分，共50分)</div><div class="questions-grid" id="mcq-grid"><div class="question-card" data-qtype="mcq" data-qid="1"><div class="q-header"><div class="q-num">选择题 1</div><div class="q-text">下列哪项是人工智能的常见应用？</div><span class="result-icon" id="resultIcon_mcq_1"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_1" value="A" disabled=""><strong>A.</strong> 语音助手（如Siri、小爱同学）</label><label class="option-label"><input type="radio" name="mcq_1" value="B" disabled=""><strong>B.</strong> 传统计算器</label><label class="option-label"><input type="radio" name="mcq_1" value="C" disabled=""><strong>C.</strong> 纸质字典</label><label class="option-label"><input type="radio" name="mcq_1" value="D" disabled=""><strong>D.</strong> 手动洗衣机</label></div><div class="explanation-area" id="expl_mcq_1"></div></div><div class="question-card" data-qtype="mcq" data-qid="2"><div class="q-header"><div class="q-num">选择题 2</div><div class="q-text">人工智能的英文缩写是？</div><span class="result-icon" id="resultIcon_mcq_2"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_2" value="A" disabled=""><strong>A.</strong> AI</label><label class="option-label"><input type="radio" name="mcq_2" value="B" disabled=""><strong>B.</strong> AR</label><label class="option-label"><input type="radio" name="mcq_2" value="C" disabled=""><strong>C.</strong> VR</label><label class="option-label"><input type="radio" name="mcq_2" value="D" disabled=""><strong>D.</strong> IT</label></div><div class="explanation-area" id="expl_mcq_2"></div></div><div class="question-card" data-qtype="mcq" data-qid="3"><div class="q-header"><div class="q-num">选择题 3</div><div class="q-text">下列关于人工智能的说法正确的是？</div><span class="result-icon" id="resultIcon_mcq_3"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_3" value="A" disabled=""><strong>A.</strong> 人工智能就是机器人</label><label class="option-label"><input type="radio" name="mcq_3" value="B" disabled=""><strong>B.</strong> 人工智能可以学习和改进</label><label class="option-label"><input type="radio" name="mcq_3" value="C" disabled=""><strong>C.</strong> 人工智能不需要任何数据</label><label class="option-label"><input type="radio" name="mcq_3" value="D" disabled=""><strong>D.</strong> 所有机器都是人工智能</label></div><div class="explanation-area" id="expl_mcq_3"></div></div><div class="question-card" data-qtype="mcq" data-qid="4"><div class="q-header"><div class="q-num">选择题 4</div><div class="q-text">智能音箱能听懂我们说话，主要使用了什么技术？</div><span class="result-icon" id="resultIcon_mcq_4"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_4" value="A" disabled=""><strong>A.</strong> 图像识别</label><label class="option-label"><input type="radio" name="mcq_4" value="B" disabled=""><strong>B.</strong> 语音识别</label><label class="option-label"><input type="radio" name="mcq_4" value="C" disabled=""><strong>C.</strong> 人脸识别</label><label class="option-label"><input type="radio" name="mcq_4" value="D" disabled=""><strong>D.</strong> 指纹识别</label></div><div class="explanation-area" id="expl_mcq_4"></div></div><div class="question-card" data-qtype="mcq" data-qid="5"><div class="q-header"><div class="q-num">选择题 5</div><div class="q-text">人脸识别门禁系统主要使用了哪种人工智能技术？</div><span class="result-icon" id="resultIcon_mcq_5"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_5" value="A" disabled=""><strong>A.</strong> 语音识别</label><label class="option-label"><input type="radio" name="mcq_5" value="B" disabled=""><strong>B.</strong> 自然语言处理</label><label class="option-label"><input type="radio" name="mcq_5" value="C" disabled=""><strong>C.</strong> 计算机视觉</label><label class="option-label"><input type="radio" name="mcq_5" value="D" disabled=""><strong>D.</strong> 机器翻译</label></div><div class="explanation-area" id="expl_mcq_5"></div></div><div class="question-card" data-qtype="mcq" data-qid="6"><div class="q-header"><div class="q-num">选择题 6</div><div class="q-text">下列设备中，可能使用了人工智能技术的是？</div><span class="result-icon" id="resultIcon_mcq_6"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_6" value="A" disabled=""><strong>A.</strong> 扫地机器人</label><label class="option-label"><input type="radio" name="mcq_6" value="B" disabled=""><strong>B.</strong> 电风扇</label><label class="option-label"><input type="radio" name="mcq_6" value="C" disabled=""><strong>C.</strong> 台灯</label><label class="option-label"><input type="radio" name="mcq_6" value="D" disabled=""><strong>D.</strong> 闹钟</label></div><div class="explanation-area" id="expl_mcq_6"></div></div><div class="question-card" data-qtype="mcq" data-qid="7"><div class="q-header"><div class="q-num">选择题 7</div><div class="q-text">阿尔法围棋是一款会下棋的人工智能程序，它属于？</div><span class="result-icon" id="resultIcon_mcq_7"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_7" value="A" disabled=""><strong>A.</strong> 语音助手</label><label class="option-label"><input type="radio" name="mcq_7" value="B" disabled=""><strong>B.</strong> 自动驾驶</label><label class="option-label"><input type="radio" name="mcq_7" value="C" disabled=""><strong>C.</strong> 智能博弈</label><label class="option-label"><input type="radio" name="mcq_7" value="D" disabled=""><strong>D.</strong> 智能翻译</label></div><div class="explanation-area" id="expl_mcq_7"></div></div><div class="question-card" data-qtype="mcq" data-qid="8"><div class="q-header"><div class="q-num">选择题 8</div><div class="q-text">在使用智能设备时，我们应该注意保护什么？</div><span class="result-icon" id="resultIcon_mcq_8"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_8" value="A" disabled=""><strong>A.</strong> 自己的个人信息</label><label class="option-label"><input type="radio" name="mcq_8" value="B" disabled=""><strong>B.</strong> 设备的外观</label><label class="option-label"><input type="radio" name="mcq_8" value="C" disabled=""><strong>C.</strong> 天气情况</label><label class="option-label"><input type="radio" name="mcq_8" value="D" disabled=""><strong>D.</strong> 家庭住址的门牌号</label></div><div class="explanation-area" id="expl_mcq_8"></div></div><div class="question-card" data-qtype="mcq" data-qid="9"><div class="q-header"><div class="q-num">选择题 9</div><div class="q-text">人工智能可以帮助医生做什么？</div><span class="result-icon" id="resultIcon_mcq_9"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_9" value="A" disabled=""><strong>A.</strong> 煮饭</label><label class="option-label"><input type="radio" name="mcq_9" value="B" disabled=""><strong>B.</strong> 洗衣服</label><label class="option-label"><input type="radio" name="mcq_9" value="C" disabled=""><strong>C.</strong> 辅助诊断疾病</label><label class="option-label"><input type="radio" name="mcq_9" value="D" disabled=""><strong>D.</strong> 打扫卫生</label></div><div class="explanation-area" id="expl_mcq_9"></div></div><div class="question-card" data-qtype="mcq" data-qid="10"><div class="q-header"><div class="q-num">选择题 10</div><div class="q-text">智能推荐系统会根据我们的什么来推荐内容？</div><span class="result-icon" id="resultIcon_mcq_10"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_10" value="A" disabled=""><strong>A.</strong> 喜好和浏览历史</label><label class="option-label"><input type="radio" name="mcq_10" value="B" disabled=""><strong>B.</strong> 身高体重</label><label class="option-label"><input type="radio" name="mcq_10" value="C" disabled=""><strong>C.</strong> 家庭成员数量</label><label class="option-label"><input type="radio" name="mcq_10" value="D" disabled=""><strong>D.</strong> 所在城市天气</label></div><div class="explanation-area" id="expl_mcq_10"></div></div><div class="question-card" data-qtype="mcq" data-qid="11"><div class="q-header"><div class="q-num">选择题 11</div><div class="q-text">下列哪项不是人工智能的优点？</div><span class="result-icon" id="resultIcon_mcq_11"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_11" value="A" disabled=""><strong>A.</strong> 处理速度快</label><label class="option-label"><input type="radio" name="mcq_11" value="B" disabled=""><strong>B.</strong> 可以24小时工作</label><label class="option-label"><input type="radio" name="mcq_11" value="C" disabled=""><strong>C.</strong> 有自我意识</label><label class="option-label"><input type="radio" name="mcq_11" value="D" disabled=""><strong>D.</strong> 准确性高</label></div><div class="explanation-area" id="expl_mcq_11"></div></div><div class="question-card" data-qtype="mcq" data-qid="12"><div class="q-header"><div class="q-num">选择题 12</div><div class="q-text">自动驾驶汽车主要依靠什么来识别路况？</div><span class="result-icon" id="resultIcon_mcq_12"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_12" value="A" disabled=""><strong>A.</strong> 驾驶员的眼睛</label><label class="option-label"><input type="radio" name="mcq_12" value="B" disabled=""><strong>B.</strong> 各种传感器和摄像头</label><label class="option-label"><input type="radio" name="mcq_12" value="C" disabled=""><strong>C.</strong> 地图上的标记</label><label class="option-label"><input type="radio" name="mcq_12" value="D" disabled=""><strong>D.</strong> 行人的指挥</label></div><div class="explanation-area" id="expl_mcq_12"></div></div><div class="question-card" data-qtype="mcq" data-qid="13"><div class="q-header"><div class="q-num">选择题 13</div><div class="q-text">在网络上遇到陌生人询问我们的隐私信息时，正确的做法是？</div><span class="result-icon" id="resultIcon_mcq_13"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_13" value="A" disabled=""><strong>A.</strong> 如实回答</label><label class="option-label"><input type="radio" name="mcq_13" value="B" disabled=""><strong>B.</strong> 不随意透露，告知家长或老师</label><label class="option-label"><input type="radio" name="mcq_13" value="C" disabled=""><strong>C.</strong> 分享给朋友</label><label class="option-label"><input type="radio" name="mcq_13" value="D" disabled=""><strong>D.</strong> 发布到网上</label></div><div class="explanation-area" id="expl_mcq_13"></div></div><div class="question-card" data-qtype="mcq" data-qid="14"><div class="q-header"><div class="q-num">选择题 14</div><div class="q-text">人工智能绘画程序是根据什么来生成画作的？</div><span class="result-icon" id="resultIcon_mcq_14"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_14" value="A" disabled=""><strong>A.</strong> 随机涂鸦</label><label class="option-label"><input type="radio" name="mcq_14" value="B" disabled=""><strong>B.</strong> 随机数字</label><label class="option-label"><input type="radio" name="mcq_14" value="C" disabled=""><strong>C.</strong> 学习大量的图像数据</label><label class="option-label"><input type="radio" name="mcq_14" value="D" disabled=""><strong>D.</strong> 空白的画布</label></div><div class="explanation-area" id="expl_mcq_14"></div></div><div class="question-card" data-qtype="mcq" data-qid="15"><div class="q-header"><div class="q-num">选择题 15</div><div class="q-text">智能客服可以自动回答问题的原因是？</div><span class="result-icon" id="resultIcon_mcq_15"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_15" value="A" disabled=""><strong>A.</strong> 它有一个真实的人在后台操作</label><label class="option-label"><input type="radio" name="mcq_15" value="B" disabled=""><strong>B.</strong> 它学习了大量的问答数据</label><label class="option-label"><input type="radio" name="mcq_15" value="C" disabled=""><strong>C.</strong> 它能读懂所有语言</label><label class="option-label"><input type="radio" name="mcq_15" value="D" disabled=""><strong>D.</strong> 它能感知情绪</label></div><div class="explanation-area" id="expl_mcq_15"></div></div><div class="question-card" data-qtype="mcq" data-qid="16"><div class="q-header"><div class="q-num">选择题 16</div><div class="q-text">下列职业中，最容易被人工智能辅助的是？</div><span class="result-icon" id="resultIcon_mcq_16"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_16" value="A" disabled=""><strong>A.</strong> 运动员</label><label class="option-label"><input type="radio" name="mcq_16" value="B" disabled=""><strong>B.</strong> 医生、律师等</label><label class="option-label"><input type="radio" name="mcq_16" value="C" disabled=""><strong>C.</strong> 农民</label><label class="option-label"><input type="radio" name="mcq_16" value="D" disabled=""><strong>D.</strong> 艺术家</label></div><div class="explanation-area" id="expl_mcq_16"></div></div><div class="question-card" data-qtype="mcq" data-qid="17"><div class="q-header"><div class="q-num">选择题 17</div><div class="q-text">使用人脸识别时，我们需要注意的是？</div><span class="result-icon" id="resultIcon_mcq_17"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_17" value="A" disabled=""><strong>A.</strong> 可以随意用他人照片尝试</label><label class="option-label"><input type="radio" name="mcq_17" value="B" disabled=""><strong>B.</strong> 注意保护个人生物信息</label><label class="option-label"><input type="radio" name="mcq_17" value="C" disabled=""><strong>C.</strong> 每次都使用同一个人脸</label><label class="option-label"><input type="radio" name="mcq_17" value="D" disabled=""><strong>D.</strong> 不需要任何注意</label></div><div class="explanation-area" id="expl_mcq_17"></div></div><div class="question-card" data-qtype="mcq" data-qid="18"><div class="q-header"><div class="q-num">选择题 18</div><div class="q-text">人工智能在教育领域可以发挥什么作用？</div><span class="result-icon" id="resultIcon_mcq_18"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_18" value="A" disabled=""><strong>A.</strong> 完全取代老师</label><label class="option-label"><input type="radio" name="mcq_18" value="B" disabled=""><strong>B.</strong> 提供个性化学习帮助</label><label class="option-label"><input type="radio" name="mcq_18" value="C" disabled=""><strong>C.</strong> 取消所有考试</label><label class="option-label"><input type="radio" name="mcq_18" value="D" disabled=""><strong>D.</strong> 减少学生的数量</label></div><div class="explanation-area" id="expl_mcq_18"></div></div><div class="question-card" data-qtype="mcq" data-qid="19"><div class="q-header"><div class="q-num">选择题 19</div><div class="q-text">机器学习是人工智能的一个分支，它的特点是？</div><span class="result-icon" id="resultIcon_mcq_19"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_19" value="A" disabled=""><strong>A.</strong> 固定不变的程序</label><label class="option-label"><input type="radio" name="mcq_19" value="B" disabled=""><strong>B.</strong> 从数据中学习规律</label><label class="option-label"><input type="radio" name="mcq_19" value="C" disabled=""><strong>C.</strong> 不需要计算机</label><label class="option-label"><input type="radio" name="mcq_19" value="D" disabled=""><strong>D.</strong> 只执行简单计算</label></div><div class="explanation-area" id="expl_mcq_19"></div></div><div class="question-card" data-qtype="mcq" data-qid="20"><div class="q-header"><div class="q-num">选择题 20</div><div class="q-text">智能手环可以记录我们每天走的步数，它使用了什么技术？</div><span class="result-icon" id="resultIcon_mcq_20"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_20" value="A" disabled=""><strong>A.</strong> 图像识别</label><label class="option-label"><input type="radio" name="mcq_20" value="B" disabled=""><strong>B.</strong> 语音识别</label><label class="option-label"><input type="radio" name="mcq_20" value="C" disabled=""><strong>C.</strong> 运动传感器技术</label><label class="option-label"><input type="radio" name="mcq_20" value="D" disabled=""><strong>D.</strong> 机器翻译</label></div><div class="explanation-area" id="expl_mcq_20"></div></div><div class="question-card" data-qtype="mcq" data-qid="21"><div class="q-header"><div class="q-num">选择题 21</div><div class="q-text">人工智能战胜人类棋手的例子说明了？</div><span class="result-icon" id="resultIcon_mcq_21"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_21" value="A" disabled=""><strong>A.</strong> 人类不应该下棋</label><label class="option-label"><input type="radio" name="mcq_21" value="B" disabled=""><strong>B.</strong> 人工智能在特定领域可以超越人类</label><label class="option-label"><input type="radio" name="mcq_21" value="C" disabled=""><strong>C.</strong> 人工智能比人类更聪明</label><label class="option-label"><input type="radio" name="mcq_21" value="D" disabled=""><strong>D.</strong> 以后不需要人类思考</label></div><div class="explanation-area" id="expl_mcq_21"></div></div><div class="question-card" data-qtype="mcq" data-qid="22"><div class="q-header"><div class="q-num">选择题 22</div><div class="q-text">下列关于人工智能与人类关系的说法，正确的是？</div><span class="result-icon" id="resultIcon_mcq_22"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_22" value="A" disabled=""><strong>A.</strong> 人工智能会完全取代人类</label><label class="option-label"><input type="radio" name="mcq_22" value="B" disabled=""><strong>B.</strong> 人工智能是人类创造的工具</label><label class="option-label"><input type="radio" name="mcq_22" value="C" disabled=""><strong>C.</strong> 人工智能不需要电力</label><label class="option-label"><input type="radio" name="mcq_22" value="D" disabled=""><strong>D.</strong> 人类不需要学习人工智能</label></div><div class="explanation-area" id="expl_mcq_22"></div></div><div class="question-card" data-qtype="mcq" data-qid="23"><div class="q-header"><div class="q-num">选择题 23</div><div class="q-text">在使用智能设备时，什么是正确的做法？</div><span class="result-icon" id="resultIcon_mcq_23"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_23" value="A" disabled=""><strong>A.</strong> 不加保护地使用</label><label class="option-label"><input type="radio" name="mcq_23" value="B" disabled=""><strong>B.</strong> 遵守使用规范，注意信息安全</label><label class="option-label"><input type="radio" name="mcq_23" value="C" disabled=""><strong>C.</strong> 随意点击所有弹窗</label><label class="option-label"><input type="radio" name="mcq_23" value="D" disabled=""><strong>D.</strong> 分享密码给朋友</label></div><div class="explanation-area" id="expl_mcq_23"></div></div><div class="question-card" data-qtype="mcq" data-qid="24"><div class="q-header"><div class="q-num">选择题 24</div><div class="q-text">人工智能伦理主要关注的是？</div><span class="result-icon" id="resultIcon_mcq_24"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_24" value="A" disabled=""><strong>A.</strong> 如何让机器跑得更快</label><label class="option-label"><input type="radio" name="mcq_24" value="B" disabled=""><strong>B.</strong> 如何让人工智能更好地为人类服务</label><label class="option-label"><input type="radio" name="mcq_24" value="C" disabled=""><strong>C.</strong> 如何制造更多机器人</label><label class="option-label"><input type="radio" name="mcq_24" value="D" disabled=""><strong>D.</strong> 如何节省电力</label></div><div class="explanation-area" id="expl_mcq_24"></div></div><div class="question-card" data-qtype="mcq" data-qid="25"><div class="q-header"><div class="q-num">选择题 25</div><div class="q-text">未来人工智能可能帮助人类解决什么问题？</div><span class="result-icon" id="resultIcon_mcq_25"></span></div><div class="options"><label class="option-label"><input type="radio" name="mcq_25" value="A" disabled=""><strong>A.</strong> 宇宙探索</label><label class="option-label"><input type="radio" name="mcq_25" value="B" disabled=""><strong>B.</strong> 疾病治疗</label><label class="option-label"><input type="radio" name="mcq_25" value="C" disabled=""><strong>C.</strong> 环境保护</label><label class="option-label"><input type="radio" name="mcq_25" value="D" disabled=""><strong>D.</strong> 以上都有可能</label></div><div class="explanation-area" id="expl_mcq_25"></div></div></div><div class="section-title">⚖️ 第二部分 · 判断题 (每题2分，共50分)</div><div class="questions-grid" id="tf-grid"><div class="question-card" data-qtype="tf" data-qid="26"><div class="q-header"><div class="q-num">判断题 26</div><div class="q-text">人工智能就是机器人，两者没有区别。</div><span class="result-icon" id="resultIcon_tf_26"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_26" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_26" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_26"></div></div><div class="question-card" data-qtype="tf" data-qid="27"><div class="q-header"><div class="q-num">判断题 27</div><div class="q-text">智能音箱能听懂我们说话，说明它具有一定的听懂能力。</div><span class="result-icon" id="resultIcon_tf_27"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_27" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_27" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_27"></div></div><div class="question-card" data-qtype="tf" data-qid="28"><div class="q-header"><div class="q-num">判断题 28</div><div class="q-text">人工智能可以完全不依赖人类自主学习和进化。</div><span class="result-icon" id="resultIcon_tf_28"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_28" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_28" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_28"></div></div><div class="question-card" data-qtype="tf" data-qid="29"><div class="q-header"><div class="q-num">判断题 29</div><div class="q-text">人脸识别技术可以帮助我们快速解锁手机。</div><span class="result-icon" id="resultIcon_tf_29"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_29" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_29" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_29"></div></div><div class="question-card" data-qtype="tf" data-qid="30"><div class="q-header"><div class="q-num">判断题 30</div><div class="q-text">我们可以相信人工智能给出的所有答案，不需要思考。</div><span class="result-icon" id="resultIcon_tf_30"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_30" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_30" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_30"></div></div><div class="question-card" data-qtype="tf" data-qid="31"><div class="q-header"><div class="q-num">判断题 31</div><div class="q-text">智能推荐系统会根据我们的喜好推荐内容。</div><span class="result-icon" id="resultIcon_tf_31"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_31" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_31" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_31"></div></div><div class="question-card" data-qtype="tf" data-qid="32"><div class="q-header"><div class="q-num">判断题 32</div><div class="q-text">自动驾驶汽车已经完全不需要人类干预。</div><span class="result-icon" id="resultIcon_tf_32"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_32" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_32" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_32"></div></div><div class="question-card" data-qtype="tf" data-qid="33"><div class="q-header"><div class="q-num">判断题 33</div><div class="q-text">人工智能可以帮助医生分析医学影像。</div><span class="result-icon" id="resultIcon_tf_33"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_33" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_33" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_33"></div></div><div class="question-card" data-qtype="tf" data-qid="34"><div class="q-header"><div class="q-num">判断题 34</div><div class="q-text">我们可以随意在网上公开自己的个人信息。</div><span class="result-icon" id="resultIcon_tf_34"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_34" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_34" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_34"></div></div><div class="question-card" data-qtype="tf" data-qid="35"><div class="q-header"><div class="q-num">判断题 35</div><div class="q-text">人工智能绘画程序是通过学习大量画作来生成新作品的。</div><span class="result-icon" id="resultIcon_tf_35"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_35" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_35" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_35"></div></div><div class="question-card" data-qtype="tf" data-qid="36"><div class="q-header"><div class="q-num">判断题 36</div><div class="q-text">所有的智能设备都有人工智能功能。</div><span class="result-icon" id="resultIcon_tf_36"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_36" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_36" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_36"></div></div><div class="question-card" data-qtype="tf" data-qid="37"><div class="q-header"><div class="q-num">判断题 37</div><div class="q-text">使用人工智能时要注意保护个人隐私。</div><span class="result-icon" id="resultIcon_tf_37"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_37" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_37" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_37"></div></div><div class="question-card" data-qtype="tf" data-qid="38"><div class="q-header"><div class="q-num">判断题 38</div><div class="q-text">人工智能在未来可能取代所有的职业。</div><span class="result-icon" id="resultIcon_tf_38"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_38" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_38" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_38"></div></div><div class="question-card" data-qtype="tf" data-qid="39"><div class="q-header"><div class="q-num">判断题 39</div><div class="q-text">智能客服可以24小时为用户提供服务。</div><span class="result-icon" id="resultIcon_tf_39"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_39" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_39" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_39"></div></div><div class="question-card" data-qtype="tf" data-qid="40"><div class="q-header"><div class="q-num">判断题 40</div><div class="q-text">人工智能没有好坏之分，如何使用取决于人类。</div><span class="result-icon" id="resultIcon_tf_40"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_40" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_40" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_40"></div></div><div class="question-card" data-qtype="tf" data-qid="41"><div class="q-header"><div class="q-num">判断题 41</div><div class="q-text">我们不需要了解人工智能，因为它太复杂了。</div><span class="result-icon" id="resultIcon_tf_41"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_41" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_41" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_41"></div></div><div class="question-card" data-qtype="tf" data-qid="42"><div class="q-header"><div class="q-num">判断题 42</div><div class="q-text">人工智能在环境保护、资源优化等方面可以发挥作用。</div><span class="result-icon" id="resultIcon_tf_42"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_42" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_42" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_42"></div></div><div class="question-card" data-qtype="tf" data-qid="43"><div class="q-header"><div class="q-num">判断题 43</div><div class="q-text">机器学习让人工智能可以从数据中学习改进。</div><span class="result-icon" id="resultIcon_tf_43"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_43" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_43" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_43"></div></div><div class="question-card" data-qtype="tf" data-qid="44"><div class="q-header"><div class="q-num">判断题 44</div><div class="q-text">人工智能做出的决定一定是正确的。</div><span class="result-icon" id="resultIcon_tf_44"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_44" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_44" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_44"></div></div><div class="question-card" data-qtype="tf" data-qid="45"><div class="q-header"><div class="q-num">判断题 45</div><div class="q-text">了解人工智能有助于我们更好地使用它。</div><span class="result-icon" id="resultIcon_tf_45"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_45" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_45" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_45"></div></div><div class="question-card" data-qtype="tf" data-qid="46"><div class="q-header"><div class="q-num">判断题 46</div><div class="q-text">人脸、指纹等生物特征信息不需要特别保护。</div><span class="result-icon" id="resultIcon_tf_46"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_46" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_46" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_46"></div></div><div class="question-card" data-qtype="tf" data-qid="47"><div class="q-header"><div class="q-num">判断题 47</div><div class="q-text">人工智能可以协助人类完成一些重复性工作。</div><span class="result-icon" id="resultIcon_tf_47"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_47" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_47" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_47"></div></div><div class="question-card" data-qtype="tf" data-qid="48"><div class="q-header"><div class="q-num">判断题 48</div><div class="q-text">我们应该对人工智能有畏惧心理，不应该使用它。</div><span class="result-icon" id="resultIcon_tf_48"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_48" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_48" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_48"></div></div><div class="question-card" data-qtype="tf" data-qid="49"><div class="q-header"><div class="q-num">判断题 49</div><div class="q-text">人工智能的发展需要遵循伦理道德规范。</div><span class="result-icon" id="resultIcon_tf_49"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_49" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_49" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_49"></div></div><div class="question-card" data-qtype="tf" data-qid="50"><div class="q-header"><div class="q-num">判断题 50</div><div class="q-text">学习人工智能知识对我们的未来很重要。</div><span class="result-icon" id="resultIcon_tf_50"></span></div><div class="options"><label class="option-label"><input type="radio" name="tf_50" value="正确" disabled=""> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_50" value="错误" disabled=""> ❌ 错误</label></div><div class="explanation-area" id="expl_tf_50"></div></div></div></div>
+        <div class="action-bar">
+            <button class="btn btn-score" id="submitBtn">📊 提交测评 · 查看分数+解析</button>
+            <button class="btn btn-reset" id="resetBtn">🔄 重置所有答案 &amp; 计时器</button>
+        </div>
+        <div id="scoreArea" class="score-panel" style="display: none;"></div>
+        <footer>
+            ⭐ 护眼模式 · 每道题提交后均会显示解析说明，帮助理解AI知识。<br>
+            🌱 争做人工智能小达人，让科技向善，思维生长！<br>
+            📌 项目组负责：常州市新北区汤庄桥小学信息中心 85583392@qq.com<br>
+            📊 数据来源：互联网公开资源，仅用于免费学习用。
+        </footer>
+    </div>
+</div>
+
+<!-- 错题集弹窗 -->
+<div id="wrongModal" class="modal-mask">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>📚 错题本 · 集中学习</h3>
+            <button class="modal-close" id="closeModalBtn">×</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+        </div>
+    </div>
+</div>
+
+<script>
+var mcqData = [
+    { text: "下列哪项是人工智能的常见应用？", options: ["语音助手（如Siri、小爱同学）", "传统计算器", "纸质字典", "手动洗衣机"], correct: "A", explanation: "语音助手可以理解人类语言并回答问题，属于人工智能技术；传统计算器、纸质字典、手动洗衣机都不具备AI学习能力。" },
+    { text: "人工智能的英文缩写是？", options: ["AI", "AR", "VR", "IT"], correct: "A", explanation: "AI = Artificial Intelligence，是人工智能的英文缩写；AR增强现实，VR虚拟现实，IT信息技术。" },
+    { text: "下列关于人工智能的说法正确的是？", options: ["人工智能就是机器人", "人工智能可以学习和改进", "人工智能不需要任何数据", "所有机器都是人工智能"], correct: "B", explanation: "人工智能的核心是让机器从数据中学习并改进，机器人只是AI的一种载体，并不是所有机器都是AI。" },
+    { text: "智能音箱能听懂我们说话，主要使用了什么技术？", options: ["图像识别", "语音识别", "人脸识别", "指纹识别"], correct: "B", explanation: "语音识别技术将声音转换成文字，让智能音箱理解指令；图像识别用于图片，人脸指纹用于身份验证。" },
+    { text: "人脸识别门禁系统主要使用了哪种人工智能技术？", options: ["语音识别", "自然语言处理", "计算机视觉", "机器翻译"], correct: "C", explanation: "计算机视觉让机器看懂图像和视频，人脸识别就是典型应用，通过摄像头识别面部特征。" },
+    { text: "下列设备中，可能使用了人工智能技术的是？", options: ["扫地机器人", "电风扇", "台灯", "闹钟"], correct: "A", explanation: "扫地机器人利用传感器和AI算法规划路线、避开障碍物，是智能设备；普通电风扇、台灯、闹钟不具备AI。" },
+    { text: "阿尔法围棋是一款会下棋的人工智能程序，它属于？", options: ["语音助手", "自动驾驶", "智能博弈", "智能翻译"], correct: "C", explanation: "AlphaGo是专门下围棋的智能博弈程序，属于游戏AI，曾击败世界冠军。" },
+    { text: "在使用智能设备时，我们应该注意保护什么？", options: ["自己的个人信息", "设备的外观", "天气情况", "家庭住址的门牌号"], correct: "A", explanation: "智能设备可能收集隐私数据，我们要保护姓名、电话、照片等个人信息，避免泄露。" },
+    { text: "人工智能可以帮助医生做什么？", options: ["煮饭", "洗衣服", "辅助诊断疾病", "打扫卫生"], correct: "C", explanation: "AI能分析医学影像、辅助医生发现病灶，提高诊断效率，但不能完全替代医生。" },
+    { text: "智能推荐系统会根据我们的什么来推荐内容？", options: ["喜好和浏览历史", "身高体重", "家庭成员数量", "所在城市天气"], correct: "A", explanation: "推荐系统分析我们的点击、观看记录，推测喜好，推荐视频、商品等。" },
+    { text: "下列哪项不是人工智能的优点？", options: ["处理速度快", "可以24小时工作", "有自我意识", "准确性高"], correct: "C", explanation: "目前AI没有真正的自我意识和情感，它只是高效的计算工具。" },
+    { text: "自动驾驶汽车主要依靠什么来识别路况？", options: ["驾驶员的眼睛", "各种传感器和摄像头", "地图上的标记", "行人的指挥"], correct: "B", explanation: "激光雷达、摄像头、毫米波雷达等传感器让汽车感知周围环境，实现自动行驶。" },
+    { text: "在网络上遇到陌生人询问我们的隐私信息时，正确的做法是？", options: ["如实回答", "不随意透露，告知家长或老师", "分享给朋友", "发布到网上"], correct: "B", explanation: "保护隐私很重要，绝不能把家庭住址、密码等告诉陌生人，应及时求助大人。" },
+    { text: "人工智能绘画程序是根据什么来生成画作的？", options: ["随机涂鸦", "随机数字", "学习大量的图像数据", "空白的画布"], correct: "C", explanation: "AI绘画模型通过分析数百万张画作，学习风格和元素，再根据指令创作新画。" },
+    { text: "智能客服可以自动回答问题的原因是？", options: ["它有一个真实的人在后台操作", "它学习了大量的问答数据", "它能读懂所有语言", "它能感知情绪"], correct: "B", explanation: "智能客服基于自然语言处理和知识库，通过大量对话数据训练，自动回复常见问题。" },
+    { text: "下列职业中，最容易被人工智能辅助的是？", options: ["运动员", "医生、律师等", "农民", "艺术家"], correct: "B", explanation: "医生诊断、法律条文检索等知识密集型工作可被AI辅助，但核心判断仍需人类。" },
+    { text: "使用人脸识别时，我们需要注意的是？", options: ["可以随意用他人照片尝试", "注意保护个人生物信息", "每次都使用同一个人脸", "不需要任何注意"], correct: "B", explanation: "人脸、指纹等生物特征不可更改，一旦泄露危害极大，因此要特别保护。" },
+    { text: "人工智能在教育领域可以发挥什么作用？", options: ["完全取代老师", "提供个性化学习帮助", "取消所有考试", "减少学生的数量"], correct: "B", explanation: "AI可以根据学生学习情况推荐练习题、讲解知识点，做老师的得力助手。" },
+    { text: "机器学习是人工智能的一个分支，它的特点是？", options: ["固定不变的程序", "从数据中学习规律", "不需要计算机", "只执行简单计算"], correct: "B", explanation: "机器学习让计算机从数据中自动寻找规律，而不是死板地按固定规则执行。" },
+    { text: "智能手环可以记录我们每天走的步数，它使用了什么技术？", options: ["图像识别", "语音识别", "运动传感器技术", "机器翻译"], correct: "C", explanation: "内置加速度计等运动传感器检测身体晃动，结合算法计算步数和消耗热量。" },
+    { text: "人工智能战胜人类棋手的例子说明了？", options: ["人类不应该下棋", "人工智能在特定领域可以超越人类", "人工智能比人类更聪明", "以后不需要人类思考"], correct: "B", explanation: "AI在计算和模式识别上能超越人类，但仅限于特定任务，综合智慧仍不如人类。" },
+    { text: "下列关于人工智能与人类关系的说法，正确的是？", options: ["人工智能会完全取代人类", "人工智能是人类创造的工具", "人工智能不需要电力", "人类不需要学习人工智能"], correct: "B", explanation: "AI是人类发明的工具，用来辅助工作生活，未来人机协作是主流。" },
+    { text: "在使用智能设备时，什么是正确的做法？", options: ["不加保护地使用", "遵守使用规范，注意信息安全", "随意点击所有弹窗", "分享密码给朋友"], correct: "B", explanation: "要设置密码、不点可疑链接、定期更新软件，保障设备和个人信息安全。" },
+    { text: "人工智能伦理主要关注的是？", options: ["如何让机器跑得更快", "如何让人工智能更好地为人类服务", "如何制造更多机器人", "如何节省电力"], correct: "B", explanation: "AI伦理讨论公平、隐私、责任等问题，确保技术向善，不伤害人类。" },
+    { text: "未来人工智能可能帮助人类解决什么问题？", options: ["宇宙探索", "疾病治疗", "环境保护", "以上都有可能"], correct: "D", explanation: "AI可分析宇宙数据、加速新药研发、监测污染源，三个方向都能发挥巨大作用。" }
+];
+
+var tfData = [
+    { text: "人工智能就是机器人，两者没有区别。", correct: "错误", explanation: "机器人是硬件设备，人工智能是算法能力，很多AI没有机器人形态，如Siri。" },
+    { text: "智能音箱能听懂我们说话，说明它具有一定的听懂能力。", correct: "正确", explanation: "语音识别技术使智能音箱理解指令，这种“听懂”是AI能力的体现。" },
+    { text: "人工智能可以完全不依赖人类自主学习和进化。", correct: "错误", explanation: "目前的AI需要人类提供数据和设计算法，不能完全脱离人类独立进化。" },
+    { text: "人脸识别技术可以帮助我们快速解锁手机。", correct: "正确", explanation: "手机人脸解锁是AI计算机视觉的典型应用，方便快捷。" },
+    { text: "我们可以相信人工智能给出的所有答案，不需要思考。", correct: "错误", explanation: "AI也可能出错，我们要保持批判性思维，验证信息。" },
+    { text: "智能推荐系统会根据我们的喜好推荐内容。", correct: "正确", explanation: "推荐系统通过学习你的浏览行为来推荐你喜欢的内容。" },
+    { text: "自动驾驶汽车已经完全不需要人类干预。", correct: "错误", explanation: "目前自动驾驶还需要人类监控和接管，并未实现完全无人驾驶。" },
+    { text: "人工智能可以帮助医生分析医学影像。", correct: "正确", explanation: "AI可以识别X光片、CT中的异常，辅助医生诊断。" },
+    { text: "我们可以随意在网上公开自己的个人信息。", correct: "错误", explanation: "随意公开个人信息可能导致隐私泄露，甚至诈骗风险。" },
+    { text: "人工智能绘画程序是通过学习大量画作来生成新作品的。", correct: "正确", explanation: "生成式AI通过学习数万幅艺术作品，掌握风格并创作新画。" },
+    { text: "所有的智能设备都有人工智能功能。", correct: "错误", explanation: "很多“智能”设备只是预置程序，没有真正的学习和推理能力。" },
+    { text: "使用人工智能时要注意保护个人隐私。", correct: "正确", explanation: "AI系统可能收集数据，我们必须注意隐私设置和安全使用。" },
+    { text: "人工智能在未来可能取代所有的职业。", correct: "错误", explanation: "AI会替代重复性工作，但创意、情感交流等职业仍需人类。" },
+    { text: "智能客服可以24小时为用户提供服务。", correct: "正确", explanation: "AI客服不需要休息，能全天在线回答常见问题。" },
+    { text: "人工智能没有好坏之分，如何使用取决于人类。", correct: "正确", explanation: "AI技术是中性的，关键在于人类如何设计、应用和监管它。" },
+    { text: "我们不需要了解人工智能，因为它太复杂了。", correct: "错误", explanation: "了解AI能帮助我们更好地使用它、保护自己，并参与未来社会。" },
+    { text: "人工智能在环境保护、资源优化等方面可以发挥作用。", correct: "正确", explanation: "AI可以分析气候数据、优化能源使用，助力可持续发展。" },
+    { text: "机器学习让人工智能可以从数据中学习改进。", correct: "正确", explanation: "机器学习是AI的核心，让系统通过数据自动提升性能。" },
+    { text: "人工智能做出的决定一定是正确的。", correct: "错误", explanation: "AI受数据影响可能产生偏见或错误，不可盲目信任。" },
+    { text: "了解人工智能有助于我们更好地使用它。", correct: "正确", explanation: "知道AI的原理和局限，才能高效、安全地运用AI工具。" },
+    { text: "人脸、指纹等生物特征信息不需要特别保护。", correct: "错误", explanation: "生物特征唯一且不可更改，一旦泄露危害巨大，必须严格保护。" },
+    { text: "人工智能可以协助人类完成一些重复性工作。", correct: "正确", explanation: "AI非常适合处理大量重复劳动，解放人类去做创造型工作。" },
+    { text: "我们应该对人工智能有畏惧心理，不应该使用它。", correct: "错误", explanation: "应当积极学习、合理使用AI，而不是恐惧回避。" },
+    { text: "人工智能的发展需要遵循伦理道德规范。", correct: "正确", explanation: "制定AI伦理准则能防止技术滥用，确保公平和向善。" },
+    { text: "学习人工智能知识对我们的未来很重要。", correct: "正确", explanation: "AI正在改变世界，掌握AI素养是未来人才的关键能力。" }
+];
+
+var timeLeft = 35 * 60;
+var timerInterval = null;
+var timerActive = false;
+var isSubmitted = false;
+var studentInfo = { name: '', class: '' };
+var timerDisplaySpan = null;
+var submitBtn = null, resetBtn = null, startBtn = null;
+var allQuestionCards = [];
+var wrongDetailsList = [];
+
+function showToast(msg) {
+    var toast = document.createElement('div');
+    toast.className = 'toast-msg';
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(function() { if(toast && toast.remove) toast.remove(); }, 3000);
+}
+
+function updateTimerDisplay() {
+    if (timerDisplaySpan) {
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft % 60;
+        timerDisplaySpan.innerText = (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+    }
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    timerActive = false;
+}
+
+// 全局校验用户名是否填写，未填写则提示
+function checkStudentInfo() {
+    var studentNameInput = document.getElementById('studentName');
+    var classNumberInput = document.getElementById('classNumber');
+    var studentName = studentNameInput ? studentNameInput.value.trim() : '';
+    var classNumber = classNumberInput ? classNumberInput.value.trim() : '';
+
+    if (!studentName) {
+        showToast("请先填写【用户名/昵称】！");
+        return false;
+    }
+    if (!classNumber) {
+        showToast("请填写【班级号】！");
+        return false;
+    }
+    if (!/^\d{3}$/.test(classNumber)) {
+        showToast("班级号必须是3位数字格式！");
+        return false;
+    }
+    studentInfo.name = studentName;
+    studentInfo.class = classNumber;
+    return true;
+}
+
+function startTimer() {
+    if (timerActive || isSubmitted) return;
+    if (timeLeft <= 0) return;
+
+    if (!checkStudentInfo()) return;
+
+    timerActive = true;
+    showToast("📢 正式测评开始！计时已启动，请在35分钟内完成答题，祝你取得好成绩~");
+    timerInterval = setInterval(function() {
+        if (!timerActive) return;
+        if (timeLeft <= 1) {
+            timeLeft = 0;
+            updateTimerDisplay();
+            stopTimer();
+            if (!isSubmitted) {
+                showToast("⌛ 时间到啦！自动提交测评卷");
+                computeAndShowScore(true);
+            }
+        } else {
+            timeLeft--;
+            updateTimerDisplay();
+        }
+    }, 1000);
+}
+
+function resetTimer() {
+    stopTimer();
+    timeLeft = 35 * 60;
+    updateTimerDisplay();
+    timerActive = false;
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function isCardAnswered(card) {
+    var radios = card.querySelectorAll('input[type="radio"]');
+    for (var r = 0; r < radios.length; r++) {
+        if (radios[r].checked) return true;
+    }
+    return false;
+}
+
+function checkAndLocateMissing() {
+    var missingCards = [];
+    var firstMissing = null;
+
+    for (var i = 0; i < allQuestionCards.length; i++) {
+        allQuestionCards[i].classList.remove('missing-question');
+    }
+
+    for (var i = 0; i < allQuestionCards.length; i++) {
+        var card = allQuestionCards[i];
+        if (!isCardAnswered(card)) {
+            card.classList.add('missing-question');
+            if (!firstMissing) {
+                firstMissing = card;
+            }
+            missingCards.push(card);
+        }
+    }
+
+    if (firstMissing) {
+        showToast("⚠️ 还有 " + missingCards.length + " 道题目未作答，请依次补全。");
+        firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return true;
+    }
+    return false;
+}
+
+function renderQuestions() {
+    var container = document.getElementById('questions-container');
+    if (!container) return;
+    var html = '<div class="section-title">📌 第一部分 · 选择题 (每题2分，共50分)</div><div class="questions-grid" id="mcq-grid"></div>' +
+               '<div class="section-title">⚖️ 第二部分 · 判断题 (每题2分，共50分)</div><div class="questions-grid" id="tf-grid"></div>';
+    container.innerHTML = html;
+    var mcqGrid = document.getElementById('mcq-grid');
+    var tfGrid = document.getElementById('tf-grid');
+    allQuestionCards = [];
+
+    for (var i = 0; i < mcqData.length; i++) {
+        var item = mcqData[i];
+        var qNumber = i + 1;
+        var optsHtml = '';
+        for (var j = 0; j < item.options.length; j++) {
+            var letter = String.fromCharCode(65 + j);
+            optsHtml += '<label class="option-label"><input type="radio" name="mcq_' + qNumber + '" value="' + letter + '"><strong>' + letter + '.</strong> ' + escapeHtml(item.options[j]) + '</label>';
+        }
+        var card = document.createElement('div');
+        card.className = 'question-card';
+        card.setAttribute('data-qtype', 'mcq');
+        card.setAttribute('data-qid', qNumber);
+        card.innerHTML = '<div class="q-header"><div class="q-num">选择题 ' + qNumber + '</div><div class="q-text">' + escapeHtml(item.text) + '</div><span class="result-icon" id="resultIcon_mcq_' + qNumber + '"></span></div>' +
+                         '<div class="options">' + optsHtml + '</div>' +
+                         '<div class="explanation-area" id="expl_mcq_' + qNumber + '"></div>';
+        mcqGrid.appendChild(card);
+        allQuestionCards.push(card);
+
+        (function(cardElement) {
+            var radios = cardElement.querySelectorAll('input[type="radio"]');
+            for (var r = 0; r < radios.length; r++) {
+                radios[r].addEventListener('change', function() {
+                    if(!checkStudentInfo()){
+                        this.checked = false;
+                        return;
+                    }
+                    cardElement.classList.add('answered');
+                    var wasMissing = cardElement.classList.contains('missing-question');
+                    cardElement.classList.remove('missing-question');
+
+                    if (wasMissing) {
+                        var currentIndex = allQuestionCards.indexOf(cardElement);
+                        var nextMissing = null;
+
+                        for (var k = currentIndex + 1; k < allQuestionCards.length; k++) {
+                            if (!isCardAnswered(allQuestionCards[k])) {
+                                nextMissing = allQuestionCards[k];
+                                break;
+                            }
+                        }
+                        if (!nextMissing) {
+                             for (var k = 0; k < currentIndex; k++) {
+                                if (!isCardAnswered(allQuestionCards[k])) {
+                                    nextMissing = allQuestionCards[k];
+                                    break;
+                                }
+                            }
+                        }
+                        if (nextMissing) {
+                            nextMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+            }
+        })(card);
+    }
+
+    for (var k = 0; k < tfData.length; k++) {
+        var tItem = tfData[k];
+        var qNum = k + 26;
+        var card = document.createElement('div');
+        card.className = 'question-card';
+        card.setAttribute('data-qtype', 'tf');
+        card.setAttribute('data-qid', qNum);
+        card.innerHTML = '<div class="q-header"><div class="q-num">判断题 ' + qNum + '</div><div class="q-text">' + escapeHtml(tItem.text) + '</div><span class="result-icon" id="resultIcon_tf_' + qNum + '"></span></div>' +
+                         '<div class="options"><label class="option-label"><input type="radio" name="tf_' + qNum + '" value="正确"> ✅ 正确</label><label class="option-label"><input type="radio" name="tf_' + qNum + '" value="错误"> ❌ 错误</label></div>' +
+                         '<div class="explanation-area" id="expl_tf_' + qNum + '"></div>';
+        tfGrid.appendChild(card);
+        allQuestionCards.push(card);
+
+        (function(cardElement) {
+            var radios = cardElement.querySelectorAll('input[type="radio"]');
+            for (var r = 0; r < radios.length; r++) {
+                radios[r].addEventListener('change', function() {
+                    if(!checkStudentInfo()){
+                        this.checked = false;
+                        return;
+                    }
+                    cardElement.classList.add('answered');
+                    var wasMissing = cardElement.classList.contains('missing-question');
+                    cardElement.classList.remove('missing-question');
+
+                    if (wasMissing) {
+                        var currentIndex = allQuestionCards.indexOf(cardElement);
+                        var nextMissing = null;
+                        for (var k = currentIndex + 1; k < allQuestionCards.length; k++) {
+                            if (!isCardAnswered(allQuestionCards[k])) {
+                                nextMissing = allQuestionCards[k];
+                                break;
+                            }
+                        }
+                        if (!nextMissing) {
+                             for (var k = 0; k < currentIndex; k++) {
+                                if (!isCardAnswered(allQuestionCards[k])) {
+                                    nextMissing = allQuestionCards[k];
+                                    break;
+                                }
+                            }
+                        }
+                        if (nextMissing) {
+                            nextMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+            }
+        })(card);
+    }
+
+    var allRadios = document.querySelectorAll('input[type="radio"]');
+    for (var r = 0; r < allRadios.length; r++) {
+        allRadios[r].disabled = true;
+    }
+}
+
+function enableAllRadios() {
+    var allRadios = document.querySelectorAll('input[type="radio"]');
+    for (var r = 0; r < allRadios.length; r++) {
+        allRadios[r].disabled = false;
+    }
+}
+
+// 提交数据到指定接口
+function submitScoreToApi(totalScore){
+    var formData = new FormData();
+    formData.append('student_name', studentInfo.name);
+    formData.append('class_number', studentInfo.class);
+    formData.append('total_score', totalScore);
+    formData.append('total_questions', allQuestionCards.length);
+    formData.append('wrong_count', wrongDetailsList.length);
+    formData.append('submit_time', new Date().toLocaleString());
+
+    fetch('https://quickform.cn/api/dhv10tuwkg', {
+        method: 'POST',
+        body: formData,
+        mode: 'cors'
+    }).then(res => {
+        console.log("成绩提交成功", res);
+        showToast("✅ 成绩已成功提交至服务器！");
+    }).catch(err => {
+        console.error("提交失败", err);
+        showToast("⚠️ 成绩提交失败，请稍后重试");
+    });
+}
+
+function computeAndShowScore(isTimeUp = false) {
+    if (isSubmitted) return;
+    if (!timerActive && !isTimeUp) {
+        showToast("请先点击“开始答题”按钮启动测评！");
+        return;
+    }
+
+    if (checkAndLocateMissing()) {
+        return;
+    }
+
+    stopTimer();
+    isSubmitted = true;
+
+    var allRadios = document.querySelectorAll('input[type="radio"]');
+    for (var r = 0; r < allRadios.length; r++) {
+        allRadios[r].disabled = true;
+    }
+
+    var totalScore = 0;
+    wrongDetailsList = [];
+
+    // 计算选择题
+    for (var i = 0; i < mcqData.length; i++) {
+        var qNumber = i + 1;
+        var selectedOption = document.querySelector('input[name="mcq_' + qNumber + '"]:checked');
+        var correctAnswer = mcqData[i].correct;
+        var resultIcon = document.getElementById('resultIcon_mcq_' + qNumber);
+        var explArea = document.getElementById('expl_mcq_' + qNumber);
+        
+        explArea.innerText = mcqData[i].explanation;
+        explArea.classList.add('show-exp');
+
+        if (selectedOption && selectedOption.value === correctAnswer) {
+            totalScore += 2;
+            resultIcon.innerText = '✅';
+            resultIcon.style.color = '#2c7a4a';
+        } else {
+            resultIcon.innerText = '❌';
+            resultIcon.style.color = '#c23d1c';
+            wrongDetailsList.push({
+                type: '选择题',
+                number: qNumber,
+                text: mcqData[i].text,
+                selected: selectedOption ? selectedOption.value : '未作答',
+                correct: correctAnswer,
+                explanation: mcqData[i].explanation
+            });
+        }
+    }
+
+    // 计算判断题
+    for (var k = 0; k < tfData.length; k++) {
+        var qNum = k + 26;
+        var selectedOption = document.querySelector('input[name="tf_' + qNum + '"]:checked');
+        var correctAnswer = tfData[k].correct;
+        var resultIcon = document.getElementById('resultIcon_tf_' + qNum);
+        var explArea = document.getElementById('expl_tf_' + qNum);
+        
+        explArea.innerText = tfData[k].explanation;
+        explArea.classList.add('show-exp');
+
+        if (selectedOption && selectedOption.value === correctAnswer) {
+            totalScore += 2;
+            resultIcon.innerText = '✅';
+            resultIcon.style.color = '#2c7a4a';
+        } else {
+            resultIcon.innerText = '❌';
+            resultIcon.style.color = '#c23d1c';
+            wrongDetailsList.push({
+                type: '判断题',
+                number: qNum,
+                text: tfData[k].text,
+                selected: selectedOption ? selectedOption.value : '未作答',
+                correct: correctAnswer,
+                explanation: tfData[k].explanation
+            });
+        }
+    }
+
+    // 自动提交
+    submitScoreToApi(totalScore);
+
+    var scoreArea = document.getElementById('scoreArea');
+    scoreArea.style.display = 'block';
+    
+    var feedbackMsg = '';
+    if (totalScore >= 90) {
+        feedbackMsg = '🎉 太棒了！你是AI小达人，继续保持对人工智能的探索热情～';
+    } else if (totalScore >= 80) {
+        feedbackMsg = '👏 优秀！你对AI知识掌握得很好，再努努力就能成为顶尖小专家～';
+    } else if (totalScore >= 70) {
+        feedbackMsg = '👍 不错哦！基本掌握了AI基础素养，继续加油巩固知识点～';
+    } else if (totalScore >= 60) {
+        feedbackMsg = '💪 合格啦！还有不少提升空间，多了解AI知识会更棒～';
+    } else {
+        feedbackMsg = '💡 还要继续努力哦！人工智能很有趣，多学习多探索就能进步～';
+    }
+
+    scoreArea.innerHTML = `
+        <div>🏆 ${studentInfo.name} (${studentInfo.class}班) 测评得分</div>
+        <div><span class="score-value">${totalScore}</span> / 100 分</div>
+        <div class="feedback-message">${feedbackMsg}</div>
+        ${wrongDetailsList.length > 0 ? '<button class="btn" style="margin-top: 10px; background: #e28743;" id="showWrongBtn">📖 查看错题集 (' + wrongDetailsList.length + '道)</button>' : ''}
+    `;
+
+    var showWrongBtn = document.getElementById('showWrongBtn');
+    if (showWrongBtn) {
+        showWrongBtn.addEventListener('click', function() {
+            showWrongModal();
+        });
+    }
+
+    showToast("📊 测评已提交！总分：" + totalScore + "分，错题解析已展开～");
+}
+
+function showWrongModal() {
+    var modalMask = document.getElementById('wrongModal');
+    var modalBody = document.getElementById('modalBody');
+    modalBody.innerHTML = '';
+
+    if (wrongDetailsList.length === 0) {
+        modalBody.innerHTML = '<div style="text-align:center; padding: 2rem; color: #2c7a4a;">🎉 恭喜！你没有错题～</div>';
+        modalMask.classList.add('active');
+        return;
+    }
+
+    for (var i = 0; i < wrongDetailsList.length; i++) {
+        var wrongItem = wrongDetailsList[i];
+        var wrongHtml = `
+            <div class="wrong-item-summary">
+                <p><span class="wrong-question-text">${wrongItem.type} ${wrongItem.number}：${wrongItem.text}</span></p>
+                <p>你的答案：<span class="wrong-answer">${wrongItem.selected}</span></p>
+                <p>正确答案：<span class="wrong-correct">${wrongItem.correct}</span></p>
+                <p>解析：<span class="wrong-explanation">${wrongItem.explanation}</span></p>
+            </div>
+        `;
+        modalBody.innerHTML += wrongHtml;
+    }
+    modalMask.classList.add('active');
+}
+
+function resetAll() {
+    if (confirm('⚠️ 确定要重置所有答案和计时器吗？已作答内容将全部清空！')) {
+        resetTimer();
+        isSubmitted = false;
+        studentInfo = { name: '', class: '' };
+        
+        var studentNameInput = document.getElementById('studentName');
+        var classNumberInput = document.getElementById('classNumber');
+        if (studentNameInput) studentNameInput.value = '';
+        if (classNumberInput) classNumberInput.value = '';
+        
+        renderQuestions();
+        
+        var scoreArea = document.getElementById('scoreArea');
+        if (scoreArea) scoreArea.style.display = 'none';
+        
+        var modalMask = document.getElementById('wrongModal');
+        modalMask.classList.remove('active');
+        
+        startBtn.disabled = false;
+        startBtn.style.opacity = '1';
+        
+        showToast("🔄 已重置所有内容，请重新点击“开始答题”～");
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    timerDisplaySpan = document.getElementById('timerDisplay');
+    submitBtn = document.getElementById('submitBtn');
+    resetBtn = document.getElementById('resetBtn');
+    startBtn = document.getElementById('startBtn');
+    
+    renderQuestions();
+    
+    startBtn.addEventListener('click', function() {
+        if (timerActive) {
+            showToast("⏳ 测评已经开始，无需重复点击～");
+            return;
+        }
+        startTimer();
+        enableAllRadios();
+        this.disabled = true;
+        this.style.opacity = '0.7';
+    });
+    
+    submitBtn.addEventListener('click', function() {
+        computeAndShowScore(false);
+    });
+    
+    resetBtn.addEventListener('click', resetAll);
+    
+    var closeModalBtn = document.getElementById('closeModalBtn');
+    closeModalBtn.addEventListener('click', function() {
+        var modalMask = document.getElementById('wrongModal');
+        modalMask.classList.remove('active');
+    });
+    
+    var modalMask = document.getElementById('wrongModal');
+    modalMask.addEventListener('click', function(e) {
+        if (e.target === modalMask) {
+            modalMask.classList.remove('active');
+        }
+    });
+});
+</script>
+
+
+</body></html>

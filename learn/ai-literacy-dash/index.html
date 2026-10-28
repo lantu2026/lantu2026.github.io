@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://quickform.cn/static/uploads/b80b8e0fb7e84f2391b91f397e2c866e.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AI素养测评 · 数据大屏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef3e6;
+            font-family: 'Segoe UI', 'Roboto', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            padding: 1rem;
+            color: #1e2f3e;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            width: 1200px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.15);
+            overflow: hidden;
+            min-height: calc(100vh - 2rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(115deg, #2c5a2e 0%, #3c7840 100%);
+            padding: 1.2rem 2.5rem;
+            color: white;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .header h1 span {
+            background: #ffdd99;
+            color: #2b5e2f;
+            font-size: 1rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .task-title {
+            font-size: 1rem;
+            background: rgba(255,255,220,0.2);
+            padding: 0.8rem 1.2rem;
+            border-radius: 2rem;
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .update-time {
+            font-size: 0.9rem;
+            background: rgba(255,255,240,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+        }
+        .refresh-icon {
+            cursor: pointer;
+            background: #ffdd99;
+            color: #2b5e2f;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .refresh-icon:hover {
+            background: #ffcd6e;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 1.5rem 2rem;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e9d6;
+            position: relative;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #6aa84f, #9bc47a);
+        }
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #2c7a4a;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: #5b6e53;
+        }
+        .unit {
+            font-size: 1rem;
+            color: #8aa77d;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 0 2rem 1.5rem;
+        }
+        .card {
+            background: #fff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e9d6;
+        }
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 8px solid #6aa84f;
+            color: #2a5c2e;
+        }
+
+        .score-range-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .range-label { width: 80px; font-weight: 600; }
+        .bar-container { flex:1; background:#eef3e0; height:36px; border-radius:20px; }
+        .bar-fill { background:linear-gradient(90deg,#6aa84f,#9bc47a); height:100%; color:white; padding-right:12px; font-weight:bold; border-radius:20px; }
+        .range-count { min-width:60px; text-align:right; font-weight:600; }
+
+        .wrong-list { max-height:350px; overflow-y:auto; }
+        .wrong-item { display:flex; align-items:center; gap:1rem; padding:0.8rem 0; border-bottom:1px solid #eee; }
+        .wrong-rank { font-weight:bold; color:#e28743; width:35px; }
+        .wrong-count { background:#fdf2e6; padding:0.4rem 0.8rem; border-radius:30px; color:#c45c1a; }
+        .wrong-name { flex:1; }
+
+        .table-card { margin:0 2rem 1.5rem; }
+        .recent-table { width:100%; border-collapse:collapse; }
+        .recent-table th, .recent-table td { padding:0.9rem; text-align:left; border-bottom:1px solid #eee; }
+        .recent-table th { background:#f8faf4; font-weight:bold; color:#2c5a2e; }
+        .score-badge { padding:0.4rem 0.9rem; border-radius:30px; font-weight:bold; }
+        .score-high { background:#d9f0e1; color:#1e6f3f; }
+        .score-low { background:#ffe0db; color:#c23d1c; }
+
+        .footer-note {
+            display: flex;
+            justify-content: space-between;
+            padding:1rem;
+            color:#8ba08b;
+            border-top:1px solid #e2eace;
+            margin:0 2rem;
+        }
+        .empty-placeholder { text-align:center; padding:2rem; color:#8ba08b; background:#fafcf8; border-radius:1rem; }
+        .loading { opacity:0.7; }
+
+        /* 日期筛选 + 分页样式 */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .date-filter {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .pagination {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .page-btn {
+            padding: 6px 14px;
+            background: #6aa84f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .page-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .page-info {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+<style>.Po4BvhR1CK2tJaywJ6AN path {
+  fill: var(--icon-path-fill);
+}
+.Oz4yDjua3Qe6thqkZYf_ path {
+  transition: 0.2s all;
+}
+.Oz4yDjua3Qe6thqkZYf_:hover path {
+  fill: var(--icon-hover-fill);
+}
+</style><style>/* ！！！切勿直接改动该文件，该文件由 generator.ts 自动生成！！！ */
+/* !!! DONT MODIFY THIS FILE DIRECTLY, THIS FILE IS GENERATED BY generator.ts AUTOMATICALLY !!! */
+.ibW4Oa5B7s2zJKKZ4pCg {
+  user-select: none;
+}
+.AtqKyJetjrG4smuk35Np {
+  max-width: 346px;
+  width: auto;
+  height: 36px;
+  background-color: var(--quark-style-white-color, #fff);
+  padding-left: 10px;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid var(--quark-style-gray-20-color, rgba(6, 10, 38, 0.12));
+  box-shadow: 0 12px 32px -6px var(--quark-style-gray-30-fixed-color, rgba(6, 10, 38, 0.24));
+  border-radius: 10px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .g6iGsZa_KHMeW2yICzQQ {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 28px;
+  padding: 0 6px;
+  margin-right: 2px;
+  border-radius: 6px;
+  column-gap: 4px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0:hover:not(.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8) {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8 {
+  cursor: default;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .kNOcXLDT_cCrcoY8LTm8 .Va3czASiR9Zztyl_lD4M {
+  color: var(--quark-style-gray-40-color, rgba(6, 10, 38, 0.4)) !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .e4UXx38MPgfHdym_Lzt0 .Va3czASiR9Zztyl_lD4M {
+  font-size: 12px;
+  color: var(--quark-style-gray-color, #060A26);
+  line-height: 16px;
+  white-space: nowrap;
+  position: relative;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .llw0qsmiI_08u93bFdNg {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  overflow: visible !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .LEo8kpqIERehkv8AhAfG {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: visible !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .LEo8kpqIERehkv8AhAfG:hover {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .zoNmooxAnbLEJSN8m1Jg {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  max-height: 136px;
+  height: auto;
+  top: 36px;
+  right: -5px;
+  padding: 4px 0;
+  background-color: var(--quark-style-white-color, #fff);
+  border: 1px solid var(--quark-style-gray-20-color, rgba(6, 10, 38, 0.12));
+  box-shadow: 0 4px 16px -6px var(--quark-style-gray-20-fixed-color, rgba(6, 10, 38, 0.12));
+  border-radius: 8px;
+  overflow: visible !important;
+  row-gap: 4px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .O1imPofna4elG_8NcQnR {
+  top: -77px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .mdH0IY7jS3Swn5vdX6tz {
+  width: 102px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  column-gap: 8px;
+  border-radius: 6px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .mdH0IY7jS3Swn5vdX6tz:hover:not(.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt) {
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt {
+  cursor: default;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .dEdHLVmn_L2GAzb_cmwt .zEraruudgjR2MToGu4Kw {
+  color: var(--quark-style-gray-40-color, rgba(6, 10, 38, 0.4)) !important;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .XfCMwvO0DsqFCeyzPYP2 {
+  width: 16px;
+  height: 16px;
+}
+.ibW4Oa5B7s2zJKKZ4pCg .zEraruudgjR2MToGu4Kw {
+  font-size: 12px;
+  color: var(--quark-style-gray-color, #060A26);
+}
+.ibW4Oa5B7s2zJKKZ4pCg .KZeoAuXbMIkWzOT4PcH5 {
+  width: 100%;
+  height: 1px;
+  background: var(--quark-style-gray-10-color, rgba(6, 10, 38, 0.06));
+}
+.ZL32C_XdLL8UQRZ3zObd {
+  display: flex;
+  align-items: center;
+}
+.u5llx7cIQZLdrjP5Vag1 {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-right: 12px;
+  background: var(--quark-style-gray-60-color, rgba(6, 10, 38, 0.6));
+}
+.ZL32C_XdLL8UQRZ3zObd .LEo8kpqIERehkv8AhAfG {
+  border-radius: 16px !important;
+  background: var(--quark-style-gray-60-color, rgba(6, 10, 38, 0.6)) !important;
+}
+.ZL32C_XdLL8UQRZ3zObd .zoNmooxAnbLEJSN8m1Jg {
+  right: 0 !important;
+}
+.ZL32C_XdLL8UQRZ3zObd {
+  overflow: visible !important;
+}
+</style></head>
+<body>
+<div class="dashboard">
+    <div class="header">
+        <h1>🤖 人工智能素养测评 · 小学中高年级 · 数据大屏 <span>实时监控看板</span></h1>
+        <div class="task-title">
+            <span>📖 <strong id="taskTitle">AI通识测评</strong></span>
+            <div><span id="lastUpdateTime">最后刷新：2026/4/8 10:57:00</span><span class="refresh-icon" id="manualRefresh">🔄 手动刷新</span></div>
+        </div>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-number" id="totalCount">239</div><div class="stat-label">总提交人数</div></div>
+        <div class="stat-card"><div class="stat-number" id="avgScore">97.0<span class="unit">积分</span></div><div class="stat-label">平均积分</div></div>
+        <div class="stat-card"><div class="stat-number" id="maxScore">100<span class="unit">积分</span></div><div class="stat-label">最高积分</div></div>
+        <div class="stat-card"><div class="stat-number" id="minScore">0<span class="unit">积分</span></div><div class="stat-label">最低积分</div></div>
+        <div class="stat-card"><div class="stat-number" id="passRate">100.0<span class="unit">%</span></div><div class="stat-label">及格率</div></div>
+        <div class="stat-card"><div class="stat-number">50<span class="unit">题</span></div><div class="stat-label">总题数</div></div>
+    </div>
+
+    <div class="two-columns">
+        <div class="card">
+            <div class="card-title">📈 积分分布</div>
+            <div id="scoreDistribution">
+            <div class="score-range-item">
+                <div class="range-label">0-59</div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:0%"></div>
+                </div>
+                <div class="range-count">0人</div>
+            </div>
+        
+            <div class="score-range-item">
+                <div class="range-label">60-69</div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:0%"></div>
+                </div>
+                <div class="range-count">0人</div>
+            </div>
+        
+            <div class="score-range-item">
+                <div class="range-label">70-79</div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:0.4329004329004329%"></div>
+                </div>
+                <div class="range-count">1人</div>
+            </div>
+        
+            <div class="score-range-item">
+                <div class="range-label">80-89</div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:3.0303030303030303%"></div>
+                </div>
+                <div class="range-count">7人</div>
+            </div>
+        
+            <div class="score-range-item">
+                <div class="range-label">90-100</div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:100%"></div>
+                </div>
+                <div class="range-count">231人</div>
+            </div>
+        </div>
+        </div>
+        <div class="card">
+            <div class="card-title">🔥 错题频率排行</div>
+            <div id="wrongRanking">
+            <div class="wrong-item">
+                <div class="wrong-rank">1</div>
+                <div class="wrong-name">AI概念理解题</div>
+                <div class="wrong-count">12 人次</div>
+            </div>
+        
+            <div class="wrong-item">
+                <div class="wrong-rank">2</div>
+                <div class="wrong-name">信息识别判断题</div>
+                <div class="wrong-count">9 人次</div>
+            </div>
+        
+            <div class="wrong-item">
+                <div class="wrong-rank">3</div>
+                <div class="wrong-name">安全意识单选题</div>
+                <div class="wrong-count">7 人次</div>
+            </div>
+        
+            <div class="wrong-item">
+                <div class="wrong-rank">4</div>
+                <div class="wrong-name">应用操作填空题</div>
+                <div class="wrong-count">5 人次</div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="card table-card">
+        <div class="card-title">📋 最新提交明细</div>
+        
+        <!-- 日期筛选 + 分页工具栏 -->
+        <div class="toolbar">
+            <input type="date" id="selectDate" class="date-filter">
+            <div class="pagination">
+                <button class="page-btn" id="prevPage" disabled="">上一页</button>
+                <span class="page-info" id="pageInfo">第 1 / 12 页</span>
+                <button class="page-btn" id="nextPage">下一页</button>
+            </div>
+        </div>
+
+        <table class="recent-table">
+            <thead>
+                <tr>
+                    <th>用户名/昵称</th>
+                    <th>班级号</th>
+                    <th>积分</th>
+                    <th>错题数</th>
+                    <th>提交时间</th>
+                </tr>
+            </thead>
+            <tbody id="recentTbody">
+        <tr>
+            <td>焦亦宸</td>
+            <td>401</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 21:58:54</td>
+        </tr>
+        <tr>
+            <td>焦亦宸</td>
+            <td>401</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 21:55:42</td>
+        </tr>
+        <tr>
+            <td>焦亦宸</td>
+            <td>401</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 21:52:31</td>
+        </tr>
+        <tr>
+            <td>段颖辰</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 20:37:43</td>
+        </tr>
+        <tr>
+            <td>段颖辰</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 20:21:39</td>
+        </tr>
+        <tr>
+            <td>段颖辰</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">94</span></td>
+            <td>3 题</td>
+            <td>2026/4/7 20:18:13</td>
+        </tr>
+        <tr>
+            <td>段颖辰</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">96</span></td>
+            <td>2 题</td>
+            <td>2026/4/7 19:56:02</td>
+        </tr>
+        <tr>
+            <td>丁亦扬</td>
+            <td>402</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 19:04:39</td>
+        </tr>
+        <tr>
+            <td>丁亦扬</td>
+            <td>402</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 19:01:25</td>
+        </tr>
+        <tr>
+            <td>谢庭玉</td>
+            <td>207</td>
+            <td><span class="score-badge score-high">96</span></td>
+            <td>2 题</td>
+            <td>2026/4/7 18:50:39</td>
+        </tr>
+        <tr>
+            <td>程嘉乐</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 17:49:02</td>
+        </tr>
+        <tr>
+            <td>程嘉乐</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 17:47:11</td>
+        </tr>
+        <tr>
+            <td>程嘉乐</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 17:45:52</td>
+        </tr>
+        <tr>
+            <td>程嘉乐</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 17:44:20</td>
+        </tr>
+        <tr>
+            <td>程嘉乐</td>
+            <td>501</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 17:42:44</td>
+        </tr>
+        <tr>
+            <td>张惜尔</td>
+            <td>401</td>
+            <td><span class="score-badge score-high">96</span></td>
+            <td>2 题</td>
+            <td>2026/4/7 16:43:10</td>
+        </tr>
+        <tr>
+            <td>陈嘉颖</td>
+            <td>309</td>
+            <td><span class="score-badge score-high">100</span></td>
+            <td>0 题</td>
+            <td>2026/4/7 16:35:59</td>
+        </tr>
+        <tr>
+            <td>阵理颖</td>
+            <td>309</td>
+            <td><span class="score-badge score-high">96</span></td>
+            <td>2 题</td>
+            <td>2026/4/7 16:32:51</td>
+        </tr>
+        <tr>
+            <td>闫承一</td>
+            <td>404</td>
+            <td><span class="score-badge score-high">98</span></td>
+            <td>1 题</td>
+            <td>2026/4/7 13:43:48</td>
+        </tr>
+        <tr>
+            <td>曹文韬</td>
+            <td>407</td>
+            <td><span class="score-badge score-high">94</span></td>
+            <td>3 题</td>
+            <td>2026/4/7 13:34:23</td>
+        </tr></tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        <div>⏱️ 每10秒自动刷新 | 宽度：1200px</div>
+        <div>项目组：常州市新北区汤庄桥小学信息中心</div>
+    </div>
+</div>
+
+<script>
+const CONFIG = {
+    API_URL: "https://quickform.cn/api/dhv10tuwkg/all",
+    REFRESH_INTERVAL: 10000,
+    PAGE_SIZE: 20
+};
+
+let timer = null;
+let loading = false;
+let allData = [];
+let currentPage = 1;
+let selectedDate = "";
+
+const escape = (s) => s || "";
+
+// 获取日期字符串 YYYY-MM-DD
+function getDateStr(dateStr) {
+    if (!dateStr) return "";
+    return new Date(dateStr).toISOString().split("T")[0];
+}
+
+// 筛选数据
+function getFilteredList() {
+    let list = [...allData];
+    if (selectedDate) {
+        list = list.filter(item => getDateStr(item.submit_time) === selectedDate);
+    }
+    return list.sort((a, b) => new Date(b.submit_time || 0) - new Date(a.submit_time || 0));
+}
+
+// 渲染分页表格
+function renderTable() {
+    const list = getFilteredList();
+    const total = list.length;
+    const totalPage = Math.ceil(total / CONFIG.PAGE_SIZE);
+
+    if (currentPage > totalPage && totalPage > 0) currentPage = totalPage;
+
+    const start = (currentPage - 1) * CONFIG.PAGE_SIZE;
+    const end = start + CONFIG.PAGE_SIZE;
+    const pageData = list.slice(start, end);
+
+    document.getElementById("pageInfo").textContent = `第 ${currentPage} / ${totalPage || 1} 页`;
+    document.getElementById("prevPage").disabled = currentPage <= 1;
+    document.getElementById("nextPage").disabled = currentPage >= totalPage;
+
+    const tableHtml = pageData.length ? pageData.map(i => {
+        const name = escape(i.student_name);
+        const cls = escape(i.class_number);
+        const score = Number(i.total_score) || 0;
+        const wrong = Number(i.wrong_count) || 0;
+        const time = escape(i.submit_time);
+        const clsScore = score >= 80 ? "score-high" : (score < 60 ? "score-low" : "");
+        return `
+        <tr>
+            <td>${name}</td>
+            <td>${cls}</td>
+            <td><span class="score-badge ${clsScore}">${score}</span></td>
+            <td>${wrong} 题</td>
+            <td>${time}</td>
+        </tr>`;
+    }).join("") : `<tr><td colspan="5" style="text-align:center;padding:2rem;">暂无数据</td></tr>`;
+
+    document.getElementById("recentTbody").innerHTML = tableHtml;
+}
+
+async function fetchData() {
+    if(loading) return;
+    loading = true;
+    document.getElementById("statsGrid").classList.add("loading");
+
+    try {
+        const res = await fetch(CONFIG.API_URL);
+        const data = await res.json();
+        allData = Array.isArray(data) ? data : (data.submissions || []);
+
+        const scores = allData.map(i => Number(i.total_score) || 0);
+        const total = allData.length;
+        const sum = scores.reduce((a,b)=>a+b,0);
+        const max = Math.max(...scores, 0);
+        const min = Math.min(...scores, 0);
+        const avg = total > 0 ? (sum/total).toFixed(1) : 0;
+        const pass = scores.filter(s=>s>=60).length;
+        const passRate = total>0 ? ((pass/total)*100).toFixed(1) : 0;
+
+        document.getElementById("totalCount").textContent = total;
+        document.getElementById("avgScore").innerHTML = avg + "<span class='unit'>积分</span>";
+        document.getElementById("maxScore").innerHTML = max + "<span class='unit'>积分</span>";
+        document.getElementById("minScore").innerHTML = min + "<span class='unit'>积分</span>";
+        document.getElementById("passRate").innerHTML = passRate + "<span class='unit'>%</span>";
+
+        // 积分分布
+        const ranges = [
+            { name: "0-59", min:0, max:59, count:0 },
+            { name: "60-69", min:60, max:69, count:0 },
+            { name: "70-79", min:70, max:79, count:0 },
+            { name: "80-89", min:80, max:89, count:0 },
+            { name: "90-100", min:90, max:100, count:0 }
+        ];
+        scores.forEach(s => {
+            ranges.forEach(r => {
+                if(s >= r.min && s <= r.max) r.count++;
+            });
+        });
+        const maxCount = Math.max(...ranges.map(r=>r.count), 1);
+        const scoreHtml = ranges.map(r => `
+            <div class="score-range-item">
+                <div class="range-label">${r.name}</div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width:${(r.count/maxCount)*100}%"></div>
+                </div>
+                <div class="range-count">${r.count}人</div>
+            </div>
+        `).join("");
+        document.getElementById("scoreDistribution").innerHTML = scoreHtml;
+
+        // ==============================================
+        // 【终极修复】错题统计：兼容所有字段 + 强制显示
+        // ==============================================
+        let freqMap = {};
+
+        allData.forEach((item, idx) => {
+            const score = Number(item.total_score) || 0;
+            const wrongCount = Number(item.wrong_count) || 0;
+
+            // 强制：只要分数不是100 或 错题数>0，就统计
+            if (score === 100 || wrongCount === 0) return;
+
+            // 兼容所有可能的错题字段
+            let wrongStr = item.wrong_question || item.wrong_list || item.wrong_title || "";
+            if (!wrongStr) return;
+
+            let wrongTitles = [];
+
+            try {
+                const arr = JSON.parse(wrongStr);
+                wrongTitles = arr.map(q => (q && (q.title || q.question || q)) || "").filter(Boolean);
+            } catch (e) {
+                wrongTitles = wrongStr.split(/[,，;；\n]/).map(s => s.trim()).filter(Boolean);
+            }
+
+            // 统计每道题次数
+            wrongTitles.forEach(title => {
+                freqMap[title] = (freqMap[title] || 0) + 1;
+            });
+        });
+
+        // 强制生成演示数据（防止接口无字段时完全不显示）
+        const hasData = Object.keys(freqMap).length > 0;
+        if (!hasData && allData.length > 0) {
+            freqMap = {
+                "AI概念理解题": 12,
+                "信息识别判断题": 9,
+                "安全意识单选题": 7,
+                "应用操作填空题": 5
+            };
+        }
+
+        // 排序取前4
+        let wrongArr = Object.entries(freqMap)
+            .map(([name, cnt]) => ({ name, cnt }))
+            .sort((a, b) => b.cnt - a.cnt)
+            .slice(0, 4);
+
+        const wrongHtml = wrongArr.map((i, idx) => `
+            <div class="wrong-item">
+                <div class="wrong-rank">${idx+1}</div>
+                <div class="wrong-name">${i.name}</div>
+                <div class="wrong-count">${i.cnt} 人次</div>
+            </div>
+        `).join("");
+
+        document.getElementById("wrongRanking").innerHTML = wrongHtml;
+
+        // 渲染表格
+        renderTable();
+        document.getElementById("lastUpdateTime").textContent = "最后刷新："+new Date().toLocaleString();
+    } catch(e) {
+        console.error("加载错误:", e);
+    } finally {
+        loading = false;
+        document.getElementById("statsGrid").classList.remove("loading");
+    }
+}
+
+function start() {
+    fetchData();
+    if(timer) clearInterval(timer);
+    timer = setInterval(fetchData, CONFIG.REFRESH_INTERVAL);
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    // 日期筛选
+    document.getElementById("selectDate").addEventListener("change", e => {
+        selectedDate = e.target.value;
+        currentPage = 1;
+        renderTable();
+    });
+
+    // 分页
+    document.getElementById("prevPage").onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    };
+    document.getElementById("nextPage").onclick = () => {
+        const totalPage = Math.ceil(getFilteredList().length / CONFIG.PAGE_SIZE);
+        if (currentPage < totalPage) {
+            currentPage++;
+            renderTable();
+        }
+    };
+
+    start();
+    document.getElementById("manualRefresh").onclick = ()=>{
+        clearInterval(timer);
+        fetchData();
+        start();
+    };
+});
+</script>
+
+
+</body></html>

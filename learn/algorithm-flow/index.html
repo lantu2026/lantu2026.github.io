@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>多场景 · 算法流程图教学工具</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #f0f4f8 0%, #d9e2ec 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .teaching-card {
+      width: 1200px;
+      max-width: 100%;
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .app-header {
+      padding: 18px 28px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .app-header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #1e3c5c, #2c5282);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .scene-selector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .scene-selector label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .scene-selector select {
+      padding: 10px 20px;
+      border-radius: 40px;
+      border: 1.5px solid #94a3b8;
+      background: white;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .main-layout {
+      display: flex;
+      min-height: 680px;
+    }
+
+    .sidebar {
+      width: 290px;
+      background: #f8fafc;
+      padding: 20px 16px;
+      border-right: 1px solid #e2e8f0;
+    }
+
+    .sidebar-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-shapes {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .shape-category {
+      background: white;
+      border-radius: 18px;
+      padding: 14px 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+      border: 1px solid #cbd5e1;
+    }
+
+    .shape-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #475569;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .draggable-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .flow-node {
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.05);
+      border: 2px solid #1e293b;
+      background-color: #fff9c4;
+      color: #1e1e2a;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 13px;
+      padding: 4px;
+      line-height: 1.3;
+      will-change: transform;
+    }
+
+    .flow-node:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 20px -6px rgba(0, 0, 0, 0.15);
+      border-color: #b45309;
+      background-color: #fef3c7;
+    }
+
+    .flow-node:active {
+      cursor: grabbing;
+      opacity: 0.8;
+    }
+
+    .node-rect {
+      width: 100px;
+      height: 44px;
+      border-radius: 15px;
+    }
+
+    .node-parallelogram {
+      width: 150px;
+      height: 44px;
+      clip-path: polygon(12% 0%, 100% 0%, 88% 100%, 0% 100%);
+      padding: 0 12px;
+    }
+
+    .node-diamond {
+      width: 150px;
+      height: 64px;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+    }
+
+    .canvas-header {
+      padding: 8px 24px 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reset-btn {
+      background: white;
+      color: #1e293b;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      border: 1px solid #94a3b8;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .reset-btn:hover {
+      background: #f1f5f9;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 480px;
+      background: #f8fafc;
+      background-image: radial-gradient(circle, #94a3b8 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      margin: 12px 20px 8px 20px;
+      border-radius: 24px;
+      border: 1px solid #cbd5e1;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+      overflow: visible;
+    }
+
+    #dropzoneContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dropzone {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2.5px dashed #64748b;
+      background: rgba(241, 245, 249, 0.6);
+      border-radius: 4px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      pointer-events: auto;
+    }
+
+    .dropzone.filled {
+      border: 2.5px solid transparent;
+      background: transparent;
+    }
+
+    .placed-node {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff9c4;
+      border: 2px solid #1e293b;
+      box-shadow: 0 8px 12px -4px rgba(0,0,0,0.1);
+      font-weight: 500;
+      font-size: 13px;
+      transition: box-shadow 0.2s, filter 0.2s;
+      pointer-events: none;
+    }
+
+    .placed-node.highlight {
+      box-shadow: 0 0 0 5px #f59e0b, 0 8px 12px -4px #0000001a;
+      border-color: #b45309;
+      background-color: #fef3c7;
+    }
+
+    .svg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .control-panel {
+      padding: 16px 24px 24px;
+      background: #f1f5f9;
+      border-top: 1px solid #cbd5e1;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 24px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .input-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-field label {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #1e293b;
+    }
+
+    .input-field select {
+      padding: 10px 16px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 18px;
+      font-size: 1rem;
+      width: 200px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .hint-text {
+      color: #334155;
+      font-size: 0.9rem;
+      background: #e0e7ff;
+      padding: 6px 14px;
+      border-radius: 30px;
+    }
+
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: linear-gradient(to bottom, #2563eb, #1d4ed8);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-size: 1rem;
+      box-shadow: 0 8px 14px -4px #1e3a8a80;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid #3b82f6;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 20px -6px #1e3a8a;
+      background: linear-gradient(to bottom, #3b82f6, #2563eb);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .message-area {
+      flex: 1;
+      min-height: 48px;
+      background: #ffffffd9;
+      border-radius: 40px;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #cbd5e1;
+      font-weight: 500;
+    }
+
+    .msg-success { color: #065f46; background: #d1fae5; }
+    .msg-error { color: #991b1b; background: #fee2e2; }
+    .msg-info { color: #1e3a8a; }
+
+    .exec-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 20px solid #dc2626;
+      filter: drop-shadow(0 2px 4px #7f1d1d);
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .toast-tip {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      animation: slideIn 0.2s;
+      z-index: 999;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="teaching-card">
+  <div class="app-header">
+    <h1>🧩 多场景 · 算法流程图教学工具</h1>
+    <div class="scene-selector">
+      <label for="sceneSelect">📍 选择场景：</label>
+      <select id="sceneSelect">
+        <option value="campus" selected>🏫 校园出入管理</option>
+        <option value="hospital">🏥 医院挂号流程</option>
+        <option value="library">📚 图书馆借阅</option>
+        <option value="canteen">🍱 食堂点餐</option>
+      </select>
+    </div>
+  </div>
+  <div class="main-layout">
+    <!-- 左侧边栏：动态图元 -->
+    <div class="sidebar">
+      <div class="sidebar-title"><span class="icon">📦</span> 流程框</div>
+      <div class="flow-shapes" id="shapeContainer">
+        <!-- 由JS动态渲染 -->
+      </div>
+      <div style="margin-top: 24px; font-size: 0.8rem; color: #475569;">✨ 拖拽至虚线框内拼图</div>
+    </div>
+
+    <!-- 右侧区域 -->
+    <div class="right-panel">
+      <div class="canvas-header">
+        <span style="font-weight:500; color:#334155;" id="sceneHint">当前：校园出入管理</span>
+        <button class="reset-btn" id="resetCanvasBtn">🧹 清空放置</button>
+      </div>
+
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <div id="dropzoneContainer"></div>
+        <svg class="svg-layer" id="svgLayer">
+          <defs>
+            <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+              <polygon points="0 0, 10 5, 0 10" fill="#1e1e2f" />
+            </marker>
+          </defs>
+          <g id="linesGroup"></g>
+        </svg>
+        <div id="execArrow" class="exec-arrow" style="display:none;"></div>
+      </div>
+
+      <!-- 底部控制区 (场景化输入) -->
+      <div class="control-panel">
+        <div class="input-group" id="dynamicInputs">
+          <!-- 动态输入控件 -->
+        </div>
+        <div class="action-bar">
+          <button class="btn" id="executeBtn">▶ 执行流程</button>
+          <div class="message-area" id="messageBox">
+            <span>✅ 拖拽图元到正确位置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- 场景配置库 ----------
+    const scenes = {
+      campus: {
+        name: '校园出入管理',
+        hint: '学生/访客刷卡验证',
+        shapes: {
+          start: [{ id:'start', label:'开始', shape:'rect' }],
+          end: [{ id:'end', label:'结束', shape:'rect' }],
+          io: [
+            { id:'in_card', label:'刷卡/扫码', shape:'parallel' },
+            { id:'out_pass', label:'允许通行', shape:'parallel' },
+            { id:'out_visitor', label:'访客登记通行', shape:'parallel' },
+            { id:'out_reject', label:'拒绝进入', shape:'parallel' }
+          ],
+          decision: [
+            { id:'cond_student', label:'是否为本校学生？', shape:'diamond' }
+          ]
+        },
+        zones: [
+          { id:'dz_start', left:150, top:40, w:100, h:44, expected:'start', shape:'rect' },
+          { id:'dz_card', left:150, top:110, w:140, h:44, expected:'in_card', shape:'parallel' },
+          { id:'dz_cond', left:150, top:200, w:170, h:64, expected:'cond_student', shape:'diamond' },
+          { id:'dz_pass', left:150, top:310, w:140, h:44, expected:'out_pass', shape:'parallel' },
+          { id:'dz_visitor', left:400, top:310, w:170, h:44, expected:'out_visitor', shape:'parallel' },
+          { id:'dz_end', left:150, top:410, w:100, h:44, expected:'end', shape:'rect' }
+        ],
+        inputs: (parent) => {
+          parent.innerHTML = `
+            <div class="input-field"><label>🪪 卡类型</label><select id="cardType"><option value="student">学生卡</option><option value="visitor">访客卡</option></select></div>
+            <div class="hint-text">💡 学生直接通行，访客登记</div>`;
+        },
+        getPathAndResult: (inputs) => {
+          const card = document.getElementById('cardType').value;
+          if (card === 'student') return { path: ['dz_start','dz_card','dz_cond','dz_pass','dz_end'], msg: '✅ 学生验证通过，允许通行！' };
+          else return { path: ['dz_start','dz_card','dz_cond','dz_visitor','dz_end'], msg: '🟡 访客请登记后通行。' };
+        },
+        drawLines: (getCenter) => {
+          const s = getCenter('dz_start'), c = getCenter('dz_card'), cond = getCenter('dz_cond');
+          const pass = getCenter('dz_pass'), vis = getCenter('dz_visitor'), end = getCenter('dz_end');
+          drawLine(s.x,s.y,c.x,c.y); drawLine(c.x,c.y,cond.x,cond.y);
+          drawLine(cond.x,cond.y,pass.x,pass.y,'#1e1e2f','是');
+          drawLine(cond.x,cond.y,vis.x,vis.y,'#1e1e2f','否');
+          drawLine(pass.x,pass.y,end.x,end.y);
+          drawPolyline([vis, {x:vis.x, y:vis.y+30}, {x:end.x-30, y:vis.y+30}, end]);
+        }
+      },
+      hospital: {
+        name: '医院挂号流程',
+        hint: '医保/自费判断',
+        shapes: {
+          start: [{ id:'start', label:'开始', shape:'rect' }],
+          end: [{ id:'end', label:'结束', shape:'rect' }],
+          io: [
+            { id:'in_id', label:'读取医保卡', shape:'parallel' },
+            { id:'out_insurance', label:'医保挂号', shape:'parallel' },
+            { id:'out_self', label:'自费挂号', shape:'parallel' },
+            { id:'out_error', label:'无效卡提示', shape:'parallel' }
+          ],
+          decision: [
+            { id:'cond_insurance', label:'是否本市医保？', shape:'diamond' }
+          ]
+        },
+        zones: [
+          { id:'dz_start', left:150, top:40, w:100, h:44, expected:'start', shape:'rect' },
+          { id:'dz_card', left:150, top:110, w:140, h:44, expected:'in_id', shape:'parallel' },
+          { id:'dz_cond', left:150, top:200, w:170, h:64, expected:'cond_insurance', shape:'diamond' },
+          { id:'dz_insurance', left:150, top:310, w:140, h:44, expected:'out_insurance', shape:'parallel' },
+          { id:'dz_self', left:400, top:310, w:140, h:44, expected:'out_self', shape:'parallel' },
+          { id:'dz_end', left:150, top:410, w:100, h:44, expected:'end', shape:'rect' }
+        ],
+        inputs: (parent) => {
+          parent.innerHTML = `<div class="input-field"><label>🏥 医保类型</label><select id="insuranceType"><option value="local">本市医保</option><option value="other">异地/自费</option></select></div>
+            <div class="hint-text">💡 本市医保直接结算</div>`;
+        },
+        getPathAndResult: () => {
+          const type = document.getElementById('insuranceType').value;
+          if (type === 'local') return { path: ['dz_start','dz_card','dz_cond','dz_insurance','dz_end'], msg: '✅ 医保挂号成功，请前往科室。' };
+          else return { path: ['dz_start','dz_card','dz_cond','dz_self','dz_end'], msg: '🟡 自费挂号，请先缴费。' };
+        },
+        drawLines: (getCenter) => {
+          const s=getCenter('dz_start'),c=getCenter('dz_card'),cond=getCenter('dz_cond');
+          const ins=getCenter('dz_insurance'), self=getCenter('dz_self'), end=getCenter('dz_end');
+          drawLine(s.x,s.y,c.x,c.y); drawLine(c.x,c.y,cond.x,cond.y);
+          drawLine(cond.x,cond.y,ins.x,ins.y,'#1e1e2f','是');
+          drawLine(cond.x,cond.y,self.x,self.y,'#1e1e2f','否');
+          drawLine(ins.x,ins.y,end.x,end.y);
+          drawPolyline([self, {x:self.x, y:self.y+30}, {x:end.x-30, y:self.y+30}, end]);
+        }
+      },
+      library: {
+        name: '图书馆借阅',
+        hint: '借书数量/逾期检查',
+        shapes: {
+          start: [{ id:'start', label:'开始', shape:'rect' }],
+          end: [{ id:'end', label:'结束', shape:'rect' }],
+          io: [
+            { id:'in_scan', label:'扫描借书证', shape:'parallel' },
+            { id:'out_borrow', label:'借阅成功', shape:'parallel' },
+            { id:'out_limit', label:'已达上限', shape:'parallel' },
+            { id:'out_overdue', label:'有逾期未还', shape:'parallel' }
+          ],
+          decision: [
+            { id:'cond_overdue', label:'是否有逾期？', shape:'diamond' },
+            { id:'cond_limit', label:'是否达到上限？', shape:'diamond' }
+          ]
+        },
+        zones: [
+          { id:'dz_start', left:150, top:30, w:100, h:44, expected:'start', shape:'rect' },
+          { id:'dz_scan', left:150, top:90, w:140, h:44, expected:'in_scan', shape:'parallel' },
+          { id:'dz_cond_over', left:150, top:160, w:170, h:64, expected:'cond_overdue', shape:'diamond' },
+          { id:'dz_overdue', left:380, top:170, w:150, h:44, expected:'out_overdue', shape:'parallel' },
+          { id:'dz_cond_limit', left:150, top:270, w:170, h:64, expected:'cond_limit', shape:'diamond' },
+          { id:'dz_limit', left:380, top:280, w:140, h:44, expected:'out_limit', shape:'parallel' },
+          { id:'dz_borrow', left:150, top:380, w:140, h:44, expected:'out_borrow', shape:'parallel' },
+          { id:'dz_end', left:150, top:460, w:100, h:44, expected:'end', shape:'rect' }
+        ],
+        inputs: (parent) => {
+          parent.innerHTML = `<div class="input-field"><label>📅 逾期状态</label><select id="overdue"><option value="no">无逾期</option><option value="yes">有逾期</option></select></div>
+            <div class="input-field"><label>📚 借书数量</label><select id="limit"><option value="ok">未超限</option><option value="full">已达上限</option></select></div>`;
+        },
+        getPathAndResult: () => {
+          const overdue = document.getElementById('overdue').value;
+          const limit = document.getElementById('limit').value;
+          if (overdue === 'yes') return { path: ['dz_start','dz_scan','dz_cond_over','dz_overdue','dz_end'], msg: '⛔ 有逾期图书，请先归还。' };
+          if (limit === 'full') return { path: ['dz_start','dz_scan','dz_cond_over','dz_cond_limit','dz_limit','dz_end'], msg: '⚠️ 借书已达上限，无法再借。' };
+          return { path: ['dz_start','dz_scan','dz_cond_over','dz_cond_limit','dz_borrow','dz_end'], msg: '✅ 借阅成功！请按时归还。' };
+        },
+        drawLines: (getCenter) => {
+          const s=getCenter('dz_start'), scan=getCenter('dz_scan'), over=getCenter('dz_cond_over');
+          const overdue=getCenter('dz_overdue'), limitC=getCenter('dz_cond_limit'), limitOut=getCenter('dz_limit');
+          const borrow=getCenter('dz_borrow'), end=getCenter('dz_end');
+          drawLine(s.x,s.y,scan.x,scan.y); drawLine(scan.x,scan.y,over.x,over.y);
+          drawLine(over.x,over.y,overdue.x,overdue.y,'#1e1e2f','是');
+          drawLine(over.x,over.y,limitC.x,limitC.y,'#1e1e2f','否');
+          drawLine(limitC.x,limitC.y,limitOut.x,limitOut.y,'#1e1e2f','是');
+          drawLine(limitC.x,limitC.y,borrow.x,borrow.y,'#1e1e2f','否');
+          drawLine(borrow.x,borrow.y,end.x,end.y);
+          drawPolyline([overdue, {x:overdue.x, y:end.y-30}, {x:end.x-40, y:end.y-30}, end]);
+          drawPolyline([limitOut, {x:limitOut.x, y:end.y-10}, {x:end.x-30, y:end.y-10}, end]);
+        }
+      },
+      canteen: {
+        name: '食堂点餐',
+        hint: '余额/优惠判断',
+        shapes: {
+          start: [{ id:'start', label:'开始', shape:'rect' }],
+          end: [{ id:'end', label:'结束', shape:'rect' }],
+          io: [
+            { id:'in_card', label:'刷卡', shape:'parallel' },
+            { id:'out_success', label:'扣款成功', shape:'parallel' },
+            { id:'out_fail', label:'余额不足', shape:'parallel' }
+          ],
+          decision: [
+            { id:'cond_balance', label:'余额是否足够？', shape:'diamond' }
+          ]
+        },
+        zones: [
+          { id:'dz_start', left:150, top:50, w:100, h:44, expected:'start', shape:'rect' },
+          { id:'dz_card', left:150, top:120, w:140, h:44, expected:'in_card', shape:'parallel' },
+          { id:'dz_cond', left:150, top:210, w:170, h:64, expected:'cond_balance', shape:'diamond' },
+          { id:'dz_success', left:150, top:320, w:140, h:44, expected:'out_success', shape:'parallel' },
+          { id:'dz_fail', left:380, top:320, w:140, h:44, expected:'out_fail', shape:'parallel' },
+          { id:'dz_end', left:150, top:420, w:100, h:44, expected:'end', shape:'rect' }
+        ],
+        inputs: (parent) => {
+          parent.innerHTML = `<div class="input-field"><label>💰 账户余额</label><select id="balance"><option value="enough">充足 (≥20元)</option><option value="low">不足 (＜20元)</option></select></div>
+            <div class="hint-text">🍚 假设消费20元</div>`;
+        },
+        getPathAndResult: () => {
+          const bal = document.getElementById('balance').value;
+          if (bal === 'enough') return { path: ['dz_start','dz_card','dz_cond','dz_success','dz_end'], msg: '✅ 扣款成功，请取餐。' };
+          else return { path: ['dz_start','dz_card','dz_cond','dz_fail','dz_end'], msg: '❌ 余额不足，请充值。' };
+        },
+        drawLines: (getCenter) => {
+          const s=getCenter('dz_start'),c=getCenter('dz_card'),cond=getCenter('dz_cond');
+          const succ=getCenter('dz_success'), fail=getCenter('dz_fail'), end=getCenter('dz_end');
+          drawLine(s.x,s.y,c.x,c.y); drawLine(c.x,c.y,cond.x,cond.y);
+          drawLine(cond.x,cond.y,succ.x,succ.y,'#1e1e2f','是');
+          drawLine(cond.x,cond.y,fail.x,fail.y,'#1e1e2f','否');
+          drawLine(succ.x,succ.y,end.x,end.y);
+          drawPolyline([fail, {x:fail.x, y:fail.y+30}, {x:end.x-30, y:fail.y+30}, end]);
+        }
+      }
+    };
+
+    // ---------- 全局变量 ----------
+    let currentScene = 'campus';
+    const dropzoneState = new Map();
+    const msgBox = document.getElementById('messageBox');
+    const execArrow = document.getElementById('execArrow');
+    const linesGroup = document.getElementById('linesGroup');
+    const dropContainer = document.getElementById('dropzoneContainer');
+    const executeBtn = document.getElementById('executeBtn');
+    const sceneSelect = document.getElementById('sceneSelect');
+    const sceneHint = document.getElementById('sceneHint');
+    const shapeContainer = document.getElementById('shapeContainer');
+    const dynamicInputs = document.getElementById('dynamicInputs');
+
+    function setMessage(text, type='info'){
+      msgBox.innerHTML = text;
+      msgBox.className = 'message-area';
+      if(type==='success') msgBox.classList.add('msg-success');
+      else if(type==='error') msgBox.classList.add('msg-error');
+      else msgBox.classList.add('msg-info');
+    }
+
+    function showToast(text, isGood=true){
+      const toast = document.createElement('div');
+      toast.className = 'toast-tip';
+      toast.style.background = isGood ? '#d1fae5' : '#fee2e2';
+      toast.style.color = isGood ? '#065f46' : '#991b1b';
+      toast.innerText = text;
+      document.body.appendChild(toast);
+      setTimeout(()=>toast.remove(), 1800);
+    }
+
+    // 渲染左侧图元
+    function renderShapes(sceneId){
+      const scene = scenes[sceneId];
+      const { start, end, io, decision } = scene.shapes;
+      shapeContainer.innerHTML = `
+        <div class="shape-category"><div class="shape-label">⏵ 开始/结束</div><div class="draggable-items" id="startEndGroup"></div></div>
+        <div class="shape-category"><div class="shape-label">📥 输入/输出</div><div class="draggable-items" id="ioGroup"></div></div>
+        <div class="shape-category"><div class="shape-label">🔀 判断</div><div class="draggable-items" id="decisionGroup"></div></div>
+      `;
+      const addNode = (container, node) => {
+        const div = document.createElement('div');
+        div.className = `flow-node node-${node.shape}`;
+        div.setAttribute('draggable','true');
+        div.dataset.nodeId = node.id;
+        div.dataset.label = node.label;
+        div.innerText = node.label;
+        container.appendChild(div);
+        div.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', JSON.stringify({nodeId: node.id, label: node.label}));
+        });
+      };
+      const startEndC = document.getElementById('startEndGroup');
+      start.concat(end).forEach(n => addNode(startEndC, n));
+      const ioC = document.getElementById('ioGroup');
+      io.forEach(n => addNode(ioC, n));
+      const decC = document.getElementById('decisionGroup');
+      decision.forEach(n => addNode(decC, n));
+    }
+
+    // 渲染放置区
+    function renderDropzones(sceneId){
+      dropContainer.innerHTML = '';
+      dropzoneState.clear();
+      const scene = scenes[sceneId];
+      scene.zones.forEach(z => {
+        const dz = document.createElement('div');
+        dz.className = 'dropzone';
+        dz.id = z.id;
+        dz.style.left = z.left+'px'; dz.style.top = z.top+'px';
+        dz.style.width = z.w+'px'; dz.style.height = z.h+'px';
+        if(z.shape === 'diamond') dz.style.clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)';
+        else if(z.shape === 'parallel') dz.style.clipPath = 'polygon(12% 0%, 100% 0%, 88% 100%, 0% 100%)';
+        else dz.style.borderRadius = '15px';
+        dz.dataset.expected = z.expected;
+        dz.dataset.shape = z.shape;
+        dz.addEventListener('dragover', e=>e.preventDefault());
+        dz.addEventListener('drop', handleDrop);
+        dropContainer.appendChild(dz);
+        dropzoneState.set(z.id, {filled:false, nodeId:null});
+      });
+      updateLines();
+      scene.inputs(dynamicInputs);
+      sceneHint.innerText = `当前：${scene.name} · ${scene.hint}`;
+    }
+
+    function handleDrop(e){
+      e.preventDefault();
+      const dz = e.currentTarget;
+      const expected = dz.dataset.expected;
+      const dzId = dz.id;
+      const state = dropzoneState.get(dzId);
+      const dragData = e.dataTransfer.getData('text/plain');
+      if(!dragData) return;
+      const {nodeId, label} = JSON.parse(dragData);
+      if(nodeId !== expected) {
+        setMessage('❌ 放置错误，请重新选择！','error');
+        showToast('❌ 放置错误', false);
+        return;
+      }
+      if(state.filled) return;
+      const placed = document.createElement('div');
+      placed.className = 'placed-node';
+      placed.innerText = label;
+      const shape = dz.dataset.shape;
+      if(shape==='diamond') placed.style.clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)';
+      else if(shape==='parallel') placed.style.clipPath = 'polygon(12% 0%, 100% 0%, 88% 100%, 0% 100%)';
+      else placed.style.borderRadius = '15px';
+      dz.innerHTML = ''; dz.appendChild(placed);
+      dz.classList.add('filled');
+      state.filled = true; state.nodeId = nodeId; state.element = placed;
+      setMessage('✅ 放置正确！','success');
+      showToast('✓ 放置正确', true);
+      updateLines();
+      checkAllFilled();
+    }
+
+    function checkAllFilled(){
+      const zones = scenes[currentScene].zones;
+      const all = zones.every(z => dropzoneState.get(z.id)?.filled);
+      executeBtn.disabled = !all;
+      return all;
+    }
+
+    function resetCanvas(){
+      renderDropzones(currentScene);
+      setMessage('🔄 画布已重置，请拖拽拼图','info');
+    }
+
+    // 连线绘制
+    function getCenter(dzId){
+      const el = document.getElementById(dzId);
+      if(!el) return {x:0,y:0};
+      const rect = el.getBoundingClientRect();
+      const canvasRect = dropContainer.getBoundingClientRect();
+      return {x: rect.left+rect.width/2 - canvasRect.left, y: rect.top+rect.height/2 - canvasRect.top};
+    }
+
+    function drawLine(x1,y1,x2,y2,color='#1e1e2f',label=null){
+      const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+      line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+      line.setAttribute('stroke',color); line.setAttribute('stroke-width','2.5');
+      line.setAttribute('marker-end','url(#arrowHead)');
+      linesGroup.appendChild(line);
+      if(label){
+        const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+        text.setAttribute('x',(x1+x2)/2+8); text.setAttribute('y',(y1+y2)/2-8);
+        text.setAttribute('fill','#b45309'); text.setAttribute('font-weight','bold');
+        text.textContent = label;
+        linesGroup.appendChild(text);
+      }
+    }
+
+    function drawPolyline(points){
+      let d = `M ${points[0].x} ${points[0].y}`;
+      for(let i=1;i<points.length;i++) d += ` L ${points[i].x} ${points[i].y}`;
+      const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute('d',d); path.setAttribute('stroke','#1e1e2f');
+      path.setAttribute('fill','none'); path.setAttribute('stroke-width','2.5');
+      path.setAttribute('marker-end','url(#arrowHead)');
+      linesGroup.appendChild(path);
+    }
+
+    function updateLines(){
+      linesGroup.innerHTML = '';
+      scenes[currentScene].drawLines(getCenter);
+    }
+
+    // 执行
+    async function executeFlow(){
+      if(!checkAllFilled()) { setMessage('请先正确拼出流程图','error'); return; }
+      executeBtn.disabled = true;
+      const {path, msg} = scenes[currentScene].getPathAndResult();
+      execArrow.style.display = 'block';
+      for(let dzId of path){
+        const dz = document.getElementById(dzId);
+        if(dz){
+          const rect = dz.getBoundingClientRect();
+          const canvasRect = dropContainer.getBoundingClientRect();
+          execArrow.style.left = (rect.left+rect.width/2 - canvasRect.left -10)+'px';
+          execArrow.style.top = (rect.top+rect.height/2 - canvasRect.top -10)+'px';
+          const placed = dz.querySelector('.placed-node');
+          if(placed) placed.classList.add('highlight');
+          await new Promise(r=>setTimeout(r,500));
+          if(placed) placed.classList.remove('highlight');
+        }
+      }
+      execArrow.style.display = 'none';
+      setMessage(msg, msg.includes('✅')?'success':(msg.includes('⛔')?'error':'info'));
+      executeBtn.disabled = false;
+    }
+
+    // 切换场景
+    function switchScene(sceneId){
+      currentScene = sceneId;
+      renderShapes(sceneId);
+      renderDropzones(sceneId);
+      executeBtn.disabled = true;
+    }
+
+    sceneSelect.addEventListener('change', e => switchScene(e.target.value));
+    document.getElementById('resetCanvasBtn').addEventListener('click', resetCanvas);
+    executeBtn.addEventListener('click', executeFlow);
+
+    // 初始化
+    switchScene('campus');
+    window.addEventListener('resize', updateLines);
+  })();
+</script>
+</body>
+</html>

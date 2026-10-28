@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课堂任务大闯关</title>
+    <style>
+        :root {
+            --primary-color: #4facfe;
+            --secondary-color: #00f2fe;
+            --accent-color: #ff9a9e;
+            --text-color: #444;
+            --bubble-base: #ffffff;
+            --bubble-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none; /* 防止双击选中文本 */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Comic Sans MS", "YouYuan", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 顶部标题与进度条区域 */
+        header {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+
+        h1 {
+            margin: 0 0 15px 0;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 0px #fff;
+            font-size: 1.8rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #fff;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .status-text {
+            margin-top: 10px;
+            color: #666;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* 泡泡网格区域 */
+        .bubble-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            padding: 20px;
+            max-width: 900px;
+        }
+
+        /* 泡泡样式 */
+        .bubble {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, #e0e0e0);
+            box-shadow: 
+                inset -10px -10px 20px rgba(0,0,0,0.1),
+                5px 10px 20px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 4px solid #fff;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* 泡泡高光 */
+        .bubble::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 25%;
+            height: 15%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            transform: rotate(-45deg);
+        }
+
+        /* 不同的泡泡颜色 */
+        .bubble:nth-child(4n+1) { background: radial-gradient(circle at 30% 30%, #ff9a9e, #fad0c4); color: #c0392b; animation-delay: 0s; }
+        .bubble:nth-child(4n+2) { background: radial-gradient(circle at 30% 30%, #a18cd1, #fbc2eb); color: #8e44ad; animation-delay: 0.5s; }
+        .bubble:nth-child(4n+3) { background: radial-gradient(circle at 30% 30%, #84fab0, #8fd3f4); color: #27ae60; animation-delay: 1s; }
+        .bubble:nth-child(4n+4) { background: radial-gradient(circle at 30% 30%, #fccb90, #d57eeb); color: #d35400; animation-delay: 1.5s; }
+
+        /* 悬停效果 */
+        .bubble:hover {
+            transform: scale(1.1);
+            z-index: 2;
+        }
+
+        /* 完成状态 */
+        .bubble.completed {
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s ease-in;
+        }
+
+        /* 漂浮动画 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* 庆祝弹窗 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 5px solid #ff9a9e;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal h2 {
+            color: #ff6b6b;
+            font-size: 2.5rem;
+            margin: 0 0 20px 0;
+        }
+
+        .modal button {
+            background: #4facfe;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .modal button:hover {
+            background: #00f2fe;
+        }
+
+        /* 简单的彩带动画 */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🚀 课堂任务大闯关</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="status-text" id="statusText">加油！还有 <span id="countLeft">6</span> 个任务没完成哦</div>
+    </header>
+
+    <div class="bubble-grid" id="bubbleContainer">
+        <!-- 泡泡将通过JS生成，也可以直接在这里写死 -->
+    </div>
+
+    <!-- 完成弹窗 -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h2>🎉 太棒了！🎉</h2>
+            <p style="font-size: 1.5rem; color: #555;">你已经完成了所有课堂任务！</p>
+            <br>
+            <button onclick="resetGame()">再玩一次</button>
+        </div>
+    </div>
+
+    <script>
+        // 任务列表配置
+        const tasks = [
+            { id: 1, text: "1. 打开电脑" },
+            { id: 2, text: "2. 登录系统" },
+            { id: 3, text: "3. 打开文件夹" },
+            { id: 4, text: "4. 新建文档" },
+            { id: 5, text: "5. 输入名字" },
+            { id: 6, text: "6. 保存文件" },
+            { id: 7, text: "7. 提交作业" },
+            { id: 8, text: "8. 关闭电脑" }
+        ];
+
+        const container = document.getElementById('bubbleContainer');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        const countLeft = document.getElementById('countLeft');
+        const modal = document.getElementById('successModal');
+        
+        let completedCount = 0;
+        const totalTasks = tasks.length;
+
+        // 初始化泡泡
+        function initBubbles() {
+            container.innerHTML = '';
+            tasks.forEach(task => {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.setAttribute('data-id', task.id);
+                bubble.innerHTML = task.text;
+                
+                // 点击事件
+                bubble.addEventListener('click', function() {
+                    if (!this.classList.contains('completed')) {
+                        completeTask(this);
+                    }
+                });
+
+                container.appendChild(bubble);
+            });
+            updateProgress();
+        }
+
+        // 完成任务逻辑
+        function completeTask(element) {
+            // 播放简单的音效（可选，这里用视觉反馈为主）
+            element.classList.add('completed');
+            completedCount++;
+            updateProgress();
+
+            // 检查是否全部完成
+            if (completedCount === totalTasks) {
+                setTimeout(showSuccess, 500);
+            }
+        }
+
+        // 更新进度条
+        function updateProgress() {
+            const percentage = (completedCount / totalTasks) * 100;
+            progressBar.style.width = `${percentage}%`;
+            
+            const remaining = totalTasks - completedCount;
+            if (remaining > 0) {
+                statusText.innerHTML = `加油！还有 <span style="color:#ff6b6b; font-size:1.4rem">${remaining}</span> 个任务没完成哦`;
+            } else {
+                statusText.innerText = "所有任务已完成！";
+            }
+            countLeft.innerText = remaining;
+        }
+
+        // 显示成功弹窗
+        function showSuccess() {
+            modal.classList.add('show');
+            createConfetti();
+        }
+
+        // 重置游戏
+        function resetGame() {
+            completedCount = 0;
+            modal.classList.remove('show');
+            // 移除所有彩带
+            document.querySelectorAll('.confetti').forEach(e => e.remove());
+            initBubbles();
+        }
+
+        // 彩带特效
+        function createConfetti() {
+            const colors = ['#ff9a9e', '#fecfef', '#a18cd1', '#84fab0', '#fccb90'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(confetti);
+            }
+        }
+
+        // 启动
+        initBubbles();
+
+    </script>
+</body>
+</html>

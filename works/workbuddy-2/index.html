@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>基于 WorkBuddy 的教师数字化工作实战培训（增强版）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0A0A1A; color: #ffffff;
+        }
+        .page {
+            width: 100vw; height: 100vh; position: absolute; top: 0; left: 0;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+            padding: 4.5rem 2.5rem 4rem; text-align: center; overflow-y: auto; scroll-behavior: smooth;
+            transition: opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
+        }
+        .page.active { display: flex; animation: pageReveal 0.6s ease-out; }
+        @keyframes pageReveal { 0% { opacity: 0; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
+
+        .bg1  { background: radial-gradient(circle at 15% 20%, #0f0c29 0%, #302b63 70%, #24243e 100%); }
+        .bg2  { background: linear-gradient(135deg, #0b1120 0%, #19284d 50%, #1e3a6b 100%); }
+        .bg3  { background: radial-gradient(ellipse at 80% 30%, #2c0a3e 0%, #0f0c1f 100%); }
+        .bg4  { background: linear-gradient(145deg, #071a0b 0%, #0d3320 50%, #1a4d2e 100%); }
+        .bg5  { background: linear-gradient(145deg, #1a0e0e 0%, #3d1a1a 50%, #5a2222 100%); }
+        .bg6  { background: linear-gradient(135deg, #0f1a2e 0%, #1e3a5f 50%, #2a5298 100%); }
+        .bg7  { background: radial-gradient(ellipse at 20% 70%, #1a0b2e 0%, #2d1b69 60%, #11052c 100%); }
+        .bg8  { background: linear-gradient(145deg, #0a1628 0%, #162844 50%, #1e3a6b 100%); }
+        .bg9  { background: radial-gradient(circle at 70% 40%, #0d2818 0%, #071a0b 100%); }
+        .bg10 { background: linear-gradient(145deg, #0f0c29 0%, #302b63 100%); }
+        .bg11 { background: linear-gradient(145deg, #1a0a0a 0%, #3d1515 60%, #5a1f1f 100%); }
+        .bg12 { background: linear-gradient(135deg, #060d1f 0%, #0d2137 50%, #1a3a5c 100%); }
+        .bg13 { background: radial-gradient(ellipse at 30% 60%, #0a1a10 0%, #162e1e 60%, #0a0f08 100%); }
+        .bg14 { background: linear-gradient(145deg, #050707 0%, #0d1a1a 50%, #102020 100%); }
+        .bg15 { background: radial-gradient(circle at 80% 25%, #0a1430 0%, #142048 100%); }
+        .bg16 { background: linear-gradient(145deg, #1a0a1e 0%, #2e1450 60%, #1f0a3a 100%); }
+        .bg17 { background: radial-gradient(ellipse at 25% 30%, #0a1a14 0%, #103028 60%, #060f0a 100%); }
+        .bg18 { background: linear-gradient(135deg, #0a1020 0%, #141b3a 50%, #1c2a52 100%); }
+        .bg19 { background: radial-gradient(circle at 60% 70%, #0c0a20 0%, #1e1b4a 100%); }
+        .bg20 { background: linear-gradient(145deg, #08120a 0%, #0d2418 50%, #143824 100%); }
+
+        h1 {
+            font-size: clamp(2rem, 7vw, 4.2rem); font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #FFFFFF 0%, #6CF0C8 50%, #4Fb8FF 100%);
+            background-clip: text; -webkit-background-clip: text; color: transparent; line-height: 1.2;
+        }
+        h2 {
+            font-size: clamp(1.5rem, 4.5vw, 2.8rem); font-weight: 700; margin-bottom: 1.6rem;
+            border-left: 5px solid #4Fb8FF; padding-left: 1rem; text-align: left; width: 100%; max-width: 1100px;
+            margin-left: auto; margin-right: auto; color: #fff;
+        }
+        .subtitle {
+            font-size: clamp(0.9rem, 3vw, 1.3rem); color: #6CF0C8; font-weight: 500; letter-spacing: 2px;
+            background: rgba(80,180,255,0.12); display: inline-block; padding: 0.4rem 1.2rem; border-radius: 60px;
+            backdrop-filter: blur(4px); margin-bottom: 1rem;
+        }
+        p { font-size: clamp(0.85rem, 2.5vw, 1.05rem); line-height: 1.7; color: rgba(255,255,240,0.85); max-width: 880px; margin: 0 auto 0.8rem; }
+
+        @keyframes floatUp { from { opacity: 0; transform: translateY(50px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .anim-up { opacity: 0; animation: floatUp 0.7s cubic-bezier(0.15, 0.85, 0.3, 1.05) forwards; }
+        .anim-in { opacity: 0; animation: fadeIn 0.9s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.45s; } .delay-4 { animation-delay: 0.65s; } .delay-5 { animation-delay: 0.85s; }
+
+        .row { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin-top: 0.8rem; width: 100%; }
+        .card {
+            background: rgba(20, 30, 55, 0.55); backdrop-filter: blur(12px); border: 1px solid rgba(80, 180, 255, 0.25);
+            border-radius: 1.3rem; padding: 1.3rem 1.3rem; min-width: 200px; flex: 1; max-width: 320px;
+            transition: all 0.35s ease; box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4); text-align: left;
+        }
+        .card:hover { transform: translateY(-8px) scale(1.02); background: rgba(45, 55, 95, 0.75); border-color: #4Fb8FF; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.6); }
+        .card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 700; color: #6CF0C8; }
+        .card p { font-size: 0.84rem; margin-bottom: 0; text-align: left; color: #ddd; max-width: none; }
+
+        .card-sm { max-width: 260px; min-width: 180px; padding: 1.1rem 1.1rem; }
+        .card-sm h3 { font-size: 1rem; }
+        .card-sm p { font-size: 0.8rem; }
+
+        .bar-bg { width: 100%; height: 5px; background: rgba(255,255,210,0.2); border-radius: 12px; overflow: hidden; margin-top: 0.6rem; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #4Fb8FF, #6CF0C8); border-radius: 12px; width: 0; transition: width 1.2s cubic-bezier(0.22, 0.97, 0.36, 1); }
+        .page.active .bar-fill { width: var(--w); }
+
+        .timeline { display: flex; flex-direction: column; gap: 1rem; max-width: 900px; width: 100%; text-align: left; position: relative; margin-top: 0.5rem; }
+        .timeline::before { content: ''; position: absolute; left: 16px; top: 12px; bottom: 12px; width: 2px; background: linear-gradient(to bottom, #4Fb8FF, #6CF0C8, rgba(80,180,255,0.2)); }
+        .tl-item { display: flex; gap: 1.2rem; align-items: flex-start; background: rgba(15, 20, 40, 0.5); backdrop-filter: blur(4px); padding: 0.85rem 1.1rem; border-radius: 1.2rem; transition: all 0.25s; }
+        .tl-item:hover { background: rgba(30,40,70,0.7); transform: translateX(6px); }
+        .tl-dot { width: 16px; height: 16px; border-radius: 50%; background: #4Fb8FF; box-shadow: 0 0 10px #4Fb8FF; flex-shrink: 0; margin-top: 4px; z-index: 2; }
+        .tl-content h3 { font-size: 1.1rem; font-weight: 700; color: #6CF0C8; margin-bottom: 0.2rem; }
+        .tl-content p { margin: 0; font-size: 0.84rem; color: rgba(240,240,250,0.8); max-width: none; }
+
+        .list-items { max-width: 900px; width: 100%; text-align: left; margin-top: 0.5rem; }
+        .list-item { display: flex; align-items: flex-start; gap: 1rem; padding: 0.65rem 1.1rem; background: rgba(15, 22, 45, 0.5); border-radius: 1rem; margin-bottom: 0.5rem; border-left: 3px solid rgba(80,180,255,0.5); transition: all 0.25s; }
+        .list-item:hover { background: rgba(30,40,70,0.7); border-left-color: #4Fb8FF; }
+        .list-num { background: linear-gradient(135deg, #4Fb8FF, #6CF0C8); color: #0F0E17; font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+        .list-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+        .list-text h4 { font-size: 1rem; font-weight: 700; color: #6CF0C8; margin-bottom: 0.15rem; }
+        .list-text p { font-size: 0.82rem; color: rgba(240,240,250,0.8); max-width: none; margin: 0; }
+
+        .highlight-box { background: rgba(80, 180, 255, 0.10); border: 1px solid rgba(80, 180, 255, 0.40); border-radius: 1.2rem; padding: 1.1rem 1.5rem; max-width: 900px; width: 100%; text-align: left; margin-top: 1rem; }
+        .highlight-box .label { font-size: 0.8rem; font-weight: 700; color: #4Fb8FF; letter-spacing: 2px; margin-bottom: 0.4rem; }
+        .highlight-box p { font-size: 0.9rem; color: rgba(235,245,255,0.92); max-width: none; margin: 0; line-height: 1.7; }
+        .highlight-box.green { background: rgba(80,200,120,0.10); border-color: rgba(80,200,120,0.40); }
+        .highlight-box.green .label { color: #6CF0C8; }
+        .highlight-box.amber { background: rgba(255,183,71,0.10); border-color: rgba(255,183,71,0.40); }
+        .highlight-box.amber .label { color: #FFB347; }
+        .highlight-box.red { background: rgba(255,100,100,0.10); border-color: rgba(255,100,100,0.40); }
+        .highlight-box.red .label { color: #ffaaaa; }
+
+        .code-box { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(80,180,255,0.3); border-radius: 1rem; padding: 1rem 1.3rem; max-width: 880px; width: 100%; text-align: left; font-family: 'Consolas', 'Source Code Pro', monospace; font-size: 0.8rem; color: #b8e994; line-height: 1.7; margin-top: 0.8rem; overflow-x: auto; white-space: pre-wrap; }
+        .code-box .code-label { color: #4Fb8FF; font-weight: 700; font-family: 'Microsoft YaHei', sans-serif; font-size: 0.76rem; margin-bottom: 0.4rem; display: block; }
+        .code-box.bad { border-color: rgba(255,100,100,0.35); color: #ffb3b3; }
+        .code-box.bad .code-label { color: #ffaaaa; }
+        .code-box.good { border-color: rgba(80,200,120,0.35); color: #9adfb8; }
+        .code-box.good .code-label { color: #6CF0C8; }
+
+        .badge { display: inline-block; background: rgba(80,180,255,0.18); border: 1px solid rgba(80,180,255,0.45); color: #aac8ff; font-size: 0.76rem; padding: 3px 10px; border-radius: 30px; margin: 2px; font-weight: 600; }
+        .badge.green { background: rgba(80,200,120,0.18); border-color: rgba(80,200,120,0.45); color: #90EE90; }
+        .badge.amber { background: rgba(255,183,71,0.18); border-color: rgba(255,183,71,0.45); color: #FFD966; }
+        .badge.red { background: rgba(255,100,100,0.18); border-color: rgba(255,100,100,0.45); color: #ffaaaa; }
+
+        .two-col { display: flex; gap: 1.2rem; max-width: 1100px; width: 100%; margin-top: 0.8rem; flex-wrap: wrap; }
+        .col-half { flex: 1; min-width: 280px; background: rgba(15,22,45,0.5); border-radius: 1.2rem; padding: 1.1rem 1.3rem; border: 1px solid rgba(80,180,255,0.2); text-align: left; }
+        .col-half h3 { font-size: 1.05rem; font-weight: 700; color: #6CF0C8; margin-bottom: 0.5rem; }
+        .col-half p { font-size: 0.84rem; color: rgba(240,240,250,0.8); max-width: none; margin-bottom: 0.35rem; }
+
+        .hint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); color: rgba(180,240,210,0.5); font-size: 0.75rem; background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 60px; backdrop-filter: blur(4px); pointer-events: none; white-space: nowrap; }
+        .page-num { position: fixed; bottom: 18px; right: 24px; color: rgba(180,210,255,0.5); font-size: 0.8rem; font-weight: 600; background: rgba(0,0,0,0.25); padding: 3px 10px; border-radius: 30px; backdrop-filter: blur(4px); letter-spacing: 1px; }
+        .nav-bar { position: fixed; top: 0; left: 0; right: 0; display: flex; gap: 4px; padding: 10px 16px; z-index: 100; background: linear-gradient(to bottom, rgba(0,0,0,0.35), transparent); overflow-x: auto; scrollbar-width: none; }
+        .nav-bar::-webkit-scrollbar { display: none; }
+        .nav-dot { flex-shrink: 0; padding: 4px 10px; border-radius: 20px; font-size: 0.66rem; color: rgba(180,240,210,0.6); cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+        .nav-dot:hover { color: #6CF0C8; background: rgba(80,180,255,0.15); }
+        .nav-dot.active { background: rgba(80,180,255,0.25); border-color: rgba(80,180,255,0.5); color: #4Fb8FF; font-weight: 700; }
+        .chapter-label { font-size: 0.78rem; color: #4Fb8FF; font-weight: 700; letter-spacing: 3px; margin-bottom: 0.4rem; text-transform: uppercase; }
+        .big-quote { font-size: clamp(1.1rem, 3.2vw, 1.7rem); font-weight: 700; color: #6CF0C8; line-height: 1.6; max-width: 800px; margin: 0.5rem auto; font-style: italic; }
+
+        table { width: 100%; max-width: 900px; border-collapse: separate; border-spacing: 0 6px; margin-top: 0.8rem; }
+        th { background: rgba(80,180,255,0.18); color: #4Fb8FF; font-size: 0.82rem; padding: 0.5rem 0.9rem; font-weight: 700; text-align: left; }
+        td { background: rgba(15,22,45,0.55); color: rgba(240,240,250,0.88); font-size: 0.82rem; padding: 0.5rem 0.9rem; line-height: 1.6; }
+        tr th:first-child, tr td:first-child { border-radius: 8px 0 0 8px; }
+        tr th:last-child, tr td:last-child { border-radius: 0 8px 8px 0; }
+        td.red { color: #ffaaaa; } td.green { color: #9adfb8; }
+
+        .step-num { display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background: rgba(80,180,255,0.18); color: #4Fb8FF; font-weight: 800; font-size: 0.8rem; align-items: center; justify-content: center; margin-right: 6px; }
+
+        @media (max-width: 780px) { .page { padding: 4rem 1.2rem 3.5rem; } h2 { font-size: 1.4rem; margin-bottom: 1rem; } .card { max-width: 100%; } .two-col { flex-direction: column; } }
+        .page::-webkit-scrollbar { width: 3px; } .page::-webkit-scrollbar-track { background: #1a1a2e; } .page::-webkit-scrollbar-thumb { background: #4Fb8FF; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar" id="navBar"></div>
+<div class="hint" id="hintBar">🎯 键盘 → ← / 点击 / 滑动翻页</div>
+<div class="page-num" id="pageNum">1 / 20</div>
+
+<!-- ===== P1 封面 ===== -->
+<div class="page active bg1" data-title="封面">
+    <span class="subtitle anim-up delay-1">🛠️ 教师数字化工作 · 实战培训</span>
+    <h1 class="anim-up delay-2">基于 WorkBuddy 的<br>教师数字化工作实战培训</h1>
+    <p class="anim-up delay-3" style="font-size:1rem; letter-spacing:1px; margin-top:0.5rem;">
+        符京雷 · 汤庄桥小学 &nbsp;|&nbsp; 培训时长：45–50 分钟
+    </p>
+    <p class="anim-up delay-4" style="font-size:0.85rem; color:rgba(180,240,210,0.6); margin-top:0.3rem;">
+        从"会用 AI"到"AI 替你干"——说出要求、开始执行、交付完整成果
+    </p>
+    <div class="anim-up delay-5" style="margin-top:1.5rem; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <span class="badge">腾讯出品</span>
+        <span class="badge green">全场景 AI 办公</span>
+        <span class="badge amber">零代码 · 真实案例 · 课后可自学</span>
+    </div>
+</div>
+
+<!-- ===== P2 内容概览 ===== -->
+<div class="page bg2" data-title="内容概览">
+    <h2 class="anim-up">📋 培训内容一览</h2>
+    <div class="timeline anim-in delay-1">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>一、认识 WorkBuddy <span class="badge" style="font-size:0.7rem;">6 min</span></h3><p>它是什么、和普通 AI 差在哪、为什么教师需要它</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>二、三分钟上手 <span class="badge" style="font-size:0.7rem;">6 min</span></h3><p>界面速览、三种模式、一句话任务公式</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>三、四大能力 + 功能地图 <span class="badge" style="font-size:0.7rem;">10 min</span></h3><p>文档备课 / 数据处理 / 零代码应用 / 自动化，附 12 项能力速查</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>四、实战案例库（亲测） <span class="badge" style="font-size:0.7rem;">12 min</span></h3><p>评语迁移、值日自动化、论文去 AI 味、成绩分析……提示词可复制</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>五、实操 + 避坑 + 行动 <span class="badge" style="font-size:0.7rem;">16 min</span></h3><p>两个上手任务、6 条避坑经验、本周就干三件事</p></div></div>
+    </div>
+</div>
+
+<!-- ===== P3 WorkBuddy 是什么 ===== -->
+<div class="page bg3" data-title="WorkBuddy是什么">
+    <div class="chapter-label anim-up">PART 01 · 认识 WorkBuddy</div>
+    <h2 class="anim-up delay-1">🤖 它到底是什么？</h2>
+    <div class="big-quote anim-up delay-2">"说出要求 → 开始执行任务 → 交付完整成果"</div>
+    <p class="anim-up delay-3" style="font-size:0.92rem; margin-top:0.5rem;">
+        腾讯出品的<strong style="color:#4Fb8FF;">全场景 AI 办公工作台</strong>。别的 AI 陪你聊天出主意，WorkBuddy 帮你把活干完、交可验收的成果文件。
+    </p>
+    <div class="row anim-in delay-3">
+        <div class="card"><h3>🗣️ 理解自然语言</h3><p>一句话下达任务，不用学操作步骤。说人话，它就懂。</p><div class="bar-bg"><div class="bar-fill" style="--w:92%"></div></div><p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">上手难度：低</p></div>
+        <div class="card"><h3>🧠 自主规划执行</h3><p>自动拆解任务、列计划、一步步执行，中途可调整。</p><div class="bar-bg"><div class="bar-fill" style="--w:95%"></div></div><p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">能办复杂事</p></div>
+        <div class="card"><h3>📑 多模态处理</h3><p>文档、表格、PPT、数据分析、图片、视频……一站式搞定。</p><div class="bar-bg"><div class="bar-fill" style="--w:88%"></div></div><p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">覆盖范围：广</p></div>
+        <div class="card"><h3>💻 本地文件操作</h3><p>授权后能读你电脑文件，批量处理、改名、转换、整理、填表。</p><div class="bar-bg"><div class="bar-fill" style="--w:96%"></div></div><p style="font-size:0.7rem; margin-top:0.3rem; color:#aaa;">省时：极强</p></div>
+    </div>
+</div>
+
+<!-- ===== P4 为什么教师需要 ===== -->
+<div class="page bg4" data-title="为什么需要">
+    <div class="chapter-label anim-up">PART 01 · 老师的痛，它来解</div>
+    <h2 class="anim-up delay-1">💡 传统 vs WorkBuddy</h2>
+    <table class="anim-in delay-2">
+        <tr><th style="width:50%">😩 传统方式</th><th style="width:50%">🚀 WorkBuddy 方式</th></tr>
+        <tr><td class="red">备一节课，找素材+做课件，半天起步</td><td class="green">一句话描述，教学设计+学习单几分钟出稿</td></tr>
+        <tr><td class="red">出套题，一道道手敲排版，熬夜</td><td class="green">说清学段知识点，自动出题+答案+问卷星格式</td></tr>
+        <tr><td class="red">Word 评语往 Excel 搬，逐个复制粘贴</td><td class="green">读两个文件，自动精准匹配批量填入</td></tr>
+        <tr><td class="red">每周值日反馈，全程手动串流程</td><td class="green">一条指令+定时，全链路自动跑，零干预</td></tr>
+        <tr><td class="red">期末汇总教科研获奖，各处收集核对</td><td class="green">丢进原始材料，自动分类整理成表</td></tr>
+    </table>
+    <div class="highlight-box green anim-up delay-3" style="margin-top:1rem; text-align:center;">
+        <p style="font-size:1.05rem; color:#6CF0C8; font-weight:700;">核心区别：普通 AI 只会"说"，WorkBuddy 会"做"</p>
+    </div>
+</div>
+
+<!-- ===== P5 界面速览 ===== -->
+<div class="page bg5" data-title="界面速览">
+    <div class="chapter-label anim-up">PART 02 · 三分钟上手</div>
+    <h2 class="anim-up delay-1">🖥️ 界面速览（打开就认识）</h2>
+    <table class="anim-in delay-2">
+        <tr><th style="width:120px">区域</th><th>在哪 / 长什么样</th><th>是干什么的</th></tr>
+        <tr><td>🏠 左侧边栏</td><td>一排图标：新建任务、项目、专家、技能、自动化、记忆、邮箱、设置</td><td>所有功能入口。点"专家"进专家中心，点"技能"管工具包</td></tr>
+        <tr><td>💬 对话区（中间）</td><td>底部输入框，顶部可带文件/附件</td><td>下达任务的地方，像聊天一样持续追问、改要求</td></tr>
+        <tr><td>📦 结果区（右侧）</td><td>任务跑完后出现的文件卡片、预览窗</td><td>展示产出的成果文件、过程变更，可点开预览、下载</td></tr>
+        <tr><td>🎛️ 模式开关</td><td>输入框上方：Craft / Plan / Ask</td><td>控"AI 的胆子"：直接干 / 先报方案再干 / 只答不做</td></tr>
+    </table>
+    <div class="highlight-box anim-up delay-3">
+        <div class="label">💡 第一印象</div>
+        <p>它生成的是真的<strong style="color:#6CF0C8;">.docx / .xlsx / .pptx / .html 文件</strong>给你，而不是只吐一段文字——这就是"执行型 AI"和"聊天型 AI"最直观的区别。</p>
+    </div>
+</div>
+
+<!-- ===== P6 三种模式 ===== -->
+<div class="page bg6" data-title="三种模式">
+    <div class="chapter-label anim-up">PART 02 · 控好"AI 的胆子"</div>
+    <h2 class="anim-up delay-1">🎛️ 三种模式怎么选（重要！）</h2>
+    <table class="anim-in delay-2">
+        <tr><th style="width:24%">模式</th><th style="width:34%">含义</th><th>什么时候用</th></tr>
+        <tr><td><strong style="color:#6CF0C8;">Craft（你说我做）</strong></td><td>拿到任务直接开干，边做边汇报</td><td>日常 80% 场景：生成文档、填表格、做分析。熟悉后默认用它</td></tr>
+        <tr><td><strong style="color:#aac8ff;">Plan（先想后做）</strong></td><td>先出方案给你审，确认后才动手</td><td>大工程、要改重要文件前：先看它计划靠不靠谱</td></tr>
+        <tr><td><strong style="color:#FFD966;">Ask（只问不做）</strong></td><td>只回答、只分析，不碰文件</td><td>纯咨询："这两份文件结构有啥区别？"</td></tr>
+    </table>
+    <div class="highlight-box green anim-up delay-3" style="margin-top:1rem;">
+        <div class="label">🛡️ 安全沙箱</div>
+        <p>涉及删除、覆盖、批量改你个人文件时，它会先列清单等你确认，你随时能喊停。这是保护你的设计，别嫌它啰嗦。</p>
+    </div>
+</div>
+
+<!-- ===== P7 任务公式 ===== -->
+<div class="page bg7" data-title="任务公式">
+    <div class="chapter-label anim-up">PART 02 · 高手心法</div>
+    <h2 class="anim-up delay-1">🧪 一句话把任务说清楚</h2>
+    <p class="anim-up delay-2" style="font-size:0.95rem; color:#6CF0C8; font-weight:600;">任务公式 = 角色 + 任务 + 对象 + 要求 + 格式</p>
+    <table class="anim-in delay-2">
+        <tr><th style="width:18%">要素</th><th style="width:34%">问自己</th><th>示例</th></tr>
+        <tr><td>🎭 角色</td><td>它该站什么视角？</td><td>"有 20 年经验的小学信息科技教研员"</td></tr>
+        <tr><td>🛠️ 任务</td><td>要它做什么动作？</td><td>设计 / 改写 / 分析 / 填入 / 汇总 / 生成</td></tr>
+        <tr><td>📎 对象</td><td>基于什么材料？</td><td>"读取 D:\某某.docx""参考 2022 版课标"</td></tr>
+        <tr><td>📏 要求</td><td>有什么约束？</td><td>"难度 7:2:1""语句温暖有画面感""避免 AI 腔"</td></tr>
+        <tr><td>📦 格式</td><td>交付成什么？</td><td>"输出 Word""做成 Excel""生成 HTML 学件"</td></tr>
+    </table>
+    <div class="code-box bad anim-in delay-3"><span class="code-label">❌ 太模糊（效果打折）</span>帮我做个 PPT</div>
+    <div class="code-box good anim-in delay-4"><span class="code-label">✅ 够具体（直接可用）</span>你是一位小学信息科技教研员，为三年级家长会做一份8页PPT：
+主题《数字时代如何帮孩子用好屏幕》，含①现状数据②利与弊③家庭屏幕公约模板④给家长5条建议。
+风格清新童趣，每页文字不超过6行，用.pptx格式输出。</div>
+</div>
+
+<!-- ===== P8 能力地图12项 ===== -->
+<div class="page bg8" data-title="能力地图">
+    <div class="chapter-label anim-up">PART 03 · 功能地图</div>
+    <h2 class="anim-up delay-1">🗂️ 12 个你会常用的能力</h2>
+    <div class="row anim-in delay-2">
+        <div class="card card-sm"><h3>📄 1.文档三件套</h3><p>教学设计、论文、总结→Word；成绩台账、CSV→Excel；课件→PPT</p></div>
+        <div class="card card-sm"><h3>🔁 2.定时自动化</h3><p>每周五自动汇总值日反馈、每月1号整理台账，到点自己跑</p></div>
+        <div class="card card-sm"><h3>🧩 3.零代码学件</h3><p>用嘴描述生成HTML互动学件，双击/希沃可用，无需编程</p></div>
+        <div class="card card-sm"><h3>📊 4.数据分析可视化</h3><p>成绩算平均分优秀率，画图表并解读，输出质量分析报告</p></div>
+        <div class="card card-sm"><h3>📚 5.专家中心</h3><p>100+领域专家，教学/课题/评审专家，跨学科找对口把关</p></div>
+        <div class="card card-sm"><h3>🧰 6.技能市场</h3><p>docx/xlsx/pdf处理、去AI味写作；还能自建技能复用流程</p></div>
+        <div class="card card-sm"><h3>🎨 7.多模态生成</h3><p>文生图、文生视频、文生3D，课件插图海报描述即得</p></div>
+        <div class="card card-sm"><h3>🖥️ 8.本地文件批处理</h3><p>批量重命名、归档、转PDF、清重复（先列清单再确认）</p></div>
+        <div class="card card-sm"><h3>🌐 9.联网搜索研究</h3><p>自动查资料附来源，查政策、搜案例，输出带引用的调研报告</p></div>
+        <div class="card card-sm"><h3>🔌 10.连接器生态</h3><p>接腾讯文档、QQ邮箱、金山文档、ima、腾讯会议，一句话管理</p></div>
+        <div class="card card-sm"><h3>🧠 11.长期记忆</h3><p>记得你是谁、偏好什么，跨会话不失忆，越用越懂你</p></div>
+        <div class="card card-sm"><h3>📱 12.产物回传/多端助理</h3><p>电脑干完活一键回传手机小程序；接入微信QQ企微派活</p></div>
+    </div>
+</div>
+
+<!-- ===== P9 能力一 文档三件套 ===== -->
+<div class="page bg9" data-title="能力一·文档备课">
+    <div class="chapter-label anim-up">PART 03 · 四大核心能力 · ①</div>
+    <h2 class="anim-up delay-1">📝 能力一：文档生成与备课出题</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half"><h3>✍️ 能做什么</h3><p>· 教学设计、教案、学习单批量生成</p><p>· 出题：评测卷 + 问卷星CSV一键产出</p><p>· 工作总结、计划、报告、纪要</p><p>· 论文撰写与润色（控AIGC检测率）</p><p>· PPT/演示文稿从需求到成品</p></div>
+        <div class="col-half"><h3>🏆 我亲测的案例</h3><p>· 六年级<strong style="color:#6CF0C8;">59个</strong>教学设计+学习单docx</p><p>· 评测练习(29题/100分)+问卷星CSV(32题/115分)<strong style="color:#6CF0C8;">三件套</strong></p><p>· 校本培训工作总结、教师发展处计划与总结</p><p>· "教海探航"参赛论文打磨</p></div>
+    </div>
+    <div class="code-box anim-in delay-4"><span class="code-label">💬 示例指令（备课+学习单两步）</span>第一句：你是20年经验的六年级数学骨干教师，为苏教版《圆的认识》
+设计40分钟教学设计，含重难点、情境导入、三个探究活动、分层作业，
+输出Word文档，体现教学评一体化。
+第二句：接着把探究活动与练习做成A4学生学习单Word，留白充足适合打印。</div>
+    <p class="anim-up delay-5" style="font-size:0.8rem; color:#aac8ff; margin-top:0.5rem;">💡 诀窍：角色+场景+对象+要求+输出格式说全，成果质量提升一个档次</p>
+</div>
+
+<!-- ===== P10 能力二 数据处理 ===== -->
+<div class="page bg10" data-title="能力二·数据处理">
+    <div class="chapter-label anim-up">PART 03 · 四大核心能力 · ②</div>
+    <h2 class="anim-up delay-1">📊 能力二：数据处理与分析</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half"><h3>🔧 能做什么</h3><p>· 读Excel/Word，跨表批量匹配、迁移、填入</p><p>· 成绩统计、等级换算、数据清洗</p><p>· 数据可视化图表自动生成</p><p>· 教科研获奖、课题等分散数据分类汇总</p></div>
+        <div class="col-half"><h3>🏆 我亲测的案例</h3><p>· <strong style="color:#6CF0C8;">六4班学生评语Word→Excel迁移</strong>：读评语文档按姓名精准匹配，批量填入毕业成绩等级表的"综合素质评价"栏</p><p>· 教师发展四大工程获奖数据整理成表</p><p>· 课题申报、教科研获奖数据归档</p></div>
+    </div>
+    <div class="code-box anim-in delay-3"><span class="code-label">💬 示例指令（谨慎分步版）</span>处理两个文件：六（4）班学生评语.docx 和 六4毕业成绩等级.xlsx。
+第一步：先只读扫描，按姓名对应关系列出来，确认无误后告诉我，不要写入；
+第二步：确认后把评语填入Excel对应行"综合素质评价"栏；
+第三步：写入完输出校验报告：填了多少条、哪些没匹配上。</div>
+    <p class="anim-up delay-4" style="font-size:0.8rem; color:#6CF0C8; margin-top:0.5rem;">⚡ "先扫描→确认→执行→校验"是处理一切"两表对账"型任务的模板</p>
+</div>
+
+<!-- ===== P11 能力三 零代码应用 ===== -->
+<div class="page bg11" data-title="能力三·零代码应用">
+    <div class="chapter-label anim-up">PART 03 · 四大核心能力 · ③</div>
+    <h2 class="anim-up delay-1">🛠️ 能力三：零代码做本地应用</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half"><h3>🎯 能做什么</h3><p>· 一句话生成单文件HTML网页工具</p><p>· 互动网页学件（签到、积分、闯关、配对）</p><p>· 本地实用小应用（通讯录、查询台、工作台）</p><p>· 可结合PPT/电子白板直接用</p></div>
+        <div class="col-half"><h3>🏆 我亲测的案例</h3><p>· <strong style="color:#6CF0C8;">教师工作台·通讯录模块</strong>：单文件HTML，录入100条教职工记录，按姓名/首字母/姓+密码复合查询后显示电话，保护隐私</p><p>· 跨学科互动网页学件（《智慧校园及系统安全》《数智赋能》代表作已投入使用）</p><p>· 创客社团编程作品获奖</p></div>
+    </div>
+    <div class="code-box anim-in delay-3"><span class="code-label">💬 示例指令（做通讯录查询应用）</span>做一个单文件离线HTML通讯录：录入约100条教职工记录（姓名/部门/电话/类别），
+支持按姓名、拼音首字母、姓氏模糊搜索；电话默认打码隐藏，
+需输入正确密码才显示完整号码；界面美观、手机端可用、键盘快捷操作。</div>
+</div>
+
+<!-- ===== P12 能力四 自动化 ===== -->
+<div class="page bg12" data-title="能力四·自动化">
+    <div class="chapter-label anim-up">PART 03 · 四大核心能力 · ④</div>
+    <h2 class="anim-up delay-1">🔄 能力四：自动化工作流</h2>
+    <div class="timeline anim-in delay-2">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>📥 数据采集 <span class="badge green" style="font-size:0.7rem;">自动</span></h3><p>从QQ群/群消息自动收集值日反馈信息</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>📄 文档生成 <span class="badge green" style="font-size:0.7rem;">自动</span></h3><p>信息自动整理写入Word反馈文档</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>🖼️ 格式转换 <span class="badge amber" style="font-size:0.7rem;">自动</span></h3><p>Word转PNG图片，适配群内发送</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h3>📤 回传发送 <span class="badge green" style="font-size:0.7rem;">定时</span></h3><p>定时把图片发回QQ群，全程零手动干预</p></div></div>
+    </div>
+    <div class="highlight-box green anim-up delay-3" style="margin-top:1rem;">
+        <div class="label">🏆 我的实战</div>
+        <p><strong style="color:#6CF0C8;">周五值日反馈全自动化流程</strong>：QQ群消息收集→Word文档→WPS转PNG→发送回QQ群。挂上定时自动化后，连"记得启动"都省了——到点自己跑，真正零手动。</p>
+    </div>
+</div>
+
+<!-- ===== P13 案例库速览 ===== -->
+<div class="page bg13" data-title="案例库速览">
+    <div class="chapter-label anim-up">PART 04 · 实战案例库</div>
+    <h2 class="anim-up delay-1">🗂️ 10 个拿来就用的场景</h2>
+    <p class="anim-up delay-2" style="font-size:0.88rem;">每个案例都是"一句话指令→它能给你什么"，提示词可复制改改用。下面挑几个重点展开讲👇</p>
+    <div class="row anim-in delay-2">
+        <div class="card card-sm"><h3>① 备课一条龙</h3><p>教学设计→学习单→分层作业</p></div>
+        <div class="card card-sm"><h3>② 出题+问卷星</h3><p>测评定卷，Word+CSV双形态</p></div>
+        <div class="card card-sm"><h3>③ 零代码学件</h3><p>《智慧校园》互动网页</p></div>
+        <div class="card card-sm"><h3>④ 评语迁移</h3><p>Word→Excel精准填入</p></div>
+        <div class="card card-sm"><h3>⑤ 成绩分析</h3><p>统计+图表+报告一次给齐</p></div>
+        <div class="card card-sm"><h3>⑥ 论文去AI味</h3><p>AIGC检测率压到20%</p></div>
+        <div class="card card-sm"><h3>⑦ 值日自动化</h3><p>定时全链路无人值守</p></div>
+        <div class="card card-sm"><h3>⑧ 处室台账</h3><p>四大工程总结+统计表</p></div>
+        <div class="card card-sm"><h3>⑨ 家校沟通</h3><p>告家长书/活动通知</p></div>
+        <div class="card card-sm"><h3>⑩ 创客社团</h3><p>课程设计+课堂实时排错</p></div>
+    </div>
+</div>
+
+<!-- ===== P14 精选案例 论文去AI味 ===== -->
+<div class="page bg14" data-title="案例·论文去AI味">
+    <div class="chapter-label anim-up">PART 04 · 精选案例 · 教科研</div>
+    <h2 class="anim-up delay-1">✍️ 案例：论文写作与"去 AI 味"</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half"><h3>🎯 场景</h3><p>参加省"教海探航"论文，主题是AI零代码网页学件课堂教学实践。要保留个人风格、压低AIGC检测率，还要用省级评审专家视角反查自己。</p></div>
+        <div class="col-half"><h3>🧩 用到的能力</h3><p>· 技能：中文去AI味写作</p><p>· 专家中心：省级教科研评审专家</p><p>· 保留温暖、有画面感的个人风格</p></div>
+    </div>
+    <div class="code-box anim-in delay-3"><span class="code-label">✍️ 第一句（去AI味改写）</span>这是我参赛论文初稿（附件docx）。请用"中文去AI味写作"技能改写：
+消除排比堆砌、万能金句、模板化小标题等AI痕迹；保留我温暖、有画面感、
+逻辑清晰的写作风格和真实课例细节；目标把AIGC检测率降到20%左右；
+输出Word对比稿，附改写说明。</div>
+    <div class="code-box good anim-in delay-4"><span class="code-label">✍️ 第二句（省级专家视角把关）</span>切换到"省级教科研评审专家"视角：审读这篇论文，指出选题价值、
+论证逻辑、课例呈现、成果表达四方面的硬伤与改进点，按优先级列出，逐条给修改建议。</div>
+    <div class="highlight-box green anim-up delay-5" style="margin-top:0.8rem;"><div class="label">✅ 效果</div><p>把"写得像人 + 经得起评审"两件事拆给AI把关，自己专注在思想和课例的独特性上。</p></div>
+</div>
+
+<!-- ===== P15 精选案例 成绩分析+台账 ===== -->
+<div class="page bg15" data-title="案例·成绩与台账">
+    <div class="chapter-label anim-up">PART 04 · 精选案例 · 数据与处室</div>
+    <h2 class="anim-up delay-1">📈 成绩分析 & 处室台账</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half"><h3>📊 案例·期末成绩分析</h3><p>把成绩Excel丢给它：算平均分、优秀率、及格率、分数段分布；指出进步明显和需重点关注的学生；生成图表；输出含归因和教学建议的Word质量分析报告。</p><div class="code-box" style="margin-top:0.6rem;"><span class="code-label">💬 指令</span>分析附件《六4班期末数学成绩.xlsx》：计算平均分/优秀率(≥90)/及格率(≥60)/分数段；指出进步与需关注学生；生成2-3张图表；输出期末质量分析报告Word，含典型问题归因和下阶段教学建议。</div></div>
+        <div class="col-half"><h3>🏫 案例·处室四大工程</h3><p>基于教师发展处数据台账，按"青蓝携手、城乡牵手、规划引领、名师培育"四大工程整理，输出统计表Excel+校本培训工作总结Word框架，数据处留高亮供核对。</p><div class="code-box good" style="margin-top:0.6rem;"><span class="code-label">💬 指令</span>基于《教师发展处数据台账.xlsx》，整理输出两份：①教科研获奖统计表Excel按级别/类别分类；②校本培训工作总结Word，以四大工程为线索，把台账真实数据填进对应位置，数据处留高亮标记供核对。</div></div>
+    </div>
+    <p class="anim-up delay-4" style="font-size:0.8rem; color:#6CF0C8; margin-top:0.5rem;">💡 台账数据→统计表+总结初稿一次生成，核对高亮数据后配合去AI味技能润色</p>
+</div>
+
+<!-- ===== P16 实操任务一 ===== -->
+<div class="page bg16" data-title="实操任务一">
+    <div class="chapter-label anim-up">⭐ 实操任务一</div>
+    <h2 class="anim-up delay-1">🛠️ 让 WorkBuddy 帮你备课出题</h2>
+    <div class="list-items anim-in delay-2">
+        <div class="list-item"><div class="list-num">1</div><div class="list-text"><h4>打开 WorkBuddy，新建任务</h4><p>登录后点"新建任务"，进入对话界面</p></div></div>
+        <div class="list-item"><div class="list-num">2</div><div class="list-text"><h4>套用万能指令公式</h4><p>身份（命题专家）+ 场景（学科学段课题）+ 要求（题量/分值/难度）+ 输出格式（Word/CSV）</p></div></div>
+        <div class="list-item"><div class="list-num">3</div><div class="list-text"><h4>发送指令，等待执行</h4><p>WorkBuddy 自动规划步骤，逐项产出题目、答案、解析</p></div></div>
+        <div class="list-item"><div class="list-num">4</div><div class="list-text"><h4>查看产物并验收</h4><p>在"结果"区查看文档，不满意可追加修改指令（如"再加5道易错题"）</p></div></div>
+        <div class="list-item"><div class="list-num">5</div><div class="list-text"><h4>下载保存到桌面</h4><p>一键下载 Word/CSV，直接用于课堂或导入问卷星</p></div></div>
+    </div>
+    <div class="highlight-box amber anim-up delay-3"><div class="label">⏱️ 时间：8 分钟，完成一套可用评测练习</div><p>进阶挑战：再让它生成配套的"知识点整理"和"学习单"，凑齐三件套</p></div>
+</div>
+
+<!-- ===== P17 实操任务二 ===== -->
+<div class="page bg17" data-title="实操任务二">
+    <div class="chapter-label anim-up">⭐ 实操任务二</div>
+    <h2 class="anim-up delay-1">📊 数据迁移 / 零代码应用</h2>
+    <div class="two-col anim-in delay-2">
+        <div class="col-half"><h3>任务A：数据迁移（5分钟）</h3><p><span class="step-num">1</span>准备两份文件：一份Word（含文字内容）、一份Excel（需填入的表）</p><p><span class="step-num">2</span>授权WorkBuddy读取文件夹</p><p><span class="step-num">3</span>指令："读XX.docx，按姓名匹配填入XX.xlsx的指定列，保存"</p><p><span class="step-num">4</span>验收：打开Excel检查填充结果</p></div>
+        <div class="col-half"><h3>任务B：零代码应用（5分钟）</h3><p><span class="step-num">1</span>想一个日常小需求（签到器、抽签、积分榜）</p><p><span class="step-num">2</span>用万能公式描述："做一个单文件HTML的XX工具，要求……"</p><p><span class="step-num">3</span>等WorkBuddy生成完整代码</p><p><span class="step-num">4</span>下载保存为.html，双击打开即用</p></div>
+    </div>
+    <div class="highlight-box amber anim-up delay-3"><div class="label">💡 关键提醒</div><p>指令里把"文件路径、匹配字段、输出位置"说具体；数据任务务必先备份原文件，验收无误再覆盖。自动化流程先用"定时每周五"试跑一次。</p></div>
+    <p class="anim-up delay-4" style="font-size:0.8rem; color:#6CF0C8; margin-top:0.5rem;">🚀 体验地址：https://www.codebuddy.cn/events/invite?inviteCode=31wjl7ew3xw0u</p>
+</div>
+
+<!-- ===== P18 避坑指南 ===== -->
+<div class="page bg18" data-title="避坑指南">
+    <div class="chapter-label anim-up">PART 05 · 老司机经验</div>
+    <h2 class="anim-up delay-1">⚠️ 避坑指南 6 条</h2>
+    <div class="list-items anim-in delay-2">
+        <div class="list-item" style="border-left-color:#ffaaaa;"><div class="list-icon">1️⃣</div><div class="list-text"><h4>涉及"删/移/批量改"文件时别嫌它啰嗦</h4><p>它先列清单等你确认是保护你的设计。别说"把桌面清理干净"这种模糊指令，务必指明目录、文件类型、处理规则。</p></div></div>
+        <div class="list-item" style="border-left-color:#ffaaaa;"><div class="list-icon">2️⃣</div><div class="list-text"><h4>隐私信息要主动声明</h4><p>涉及学生电话、身份证号，可要求"姓名+密码门控才显示"（如通讯录tx2000方案）。私人文件不外传、不回传公网。</p></div></div>
+        <div class="list-item" style="border-left-color:#FFD966;"><div class="list-icon">3️⃣</div><div class="list-text"><h4>格式要提前说</h4><p>正式材料一定写明"输出Word/Excel"，避免它给Markdown或网页。</p></div></div>
+        <div class="list-item" style="border-left-color:#FFD966;"><div class="list-icon">4️⃣</div><div class="list-text"><h4>大活分步走</h4><p>一次只交代一个大任务；牵一发动全身的操作先"只读扫描→确认→再执行"。</p></div></div>
+        <div class="list-item" style="border-left-color:#ffaaaa;"><div class="list-icon">5️⃣</div><div class="list-text"><h4>别删 .workbuddy 文件夹</h4><p>那是它的"记忆"所在，删了就"失忆"，你们之间的默契要从头培养。</p></div></div>
+        <div class="list-item" style="border-left-color:#FFD966;"><div class="list-icon">6️⃣</div><div class="list-text"><h4>手机端接收产物</h4><p>记得打开连接设置里"产物回传到小程序"开关，电脑上生成的文件才能发到你手机。</p></div></div>
+    </div>
+</div>
+
+<!-- ===== P19 能力延伸 ===== -->
+<div class="page bg19" data-title="能力延伸">
+    <div class="chapter-label anim-up">PART 05 · 把 AI 用成"自己的"</div>
+    <h2 class="anim-up delay-1">🌐 不止干活，还能"进化"</h2>
+    <div class="row anim-in delay-2">
+        <div class="card"><h3>🧑‍🏫 专家中心</h3><p>100+领域专家，按学科/场景选专家对话。写论文、做课题、做评审都能找到对口的。</p></div>
+        <div class="card"><h3>🧩 技能市场</h3><p>扩展能力插件：浏览器自动化、文档四件套、语音转写、联网搜索、前端设计、去AI味写作。需要啥装啥。</p></div>
+        <div class="card"><h3>🔌 连接器</h3><p>打通腾讯文档、ima知识库、乐享、邮箱、会议——一句话管理所有文档和会议。</p></div>
+        <div class="card"><h3>⚡ 自动化</h3><p>定时任务、远程遥控、每日资讯推送——让WorkBuddy在后台替你值班。</p></div>
+    </div>
+    <div class="highlight-box green anim-up delay-3" style="margin-top:1rem;"><div class="label">🎯 进阶路径</div><p>新手：会用指令干活 → 进阶：装技能扩能力 → 高手：创建自己的技能，把"评语迁移""学件生成"存成技能，下次一句话复用——这就是把AI经验变成你的"数字资产"。</p></div>
+</div>
+
+<!-- ===== P20 行动清单+结语 ===== -->
+<div class="page bg20" data-title="行动与结语">
+    <h1 class="anim-up">🙏 感谢聆听</h1>
+    <p class="anim-up delay-1" style="font-size:1rem; max-width:700px; color:#6CF0C8; line-height:1.8;">
+        AI 不是少数人的"技术秀"，而是每位老师都能上手的"办公搭子"。<br>关键不在会用多少软件，而在会不会"下指令"。
+    </p>
+    <div class="list-items anim-in delay-2" style="max-width:680px; margin-top:0.8rem;">
+        <div class="list-item" style="border-left-color:#4Fb8FF;"><div class="list-icon">🔥</div><div class="list-text"><h4>本周第一件：升级一份旧教案</h4><p>找份以前写的教学设计丢给它："按教学评一体化理念升级，补评价任务与量表，输出Word"。感受从"建议"到"成品"的差别。</p></div></div>
+        <div class="list-item" style="border-left-color:#6CF0C8;"><div class="list-icon">⏰</div><div class="list-text"><h4>本周第二件：建第一个自动化</h4><p>选个每周固定做的活（值日反馈/国旗下讲话/材料汇总），跟它说"每周五16:30自动……"，跑通一次全自动流程。</p></div></div>
+        <div class="list-item" style="border-left-color:#aac8ff;"><div class="list-icon">🧩</div><div class="list-text"><h4>本周第三件：沉淀一个自定义技能</h4><p>把"评语迁移"或"学件生成"存成技能，起个名字。下次一句话唤起整套流程——把经验变成数字资产。</p></div></div>
+    </div>
+    <p class="anim-up delay-3" style="margin-top:1rem; font-size:0.85rem; color:rgba(180,240,210,0.6);">"说出要求，交付成果" · 让 AI 替你干活，把时间还给教育本身</p>
+    <p class="anim-up delay-4" style="font-size:0.8rem; color:rgba(255,255,255,0.35); margin-top:0.3rem;">符京雷 · 汤庄桥小学 · 2026</p>
+</div>
+
+<script>
+(function() {
+    const pages = document.querySelectorAll('.page');
+    const total = pages.length;
+    let currentIdx = 0;
+    let isAnimating = false;
+    const navBar = document.getElementById('navBar');
+    pages.forEach((page, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+        dot.textContent = (i + 1) + '. ' + (page.dataset.title || '');
+        dot.addEventListener('click', (e) => { e.stopPropagation(); goToPage(i); });
+        navBar.appendChild(dot);
+    });
+    function updateUI() {
+        document.getElementById('pageNum').textContent = (currentIdx + 1) + ' / ' + total;
+        document.querySelectorAll('.nav-dot').forEach((d, i) => { d.classList.toggle('active', i === currentIdx); });
+        const activeDot = navBar.querySelectorAll('.nav-dot')[currentIdx];
+        if (activeDot) activeDot.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+    function goToPage(index) {
+        if (isAnimating) return;
+        if (index === currentIdx) return;
+        if (index < 0 || index >= total) return;
+        isAnimating = true;
+        pages[currentIdx].classList.remove('active');
+        currentIdx = index;
+        pages[currentIdx].classList.add('active');
+        updateUI();
+        setTimeout(() => { pages[currentIdx].querySelectorAll('.bar-fill').forEach(bar => { const w = getComputedStyle(bar).getPropertyValue('--w').trim(); if (w) bar.style.width = w; }); }, 100);
+        setTimeout(() => { isAnimating = false; }, 700);
+    }
+    window.addEventListener('keydown', (e) => {
+        const fwd = ['ArrowRight','ArrowDown',' ','Enter','PageDown'];
+        const bwd = ['ArrowLeft','ArrowUp','PageUp'];
+        if (fwd.includes(e.key)) { e.preventDefault(); goToPage(currentIdx + 1); }
+        else if (bwd.includes(e.key)) { e.preventDefault(); goToPage(currentIdx - 1); }
+    });
+    document.body.addEventListener('click', (e) => {
+        if (e.target.closest('.nav-dot')) return;
+        if (e.target.closest('.contact-btn')) return;
+        const x = e.clientX;
+        if (x > window.innerWidth * 0.25 && x < window.innerWidth * 0.75) { goToPage(currentIdx + 1); }
+        else if (x <= window.innerWidth * 0.25) { goToPage(currentIdx - 1); }
+        else { goToPage(currentIdx + 1); }
+    });
+    let wheelTimer = null;
+    window.addEventListener('wheel', (e) => {
+        if (wheelTimer) return;
+        wheelTimer = setTimeout(() => { wheelTimer = null; }, 600);
+        if (e.deltaY > 0) goToPage(currentIdx + 1);
+        else if (e.deltaY < 0) goToPage(currentIdx - 1);
+    }, { passive: true });
+    let touchStartY = 0, touchStartX = 0;
+    window.addEventListener('touchstart', (e) => { touchStartY = e.changedTouches[0].clientY; touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+        const dy = touchStartY - e.changedTouches[0].clientY;
+        const dx = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) { if (dy > 0) goToPage(currentIdx + 1); else goToPage(currentIdx - 1); }
+        else if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) { if (dx > 0) goToPage(currentIdx + 1); else goToPage(currentIdx - 1); }
+    }, { passive: true });
+    setTimeout(() => { pages[0].querySelectorAll('.bar-fill').forEach(bar => { const w = getComputedStyle(bar).getPropertyValue('--w').trim(); if (w) bar.style.width = w; }); }, 150);
+    updateUI();
+})();
+</script>
+</body>
+</html>
