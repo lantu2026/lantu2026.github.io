@@ -1861,5 +1861,26 @@ document.getElementById('verText').textContent = DB.site.version;
 document.getElementById('updText').textContent = DB.site.updated;
 route();
 </script>
+<!-- pf-home:start -->
+<a id="pf-home" href="../../" aria-label="返回符京雷数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
+<style>
+#pf-home{position:fixed;left:14px;bottom:14px;z-index:2147483000;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 13px 0 11px;border-radius:16px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);border:1px solid rgba(15,23,42,.13);box-shadow:0 2px 12px rgba(15,23,42,.15);color:#1e293b!important;font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif!important;text-decoration:none!important;letter-spacing:.02em;opacity:.9;transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+#pf-home:hover,#pf-home:focus-visible{opacity:1;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.22);transform:translateY(-1px);outline:none}
+#pf-home .pf-ar{font-size:14px;line-height:1;opacity:.65}
+@media (hover:none){#pf-home{opacity:.95}}
+@media (max-width:520px){#pf-home{opacity:.95;height:30px;padding:0 11px;font-size:12px}}
+@media print{#pf-home{display:none!important}}
+</style>
+<script>
+(function(){try{
+  if(window.__pfHome)return;window.__pfHome=1;
+  document.addEventListener('keydown',function(e){
+    if(e.altKey&&e.key==='ArrowLeft'&&!e.ctrlKey&&!e.metaKey){
+      var a=document.getElementById('pf-home');if(a){e.preventDefault();location.href=a.getAttribute('href');}
+    }
+  });
+}catch(e){}})();
+</script>
+<!-- pf-home:end -->
 </body>
 </html>
