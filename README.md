@@ -7,7 +7,7 @@
 ## 结构
 
 ```
-index.html          总入口（作品集首页）
+index.html          总入口（作品集首页：门牌 / 迎宾 / 分流 / 说明）
 works/              专业成果（给老师看：讲座、手册、共建平台）
   shuzhi-funeng/      数智赋能 · 网页学件制作实战
   workbuddy-2/        WorkBuddy 教师数字化实战 2.0
@@ -26,7 +26,28 @@ learn/              学生学件（给学生用：即开即用）
   quiz/               课堂知识竞赛（出题版）
   typing/             打字乐园 · 年级闯关
   enumeration/        小智的采购任务 · 枚举算法
+docs/
+  GitHub教学作品集搭建手记.md   全流程复盘（选型、踩坑、双向门、隐私红线）
+tools/
+  inject-home-link.py 批量注入「← 作品集」回流入口（幂等，可 --check / --revert）
 ```
+
+## 双向门
+
+每个子页面左下角都有一个「← 作品集」胶囊，点一下回首页；键盘 `Alt + ←` 同样生效。
+
+需要新增或调整时，不要手工改 16 个文件，跑脚本：
+
+```bash
+python tools/inject-home-link.py --apply    # 注入 / 更新
+python tools/inject-home-link.py --check    # 检查每页标记份数（正常为 1）
+python tools/inject-home-link.py --revert   # 全部撤掉
+```
+
+## 复盘文档
+
+完整过程见 [docs/GitHub教学作品集搭建手记.md](docs/GitHub教学作品集搭建手记.md)：为什么选 GitHub Pages、英文界面速查表、七步上线流程、八个真实故障、双向门的设计取舍、隐私红线、可复用清单。
+
 
 ## 发布原则
 

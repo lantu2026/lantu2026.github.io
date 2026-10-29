@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>符京雷 · 数字教学作品集</title>
 <meta name="description" content="常州市新北区汤庄桥小学 符京雷（蓝兔）的数字教学作品集：专业成果与学生学件。">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+<meta name="author" content="符京雷（蓝兔）">
+<meta name="theme-color" content="#3C6653">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%233C6653'/%3E%3Ctext x='50' y='73' font-size='60' font-weight='700' font-family='PingFang SC,Microsoft YaHei,sans-serif' fill='%23ffffff' text-anchor='middle'%3E%E7%AC%A6%3C/text%3E%3C/svg%3E">
 <style>
 :root{
   --green:#3C6653; --green-2:#4F8368; --green-3:#E3F0E8;
@@ -122,7 +124,36 @@ footer a{color:var(--green);text-decoration:none}
 footer a:hover{text-decoration:underline}
 footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
 
+/* ---------- 品牌徽标 ---------- */
+.mark{width:26px;height:26px;border-radius:8px;background:var(--green);color:#fff;font-size:12.5px;font-weight:700;
+  display:grid;place-items:center;flex:none;line-height:1;letter-spacing:0;
+  box-shadow:0 1px 3px rgba(31,42,36,.18)}
+html[data-theme="dark"] .mark{color:#141815}
+
+/* ---------- 访客分流 ---------- */
+.paths{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0 0}
+.paths a{display:inline-block;font-size:12.6px;color:var(--muted);text-decoration:none;
+  border:1px solid var(--line);background:var(--card);padding:5px 12px;border-radius:999px;
+  transition:color .18s,border-color .18s,background .18s,transform .18s}
+.paths a:hover{color:var(--green);border-color:color-mix(in srgb,var(--green) 40%,var(--line));background:var(--green-3);transform:translateY(-1px)}
+.paths b{color:var(--text);font-weight:650}
+
+/* ---------- 关于本站 ---------- */
+.about{display:grid;grid-template-columns:1.3fr .95fr;gap:15px}
+.ab-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:19px 21px 17px;box-shadow:var(--sh)}
+.ab-card h3{margin:0 0 7px;font-size:14.5px;font-weight:700;letter-spacing:-.1px;display:flex;align-items:center;gap:7px}
+.ab-card h3 i{font-style:normal;font-size:15px;opacity:.9}
+.ab-card p{margin:0 0 13px;font-size:13.5px;color:var(--muted);line-height:1.74}
+.ab-card p:last-child{margin-bottom:0}
+.ab-card p b{color:var(--text);font-weight:650}
+.ab-list{list-style:none;margin:0;padding:0}
+.ab-list li{display:flex;gap:11px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13.1px;color:var(--muted);line-height:1.62}
+.ab-list li:last-child{border-bottom:0;padding-bottom:0}
+.ab-list li:first-child{padding-top:0}
+.ab-list time{flex:none;color:var(--green);font-weight:650;font-size:12.3px;font-variant-numeric:tabular-nums;padding-top:1px}
+
 @media (max-width:980px){
+  .about{grid-template-columns:1fr}
   .hero .wrap{grid-template-columns:1fr;gap:20px}
   .quick-g{grid-template-columns:repeat(auto-fit,minmax(74px,1fr))}
   .quick{padding:13px}
@@ -145,6 +176,11 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
   .cols{grid-template-columns:1fr;gap:16px}
   .topmeta{display:none}
 }
+@media (max-width:520px){
+  .topnav a[href="#about"]{display:none}
+  .brand{font-size:13px}
+  .paths a{font-size:12px;padding:5px 10px}
+}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
@@ -154,11 +190,12 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
 
 <div class="topbar">
   <div class="wrap">
-    <a class="brand" href="./"><i>🌱</i><span class="bf">符京雷 · 数字教学作品集</span><span class="bs">符京雷的作品集</span></a>
+    <a class="brand" href="./"><span class="mark" aria-hidden="true">符</span><span class="bf">符京雷 · 数字教学作品集</span><span class="bs">符京雷的作品集</span></a>
     <span class="topmeta">17 件作品 · 免登录 · 手机可用</span>
     <nav class="topnav">
       <a href="#works">专业成果</a>
       <a href="#learn">学生学件</a>
+      <a href="#about">关于本站</a>
       <button class="tbtn" id="themeBtn" title="切换深浅色" aria-label="切换深浅色">🌙</button>
     </nav>
   </div>
@@ -175,6 +212,11 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="stat"><b>4</b>件专业成果</div>
         <div class="stat"><b>13</b>件学生学件</div>
         <div class="stat"><b>免登录</b>直接打开</div>
+      </div>
+      <div class="paths">
+        <a href="#works">👩‍🏫 我是<b>老师</b>，要看方法</a>
+        <a href="#learn">🧑‍🎓 我是<b>学生</b>，直接开学件</a>
+        <a href="#about">🧭 <b>第一次</b>来，先看这里</a>
       </div>
     </div>
     <aside class="quick">
@@ -365,6 +407,32 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
     </div>
   </section>
 
+  <section id="about">
+    <div class="sechead">
+      <h2>关于本站</h2>
+      <span class="en">About</span>
+    </div>
+    <p class="secdesc">把客厅这一块看清了，就知道这是什么地方、人该往哪间屋子走。</p>
+    <div class="about">
+      <div class="ab-card">
+        <h3><i>🏠</i>这是什么地方</h3>
+        <p>不是作品展示墙，是<b>一个在职教师的教学资源库</b>。这里的每一件都在真实课堂里用过——能上课、能改、能直接发给学生，不是做完就搁着的样片。</p>
+        <p>全部免登录、无广告，电脑和平板都能开。单个学件就是一个 HTML 文件，存到 U 盘里断网也能跑，学校网络不稳时照样上课。</p>
+        <h3><i>🚪</i>怎么走</h3>
+        <p><b>老师</b>从「专业成果」进，拿走方法与模板；<b>学生</b>从「学生学件」进，点开即用。<b>投屏上课</b>时，任意学件左下角都挂着「← 作品集」，一点就回客厅，不用去按浏览器的后退键。</p>
+      </div>
+      <div class="ab-card">
+        <h3><i>🕘</i>最近更新</h3>
+        <ul class="ab-list">
+          <li><time>10-29</time><span>全部子页面加上「← 作品集」回流入口；首页补「关于本站」与「电脑第一课」入口</span></li>
+          <li><time>10-29</time><span>作品集站点正式上线，17 件作品收进同一个入口</span></li>
+          <li><time>10-28</time><span>首页改两栏版式，搜索框拉满整行，课堂常用区按打开次数自动排序</span></li>
+          <li><time>10-27</time><span>套壳学件清理为单文件版，断网也能用</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <div class="empty" id="empty">没有匹配的作品，换个词试试。</div>
 
 </main>
@@ -379,7 +447,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
       <div>
         <b>站内导航</b><br>
         <a href="#works">专业成果</a> · <a href="#learn">学生学件</a><br>
-        <a href="#top">回到顶部</a>
+        <a href="#about">关于本站</a> · <a href="#top">回到顶部</a>
       </div>
       <div>
         内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a><br>
