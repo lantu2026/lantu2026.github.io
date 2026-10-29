@@ -89,6 +89,18 @@ section{padding:26px 0 8px}
 }
 .card::after{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--green);opacity:0;transition:opacity .2s}
 .card:hover{transform:translateY(-3px);box-shadow:var(--sh-h);border-color:color-mix(in srgb,var(--green) 34%,var(--line))}
+
+/* 通栏特色卡（独立站点的完整课程） */
+.card.feat{grid-column:1/-1;flex-direction:row;align-items:center;gap:17px;padding:19px 21px 17px;
+  background:linear-gradient(180deg,var(--card),color-mix(in srgb,var(--green-3) 42%,var(--card)))}
+.card.feat .ic{height:50px;width:50px;border-radius:13px;font-size:24px;flex:none}
+.card.feat .feat-b{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1}
+.card.feat .feat-b h3{margin:0;font-size:17.5px}
+.card.feat .feat-b p{margin:0;flex:none}
+.card.feat .feat-b .tags{margin-top:2px}
+.card.feat .feat-b .slug{margin-top:1px}
+.card.feat .feat-g{flex:none;font-size:13px;font-weight:700;color:var(--green);
+  background:var(--green-3);border-radius:9px;padding:8px 15px;white-space:nowrap}
 .card:hover::after{opacity:1}
 .card .ic{font-size:22px;line-height:1;height:38px;width:38px;display:grid;place-items:center;background:var(--green-3);border-radius:11px}
 .card h3{margin:2px 0 0;font-size:16px;font-weight:700;letter-spacing:-.1px;line-height:1.4}
@@ -128,6 +140,8 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
   .quick-g{grid-template-columns:repeat(3,1fr)}
   .search{min-width:0;max-width:none}
   .stats .stat{padding:6px 10px;font-size:12px}
+  .card.feat{flex-direction:column;align-items:flex-start;gap:12px}
+  .card.feat .feat-g{align-self:stretch;text-align:center}
   .cols{grid-template-columns:1fr;gap:16px}
   .topmeta{display:none}
 }
@@ -141,7 +155,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
 <div class="topbar">
   <div class="wrap">
     <a class="brand" href="./"><i>🌱</i><span class="bf">符京雷 · 数字教学作品集</span><span class="bs">符京雷的作品集</span></a>
-    <span class="topmeta">16 件作品 · 免登录 · 手机可用</span>
+    <span class="topmeta">17 件作品 · 免登录 · 手机可用</span>
     <nav class="topnav">
       <a href="#works">专业成果</a>
       <a href="#learn">学生学件</a>
@@ -157,9 +171,9 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
       <h1>把课堂做成一页页<span>能用的网页</span></h1>
       <p class="lede">常州市新北区汤庄桥小学 · 信息科技教师 · 教师发展处。这里放的是真上过课的东西——能上课、能扫码、能给学生用的那种。</p>
       <div class="stats">
-        <div class="stat"><b>16</b>件作品</div>
+        <div class="stat"><b>17</b>件作品</div>
         <div class="stat"><b>4</b>件专业成果</div>
-        <div class="stat"><b>12</b>件学生学件</div>
+        <div class="stat"><b>13</b>件学生学件</div>
         <div class="stat"><b>免登录</b>直接打开</div>
       </div>
     </div>
@@ -173,7 +187,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <a href="learn/quiz/"><i>🎪</i><span>知识竞赛</span></a>
         <a href="learn/ai-literacy/"><i>📊</i><span>AI 测评</span></a>
       </div>
-      <p class="quick-t">点开即用，无需登录 · <a href="#learn">全部 12 件 →</a></p>
+      <p class="quick-t">点开即用，无需登录 · <a href="#learn">全部 13 件 →</a></p>
     </aside>
   </div>
 </header>
@@ -185,7 +199,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
       <span>🔍</span>
       <input type="search" id="q" placeholder="搜索作品：算法、测评、打字…" autocomplete="off">
     </div>
-    <div class="count" id="count">共 16 件</div>
+    <div class="count" id="count">共 17 件</div>
   </div>
 
   <section id="works">
@@ -236,7 +250,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
     <div class="sechead">
       <h2>学生学件</h2>
       <span class="en">Learn</span>
-      <span class="n">12</span>
+      <span class="n">13</span>
     </div>
     <p class="secdesc">给学生用的：单个学件即开即用，适配电脑和平板。所有学件不含学生姓名、学号、成绩等个人信息。</p>
     <div class="grid">
@@ -337,6 +351,17 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
         <div class="slug">learn/enumeration</div>
       </a>
 
+      <a class="card feat" href="https://lantu2026.github.io/diannao-diyike/" data-short="电脑第一课" data-k="电脑 第一课 开学 校本 课程 39课 独立站点 系列 讲义 教师版 扫码 鼠标 键盘 文件管理">
+        <div class="ic">💻</div>
+        <div class="feat-b">
+          <h3>电脑第一课 · 开学第一课</h3>
+          <p>39 课时的完整课程：从开机、鼠标键盘到文件管理，一整套开学衔接材料。讲义版、教师家长版、扫码入口齐全，独立站点常年在线。</p>
+          <div class="tags"><span>开学衔接</span><span>39 课时</span><span>独立站点</span></div>
+          <div class="slug">lantu2026.github.io/diannao-diyike</div>
+        </div>
+        <span class="feat-g">打开 →</span>
+      </a>
+
     </div>
   </section>
 
@@ -428,7 +453,7 @@ footer .note{margin-top:14px;font-size:12.4px;line-height:1.8;max-width:760px}
     if (quickH && quickG.parentNode) {
       quickH.textContent = '\u26a1 \u4f60\u6700\u5e38\u7528\u7684 \u00b7 \u81ea\u52a8\u6392\u5e8f';
       var t = quickG.parentNode.querySelector('.quick-t');
-      if (t) t.innerHTML = '\u6309\u672c\u673a\u6253\u5f00\u6b21\u6570\u6392\u5e8f \u00b7 <a href="#learn">\u5168\u90e8 12 \u4ef6 \u2192</a>';
+      if (t) t.innerHTML = '\u6309\u672c\u673a\u6253\u5f00\u6b21\u6570\u6392\u5e8f \u00b7 <a href="#learn">\u5168\u90e8 13 \u4ef6 \u2192</a>';
     }
   }
   buildQuick();
