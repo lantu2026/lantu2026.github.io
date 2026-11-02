@@ -28,6 +28,7 @@ learn/              学生学件（给学生用：即开即用）
   enumeration/        小智的采购任务 · 枚举算法
 docs/
   GitHub教学作品集搭建手记.md   全流程复盘（选型、踩坑、双向门、隐私红线）
+  客厅改版策划案.md             命名、标语、视觉系统与落地顺序（先想后做）
 tools/
   inject-home-link.py 批量注入「← 作品集」回流入口（幂等，可 --check / --revert）
 ```

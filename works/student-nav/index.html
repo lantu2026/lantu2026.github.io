@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汤小创意编程 · 学习资源导航 V2</title>
+<style>
+  :root{
+    --club:#FF8C1A; --plat:#4C97FF; --study:#9966FF; --refe:#59C059; --teach:#FF661A; --sound:#CF63CF;
+    --bg:#F2F6FB; --card:#FFFFFF; --ink:#2A3547; --sub:#6B7A90; --line:#E4EAF2;
+    --shadow:0 5px 16px rgba(42,63,110,.08); --shadow2:0 10px 24px rgba(42,63,110,.13);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55; min-height:100vh;
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(76,151,255,.10), transparent 30%),
+      radial-gradient(circle at 92% 6%, rgba(153,102,255,.10), transparent 26%),
+      radial-gradient(circle at 85% 92%, rgba(89,192,89,.07), transparent 28%);
+  }
+  .wrap{max-width:1140px; margin:0 auto; padding:0 16px;}
+  a{text-decoration:none; color:inherit;}
+
+  /* ===== 顶栏 ===== */
+  .topbar{display:flex; align-items:center; gap:12px; padding:14px 0 0;}
+  .logo-badge{
+    width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,#4C97FF,#9966FF);
+    display:flex; align-items:center; justify-content:center; font-size:22px; flex:none;
+    box-shadow:0 4px 10px rgba(76,120,255,.25);
+  }
+  .brand h1{font-size:18px; line-height:1.2;}
+  .brand small{font-size:12px; color:var(--sub);}
+  .brand .ver{
+    display:inline-block; margin-left:6px; font-size:10px; color:#fff; background:#CF63CF;
+    border-radius:999px; padding:1px 7px; vertical-align:2px; letter-spacing:.5px;
+  }
+  .top-notes{margin-left:auto; display:flex; align-items:center; gap:6px; font-size:12px; color:var(--sub);}
+  .dot{width:8px;height:8px;border-radius:50%;background:#59C059; box-shadow:0 0 0 4px rgba(89,192,89,.15);}
+
+  /* ===== Hero ===== */
+  .hero{
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:26px;
+    align-items:center; padding:30px 16px 18px;
+  }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#7B4FE0;
+    background:#F0EAFF; border:1px solid #E0D3FF; border-radius:999px; padding:3px 11px;
+  }
+  .hero h2{font-size:clamp(24px,3.4vw,34px); line-height:1.22; margin:12px 0 6px; letter-spacing:.5px;}
+  .hero h2 .grad{
+    background:linear-gradient(90deg,#3D86E0,#7B4FE0 55%,#E04FB0);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{color:var(--sub); font-size:14px; margin-bottom:14px;}
+  .steps{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px;}
+  .step{
+    display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--line);
+    border-radius:12px; padding:7px 11px; font-size:13px; box-shadow:var(--shadow);
+  }
+  .step b{color:var(--club);}
+  .step .mini-copy{
+    border:none; background:#EEF3F9; border-radius:7px; padding:2px 8px; font-size:12px;
+    color:var(--ink); cursor:pointer; font-family:inherit;
+  }
+  .step .mini-copy:hover{background:#E0EAF4;}
+
+  /* 右侧面板：搜索 + 高频入口 */
+  .launch{
+    background:#fff; border:1px solid var(--line); border-radius:20px; padding:16px;
+    box-shadow:var(--shadow); position:relative;
+  }
+  .launch::before{content:""; position:absolute; left:0; top:16px; bottom:16px; width:5px;
+    background:linear-gradient(180deg,#4C97FF,#9966FF,#FF8C1A); border-radius:0 4px 4px 0;}
+  .searchrow{display:flex; gap:8px;}
+  .searchbox{flex:1; position:relative;}
+  .searchbox .mag{position:absolute; left:13px; top:50%; transform:translateY(-50%); font-size:15px; pointer-events:none;}
+  .searchbox input{
+    width:100%; padding:11px 14px 11px 38px; border-radius:12px; border:2px solid var(--line);
+    font-size:14.5px; outline:none; background:#F7FAFD; color:var(--ink); transition:.2s;
+  }
+  .searchbox input:focus{border-color:var(--plat); background:#fff; box-shadow:0 0 0 4px rgba(76,151,255,.12);}
+  .reset-btn{
+    display:none; border:1px solid var(--line); background:#fff; border-radius:10px;
+    padding:0 12px; font-size:13px; color:var(--sub); cursor:pointer; white-space:nowrap;
+  }
+  .reset-btn.show{display:inline-flex; align-items:center;}
+  .reset-btn:hover{color:#E04FB0; border-color:#E0B7D9;}
+  .quick-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin-top:12px;}
+  .quick{
+    display:flex; align-items:center; gap:10px; background:#F7FAFD; border:1px solid var(--line);
+    border-radius:13px; padding:10px 12px; transition:.16s;
+  }
+  .quick:hover{transform:translateY(-2px); box-shadow:var(--shadow2);}
+  .quick .qi{width:34px; height:34px; border-radius:10px; color:#fff; display:flex;
+    align-items:center; justify-content:center; font-size:17px; flex:none;}
+  .quick .qt{font-size:13px; font-weight:700; line-height:1.25;}
+  .quick .qs{font-size:11px; color:var(--sub);}
+  .launch-hint{margin-top:11px; font-size:12px; color:var(--sub); text-align:center;}
+
+  /* ===== 控制条（粘性） ===== */
+  .toolbar{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    background:rgba(255,255,255,.9); backdrop-filter:blur(10px);
+    border:1px solid var(--line); border-radius:16px; padding:9px 12px;
+    /* 覆盖 .wrap 的 max-width/margin：让筛选条外框与内容栏(1140-32=1108px)精确对齐且始终居中 */
+    max-width:1108px; width:calc(100% - 32px);
+    margin:8px auto 4px; box-shadow:var(--shadow);
+    position:sticky; top:8px; z-index:40;
+  }
+  .chips{display:flex; gap:6px; flex-wrap:wrap;}
+  .chip{
+    border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 13px;
+    font-size:13px; cursor:pointer; color:var(--ink); transition:.15s; font-family:inherit;
+  }
+  .chip:hover{border-color:#B9C4D4;}
+  .chip.on{color:#fff; border-color:transparent; font-weight:700;}
+  .chip.on.cc-club{background:var(--club);} .chip.on.cc-plat{background:var(--plat);}
+  .chip.on.cc-study{background:var(--study);} .chip.on.cc-refe{background:var(--refe);}
+  .chip.on.cc-teach{background:var(--teach);} .chip.on.cc-all{background:#4A5A70;}
+  .bar-count{margin-left:auto; font-size:12px; color:var(--sub); white-space:nowrap;}
+  .bar-count b{color:var(--plat); font-size:14px;}
+
+  /* ===== 卡片网格 ===== */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(248px,1fr)); gap:12px; margin-top:14px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 14px 12px;
+    display:flex; flex-direction:column; gap:7px; box-shadow:var(--shadow); transition:.16s;
+    position:relative; overflow:hidden;
+  }
+  .card::before{content:""; position:absolute; left:0; top:0; width:100%; height:4px; background:var(--club);}
+  .card[data-cat="platform"]::before{background:var(--plat);}
+  .card[data-cat="study"]::before{background:var(--study);}
+  .card[data-cat="reference"]::before{background:var(--refe);}
+  .card[data-cat="teacher"]::before{background:var(--teach);}
+  .card:hover{transform:translateY(-3px); box-shadow:var(--shadow2);}
+  .card.hide{display:none;}
+  .c-head{display:flex; align-items:center; gap:9px;}
+  .c-ico{width:34px; height:34px; border-radius:10px; color:#fff; display:flex;
+    align-items:center; justify-content:center; font-size:17px; flex:none;}
+  .c-name{font-size:15px; font-weight:700; line-height:1.25;}
+  .c-tagline{font-size:11.5px; color:var(--sub);}
+  .c-desc{font-size:12.5px; color:var(--sub); flex:1;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+  .c-foot{display:flex; align-items:center; gap:6px; margin-top:2px;}
+  .pill{font-size:10.5px; padding:2px 8px; border-radius:999px; background:#EEF3F9; color:var(--sub); white-space:nowrap;}
+  .pill.star{background:#FFF4DE; color:#B9740B;}
+  .btn{
+    margin-left:auto; display:inline-flex; align-items:center; gap:3px; border:none;
+    border-radius:9px; padding:6px 11px; font-size:12.5px; font-weight:700; color:#fff;
+    cursor:pointer; transition:.15s; font-family:inherit; white-space:nowrap;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn.ghost{background:#EEF3F9; color:var(--ink);}
+  .btn.ghost:hover{background:#E0EAF4;}
+  .bg-club{background:var(--club);} .bg-plat{background:var(--plat);}
+  .bg-study{background:var(--study);} .bg-refe{background:var(--refe);} .bg-teach{background:var(--teach);}
+
+  /* 教师专区 */
+  details.teacher{
+    margin-top:26px; background:#fff; border:1px solid #F3D9D0; border-radius:16px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  details.teacher summary{
+    list-style:none; cursor:pointer; padding:12px 16px; display:flex; align-items:center; gap:10px;
+    font-size:15px; font-weight:700; user-select:none; background:#FFF9F6;
+  }
+  details.teacher summary::-webkit-details-marker{display:none;}
+  details.teacher summary .arrow{margin-left:auto; color:var(--sub); font-size:12px; transition:.2s;}
+  details.teacher[open] summary .arrow{transform:rotate(180deg);}
+  details.teacher .inner{padding:4px 16px 16px;}
+  details.teacher .inner>p{font-size:12.5px; color:var(--sub); margin-bottom:10px;}
+  details.teacher.noresult{display:none;}
+  details.teacher .grid{margin-top:0;}
+
+  .info-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:26px;
+  }
+  .info-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:15px 16px; box-shadow:var(--shadow);}
+  .info-card h3{font-size:14.5px; margin-bottom:9px; display:flex; align-items:center; gap:7px;}
+  .info-card ul{list-style:none; display:grid; gap:7px;}
+  .info-card li{font-size:12.5px; color:var(--sub); display:flex; gap:8px; align-items:flex-start;}
+  .info-card li::before{content:"·"; color:var(--plat); font-weight:900;}
+  .info-card .q{font-family:Consolas,monospace; font-size:20px; font-weight:700; color:var(--club); letter-spacing:1px;}
+
+  .empty-state{display:none; text-align:center; color:var(--sub); padding:38px 10px; font-size:14px;}
+  .empty-state .big{font-size:30px; display:block; margin-bottom:6px;}
+  footer{text-align:center; color:#A3B0C2; font-size:12px; padding:24px 16px 46px;}
+  footer b{color:#7B8DA3;}
+  #toast{
+    position:fixed; left:50%; bottom:30px; transform:translate(-50%,80px);
+    background:#22334D; color:#fff; padding:10px 20px; border-radius:999px; font-size:13.5px;
+    opacity:0; pointer-events:none; transition:.3s; z-index:99; box-shadow:0 10px 24px rgba(0,0,0,.25);
+    max-width:88vw; text-align:center;
+  }
+  #toast.show{opacity:1; transform:translate(-50%,0);}
+  #topbtn{
+    position:fixed; right:20px; bottom:24px; width:42px; height:42px; border-radius:50%; border:none;
+    background:var(--plat); color:#fff; font-size:18px; cursor:pointer;
+    box-shadow:0 8px 18px rgba(76,151,255,.4); opacity:0; pointer-events:none; transition:.25s; z-index:98;
+  }
+  #topbtn.show{opacity:1; pointer-events:auto;}
+
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr; gap:16px;}
+    .info-row{grid-template-columns:1fr;}
+    .top-notes{display:none;}
+  }
+  @media(max-width:520px){
+    .quick-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 顶栏 ===== -->
+<header class="wrap">
+  <div class="topbar">
+    <div class="logo-badge">🐱</div>
+    <div class="brand">
+      <h1>汤小创意编程 · 学习资源导航<span class="ver">V2</span></h1>
+      <small>资料一站式 · 学生/家长/老师通用</small>
+    </div>
+    <div class="top-notes"><span class="dot"></span>资源已核对 · 2026.09</div>
+  </div>
+</header>
+
+<!-- ===== Hero 开始区 ===== -->
+<section class="hero wrap">
+  <div>
+    <span class="hero-tag">✨ 新同学三步就能开始</span>
+    <h2>把编程学习，<br><span class="grad">装进一个清爽工具箱</span></h2>
+    <p class="hero-sub">上课写代码、考级刷真题、跟着视频学——想用哪个点哪个。</p>
+    <div class="steps">
+      <span class="step">1️⃣ 加 QQ 群 <b>291482623</b>
+        <button class="mini-copy" onclick="copyText('291482623',this)">复制群号</button>
+      </span>
+      <span class="step">2️⃣ <a href="#sec-goto" data-go="club">查账号 / 看名单</a></span>
+      <span class="step">3️⃣ <a href="#sec-goto" data-go="study">从重点开始学</a></span>
+    </div>
+  </div>
+
+  <div class="launch">
+    <div class="searchrow">
+      <div class="searchbox">
+        <span class="mag">🔎</span>
+        <input id="kw" type="text" placeholder="搜：考级、名单、坐标、Scratch、网盘…" autocomplete="off">
+      </div>
+      <button class="reset-btn" id="resetBtn" onclick="resetFilter()">✕ 重置</button>
+    </div>
+    <div class="quick-grid">
+      <a class="quick" href="https://scratch.focalhot.com/" target="_blank" rel="noopener">
+        <span class="qi bg-plat">🕹️</span><span><span class="qt">在线写代码</span><br><span class="qs">免安装 Scratch</span></span>
+      </a>
+      <a class="quick" href="https://lsgogroup.blog.csdn.net/" target="_blank" rel="noopener">
+        <span class="qi bg-study">📖</span><span><span class="qt">考级刷真题</span><br><span class="qs">青少年编程备考</span></span>
+      </a>
+      <a class="quick" href="https://haokan.baidu.com/author/1734768767361105" target="_blank" rel="noopener">
+        <span class="qi bg-study">📺</span><span><span class="qt">跟着视频学</span><br><span class="qs">好看视频微课</span></span>
+      </a>
+      <a class="quick" href="https://docs.qq.com/sheet/DUnJNeFFvQ050c3FZ?tab=BB08J2" target="_blank" rel="noopener">
+        <span class="qi bg-club">📋</span><span><span class="qt">名单 / 账号</span><br><span class="qs">点这里查</span></span>
+      </a>
+    </div>
+    <p class="launch-hint">👇 下方还有 17 个入口，可按分类筛选</p>
+  </div>
+</section>
+
+<!-- ===== 控制条 ===== -->
+<div class="toolbar wrap" id="sec-goto">
+  <div class="chips" role="tablist" aria-label="资源分类">
+    <button class="chip on cc-all" data-cat="all">全部</button>
+    <button class="chip cc-club" data-cat="club">🎒 入社资料</button>
+    <button class="chip cc-plat" data-cat="platform">💻 平台工具</button>
+    <button class="chip cc-study" data-cat="study">📚 学习备考</button>
+    <button class="chip cc-refe" data-cat="reference">🎮 参考案例</button>
+    <button class="chip cc-teach" data-cat="teacher">🧑‍🏫 教师专用</button>
+  </div>
+  <span class="bar-count">共 <b id="countNum">17</b> 个入口</span>
+</div>
+
+<main class="wrap">
+  <div class="empty-state" id="emptyMsg"><span class="big">🤔</span>没有找到匹配的入口，换个关键词或分类试试？</div>
+
+  <div class="grid" id="grid">
+
+    <!-- ═══════ 入社资料 ═══════ -->
+    <article class="card" data-cat="club" data-tags="qq 群 三人行 加入 群号 291482623 入社">
+      <div class="c-head">
+        <span class="c-ico bg-club">💬</span>
+        <span><span class="c-name">三人行易学习 QQ 群</span><br><span class="c-tagline">答疑 · 通知 · 课后小任务</span></span>
+      </div>
+      <p class="c-desc">申请入群请备注「班级+姓名」，如：61汤小智。交流都在群里进行。</p>
+      <div class="c-foot">
+        <span class="pill">入社必加</span>
+        <button class="btn ghost" onclick="copyText('61汤小智',this)">📋 备注示例</button>
+        <button class="btn bg-club" onclick="copyText('291482623',this)">复制群号</button>
+      </div>
+    </article>
+
+    <article class="card" data-cat="club" data-tags="名单 学生名单 表格 腾讯文档 202609">
+      <div class="c-head">
+        <span class="c-ico bg-club">📋</span>
+        <span><span class="c-name">创意编程学生名单</span><br><span class="c-tagline">2026.09 · 仅提供入口</span></span>
+      </div>
+      <p class="c-desc">在线表格查看本期成员。本页不复制名单内容，保护同学信息。</p>
+      <div class="c-foot">
+        <span class="pill">QQ/微信授权</span>
+        <a class="btn bg-club" href="https://docs.qq.com/sheet/DUnJNeFFvQ050c3FZ?tab=BB08J2" target="_blank" rel="noopener">打开名单 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="club" data-tags="账号 密码 查询 点猫 问卷 wjx 入社">
+      <div class="c-head">
+        <span class="c-ico bg-club">🔑</span>
+        <span><span class="c-name">编程账号查询</span><br><span class="c-tagline">点猫等平台账号自助查</span></span>
+      </div>
+      <p class="c-desc">忘记平台账号/密码？输入报名信息即可自助查询。</p>
+      <div class="c-foot">
+        <span class="pill">问卷星</span>
+        <a class="btn bg-club" href="https://www.wjx.cn/resultquery.aspx?activity=260283473" target="_blank" rel="noopener">去查询 ↗</a>
+      </div>
+    </article>
+
+    <!-- ═══════ 平台工具 ═══════ -->
+    <article class="card" data-cat="platform" data-tags="scratch 在线 编辑器 浏览器 写代码 focalhot">
+      <div class="c-head">
+        <span class="c-ico bg-plat">🕹️</span>
+        <span><span class="c-name">在线 Scratch 编辑器</span><br><span class="c-tagline">免安装 · 即开即用</span></span>
+      </div>
+      <p class="c-desc">浏览器直接创作，家里、机房都能用，作品可保存到本地。</p>
+      <div class="c-foot">
+        <span class="pill">⭐ 高频</span>
+        <a class="btn bg-plat" href="https://scratch.focalhot.com/" target="_blank" rel="noopener">开始创作 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="platform" data-tags="点猫 校园 编程猫 codemao 登录">
+      <div class="c-head">
+        <span class="c-ico bg-plat">🐱‍👤</span>
+        <span><span class="c-name">点猫校园编程平台</span><br><span class="c-tagline">学校统一使用</span></span>
+      </div>
+      <p class="c-desc">社团课作品与作业在此提交，账号密码请先走「账号查询」。</p>
+      <div class="c-foot">
+        <span class="pill">校园版</span>
+        <a class="btn bg-plat" href="https://edu.codemao.cn/login" target="_blank" rel="noopener">平台登录 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="platform" data-tags="happycoding 下载 客户端 exe 软件">
+      <div class="c-head">
+        <span class="c-ico bg-plat">📦</span>
+        <span><span class="c-name">HappyCoding 客户端</span><br><span class="c-tagline">桌面端 · Windows</span></span>
+      </div>
+      <p class="c-desc">与省市区赛同源的客户端，参赛同学建议安装多练。</p>
+      <div class="c-foot">
+        <span class="pill">需安装</span>
+        <a class="btn bg-plat" href="https://document-download.oss-cn-shanghai.aliyuncs.com/HappyCoding.exe" target="_blank" rel="noopener">⬇ 下载</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="platform" data-tags="江苏 省平台 信息科技 课程 jsitedu jsitl">
+      <div class="c-head">
+        <span class="c-ico bg-plat">🏫</span>
+        <span><span class="c-name">江苏信息科技课程平台</span><br><span class="c-tagline">新地址 jsitedu.cn</span></span>
+      </div>
+      <p class="c-desc">省平台已启用新地址，旧站 jsitl.com 已下线，请勿再访问旧链接。</p>
+      <div class="c-foot">
+        <span class="pill">省平台</span>
+        <a class="btn bg-plat" href="https://www.jsitedu.cn/" target="_blank" rel="noopener">进入新平台 ↗</a>
+      </div>
+    </article>
+
+    <!-- ═══════ 学习备考 ═══════ -->
+    <article class="card" data-cat="study" data-tags="青少年编程备考 考级 真题 等级考试 csdn lsgogroup 解析">
+      <div class="c-head">
+        <span class="c-ico bg-study">📖</span>
+        <span><span class="c-name">青少年编程备考</span><br><span class="c-tagline">真题 + 解析 + 案例</span></span>
+      </div>
+      <p class="c-desc">电子学会图形化等级考试必刷专栏，持续更新，紧跟考纲。</p>
+      <div class="c-foot">
+        <span class="pill star">⭐ 重点推荐</span>
+        <a class="btn bg-study" href="https://lsgogroup.blog.csdn.net/" target="_blank" rel="noopener">去刷真题 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="study" data-tags="跟着老师学编程 视频 微课 好看视频 案例">
+      <div class="c-head">
+        <span class="c-ico bg-study">📺</span>
+        <span><span class="c-name">跟着老师学编程</span><br><span class="c-tagline">短视频微案例课</span></span>
+      </div>
+      <p class="c-desc">垃圾分类、排序算法、鸡兔同笼、飞机大战……几分钟学会一个小项目。</p>
+      <div class="c-foot">
+        <span class="pill star">⭐ 重点推荐</span>
+        <a class="btn bg-study" href="https://haokan.baidu.com/author/1734768767361105" target="_blank" rel="noopener">看视频课 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="study" data-tags="问小白 AI 人工智能 助手 提问 wenxiaobai">
+      <div class="c-head">
+        <span class="c-ico bg-study">🤖</span>
+        <span><span class="c-name">问小白 AI 助手</span><br><span class="c-tagline">学会提问 AI</span></span>
+      </div>
+      <p class="c-desc">卡壳了？把想法告诉它，帮你拆思路、找 bug——提问是未来必备技能。</p>
+      <div class="c-foot">
+        <span class="pill">学习辅助</span>
+        <a class="btn bg-study" href="https://www.wenxiaobai.com/" target="_blank" rel="noopener">问问小白 ↗</a>
+      </div>
+    </article>
+
+    <!-- ═══════ 参考案例 ═══════ -->
+    <article class="card" data-cat="reference" data-tags="绿化城市 案例 素材下载 知乎 scratch 环保">
+      <div class="c-head">
+        <span class="c-ico bg-refe">🌳</span>
+        <span><span class="c-name">绿化城市 · 完整案例</span><br><span class="c-tagline">探究型学习 · 含素材</span></span>
+      </div>
+      <p class="c-desc">经典 Scratch 案例，附素材下载，可照做再改造。</p>
+      <div class="c-foot">
+        <span class="pill">案例</span>
+        <a class="btn bg-refe" href="https://zhuanlan.zhihu.com/p/358983294" target="_blank" rel="noopener">查看案例 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="reference" data-tags="小镇一日游 案例 scratch 青少年编程">
+      <div class="c-head">
+        <span class="c-ico bg-refe">🏘️</span>
+        <span><span class="c-name">小镇一日游</span><br><span class="c-tagline">生活场景变编程故事</span></span>
+      </div>
+      <p class="c-desc">趣味生活化项目，适合场景类作品的灵感参考。</p>
+      <div class="c-foot">
+        <span class="pill">案例</span>
+        <a class="btn bg-refe" href="https://lsgogroup.blog.csdn.net/article/details/119743760" target="_blank" rel="noopener">查看案例 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="reference" data-tags="浦育 openinnolab AI 开放 实验室 课程">
+      <div class="c-head">
+        <span class="c-ico bg-refe">🌐</span>
+        <span><span class="c-name">浦育 OpenInnoLab</span><br><span class="c-tagline">青少年 AI 开放实验室</span></span>
+      </div>
+      <p class="c-desc">免费课程与项目，适合学有余力的同学探索 AI 方向。</p>
+      <div class="c-foot">
+        <span class="pill">进阶</span>
+        <a class="btn bg-refe" href="https://www.openinnolab.org.cn/pjedu/home" target="_blank" rel="noopener">去探索 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="reference" data-tags="虎课 huke88 scratch 视频教程 课程">
+      <div class="c-head">
+        <span class="c-ico bg-refe">🎬</span>
+        <span><span class="c-name">虎课网 · Scratch 课程</span><br><span class="c-tagline">海量视频教程</span></span>
+      </div>
+      <p class="c-desc">按专题、分难度的 Scratch 视频教程，课后按需补课。</p>
+      <div class="c-foot">
+        <span class="pill">视频</span>
+        <a class="btn bg-refe" href="https://huke88.com/search/video?keyWorld=scratch" target="_blank" rel="noopener">找教程 ↗</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="reference" data-tags="创氪 编程学院 csdn 博客 进阶 阅读">
+      <div class="c-head">
+        <span class="c-ico bg-refe">⚡</span>
+        <span><span class="c-name">创氪编程学院</span><br><span class="c-tagline">CSDN 编程教学博客</span></span>
+      </div>
+      <p class="c-desc">持续更新的 Scratch 与算法案例，适合进阶阅读。</p>
+      <div class="c-foot">
+        <span class="pill">进阶</span>
+        <a class="btn bg-refe" href="https://blog.csdn.net/m0_72914941?type=blog" target="_blank" rel="noopener">读博客 ↗</a>
+      </div>
+    </article>
+  </div>
+
+  <!-- ═══════ 教师专区 ═══════ -->
+  <details class="teacher" id="sec-teacher">
+    <summary>🔒 教师专区<span class="arrow">▼</span></summary>
+    <div class="inner">
+      <p>以下入口供老师管理社团使用，含管理后台与资料网盘，请勿转发给学生或家长。</p>
+      <div class="grid">
+        <article class="card" data-cat="teacher" data-tags="教师管理 后台 kechuangweilai 管理平台">
+          <div class="c-head">
+            <span class="c-ico bg-teach">🛠️</span>
+            <span><span class="c-name">创意编程教师管理平台</span><br><span class="c-tagline">赛事/社团后台</span></span>
+          </div>
+          <p class="c-desc">查看学生账号、作品与进度（需教师账号登录）。</p>
+          <div class="c-foot">
+            <span class="pill">教师端</span>
+            <a class="btn bg-teach" href="https://teacher.kechuangweilai.com/#/login?redirect=%2Fuser%2Findex" target="_blank" rel="noopener">进入后台 ↗</a>
+          </div>
+        </article>
+
+        <article class="card" data-cat="teacher" data-tags="网盘 百度网盘 资料 素材 提取码 ebi2">
+          <div class="c-head">
+            <span class="c-ico bg-teach">☁️</span>
+            <span><span class="c-name">社团资料网盘</span><br><span class="c-tagline">课件 · 素材备份</span></span>
+          </div>
+          <p class="c-desc">打开百度网盘后输入提取码即可下载。</p>
+          <div class="c-foot">
+            <span class="pill">提取码 ebi2</span>
+            <button class="btn ghost" onclick="copyText('ebi2',this)">复制码</button>
+            <a class="btn bg-teach" href="https://pan.baidu.com/s/1HBHiHc037JWOG4UV4yroMQ" target="_blank" rel="noopener">打开网盘 ↗</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </details>
+
+  <!-- ═══════ 使用提示 ═══════ -->
+  <div class="info-row">
+    <div class="info-card">
+      <h3>💬 三人行易学习 QQ 群</h3>
+      <p style="font-size:12.5px;color:var(--sub);">用于课程通知、学习交流与资料提醒，申请时备注「班级+姓名」。</p>
+      <p style="margin-top:8px;">群号：<span class="q">291482623</span>
+        <button class="btn ghost" style="margin-left:6px;" onclick="copyText('291482623',this)">复制</button>
+      </p>
+    </div>
+    <div class="info-card">
+      <h3>📌 使用前请留意</h3>
+      <ul>
+        <li>外链网站需登录/验证的，以对方页面实际状态为准。</li>
+        <li>学生名单页只提供访问入口，本页不复制、不展示名单内容。</li>
+        <li>下载软件或打开平台前，请先确认设备与账号权限。</li>
+        <li>教师专区内容请勿转发给学生（建议直接发「学生版」链接）。</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  🐱 <b>汤小创意编程 · 学习资源导航 V2</b> &nbsp;|&nbsp; 建议 Chrome / Edge &nbsp;|&nbsp; 2026.09 核对<br>
+  外链版权归原作者所有 · 请合理使用、文明上网
+</footer>
+
+<div id="toast"></div>
+<button id="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ---------- 工具 ----------
+  var toastTimer = null;
+  function showToast(msg){
+    var el = document.getElementById('toast');
+    el.textContent = msg; el.classList.add('show');
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2000);
+  }
+  function copyText(txt, btn){
+    var done = function(){
+      showToast('✅ 已复制：' + txt);
+      if(btn){ var old = btn.textContent; btn.textContent = '已复制 ✓';
+        setTimeout(function(){ btn.textContent = old; }, 1500); }
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ legacyCopy(txt, done); });
+    } else { legacyCopy(txt, done); }
+  }
+  function legacyCopy(txt, done){
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){ showToast('复制失败，请手动复制'); }
+    document.body.removeChild(ta);
+  }
+
+  // ---------- 状态 ----------
+  var stateCat = 'all';
+  var kwInput = document.getElementById('kw');
+  var resetBtn = document.getElementById('resetBtn');
+  var emptyMsg = document.getElementById('emptyMsg');
+  var teaSec = document.getElementById('sec-teacher');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+
+  // ---------- 渲染 ----------
+  function render(){
+    var q = kwInput.value.trim().toLowerCase();
+    var cards = document.querySelectorAll('.card');
+    var visible = 0;
+    for(var i = 0; i < cards.length; i++){
+      var c = cards[i];
+      var catOk = stateCat === 'all' || c.getAttribute('data-cat') === stateCat;
+      var hay = (c.getAttribute('data-tags') || '') + ' ' + c.textContent;
+      var qOk = q === '' || hay.toLowerCase().indexOf(q) > -1;
+      var show = catOk && qOk;
+      c.classList.toggle('hide', !show);
+      if(show) visible++;
+    }
+    document.getElementById('countNum').textContent = visible;
+    emptyMsg.style.display = visible === 0 ? 'block' : 'none';
+    resetBtn.classList.toggle('show', q !== '' || stateCat !== 'all');
+
+    // 教师专区联动
+    var teaCards = teaSec.querySelectorAll('.card');
+    var teaAny = false;
+    for(var t = 0; t < teaCards.length; t++){
+      if(!teaCards[t].classList.contains('hide')){ teaAny = true; break; }
+    }
+    var showTea = stateCat === 'all' || stateCat === 'teacher';
+    teaSec.classList.toggle('noresult', !(showTea && (q === '' || teaAny)));
+    if(stateCat === 'teacher' || (q !== '' && teaAny)){ teaSec.setAttribute('open','open'); }
+    else if(q === ''){ teaSec.removeAttribute('open'); }
+  }
+
+  // ---------- 事件 ----------
+  kwInput.addEventListener('input', render);
+  kwInput.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); render(); } });
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      stateCat = chip.getAttribute('data-cat');
+      chips.forEach(function(x){ x.classList.toggle('on', x === chip); });
+      render();
+      if(stateCat === 'teacher'){
+        teaSec.scrollIntoView({behavior:'smooth', block:'start'});
+      } else {
+        document.getElementById('sec-goto').scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+  // Hero 里的引导步骤跳分类
+  var goLinks = document.querySelectorAll('[data-go]');
+  goLinks.forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var cat = a.getAttribute('data-go');
+      var target = chips.filter(function(x){ return x.getAttribute('data-cat') === cat; })[0];
+      if(target) target.click();
+      ev.preventDefault();
+    });
+  });
+  function resetFilter(){
+    kwInput.value = '';
+    stateCat = 'all';
+    chips.forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-cat') === 'all'); });
+    render();
+    kwInput.focus();
+  }
+
+  // ---------- 返回顶部 ----------
+  var topbtn = document.getElementById('topbtn');
+  window.addEventListener('scroll', function(){
+    topbtn.classList.toggle('show', window.scrollY > 360);
+  });
+
+  // 初始
+  render();
+</script>
+<!-- pf-home:start -->
+<a id="pf-home" href="../../" aria-label="返回符京雷数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
+<style>
+#pf-home{position:fixed;left:14px;bottom:14px;z-index:2147483000;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 13px 0 11px;border-radius:16px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);border:1px solid rgba(15,23,42,.13);box-shadow:0 2px 12px rgba(15,23,42,.15);color:#1e293b!important;font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif!important;text-decoration:none!important;letter-spacing:.02em;opacity:.9;transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+#pf-home:hover,#pf-home:focus-visible{opacity:1;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.22);transform:translateY(-1px);outline:none}
+#pf-home .pf-ar{font-size:14px;line-height:1;opacity:.65}
+@media (hover:none){#pf-home{opacity:.95}}
+@media (max-width:520px){#pf-home{opacity:.95;height:30px;padding:0 11px;font-size:12px}}
+@media print{#pf-home{display:none!important}}
+</style>
+<script>
+(function(){try{
+  if(window.__pfHome)return;window.__pfHome=1;
+  document.addEventListener('keydown',function(e){
+    if(e.altKey&&e.key==='ArrowLeft'&&!e.ctrlKey&&!e.metaKey){
+      var a=document.getElementById('pf-home');if(a){e.preventDefault();location.href=a.getAttribute('href');}
+    }
+  });
+}catch(e){}})();
+</script>
+<!-- pf-home:end -->
+</body>
+</html>
