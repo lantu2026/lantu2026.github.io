@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教师数字化手册 v1.2 · 基于 WorkBuddy</title>
+<style>
+:root{
+  --ink:#111c2b; --ink2:#2b3c50; --muted:#6a7b8f; --line:#e3ecf6;
+  --bg:#f2f6fb; --card:#ffffff;
+  --brand:#1a6dff; --brand-d:#0d4fd1; --brand-l:#e8f1ff;
+  --green:#00a97f; --green-l:#e6faf3;
+  --amber:#e08c0b; --amber-l:#fff6e5;
+  --red:#e0484d;
+  --side:#0e1a2a; --side2:#16273c;
+  --r:14px;
+  --sh:0 1px 2px rgba(16,35,60,.05), 0 10px 28px rgba(16,35,60,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:15px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+
+/* ============ 顶栏 ============ */
+.topbar{
+  position:sticky; top:0; z-index:50; height:60px;
+  background:rgba(255,255,255,.88); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:18px; padding:0 22px;
+}
+.brand{display:flex; align-items:center; gap:11px; flex-shrink:0}
+.brand .mark{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#1a6dff,#00a97f);
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;
+  box-shadow:0 4px 12px rgba(26,109,255,.28);
+}
+.brand h1{font-size:15.5px;font-weight:700;letter-spacing:.2px;line-height:1.25}
+.brand .sub{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.4px}
+.searchbox{
+  flex:1; max-width:520px; position:relative;
+}
+.searchbox input{
+  width:100%; height:38px; border-radius:10px; border:1px solid var(--line);
+  background:#f7fafd; padding:0 14px 0 38px; font-size:13.5px; color:var(--ink);
+  outline:none; transition:.18s;
+}
+.searchbox input:focus{border-color:#9fc4ff;background:#fff;box-shadow:0 0 0 3px rgba(26,109,255,.09)}
+.searchbox .ico{position:absolute;left:13px;top:9px;color:#9aabbd;font-size:15px}
+.searchbox kbd{
+  position:absolute;right:9px;top:9px;font-size:10.5px;color:#9aabbd;
+  border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:#fff;
+}
+.topstat{margin-left:auto;display:flex;gap:16px;font-size:12px;color:var(--muted);flex-shrink:0}
+.topstat b{color:var(--ink);font-weight:700;font-size:13px}
+
+/* ============ 布局 ============ */
+.shell{display:flex; align-items:flex-start; min-height:calc(100vh - 60px)}
+
+/* ============ 侧栏 ============ */
+.side{
+  width:236px; flex-shrink:0; position:sticky; top:60px;
+  height:calc(100vh - 60px); overflow-y:auto;
+  background:var(--side); padding:18px 12px 40px;
+}
+.side::-webkit-scrollbar{width:5px}
+.side::-webkit-scrollbar-thumb{background:#2c3f57;border-radius:3px}
+.sgroup{margin-bottom:16px}
+.sgroup .gt{
+  font-size:13px; letter-spacing:1.2px; color:#7e97b5; font-weight:700;
+  padding:4px 12px 7px; text-transform:uppercase;
+  cursor:pointer; display:flex; align-items:center; user-select:none; border-radius:6px;
+}
+.sgroup .gt:hover{color:#9dbcdb}
+.sgroup .gt .arw{margin-left:auto; font-size:9px; color:#4c6a8c; transition:.2s}
+.sgroup.closed .gt .arw{transform:rotate(-90deg)}
+.sgroup.closed .navitem{display:none}
+.navitem{
+  display:flex; align-items:center; gap:9px; padding:8px 12px; border-radius:8px;
+  color:#b9cbe0; font-size:13.2px; transition:.15s; cursor:pointer; width:100%;
+  text-align:left; line-height:1.4;
+}
+.navitem:hover{background:rgba(255,255,255,.06); color:#fff}
+.navitem.on{background:linear-gradient(90deg,rgba(26,109,255,.32),rgba(26,109,255,.10)); color:#fff; font-weight:600}
+.navitem.on .em{filter:drop-shadow(0 0 6px rgba(90,160,255,.7))}
+.navitem .em{font-size:14.5px;width:18px;flex-shrink:0;text-align:center}
+.navitem .cnt{margin-left:auto;font-size:10.5px;color:#6a86a6;background:rgba(255,255,255,.05);padding:1px 6px;border-radius:20px}
+.menubtn{
+  display:none; align-items:center; justify-content:center;
+  width:34px; height:34px; border-radius:8px; border:1px solid var(--line);
+  background:var(--card); cursor:pointer; font-size:16px; color:var(--ink2); flex-shrink:0;
+}
+.menubtn:hover{border-color:#bcd4f6}
+.navitem .done{margin-left:auto;font-size:11px;color:#4fd6a8}
+
+/* ============ 主区 ============ */
+.main{flex:1; min-width:0; padding:26px 30px 70px; max-width:1180px}
+.crumb{font-size:12px;color:var(--muted);margin-bottom:12px;display:flex;gap:6px;align-items:center}
+.crumb b{color:var(--ink2);font-weight:600}
+
+/* 首页 hero */
+.hero{
+  background:linear-gradient(135deg,#0f2547 0%,#123a63 55%,#0d5a52 100%);
+  border-radius:18px; padding:34px 36px 30px; color:#fff; position:relative; overflow:hidden;
+  box-shadow:0 14px 40px rgba(13,38,70,.22);
+  display:flex; align-items:center; gap:34px;
+}
+.hero .hl{flex:1; min-width:0; position:relative}
+.hero::after{
+  content:""; position:absolute; right:-70px; top:-90px; width:320px; height:320px;
+  background:radial-gradient(circle,rgba(0,220,170,.22),transparent 62%);
+  pointer-events:none;
+}
+.hero::before{
+  content:""; position:absolute; left:-40px; bottom:-110px; width:280px; height:280px;
+  background:radial-gradient(circle,rgba(60,140,255,.20),transparent 65%);
+  pointer-events:none;
+}
+.hero .tag{
+  display:inline-block; font-size:11.5px; letter-spacing:1.2px;
+  background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+  padding:4px 12px; border-radius:20px; margin-bottom:14px; position:relative;
+}
+.hero h2{font-size:26px; font-weight:800; line-height:1.45; letter-spacing:.4px; position:relative; max-width:720px}
+.hero h2 em{font-style:normal;color:#5ff0c4}
+.hero p{margin-top:11px;font-size:14px;color:#c3d7ec;max-width:660px;position:relative;line-height:1.75}
+.hero .nums{display:flex;gap:34px;margin-top:22px;position:relative}
+.hero .nums div{font-size:12px;color:#8fb0d0}
+.hero .nums b{display:block;font-size:24px;color:#fff;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.hero .nums b span{font-size:13px;font-weight:500;color:#8fb0d0;margin-left:2px}
+.hero .hq{
+  flex-shrink:0; width:268px; position:relative;
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.17);
+  border-radius:14px; padding:17px 16px 12px; backdrop-filter:blur(4px);
+}
+.hero .hq .hqt{font-size:13px;font-weight:700;letter-spacing:.4px}
+.hero .hq .hqs{font-size:11px;color:#a9c4de;margin:3px 0 12px}
+.hero .hq button{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.13);
+  border-radius:9px; padding:9px 12px; margin-bottom:7px; color:#eaf3fd;
+  font-size:12.8px; cursor:pointer; transition:.15s;
+}
+.hero .hq button:hover{background:rgba(255,255,255,.22); transform:translateX(3px)}
+.hero .hq button .em{font-size:14px}
+.hero .hq button .go{margin-left:auto;font-size:11.5px;color:#7ee8c4;opacity:0;transition:.15s}
+.hero .hq button:hover .go{opacity:1}
+
+/* 区块标题 */
+.sect{display:flex;align-items:baseline;gap:12px;margin:30px 0 15px}
+.sect h3{font-size:16.5px;font-weight:700;letter-spacing:.3px}
+.sect .hint{font-size:12.5px;color:var(--muted)}
+
+/* 场景卡 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+  padding:17px 18px 15px; cursor:pointer; transition:.2s; position:relative;
+  box-shadow:0 1px 2px rgba(16,35,60,.03);
+}
+.card:hover{transform:translateY(-3px);border-color:#bcd4f6;box-shadow:var(--sh)}
+.card .ci{font-size:20px;line-height:1;margin-bottom:9px;display:block}
+.card h4{font-size:15px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.card .pain{font-size:12.8px;color:var(--muted);line-height:1.6;min-height:42px}
+.card .meta{
+  display:flex;align-items:center;gap:8px;margin-top:11px;padding-top:10px;
+  border-top:1px dashed var(--line);font-size:11.5px;color:#8fa2b6;
+}
+.card .meta .n{color:var(--brand);font-weight:600}
+.card .ok{position:absolute;top:14px;right:14px;font-size:11px;color:var(--green);opacity:0;transition:.2s}
+.card.done .ok{opacity:1}
+
+/* ============ 场景页 ============ */
+.scene-head{margin-bottom:22px}
+.scene-head .gp{
+  display:inline-block;font-size:11px;letter-spacing:1px;color:var(--brand);
+  background:var(--brand-l);padding:3px 10px;border-radius:5px;margin-bottom:11px;font-weight:600;
+}
+.scene-head h2{font-size:27px;font-weight:800;letter-spacing:.3px;display:flex;align-items:center;gap:12px}
+.scene-head .pain{
+  margin-top:10px;font-size:15.5px;color:var(--ink2);line-height:1.75;
+  border-left:3px solid #cfe0f7;padding-left:14px;max-width:820px;
+}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 6px}
+.fact{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.fact .k{font-size:11px;color:var(--muted);letter-spacing:.8px;margin-bottom:4px}
+.fact .v{font-size:13.8px;font-weight:600;line-height:1.55;color:var(--ink2)}
+.fact.good .v{color:#0a8a68}
+
+.cmdwrap{margin-top:22px}
+.cmd{
+  background:#0e1a2a; border-radius:12px; overflow:hidden; margin-bottom:13px;
+  box-shadow:0 6px 18px rgba(12,26,45,.13);
+}
+.cmd-h{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 15px; background:rgba(255,255,255,.045);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.cmd-t{color:#8fb4d8;font-size:12.5px;font-weight:600;letter-spacing:.4px;display:flex;align-items:center;gap:7px}
+.cmd-t .idx{
+  background:rgba(95,240,196,.16);color:#5ff0c4;font-size:10.5px;font-weight:700;
+  padding:1px 6px;border-radius:4px;letter-spacing:0;
+}
+.copy{
+  color:#8fb4d8;font-size:11.5px;border:1px solid rgba(255,255,255,.18);
+  padding:4px 11px;border-radius:6px;transition:.16s;flex-shrink:0;
+}
+.copy:hover{background:rgba(95,240,196,.14);border-color:rgba(95,240,196,.5);color:#5ff0c4}
+.copy.ok{background:#0d8f6b;border-color:#0d8f6b;color:#fff}
+.cmd-b{
+  padding:15px 17px; color:#dbe8f6; font-size:14px; line-height:1.9;
+  white-space:pre-wrap; word-break:break-word; font-family:inherit; margin:0;
+}
+
+.casebox{
+  margin-top:24px;background:linear-gradient(135deg,#f0fbf6,#eef7ff);
+  border:1px solid #cbebdd;border-radius:13px;padding:17px 19px;
+}
+.casebox .ct{font-size:12px;font-weight:700;color:#0a8a68;letter-spacing:.9px;margin-bottom:7px}
+.casebox p{font-size:13.8px;color:#23443c;line-height:1.8}
+
+.manual{margin-top:18px;font-size:12px;color:#93a5b8;display:flex;align-items:center;gap:8px}
+.manual b{color:#6a8099;font-weight:600}
+
+.pager{display:flex;justify-content:space-between;margin-top:34px;padding-top:18px;border-top:1px solid var(--line);gap:12px}
+.pager button{
+  font-size:13px;color:var(--ink2);border:1px solid var(--line);background:#fff;
+  padding:9px 15px;border-radius:9px;transition:.16s;max-width:48%;text-align:left;
+}
+.pager button:hover{border-color:#bcd4f6;background:#f7fbff}
+.pager .nx{margin-left:auto;text-align:right}
+
+/* 案例库 */
+.casecard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:19px 21px;margin-bottom:13px;transition:.2s}
+.casecard:hover{border-color:#bcd4f6;box-shadow:var(--sh)}
+.casecard .ch{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.casecard h4{font-size:16px;font-weight:700}
+.casecard .badge{font-size:10.5px;padding:2px 8px;border-radius:5px;background:var(--brand-l);color:var(--brand);font-weight:600}
+.casecard .desc{font-size:13.6px;color:var(--ink2);line-height:1.8}
+.casecard .res{display:flex;gap:22px;margin-top:12px;padding-top:11px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted)}
+.casecard .res b{color:#0a8a68;font-weight:700}
+
+/* 路径页 */
+.tl{position:relative;padding-left:30px}
+.tl::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(#1a6dff,#00a97f)}
+.tli{position:relative;margin-bottom:20px}
+.tli::before{
+  content:"";position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:50%;
+  background:#fff;border:3px solid var(--brand);
+}
+.tli .day{font-size:11.5px;font-weight:700;color:var(--brand);letter-spacing:1px}
+.tli h4{font-size:15.5px;font-weight:700;margin:2px 0 5px}
+.tli p{font-size:13.5px;color:var(--ink2);line-height:1.78}
+.tli .q{
+  margin-top:8px;background:#0e1a2a;color:#dbe8f6;border-radius:9px;
+  padding:11px 14px;font-size:13px;line-height:1.8;white-space:pre-wrap;position:relative;
+}
+
+.notebox{background:#fff;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:11px;padding:15px 18px;margin-bottom:12px}
+.notebox h4{font-size:14.5px;font-weight:700;margin-bottom:5px}
+.notebox p{font-size:13.4px;color:var(--ink2);line-height:1.78}
+
+/* 搜索结果 */
+.sres{background:#fff;border:1px solid var(--line);border-radius:11px;padding:14px 17px;margin-bottom:10px;cursor:pointer;transition:.16s}
+.sres:hover{border-color:#bcd4f6;background:#fbfdff}
+.sres .st{font-size:14.5px;font-weight:700;margin-bottom:3px;display:flex;gap:8px;align-items:center}
+.sres .sn{font-size:12.5px;color:var(--muted);line-height:1.6}
+.sres mark{background:#fff2c2;color:inherit;padding:0 2px;border-radius:2px}
+
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+.empty .big{font-size:36px;display:block;margin-bottom:12px;opacity:.5}
+
+@media(max-width:900px){
+  .menubtn{display:flex}
+  .side{
+    position:fixed; left:0; top:60px; bottom:0; z-index:60; width:248px;
+    transform:translateX(-102%); transition:transform .25s ease;
+    box-shadow:8px 0 30px rgba(10,25,50,.35);
+  }
+  .side.open{transform:none}
+  .scrim{display:none; position:fixed; inset:0; background:rgba(10,22,40,.45); z-index:55}
+  .scrim.on{display:block}
+  .main{padding:20px 16px 60px}
+  .hero{padding:26px 22px; flex-direction:column; align-items:stretch; gap:20px}
+  .hero .hq{width:auto}
+  .hero h2{font-size:21px}
+  .facts{grid-template-columns:1fr}
+  .topstat{display:none}
+  .searchbox{max-width:none}
+}
+@media print{
+  .side,.topbar,.pager,.copy{display:none}
+  .main{padding:0;max-width:none}
+  .cmd{break-inside:avoid}
+}
+
+/* ============ 界面风格主题 ============ */
+html[data-theme="dawn"]{
+  --side:#f2f6fb; --side2:#e7eef7; --bg:#eef3f9;
+}
+html[data-theme="dawn"] .side{border-right:1px solid var(--line)}
+html[data-theme="dawn"] .side::-webkit-scrollbar-thumb{background:#c7d6e8}
+html[data-theme="dawn"] .sgroup .gt{color:#7c92ab}
+html[data-theme="dawn"] .sgroup .gt:hover{color:#4a688c}
+html[data-theme="dawn"] .sgroup .gt .arw{color:#a8bcd2}
+html[data-theme="dawn"] .navitem{color:#42566d}
+html[data-theme="dawn"] .navitem:hover{background:rgba(26,109,255,.08); color:var(--ink)}
+html[data-theme="dawn"] .navitem.on{background:linear-gradient(90deg,rgba(26,109,255,.16),rgba(26,109,255,.05)); color:var(--brand-d)}
+html[data-theme="dawn"] .navitem.on .em{filter:none}
+html[data-theme="dawn"] .navitem .cnt{color:#8ba0b6;background:rgba(16,35,60,.06)}
+html[data-theme="dawn"] .hero{background:linear-gradient(135deg,#e8f1ff 0%,#dcebff 55%,#e0f5ef 100%); box-shadow:0 14px 40px rgba(26,109,255,.12)}
+html[data-theme="dawn"] .hero h2{color:var(--ink2)}
+html[data-theme="dawn"] .hero h2 em{color:var(--brand-d)}
+html[data-theme="dawn"] .hero p{color:#51678a}
+html[data-theme="dawn"] .hero .tag{background:rgba(26,109,255,.1);border-color:rgba(26,109,255,.28);color:var(--brand-d)}
+html[data-theme="dawn"] .hero .nums div{color:#6a83a8}
+html[data-theme="dawn"] .hero .nums b{color:var(--ink2)}
+html[data-theme="dawn"] .hero .nums b span{color:#6a83a8}
+html[data-theme="dawn"] .hero .hq{background:rgba(255,255,255,.78);border-color:rgba(26,109,255,.18)}
+html[data-theme="dawn"] .hero .hq .hqt{color:var(--ink2)}
+html[data-theme="dawn"] .hero .hq .hqs{color:#6a83a8}
+html[data-theme="dawn"] .hero .hq button{background:rgba(255,255,255,.92);border-color:rgba(26,109,255,.16);color:var(--ink2)}
+html[data-theme="dawn"] .hero .hq button:hover{background:#fff}
+html[data-theme="dawn"] .hero .hq button .go{color:var(--brand)}
+html[data-theme="dawn"] .hero::after{background:radial-gradient(circle,rgba(0,169,127,.15),transparent 62%)}
+html[data-theme="dawn"] .hero::before{background:radial-gradient(circle,rgba(26,109,255,.12),transparent 65%)}
+html[data-theme="sand"]{
+  --bg:#f6f1e7; --line:#e8dfcc; --card:#fffdf8;
+  --brand:#0e8a6d; --brand-d:#0a6a53; --brand-l:#e4f3ee;
+  --side:#262b20; --side2:#323827;
+}
+html[data-theme="sand"] .brand .mark{background:linear-gradient(135deg,#0e8a6d,#b98a2f); box-shadow:0 4px 12px rgba(14,138,109,.28)}
+html[data-theme="sand"] .navitem.on{background:linear-gradient(90deg,rgba(14,138,109,.38),rgba(14,138,109,.10))}
+html[data-theme="sand"] .navitem.on .em{filter:drop-shadow(0 0 6px rgba(80,200,160,.7))}
+html[data-theme="sand"] .hero{background:linear-gradient(135deg,#2e2a1c 0%,#4a4326 55%,#1f4a38 100%); box-shadow:0 14px 40px rgba(60,50,20,.25)}
+html[data-theme="sand"] .hero h2 em{color:#a8e6c1}
+html[data-theme="sand"] .hero .hq button .go{color:#a8e6c1}
+html[data-theme="sand"] .hero::after{background:radial-gradient(circle,rgba(185,138,47,.25),transparent 62%)}
+html[data-theme="sand"] .hero::before{background:radial-gradient(circle,rgba(14,138,109,.25),transparent 65%)}
+html[data-theme="sand"] .searchbox input:focus{border-color:#8fc7b5;box-shadow:0 0 0 3px rgba(14,138,109,.1)}
+
+/* 图解场景组件 */
+.viz{margin-top:22px}
+.viz-h{font-size:16px;font-weight:700;margin:4px 0 12px;color:var(--ink2)}
+.viz .fig{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:var(--sh)}
+.viz .fig svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12.8px;color:var(--ink2)}
+.legend b{color:var(--brand)}
+.dlrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+.dlbtn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:10px;box-shadow:0 6px 16px rgba(26,109,255,.22);transition:.15s}
+.dlbtn:hover{background:var(--brand-d);transform:translateY(-2px)}
+.dltag{font-size:12px;color:var(--ink2);border:1px solid var(--line);background:var(--card);padding:5px 11px;border-radius:20px}
+.faq3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+.faq{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.faq b{display:block;font-size:13.5px;margin-bottom:5px;color:var(--ink2)}
+.faq p{font-size:12.8px;color:var(--muted);line-height:1.7}
+.mcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:6px}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--sh)}
+.mcard .mi{font-size:22px}
+.mcard h4{font-size:15px;margin:6px 0 4px;color:var(--ink2)}
+.mcard .ms{font-size:11.5px;color:#fff;display:inline-block;padding:1px 9px;border-radius:12px;margin-bottom:8px}
+.mcard ul{list-style:none;margin-top:4px}
+.mcard li{font-size:12.8px;color:var(--ink2);line-height:1.85;padding-left:15px;position:relative}
+.mcard li::before{content:"·";position:absolute;left:2px;color:var(--brand);font-weight:800}
+.motto{margin-top:14px;background:linear-gradient(90deg,var(--brand-l),var(--green-l));border:1px solid var(--line);border-radius:12px;padding:13px 18px;font-size:14px;font-weight:700;color:var(--ink2);text-align:center;letter-spacing:.5px}
+.themebtn{
+  display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;flex-shrink:0;
+  border-radius:9px;border:1px solid var(--line);background:#fff;
+  font-size:12.5px;color:var(--ink2);transition:.15s;
+}
+.themebtn:hover{border-color:#bcd4f6}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="menubtn" id="menubtn" title="打开导航">☰</button>
+  <div class="brand">
+    <div class="mark">W</div>
+    <div>
+      <h1>教师数字化手册</h1>
+      <div class="sub">BASED ON WORKBUDDY · 拿来就用 · V1.2</div>
+    </div>
+  </div>
+  <div class="searchbox">
+    <span class="ico">🔍</span>
+    <input id="q" type="text" placeholder="搜场景或指令，比如：评语、出卷、错题集、值日">
+    <kbd>/</kbd>
+  </div>
+  <div class="topstat">
+    <div><b id="scNum">16</b> 个场景</div>
+    <div><b id="cmNum">48</b> 条指令</div>
+    <div><b id="okNum">0</b> 已试过</div>
+  </div>
+  <button class="themebtn" id="themebtn" title="切换界面风格（自动记住）">🎨 <span id="themeName">静夜蓝</span></button>
+</header>
+
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <main class="main" id="main"></main>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<script>
+/* ==================================================================
+   数据层：场景 / 指令 / 案例
+   ================================================================== */
+const GROUPS = [
+  { id:'xin',  name:'新手线', icon:'🌱' },
+  { id:'jiao', name:'教学线', icon:'📚' },
+  { id:'yu',   name:'育人线', icon:'🤝' },
+  { id:'cheng',name:'成长线', icon:'📈' },
+  { id:'tool', name:'工具线', icon:'🛠️' },
+  { id:'real', name:'实战',   icon:'🎯' }
+];
+
+const SCENES = [
+  {
+    id:'az', g:'xin', icon:'📦', name:'下载与安装',
+    pain:'听说好用想装一个，结果去哪下、装哪个版本、装完怎么登录，全是问号。',
+    gain:'五分钟装好登录，第一次打开就知道去哪点',
+    deliv:['桌面客户端', '手机 App', '登录成功'],
+    manual:'手册 1 章 · p13—16',
+    cmds:[],
+    visual:`
+    <div class="viz">
+      <div class="viz-h">📥 三步装好，跟着图走</div>
+      <div class="fig"><svg viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arw" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9ab4d0"/></marker>
+        </defs>
+        <rect x="20" y="28" width="240" height="124" rx="12" fill="#f0f6ff" stroke="#bcd4f6"/>
+        <text x="140" y="66" font-size="26" text-anchor="middle">📥</text>
+        <text x="140" y="95" font-size="15" font-weight="700" text-anchor="middle" fill="#1a3a66">① 下载</text>
+        <text x="140" y="116" font-size="11.5" text-anchor="middle" fill="#5a7396">打开官网 www.workbuddy.cn</text>
+        <text x="140" y="134" font-size="11.5" text-anchor="middle" fill="#5a7396">点“下载”，选 Windows 版</text>
+        <line x1="266" y1="90" x2="300" y2="90" stroke="#9ab4d0" stroke-width="2" marker-end="url(#arw)"/>
+        <rect x="308" y="28" width="240" height="124" rx="12" fill="#f0f6ff" stroke="#bcd4f6"/>
+        <text x="428" y="66" font-size="26" text-anchor="middle">⚙️</text>
+        <text x="428" y="95" font-size="15" font-weight="700" text-anchor="middle" fill="#1a3a66">② 安装</text>
+        <text x="428" y="116" font-size="11.5" text-anchor="middle" fill="#5a7396">双击安装包，一路“下一步”</text>
+        <text x="428" y="134" font-size="11.5" text-anchor="middle" fill="#5a7396">装完桌面出现 W 图标</text>
+        <line x1="554" y1="90" x2="588" y2="90" stroke="#9ab4d0" stroke-width="2" marker-end="url(#arw)"/>
+        <rect x="596" y="28" width="240" height="124" rx="12" fill="#f0f6ff" stroke="#bcd4f6"/>
+        <text x="716" y="66" font-size="26" text-anchor="middle">🔑</text>
+        <text x="716" y="95" font-size="15" font-weight="700" text-anchor="middle" fill="#1a3a66">③ 登录</text>
+        <text x="716" y="116" font-size="11.5" text-anchor="middle" fill="#5a7396">打开 WorkBuddy</text>
+        <text x="716" y="134" font-size="11.5" text-anchor="middle" fill="#5a7396">手机号验证码或微信扫码</text>
+        <text x="430" y="174" font-size="11" text-anchor="middle" fill="#8ba0b6">手机扫码也能用：应用商店搜 WorkBuddy，或微信小程序</text>
+      </svg></div>
+      <div class="dlrow">
+        <a class="dlbtn" href="https://www.workbuddy.cn" target="_blank">🌐 打开官网下载：www.workbuddy.cn</a>
+        <span class="dltag">Windows</span><span class="dltag">macOS</span><span class="dltag">鸿蒙</span><span class="dltag">手机 App / 小程序</span>
+      </div>
+      <div class="faq3">
+        <div class="faq"><b>下载完找不到了？</b><p>按 Ctrl + J 打开浏览器下载列表；默认在“下载”文件夹，安装包名叫 WorkBuddy_setup。</p></div>
+        <div class="faq"><b>双击没反应 / 装不上？</b><p>右键选“以管理员身份运行”；杀毒软件拦截时选“仍要允许”。还卡住就截图发给 AI 排查。</p></div>
+        <div class="faq"><b>收不到登录验证码？</b><p>先翻翻垃圾短信，60 秒后可重发；急用就换微信扫码登录，不用等短信。</p></div>
+      </div>
+    </div>`,
+    case:{t:'培训现场', d:'校级培训当天带老师现场下载安装，最常卡的不是安装，是“下载到了哪个文件夹”——按 Ctrl + J 看下载列表，一眼就找到。'}
+  },
+  {
+    id:'jiemian', g:'xin', icon:'🧭', name:'界面速览',
+    pain:'打开一堆按钮不知道哪个是哪个，怕点错，先在门口站了十分钟。',
+    gain:'一分钟认清左中右三栏，敢下手了',
+    deliv:['界面地图', '常用位置清单'],
+    manual:'手册 1 章 · p16',
+    cmds:[],
+    visual:`
+    <div class="viz">
+      <div class="viz-h">🗺️ 界面就三大块，一分钟认路</div>
+      <div class="fig"><svg viewBox="0 0 860 310" xmlns="http://www.w3.org/2000/svg" font-family="Microsoft YaHei,sans-serif">
+        <rect x="20" y="16" width="820" height="270" rx="14" fill="#ffffff" stroke="#c9d9ec"/>
+        <path d="M20,30 a14,14 0 0 1 14,-14 h792 a14,14 0 0 1 14,14 v36 h-820 Z" fill="#14314f"/>
+        <circle cx="48" cy="41" r="5" fill="#ff6b6b"/><circle cx="68" cy="41" r="5" fill="#ffc94d"/><circle cx="88" cy="41" r="5" fill="#4fd6a8"/>
+        <text x="112" y="46" font-size="12" fill="#c3d7ec">WorkBuddy</text>
+        <rect x="688" y="27" width="132" height="28" rx="14" fill="#1a6dff"/>
+        <text x="754" y="46" font-size="12" fill="#ffffff" text-anchor="middle">＋ 新建对话</text>
+        <rect x="36" y="78" width="204" height="192" rx="10" fill="#f4f8fc" stroke="#dfe9f4"/>
+        <circle cx="56" cy="98" r="11" fill="#1a6dff"/><text x="56" y="102.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+        <text x="76" y="103" font-size="13" font-weight="700" fill="#2b3c50">左栏 · 导航</text>
+        <rect x="52" y="120" width="172" height="13" rx="6" fill="#dbe7f3"/>
+        <rect x="52" y="143" width="140" height="13" rx="6" fill="#dbe7f3"/>
+        <rect x="52" y="166" width="160" height="13" rx="6" fill="#dbe7f3"/>
+        <rect x="52" y="189" width="128" height="13" rx="6" fill="#dbe7f3"/>
+        <text x="52" y="228" font-size="11" fill="#8ba0b6">新对话 / 历史记录</text>
+        <text x="52" y="246" font-size="11" fill="#8ba0b6">技能与专家入口</text>
+        <rect x="256" y="78" width="392" height="192" rx="10" fill="#f8fbfe" stroke="#dfe9f4"/>
+        <circle cx="276" cy="98" r="11" fill="#1a6dff"/><text x="276" y="102.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+        <text x="296" y="103" font-size="13" font-weight="700" fill="#2b3c50">中间 · 对话区（干活的地方）</text>
+        <rect x="272" y="120" width="300" height="30" rx="9" fill="#eef3f9"/>
+        <rect x="272" y="160" width="352" height="46" rx="9" fill="#e8f1ff"/>
+        <rect x="286" y="173" width="230" height="9" rx="4" fill="#c5d9f4"/>
+        <rect x="286" y="189" width="180" height="9" rx="4" fill="#c5d9f4"/>
+        <rect x="272" y="224" width="352" height="30" rx="15" fill="#ffffff" stroke="#c9d9ec"/>
+        <text x="288" y="243" font-size="11" fill="#9aabbd">在这里打字，把文件直接拖进来</text>
+        <rect x="664" y="78" width="160" height="192" rx="10" fill="#f4f8fc" stroke="#dfe9f4"/>
+        <circle cx="684" cy="98" r="11" fill="#1a6dff"/><text x="684" y="102.5" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+        <text x="704" y="103" font-size="13" font-weight="700" fill="#2b3c50">右栏 · 产物</text>
+        <rect x="680" y="120" width="128" height="90" rx="8" fill="#e6faf3" stroke="#bfe8db"/>
+        <text x="744" y="170" font-size="20" text-anchor="middle">📄</text>
+        <text x="680" y="228" font-size="11" fill="#8ba0b6">生成的文档、表格</text>
+        <text x="680" y="246" font-size="11" fill="#8ba0b6">点开就能预览导出</text>
+        <text x="430" y="302" font-size="11" text-anchor="middle" fill="#8ba0b6">记住一句话：左边找入口，中间打字干活，右边拿结果</text>
+      </svg></div>
+      <div class="legend">
+        <span><b>①</b> 左栏：对话列表、技能入口</span>
+        <span><b>②</b> 中间：对话区，打字传文件</span>
+        <span><b>③</b> 右栏：生成的文件与预览</span>
+      </div>
+      <div class="faq3">
+        <div class="faq"><b>新建对话在哪？</b><p>右上角“＋ 新建对话”。换个新任务就新开一个，别在一个对话里啥都干，会串。</p></div>
+        <div class="faq"><b>历史记录在哪？</b><p>左栏对话列表往下滑；对话多了就用顶部搜索框搜关键词，秒到。</p></div>
+        <div class="faq"><b>怎么把文件给它？</b><p>把 Word、Excel、PDF 直接拖进中间的输入框，或点回形针图标选取。</p></div>
+        <div class="faq"><b>结果怎么拿出来？</b><p>回复下方的导出按钮，直接生成 Word、Excel 保存到电脑，拿来就用。</p></div>
+      </div>
+    </div>`,
+    case:{t:'本校', d:'老师上手最大的门槛从来不是功能多，是“不敢点”。培训时第一件事就是对着大屏走一遍三栏，再让每人自己新建一条对话——门槛就过了。'}
+  },
+  {
+    id:'moshi', g:'xin', icon:'🎛️', name:'三种模式',
+    pain:'每次开对话都要选模式，Ask、Plan、Craft 有什么区别？选错了是不是白干？',
+    gain:'一句话判断该用哪个，不再纠结',
+    deliv:['选择口诀', '场景对照'],
+    manual:'手册 1 章 · p18—21',
+    cmds:[],
+    visual:`
+    <div class="viz">
+      <div class="viz-h">🎛️ 三个模式，一张卡分清</div>
+      <div class="mcards">
+        <div class="mcard">
+          <span class="mi">💬</span>
+          <h4>Ask · 只问不干</h4>
+          <span class="ms" style="background:#1a6dff">问答模式</span>
+          <ul>
+            <li>什么时候用：问思路、查资料、改一段文字</li>
+            <li>你会得到：一段回答，它不动手做东西</li>
+            <li>例：“把这条通知改得委婉一些”</li>
+          </ul>
+        </div>
+        <div class="mcard">
+          <span class="mi">🧭</span>
+          <h4>Plan · 先想后做</h4>
+          <span class="ms" style="background:#e08c0b">规划模式</span>
+          <ul>
+            <li>什么时候用：活儿复杂、怕它跑偏</li>
+            <li>你会得到：一份分步方案，你点头再执行</li>
+            <li>例：“期中质量分析，先给我方案”</li>
+          </ul>
+        </div>
+        <div class="mcard">
+          <span class="mi">⚡</span>
+          <h4>Craft · 直接开干</h4>
+          <span class="ms" style="background:#00a97f">干活模式</span>
+          <ul>
+            <li>什么时候用：目标明确，直接要成品</li>
+            <li>你会得到：能用的文档、表格、PPT</li>
+            <li>例：“把 45 条评语填进这个 Excel”</li>
+          </ul>
+        </div>
+      </div>
+      <div class="motto">口诀：只问不干用 Ask · 先想清楚用 Plan · 直接开干用 Craft　——　拿不准就先 Plan，方案不要钱，返工才要命</div>
+    </div>`,
+    case:{t:'口诀', d:'培训现场就教这一句口诀，剩下的场景练习里自然就分清了——选错模式顶多重说一遍，没什么大不了。'}
+  },
+  {
+    id:'diyi', g:'xin', icon:'🚀', name:'第一条指令',
+    pain:'打了一句“帮我做个PPT”，出来的东西完全不是想要的——不是 AI 不行，是话说少了。',
+    gain:'记住五要素公式，开口就是老手',
+    deliv:['任务公式卡', '改写示例'],
+    manual:'手册 1 章 · p21—24',
+    visual:`
+    <div class="viz">
+      <div class="motto">📁 开口之前，先安家 —— Spaces 管过程 · Output 管成果 · 文件不迷路，AI 才好找</div>
+      <div class="faq3" style="margin-top:14px">
+        <div class="faq"><b>🏠 首次用，搭空间（Spaces）</b><p>第一次用，先在 <b>D:\\WorkBuddy_Spaces\\</b> 搭好自己的工作空间——校务、教学、培训，十类工作各归各位。</p></div>
+        <div class="faq"><b>🧭 建任务，选空间（Spaces）</b><p>每次新建任务，把工作目录<b>选到对应的 Spaces 文件夹</b>，别都堆在默认位置——这是后面一切有序的起点。</p></div>
+        <div class="faq"><b>📦 有成品，放输出（Output）</b><p>让 AI 把做好的东西存到 <b>D:\\WorkBuddy_Output\\</b>——一份成果一个位置，要交材料随时找得到。</p></div>
+        <div class="faq"><b>🔄 用过后，勤归位（Folder）</b><p>用完的文件放回对应文件夹再走——Spaces 里留过程，Output 里留成品，桌面和下载夹不留垃圾。</p></div>
+      </div>
+    </div>`,
+    cmds:[
+      {t:'五要素公式（背下这句就够）', c:`角色 + 任务 + 对象 + 要求 + 格式。
+例：你是六年级数学老师（角色），帮我出一份《圆的认识》随堂小测（任务），
+给中等水平学生（对象），10 道题、含答案、难度由易到难（要求），输出 Word（格式）。`},
+      {t:'把我这段模糊的话改清楚', c:`这是我想让 AI 做的事：“（把你原来那句话贴上来）”。
+请按“角色、任务、对象、要求、格式”五要素帮我补全改写，并说明你补了什么、为什么。`},
+      {t:'第一个任务就走完整流程', c:`按五要素给我写一条指令的完整示范：主题是“下周班会课要一份交通安全主题的班会方案”。
+写完指令后，直接按这条指令执行，输出 Word。`}
+    ],
+    case:{t:'本校', d:'培训中让每人把自己工作里最烦的一件事按五要素写一遍再执行，交上来的指令一次成活率明显高于随手打——五要素是全场最值得抄走的一页。'}
+  },
+  {
+    id:'beike', g:'jiao', icon:'📝', name:'备课设计',
+    pain:'一节课从翻教参、找素材到写完教案，两三个小时就没了；换个班还得改一遍。',
+    gain:'40 分钟拿到可用初稿，你只负责改专业判断',
+    deliv:['教案 Word', '学生学习单', '说课稿'],
+    manual:'手册 2.1—2.5 · p24',
+    cmds:[
+      {t:'一句话出教案（最常用）', c:`你是 20 年经验的六年级数学骨干教师，为苏教版《圆的认识》设计一节 40 分钟教案：
+含学情分析、教学目标（对应 2022 版课标）、重难点、情境导入、3 个探究活动、分层作业、板书设计，
+体现教学评一体化，输出可直接打印的 Word。`},
+      {t:'先要骨架，再要细节（质量更稳）', c:`先只给我这节课的教学设计骨架：每个环节的名称、时长、师生活动各一句话，不要展开。
+我看过确认后，你再按骨架写成完整教案。`},
+      {t:'配套学习单', c:`接着把这节课的 3 个探究活动和练习做成 A4 学生学习单 Word，
+留白充足、字号不小于 11 号、适合黑白打印，每部分标明“活动几”和预计用时。`},
+      {t:'公开课说课稿', c:`把这份教案改写成 8 分钟说课稿，按“说教材—说学情—说目标—说过程—说评价”组织，
+语气口语化、像对着评委说话，控制在 1500 字，重点讲清两个探究活动为什么这样设计。`}
+    ],
+    case:{t:'本校', d:'六年级上下册 59 个教学设计 + 配套学习单，用这套指令批量产出，统一了格式和课时节奏；以前一课两小时，现在改稿十分钟。'}
+  },
+  {
+    id:'kejian', g:'jiao', icon:'🖥️', name:'课件制作',
+    pain:'备课两小时，排版三小时；改一个配色，全篇重做。',
+    gain:'一句话出 15 页，改起来只说“第几页换成什么”',
+    deliv:['.pptx 课件', '3D 模型', '教学配图'],
+    manual:'手册 3.1—3.4 · p40',
+    cmds:[
+      {t:'一键生成课件 PPT', c:`帮我制作一节《圆的认识》课件 PPT，15 页，适合六年级，
+含生活实例（井盖为什么是圆的）、3 个探究活动图示、易错点对比、5 道随堂练习、小结页。
+风格简洁、字号大、每页要点不超过 5 条，导出 .pptx。`},
+      {t:'局部修改（别重头再来）', c:`第 4 页的案例换成学生熟悉的校园场景；第 9 页练习难度降一档；
+整体主色改成蓝绿色系。其余页面保持不变。`},
+      {t:'3D 可交互模型', c:`帮我生成一个圆柱与圆锥的 3D 模型：可 360° 旋转，标注底面半径、高和母线，
+半透明显示内部结构，适合六年级数学“圆柱的体积”课堂投影演示。`},
+      {t:'教学配图', c:`帮我生成一张《圆的认识》教学配图：生活中圆形物体拼贴（井盖、车轮、餐盘、钟面），
+扁平插画风格，16:9，主体清晰、留白充足，浅色背景适合投影。`}
+    ],
+    case:{t:'本校', d:'《智慧校园及系统安全》《数智赋能》两套互动学件，从课件升级成能点、能判、能计分的网页，直接在希沃白板里打开。'}
+  },
+  {
+    id:'chujuan', g:'jiao', icon:'📄', name:'出卷命题',
+    pain:'一道道手敲题目，还要配答案、排分值、算难度，一套卷耗一晚上。',
+    gain:'一套卷 15 分钟，答案、评分标准、双向细目表一起给',
+    deliv:['试卷 Word', '答案与评分标准', '双向细目表', '问卷星 CSV'],
+    manual:'手册 6.1—6.4 · p78',
+    cmds:[
+      {t:'整卷一次出齐', c:`出一份苏教版六年级数学《圆》单元测试卷 Word，满分 100 分：
+6 道选择（每题 2 分）、8 道填空（每空 1 分）、4 道计算（每题 5 分）、3 道解决问题（共 30 分）。
+难度按 7:2:1 分布，附标准答案与分步评分标准，排版留足答题空间。`},
+      {t:'双向细目表（防止考偏）', c:`为这份卷子配一张命题双向细目表：行是知识点（圆的认识/周长/面积/环形面积/组合图形），
+列是能力层级（了解/理解/掌握/运用），每格标注题号和分值，最后一行统计总分占比。`},
+      {t:'错题变式', c:`这 3 道题（附题目）是本次错得最多的，请各改写成 2 道同考点变式题：
+一道难度略降、一道保持原难度，题型不变，答案一并给出。`},
+      {t:'转问卷星批量导入', c:`把这份卷子转成问卷星批量导入的 CSV 格式：
+列依次为题型、题干、选项A-D、正确答案、分值、解析，选择题题干不带题号。`}
+    ],
+    case:{t:'本校', d:'六年级评测练习（29 题 / 100 分）+ 问卷星 CSV（32 题 / 115 分）三件套，出卷、答题、自动统计一条线走完。'}
+  },
+  {
+    id:'pigai', g:'jiao', icon:'✅', name:'作业批改',
+    pain:'两个班一百多本，客观题改到深夜；作文一改大半天，标准还不统一。',
+    gain:'批量判分 + 主观题按量规评阅，你只做抽检和终审',
+    deliv:['批改结果表', '讲评要点', '个性化错题集'],
+    manual:'手册 7.1—7.4 · p90',
+    cmds:[
+      {t:'客观题批量统计', c:`读取 D:\\作业\\六年级\\第3单元 的答卷 Excel（含每题得分与知识点标签），
+本地处理不传云端。统计每题正确率、班级薄弱题 Top5、各分数段人数，
+并生成一段不超过 300 字的讲评要点，指出下节课该重点讲哪两道题。`},
+      {t:'主观题按量规评阅', c:`按附件这份评分量规（内容 40 / 结构 30 / 语言 30），逐份评阅学生习作：
+给出总分、两条具体到句子的优点、一条可操作的改进建议，语气对学生说，不用“较好”“尚可”这类套话。
+输出 Excel，一人一行。`},
+      {t:'把标准说清楚', c:`把这次作文的评分标准拆成 4 档量规，每档写清“什么样算这一档”，
+要能让学生自己对着判断，每档附一句学生能看懂的说明。`},
+      {t:'个性化错题集', c:`读取 D:\\学情\\六年级1班\\单元测 里全班 45 位学生的答卷数据，本地批量处理，
+为每人生成一份错题集 Word：错题原题、正确答案、逐题解析（错因 + 正确思路）、
+对应教材页码、每题 1 道同类巩固题、文末一段本周复习建议。文件名用“姓名_错题集”。`}
+    ],
+    case:null
+  },
+  {
+    id:'xueqing', g:'jiao', icon:'📊', name:'学情诊断',
+    pain:'分数排个名就完了，看不出谁哪块知识塌了，也说不清下一步补什么。',
+    gain:'从“看分数”到“读懂学生”，一人一份诊断书',
+    deliv:['HTML 分析报告', '个人诊断书', '追踪看板'],
+    manual:'手册 8.1—8.4 · p102',
+    cmds:[
+      {t:'班级整体分析', c:`读取这份成绩 Excel（学生×题目矩阵，已含知识点标签），本地分析不传云端。输出：
+1）平均分、及格率、优秀率、最高最低分、标准差；
+2）分数段分布（0-59/60-69/70-79/80-89/90-100）人数与占比，画柱状图；
+3）每题得分率与错题率 Top5 知识点；
+4）不超过 300 字的班级改进建议。导出可交互 HTML 报告。`},
+      {t:'一个学生的诊断书', c:`读取这位同学本学期的历次成绩 Excel，本地分析不传云端，生成一份诊断报告：
+1）各科折线趋势；2）最近一次各科相对班级均值的雷达图；
+3）薄弱点诊断卡片（指出 2 个具体知识点）；4）接下来 4 周的可执行建议。导出 HTML。`},
+      {t:'班级追踪看板', c:`读取本学期至今全部考试 Excel，搭一个班级学情追踪看板：
+各科均分随考试的折线趋势；分数段分布变化；薄弱知识点演化（哪块从“偶尔错”变“常错”）；
+学生分三层（稳步进步 / 波动 / 需关注）。新数据放进文件夹后，能增量更新。`}
+    ],
+    case:{t:'本校', d:'六 4 班毕业成绩等级表的综合素质评价栏，就是先把 45 份评语按姓名精准匹配、再批量填入——同一套“先扫描、再确认、后写入”的路子。'}
+  },
+  {
+    id:'jiaxiao', g:'yu', icon:'👨‍👩‍👧', name:'家校共育',
+    pain:'45 份评语写到凌晨，家长会稿子憋三天，一条私信改了又改怕说重。',
+    gain:'一批评语 20 分钟，措辞得体、不踩雷',
+    deliv:['期末评语', '家长会发言稿', '沟通信', '群通知'],
+    manual:'手册 9.1—9.4 · p115',
+    cmds:[
+      {t:'批量期末评语', c:`根据附件这 45 名学生的表现要点（Excel：姓名、优点、需改进、典型事例），
+为每人写一段 80 字左右的期末评语：先肯定一个具体进步（要有细节、不空泛），
+再提一条可操作的建议，不比较排名、不说“希望更加努力”这类套话，语气温暖、像班主任当面说。`},
+      {t:'家长会发言稿', c:`帮我写一份六年级家长会发言稿，15 分钟，1800 字左右。
+结构：班级整体情况 → 阶段成绩分析（有数据但不排名）→ 三个典型问题及原因 → 家校配合的 4 条具体建议。
+语气亲切、有具体案例，避免“感谢各位家长百忙之中”这类空话。`},
+      {t:'个别沟通信（最需要分寸）', c:`帮我写一封给六年级学生家长的私信，主题是“孩子近期数学作业连续缺交 4 次”。
+背景：孩子懂事、人缘好、思维活跃，但近两周注意力不集中，家里最近有老二出生。
+要求：开头先肯定一个具体优点；表达理解和合作态度，不指责、不下结论；
+给出 2 条家长今晚就能做的小事；结尾约一个当面沟通的时间。语气真诚。`},
+      {t:'班级群通知', c:`帮我写一条家长会通知发班级群：11 月 15 日（周五）19:00，本班教室，
+主题“期中总结与家校协同”，请家长带好孩子的期中试卷和一支笔。
+信息清楚、语气得体、不超过 150 字，末尾附一句“收到请回复”。`}
+    ],
+    case:{t:'本校', d:'六 4 班 45 份评语，从 Word 逐条复制粘贴改为读取文档、按姓名匹配、批量填入综合素质评价栏，全程只做了一次核对。'}
+  },
+  {
+    id:'banji', g:'yu', icon:'🏫', name:'班级管理',
+    pain:'班级信息散在十几个表格和群里，通知、值日、活动把一整天切得稀碎。',
+    gain:'一个本地小系统管住全班，数据不出本机',
+    deliv:['班级档案 HTML', '班会方案', '值日反馈', '成长记录'],
+    manual:'手册 10.1—10.4（2.0 版）· 班主任专题',
+    cmds:[
+      {t:'班级数字档案（单文件）', c:`帮我搭一个单文件 HTML 班级数字档案，双击就能用、数据只存本机：
+含学生基本信息、家长联系方式、座位表、值日轮值表、特殊关注事项（过敏/接送/情绪），
+支持按姓名搜索、按小组筛选、导出 Excel，界面清爽适合电脑端。`},
+      {t:'主题班会方案', c:`设计一节六年级“时间管理”主题班会，40 分钟：
+1 个破冰小游戏（5 分钟）、小组讨论“我的 24 小时去哪了”（12 分钟）、
+个人周计划模板填写（15 分钟）、教师总结（8 分钟）。
+每个环节给教师引导语和学生任务卡，环节之间过渡自然。`},
+      {t:'值日反馈文档', c:`把本周的值日检查记录（附件）整理成一份反馈 Word：
+本周总体情况（3 句话）、各班/各年级扣分项排序、重复出现的问题、3 条下周改进建议，
+语气客观、不点名批评，适合发在教师群。`},
+      {t:'学期成长记录', c:`把本学期班级活动的照片说明和通知（附件）按时间线整理成一份成长记录 HTML：
+每个活动一节，含日期、主题、一句话回顾、照片占位说明；可打印，也适合发家长群。`}
+    ],
+    case:{t:'本校', d:'班主任工作台 19 个功能模块，登录后一个页面管住班级事务；教师工作台通讯录录入 100 条记录，电话默认打码、密码才显示。'}
+  },
+  {
+    id:'huodong', g:'yu', icon:'🎭', name:'活动与剧本',
+    pain:'公开课想加点新意，项目式学习听着好但不知道怎么落地。',
+    gain:'把知识点变成学生抢着参与的活动',
+    deliv:['PBL 方案', '辩论赛方案', '分层任务单', '互动剧本'],
+    manual:'手册 4.1—5.3 · p55',
+    cmds:[
+      {t:'项目式学习（PBL）', c:`帮我设计一份小学六年级“校园垃圾分类”项目式学习方案，4 周，跨学科（科学+数学+信息科技）。
+要求：①一个真实可探究的驱动性问题；②4 个阶段任务（每周一个，含目标、活动、产出）；
+③最终成果为小组调查报告 + 一次班级路演；④学生过程性评价量规（合作/探究/表达三维度各 4 档）；
+⑤教师每周准备清单与风险预案。`},
+      {t:'课堂微型辩论（8 分钟救场）', c:`设计《圆的认识》课堂上一次 8 分钟微型辩论，辩题“车轮一定要做成圆的吗？”
+正方：必须是圆的；反方：其他形状也可能行。
+各给 3 个论点（附生活论据），流程：正方 1 分钟 → 反方 1 分钟 → 自由辩论 3 分钟 → 全班投票 2 分钟。
+最后给教师一句收尾话术，把话题拉回“圆的特征”。`},
+      {t:'分层任务单', c:`为《圆的认识》设计 A/B/C 三级分层任务单，各 6 题：
+A 级（基础巩固）——直接套用半径直径关系，含 2 道带步骤示范；
+B 级（能力提升）——解决实际问题（花坛围栏、圆桌布），每题给思路提示；
+C 级（拓展探究）——开放题，如“用一根绳子在操场上画一个大圆，说说你的办法和道理”。`},
+      {t:'知识点变剧本', c:`把六年级《圆的认识》编成一个角色扮演互动剧本，20 分钟，6 人一组。
+角色：圆心、半径、直径、圆周、一位“糊涂工匠”、一位裁判。
+核心冲突：工匠要做井盖，不知道谁说了算。每个角色给身份目标、3 条论据、一句开场白，
+附推理任务卡和教师控场提示。`}
+    ],
+    case:null
+  },
+  {
+    id:'jiaoyan', g:'cheng', icon:'✍️', name:'教研论文',
+    pain:'不是不想写，是坐下去写不出来；写出来又一股 AI 味，查重和检测都悬。',
+    gain:'先搭骨架分轮写，再加课堂细节去 AI 味',
+    deliv:['论文大纲', '分段正文', '听评课记录'],
+    manual:'手册 11.1—11.4 · p128',
+    cmds:[
+      {t:'先出大纲（别急着写正文）', c:`帮我规划一篇教研论文大纲，主题“AI 零代码网页学件在小学信息科技课堂的应用”，约 4000 字。
+结构：摘要、引言、理论基础、实践案例（2 个）、成效与反思、结语。
+每部分列出要点和字数分配，标出哪部分需要数据支撑、哪部分需要文献引用。`},
+      {t:'分三轮写正文', c:`先写“引言 + 理论基础”800 字：从一线课堂的真实困境切入，学术口吻但不堆术语，
+引用要真实可查（给我 3 篇可查的核心期刊文献，标注作者、篇名、期刊、年份）。
+写完我看过，再进入案例部分。`},
+      {t:'去 AI 味（关键一步）', c:`把这段文字改写成有我个人经验的叙述：
+加入具体课堂细节（哪个班、哪节课、学生说了什么原话）、我当时犹豫什么、后来怎么调整的；
+句子长短交错，删掉“首先/其次/最后”“综上所述”这类连接词；
+保留原有的论证逻辑和专业判断，不要写成散文。`},
+      {t:'听评课记录', c:`帮我把这份听课速记（附件）整理成结构化记录：
+教学环节时间轴、各环节师生关键行为、亮点 2 条（要有细节）、待改进 2 条、
+3 条具体可操作的建议（说清“下次怎么做”）。用 Markdown 表格呈现。`}
+    ],
+    case:{t:'本校', d:'“教海探航”参赛论文从选题到定稿，大纲—分轮—去 AI 味三步走；写《中小学教育技术装备的几点思考》时也是先要骨架再填肉。'}
+  },
+  {
+    id:'keti', g:'cheng', icon:'📋', name:'课题申报',
+    pain:'申报书动辄十几页，背景、综述、目标、步骤，光格式就劝退。',
+    gain:'大纲先立住，材料自动归档，结题有数据',
+    deliv:['申报书大纲', '文献综述', '结题报告', '数据支撑'],
+    manual:'手册 11.2 · p131',
+    cmds:[
+      {t:'申报书大纲（带写作提示）', c:`生成一份市级教育科学规划课题申报书大纲，主题“数字化学习促教学评一体化的实践研究”，小学学段。
+结构：课题提出的背景与意义、国内外研究现状综述、核心概念界定、研究目标、研究内容、
+研究方法（行动研究 + 问卷调查 + 案例研究）、研究步骤（一年，分三阶段）、预期成果、参考文献方向。
+每部分给 2—3 句写作提示，告诉我这段该写什么、不该写什么。`},
+      {t:'文献综述', c:`就“教学评一体化”检索近 5 年中文核心期刊研究，按“内涵界定 / 实施路径 / 评价工具 / 存在问题”四类归纳，
+每一类挑 3 篇代表作说明观点，标注可引用出处，输出 3000 字综述初稿，末尾指出研究空白。`},
+      {t:'过程材料归档', c:`这是本课题一学期积累的材料（通知、签到、课堂记录、问卷），
+请按“课题档案”结构分类归档：过程性材料 / 成果性材料 / 佐证性材料，
+生成一份材料清单 Excel（文件名、类别、对应研究内容、时间），并指出还缺哪几类。`},
+      {t:'结题报告（要有数据）', c:`根据这些过程材料，按“研究背景—研究过程—研究成果—问题与反思”写结题报告。
+成果部分必须有数据支撑：前后测对比、参与人数、课例数量、获奖情况；问题部分要写真实困难，不写成优点。`}
+    ],
+    case:{t:'本校', d:'区级课题“数字化学习促教学评一体化”、市级课题“人文技术视野下勤美课堂范式”均已结题，材料归档正是最耗时的一环。'}
+  },
+  {
+    id:'xingzheng', g:'cheng', icon:'🗂️', name:'行政文档',
+    pain:'计划、总结、通知、制度、操作指南，一年到头反复写，写完还得改格式。',
+    gain:'材料丢进去，成稿拿出来，格式还规范',
+    deliv:['计划与总结', '制度文件', '操作指南'],
+    manual:'手册 12.1—12.4 · p142',
+    cmds:[
+      {t:'工作计划（有抓手）', c:`写一份教师发展处本学期工作计划，约 2000 字，围绕“青蓝携手、城乡牵手、规划引领、名师培育”四大工程。
+结构：指导思想、工作目标（可量化）、主要工作与月度安排表、保障措施。
+语气正式、可落地，每月安排要写清“做什么、谁负责、什么成果”。`},
+      {t:'工作总结（用材料说话）', c:`根据这些过程材料（活动通知、签到表、照片说明、获奖名单），写本学期校本培训工作总结。
+要求：用数据说话（场次、人次、覆盖率、满意度）；分“做了什么—做成什么—还差什么”三段；
+不空喊口号，问题部分写 2 条真实短板和下一步打算。`},
+      {t:'制度文件', c:`起草《录播教室使用管理办法》，面向全体教师。
+按“预约—使用—维护—违规处理”组织，条款编号清晰、每条一句话说清，
+附 3 条常见问题解答。语气规范但不生硬。`},
+      {t:'操作指南（图文位）', c:`写一份《班级多媒体设备使用指南》，面向任课教师，目标是让他们独立完成一节课的设备操作。
+按“开机—投屏—切换信号—音量与麦克风—关机”组织，每步用“动作 + 截图位置说明”格式，
+配 3 条注意事项，末尾附 5 条常见问题。输出 Word，排版规范。`}
+    ],
+    case:{t:'本校', d:'校本培训计划、总结、报名通知、值日反馈，全部走这套流程；通知类文档已能做到“说清要素、一次过”。'}
+  },
+  {
+    id:'shuju', g:'cheng', icon:'📈', name:'数据报告',
+    pain:'上千份问卷录到崩溃，考勤成绩躺在表格里睡觉，期末凑不齐一份像样的报告。',
+    gain:'Excel 丢进去，可交互报告拿出来',
+    deliv:['HTML 交互报告', 'Excel 汇总', '评估建议'],
+    manual:'手册 13.1—13.4 · p152',
+    cmds:[
+      {t:'问卷与满意度分析', c:`读取这份问卷 Excel（1—5 分制），本地分析不传云端。维度为“教学内容、课堂互动、作业负担、答疑及时性、整体满意度”。
+输出：①各维度平均分与排名，画柱状图；②各维度评分分布（1-2 分 / 3 分 / 4-5 分）占比，画饼图；
+③明确指出满意度最低的维度并分析原因；④开放题“建议”列做关键词归纳（Top8）；
+⑤5 条改进建议。导出 HTML。`},
+      {t:'考勤分析', c:`读取 D:\\考勤\\本学期考勤.xlsx，本地分析不传云端。
+输出：月度总出勤率、迟到率、缺勤率；各周出勤率趋势折线图；
+出勤率低于 90% 的学生名单及各自缺勤天数；一份不超过 200 字的班级提醒建议。导出 HTML 报告。`},
+      {t:'教研数据汇总', c:`读取听课记录、教研考勤、成果台账三个 Excel，本地汇总不传云端。
+输出：全校人均听课节数、各学科听课分布柱状图；教研活动出勤率与缺席教师清单；
+课题/论文/赛课成果数量与级别占比饼图；不超过 300 字的教研质量评估与下学期建议。导出 Excel 汇总表。`},
+      {t:'做成能点的报告', c:`把上面的分析做成一份可交互 HTML 报告：顶部导航（总览/分段分布/小题错题/班级对比）、
+指标卡片、分数段柱状图、错题率条形图、班级下拉筛选器、底部改进建议。
+图表支持鼠标悬停看具体数值，适合投屏给年级组看。`}
+    ],
+    case:{t:'本校', d:'六 4 班毕业成绩等级表、教师发展四大工程获奖数据、教科研获奖台账，都是先散后整，用同一套“丢材料—出表—校验”的路子。'}
+  },
+  {
+    id:'xuejian', g:'tool', icon:'🧩', name:'零代码学件',
+    pain:'想做个课堂小工具，不会编程；找人做，排不上队也说不清需求。',
+    gain:'说清楚就能生成，双击就能用，还能发到班级群',
+    deliv:['单文件 HTML', '学习资源页', '课程网站', '查询工具'],
+    manual:'手册 14.1—14.4 · p166',
+    cmds:[
+      {t:'互动课堂学件', c:`做一个单文件 HTML 课堂学件《智慧校园及系统安全》，面向六年级：
+含 4 个情境判断题（校园门禁、账号密码、陌生链接、公共 WiFi）、1 个拖拽配对（安全行为 vs 危险行为）、
+即时反馈（答对变绿、答错给提示）与总分显示。卡通风格、字大、适合投影，双击即可打开。`},
+      {t:'在线学习资源页', c:`做一个《圆的认识》在线学习资源页，面向六年级学生，用于单元复习：
+①知识点精讲（含图示说明）②易错对比（半径 vs 直径）③3 个微课视频占位 ④10 道配套练习（答案可折叠）
+⑤拓展阅读链接。蓝白清爽配色，手机友好。`},
+      {t:'课程网站', c:`建一个《小学信息科技·六年级》课程网站，8 个单元，每单元含知识点、示例、练习；
+首页放课程简介、学习目标和课标对应说明；配色清新、可折叠目录、支持手机查看。`},
+      {t:'本地查询工具', c:`做一个单文件离线通讯录：录入约 100 条教职工记录（姓名/部门/电话/类别），
+支持按姓名、拼音首字母、姓氏模糊搜索；电话默认打码隐藏，需输入正确密码才显示完整号码；
+界面美观、手机端可用、支持键盘快捷操作。`}
+    ],
+    case:{t:'本校', d:'教师工作台·通讯录（100 条记录、密码保护）、班主任工作台（19 个模块）、电脑第一课课程站（92 页）——都是这类“说清楚就生成”的产物。'}
+  },
+  {
+    id:'zidonghua', g:'tool', icon:'⏰', name:'自动化',
+    pain:'每周五值日反馈、每月台账，到点就得手动走一遍，忘了就断档。',
+    gain:'设一次，之后到点自己跑，全程零干预',
+    deliv:['定时任务', '自动日报周报', '课前清单'],
+    manual:'手册 15.1—15.3 · p190',
+    cmds:[
+      {t:'周五值日反馈（全链路）', c:`创建一个每周五 17:00 执行的任务：
+读取本周值日检查记录 → 生成反馈 Word（本周情况/扣分项/3 条改进建议）→ 转成 PNG 图片 →
+发送到指定 QQ 群。首次运行前把结果给我确认，确认后再开启定时。`},
+      {t:'每日教学工作日报', c:`创建一个每天 21:30 执行的任务：读取今日教学记录，
+生成包含“今日完成 / 待办事项 / 明日计划”三栏的日报 Markdown，
+保存到“教学管理/日报”文件夹，文件名带当天日期。`},
+      {t:'每周汇总', c:`读取本周一到周五的全部工作记录，汇总成周报，固定结构：
+①本周摘要 ②关键数据（听课节数、批改份数、家校沟通次数）③异常与待跟进事项 ④下周行动清单。`},
+      {t:'课前准备清单', c:`根据这份课表，生成本周每日“课前准备清单”（Markdown 勾选框）：
+周一 第 1-2 节 六年级《圆的认识》，周三 第 5 节 六年级《圆的周长》，周五 第 3-4 节 六年级《圆的面积》。
+每节课列出：课件导了没、学案印了没、教具/器材申了没、作业本收了没。`}
+    ],
+    case:{t:'本校', d:'周五值日反馈已跑通全链路：QQ 群消息收集 → 生成 Word → WPS 转 PNG → 回传群里，中间不用人管。'}
+  },
+  {
+    id:'skill', g:'tool', icon:'🎓', name:'Skill 与专家',
+    pain:'同样的话每次都要重说一遍；别人跑通的招，不知道怎么搬过来。',
+    gain:'找现成专家、装现成技能，把自己的经验沉淀成资产',
+    deliv:['专家调用', '技能安装', '自定义 Skill'],
+    manual:'手册 16.1—16.4 · p200',
+    cmds:[
+      {t:'找专家（100+ 领域）', c:`在专家中心搜索“小学科学命题”，选一位教育专家，
+请它出一份三年级下册《植物的生长》单元练习：5 道选择、3 道填空、2 道简答，附答案与解析，
+难度适合课时检测，不要超纲。`},
+      {t:'装现成技能', c:`搜索并安装“错题集生成器”技能，装好后用它处理我班的答卷数据，
+生成个性化错题集，先跑一个学生给我看效果。`},
+      {t:'把自己的招变成 Skill', c:`帮我写一份“小学信息科技命题”Skill 的说明书：
+触发词、输入（学段/年级/知识点/题量）、处理步骤、输出格式（题干+选项+答案+解析+难度标注）、
+3 个使用示例。要求下次同事装了这个技能，只说一句话就能出题。`},
+      {t:'沉淀成可复用模板', c:`根据我们今天跑通的这几条指令，帮我整理成一个可复用指令模板：
+把学科、年级、课题、页数这些变量留成【】占位，附一段“怎么填”的说明，
+下次只要填空就能直接用。`}
+    ],
+    case:{t:'本校', d:'已装的教学类技能：teachany、excalidraw-diagram、humanize-zh-writing；给女儿配的科研技能 6 件套，也是同一个思路。'}
+  },
+  /*__MORE_SCENES__*/
+];
+
+/* ---------- 本校真实案例 ---------- */
+const CASES = [
+  {
+    icon:'📋', badge:'数据处理', title:'六 4 班评语：Word → Excel 批量迁移',
+    desc:'45 份评语写在 Word 里，毕业成绩等级表的“综合素质评价”栏还空着。人工复制粘贴，一份就要两分钟，还容易串行。',
+    points:[
+      '第一步只读扫描：读两个文件，按姓名把对应关系列出来，不写入',
+      '人工核对名单无误后，再执行批量填入',
+      '写入完成输出校验报告：填了多少条、哪些没匹配上'
+    ],
+    res:[['原本','90 分钟'],['实际','6 分钟'],['返工','0 处']]
+  },
+  {
+    icon:'🔄', badge:'自动化', title:'周五值日反馈：全链路无人值守',
+    desc:'每周五要收 QQ 群里的值日记录、整理成 Word、转成图片、再发回群里。四步全靠手动，遇上开会就断档。',
+    points:[
+      'QQ 群消息自动收集，提取各班扣分项',
+      '按固定模板生成反馈 Word，自动排版',
+      'WPS 转 PNG → 定时回传 QQ 群，全程零干预'
+    ],
+    res:[['原本','每周 40 分钟'],['实际','0 分钟'],['断档','不再发生']]
+  },
+  {
+    icon:'📚', badge:'备课', title:'六年级 59 个教学设计 + 学习单',
+    desc:'上下册全部课时，每课要一份教学设计、一份学生学习单，还要格式统一、能直接打印。',
+    points:[
+      '固定“角色 + 课标 + 环节 + 分层作业”的指令骨架',
+      '先出骨架确认，再展开成完整教案，最后生成配套学习单',
+      '同一模板批量套用，格式和课时节奏全部统一'
+    ],
+    res:[['规模','59 课时'],['配套','59 份学习单'],['格式','完全统一']]
+  },
+  {
+    icon:'🧩', badge:'零代码', title:'班主任工作台：19 个模块一个页面',
+    desc:'班级事务散在十几个表格和群里：名单、值日、评语、活动、通知，找一样东西要翻半天。',
+    points:[
+      '单文件 HTML，双击打开即用，数据只存本机',
+      '19 个功能模块，左侧导航切换',
+      '登录保护（本地鉴权），班级数据不外传'
+    ],
+    res:[['模块','19 个'],['部署','双击即用'],['数据','不出本机']]
+  },
+  {
+    icon:'📇', badge:'零代码', title:'教师工作台 · 通讯录',
+    desc:'全校 100 条教职工记录，纸质通讯录改一次印一次；直接放网页又怕电话泄露。',
+    points:[
+      '姓名 / 拼音首字母 / 姓氏三种查法，输一个字就能筛',
+      '电话默认打码，需输入统一密码才显示完整号码',
+      '手机端可用，支持键盘快捷操作'
+    ],
+    res:[['记录','100 条'],['查询','3 种方式'],['隐私','密码保护']]
+  },
+  {
+    icon:'🎮', badge:'学件', title:'互动网页学件《智慧校园及系统安全》',
+    desc:'信息科技课讲系统安全，光讲道理学生记不住；做成能点、能判、能计分的网页，课堂气氛完全不同。',
+    points:[
+      '把知识点拆成情境判断题 + 拖拽配对',
+      '答对变绿、答错给提示，即时反馈',
+      '单文件 HTML，希沃白板直接打开'
+    ],
+    res:[['形态','互动学件'],['使用','已进课堂'],['依赖','零安装']]
+  },
+  {
+    icon:'🌐', badge:'平台', title:'作品集站点 + 电脑第一课课程站',
+    desc:'20 件教学作品散在网盘里，发给别人要一个个传；课程资料也没个统一入口。',
+    points:[
+      '作品集站 20 件作品，一页看全，手机可看',
+      '课程站 92 页，按课时组织，学生可自学',
+      '纯静态页面，二维码一贴就能用'
+    ],
+    res:[['作品','20 件'],['课程站','92 页'],['访问','扫码即开']]
+  },
+  {
+    icon:'🎤', badge:'培训', title:'校本培训材料：从 0 到一套',
+    desc:'计划、通知、课件、讲稿、签到、总结，一场校级培训背后是十几份材料。',
+    points:[
+      '报名通知：要素齐全、一次过审',
+      '课件与讲稿同步生成，页码自动对齐',
+      '培训结束当天出总结，数据现成'
+    ],
+    res:[['材料','12 份'],['周期','3 天'],['返工','极少']]
+  }
+];
+
+/* ---------- 7 天上手路径 ---------- */
+const PATH = [
+  { d:'DAY 1', t:'装好，先跑通一个成品', p:'别急着学功能。先让它给你做一样东西出来——看到真的 .pptx 落在桌面，心态就变了。',
+    q:`帮我制作一节《认识人民币》课件 PPT，8 页，适合一年级，
+含图片占位说明和 2 道课堂小练习，导出 .pptx。` },
+  { d:'DAY 2', t:'备一节课', p:'挑一节你下周就要上的课，用它出教案。重点不是省时间，是看它懂不懂你的课标和学情。',
+    q:`你是 20 年经验的六年级数学教师，为苏教版《圆的认识》设计 40 分钟教案，
+含学情分析、教学目标（对应 2022 版课标）、重难点、情境导入、3 个探究活动、分层作业、板书设计，
+输出可直接打印的 Word。` },
+  { d:'DAY 3', t:'出一份卷', p:'把出卷交给它，你只审题。这一步最容易建立信任——因为好坏你一眼能看出来。',
+    q:`出一份六年级数学《圆》单元测试卷 Word，满分 100 分，
+6 道选择、8 道填空、4 道计算、3 道解决问题，难度 7:2:1，
+附标准答案与分步评分标准，排版留足答题空间。` },
+  { d:'DAY 4', t:'分析一次成绩', p:'把班里最近一次成绩丢给它。你会发现原来“看分数”和“看懂学生”是两件事。',
+    q:`读取这份成绩 Excel（含每题得分与知识点标签），本地分析不传云端。输出：
+平均分、及格率、优秀率、分数段分布、每题得分率、错题率 Top5 知识点，
+再给一段 300 字以内的改进建议。导出 HTML 报告。` },
+  { d:'DAY 5', t:'写一批评语', p:'最枯燥、最容易拖到深夜的活，先交给它。记住：先肯定具体进步，再提一条能做的建议。',
+    q:`根据附件这 45 名学生的表现要点，为每人写 80 字期末评语：
+先肯定一个具体进步（要有细节），再提一条可操作建议，
+不比较排名、不说套话，语气温暖像班主任当面说。` },
+  { d:'DAY 6', t:'做一个课堂小工具', p:'不用会编程。说清楚“给谁用、干什么、长什么样”，它会直接给你一个能双击打开的网页。',
+    q:`做一个单文件 HTML 课堂学件，面向六年级，主题《圆的认识》：
+含 5 道情境判断题、1 个拖拽配对、即时反馈与总分显示，
+卡通风格、字大、适合投影，双击即可打开。` },
+  { d:'DAY 7', t:'设一个自动化', p:'最后一课：让它自己动起来。设一次，之后到点就跑——这是“用工具”和“有助手”的分界线。',
+    q:`创建一个每周五 17:00 执行的任务：读取本周值日检查记录，
+生成反馈 Word，转成 PNG，发送到指定 QQ 群。
+首次运行前把结果给我确认，确认后再开启定时。` }
+];
+
+const MINDSET = [
+  { t:'别怕学不会', p:'它认人话，不认术语。你怎么跟同事布置任务，就怎么跟它说。' },
+  { t:'别怕被取代', p:'它替你干重复劳动，专业判断还是你的。教案好不好、评语妥不妥，最终签字的是老师。' },
+  { t:'别怕用错', p:'处理学生材料时，先让它只读扫描、列清单，你确认了再动手。它比你还谨慎。' }
+];
+
+const PITS = [
+  { t:'把它当搜索引擎用', p:'问“圆的认识怎么讲”，它只会给你一段话。要说“给我一份 40 分钟教案 Word”。' },
+  { t:'一次指令求完美', p:'第一版就是初稿。正常流程是“生成—指出第几页改什么—再生成”，两三轮就到可用。' },
+  { t:'不说清参数', p:'学科、年级、页数、题量、风格，少一个，出来的东西就得大改。' },
+  { t:'学生数据乱传', p:'成绩、评语、名单，只用本地文件处理，不上传公共网盘。这不是麻烦，是底线。' },
+  { t:'装完就放着', p:'不用就永远是别人的工具。每周挑一件最烦的活交给它，三个月后你会离不开。' }
+];
+
+/* ==================================================================
+   渲染层
+   ================================================================== */
+const $ = s => document.querySelector(s);
+const main = $('#main');
+const side = $('#side');
+const qInput = $('#q');
+const scrim = $('#scrim');
+
+/* ---------- 窄屏抽屉 ---------- */
+function toggleSide(open) {
+  side.classList.toggle('open', open);
+  scrim.classList.toggle('on', open);
+}
+$('#menubtn').addEventListener('click', () => toggleSide(!side.classList.contains('open')));
+scrim.addEventListener('click', () => toggleSide(false));
+
+/* ---------- 界面风格 ---------- */
+const THEMES = [
+  { id: '', name: '静夜蓝' },
+  { id: 'dawn', name: '清晨浅色' },
+  { id: 'sand', name: '暖沙护眼' }
+];
+let themeIdx = THEMES.findIndex(t => t.id === (localStorage.getItem('wb_manual_theme') || ''));
+if (themeIdx < 0) themeIdx = 0;
+function applyTheme() {
+  const t = THEMES[themeIdx];
+  if (t.id) document.documentElement.dataset.theme = t.id;
+  else delete document.documentElement.dataset.theme;
+  $('#themeName').textContent = t.name;
+  localStorage.setItem('wb_manual_theme', t.id);
+}
+$('#themebtn').addEventListener('click', () => { themeIdx = (themeIdx + 1) % THEMES.length; applyTheme(); });
+applyTheme();
+
+let route = 'home';
+let cur = '';
+let keyword = '';
+let DONE = new Set();
+try { DONE = new Set(JSON.parse(localStorage.getItem('wb_done') || '[]')); } catch (e) {}
+
+const TOTAL_CMDS = SCENES.reduce((a, s) => a + s.cmds.length, 0);
+
+function saveDone() {
+  try { localStorage.setItem('wb_done', JSON.stringify([...DONE])); } catch (e) {}
+  updateStats();
+}
+
+function updateStats() {
+  $('#scNum').textContent = SCENES.length;
+  $('#cmNum').textContent = TOTAL_CMDS;
+  $('#okNum').textContent = DONE.size;
+}
+
+function go(r, id) {
+  route = r; cur = id || '';
+  keyword = ''; qInput.value = '';
+  toggleSide(false);
+  location.hash = r + (id ? '/' + id : '');
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function render() {
+  renderSide();
+  if (keyword) { renderSearch(); return; }
+  if (route === 'scene') renderScene(cur);
+  else if (route === 'cases') renderCases();
+  else if (route === 'path') renderPath();
+  else renderHome();
+}
+
+/* ---------- 折叠状态 ---------- */
+const FOLD = new Set(JSON.parse(localStorage.getItem('wb_manual_fold') || '[]'));
+function saveFold() { localStorage.setItem('wb_manual_fold', JSON.stringify([...FOLD])); }
+
+function renderSide() {
+  let h = `<button class="navitem ${route === 'home' ? 'on' : ''}" data-nav="home">
+      <span class="em">🏠</span>总览首页</button>`;
+  GROUPS.forEach(g => {
+    const list = SCENES.filter(s => s.g === g.id);
+    if (!list.length) return;
+    h += `<div class="sgroup ${FOLD.has(g.id) ? 'closed' : ''}">
+      <div class="gt" data-tg="${g.id}" title="点击折叠 / 展开">${g.icon} ${g.name}<span class="arw">▾</span></div>`;
+    list.forEach(s => {
+      const on = route === 'scene' && cur === s.id;
+      h += `<button class="navitem ${on ? 'on' : ''}" data-nav="scene" data-id="${s.id}">
+        <span class="em">${s.icon}</span>${s.name}
+        ${DONE.has(s.id) ? '<span class="done">✓</span>' : `<span class="cnt">${s.cmds.length ? s.cmds.length : '图解'}</span>`}</button>`;
+    });
+    h += `</div>`;
+  });
+  h += `<div class="sgroup ${FOLD.has('real') ? 'closed' : ''}">
+    <div class="gt" data-tg="real" title="点击折叠 / 展开">🎯 实战<span class="arw">▾</span></div>
+    <button class="navitem ${route === 'cases' ? 'on' : ''}" data-nav="cases"><span class="em">🏆</span>本校案例库</button>
+    <button class="navitem ${route === 'path' ? 'on' : ''}" data-nav="path"><span class="em">🚀</span>7 天上手</button>
+  </div>`;
+  side.innerHTML = h;
+}
+
+function renderHome() {
+  const all = SCENES.length;
+  let h = `
+  <div class="hero">
+    <div class="hl">
+      <span class="tag">2026 校本培训 · 教师数字化工作实战</span>
+      <h2>不讲功能，只讲<em>你明天能用的那一件活</em></h2>
+      <p>按你最烦的那件事找<br>
+——备课、出卷、批改、评语、台账、学件。<br>
+每条指令都能直接复制，改个学科和年级就能用。</p>
+      <div class="nums">
+        <div><b>${all}<span>个</span></b>高频场景</div>
+        <div><b>${TOTAL_CMDS}<span>条</span></b>可复制指令</div>
+        <div><b>8<span>个</span></b>本校真实案例</div>
+      </div>
+    </div>
+    <div class="hq">
+      <div class="hqt">⚡ 现在就想动手？</div>
+      <div class="hqs">点一下直达，指令直接复制</div>
+      <button data-nav="scene" data-id="az"><span class="em">📦</span>还没装？先装上<span class="go">→</span></button>
+      <button data-nav="scene" data-id="beike"><span class="em">📝</span>备一节课<span class="go">→</span></button>
+      <button data-nav="scene" data-id="chujuan"><span class="em">📄</span>出一份卷<span class="go">→</span></button>
+      <button data-nav="scene" data-id="jiaxiao"><span class="em">👨‍👩‍👧</span>写期末评语<span class="go">→</span></button>
+      <button data-nav="path"><span class="em">🚀</span>第一次用？7 天上手<span class="go">→</span></button>
+    </div>
+  </div>`;
+
+  GROUPS.forEach(g => {
+    if (g.id === 'real') return;
+    const list = SCENES.filter(s => s.g === g.id);
+    if (!list.length) return;
+    h += `<div class="sect"><h3>${g.icon} ${g.name}</h3><span class="hint">${g.id === 'xin' ? '从没用过？从这里开始，今天就能走完' : g.id === 'jiao' ? '每天都要干的事' : g.id === 'yu' ? '面对学生和家长' : g.id === 'cheng' ? '专业成长与材料' : '让工具长出工具'}</span></div>`;
+    h += `<div class="grid">` + list.map(s => `
+      <div class="card ${DONE.has(s.id) ? 'done' : ''}" data-nav="scene" data-id="${s.id}">
+        <span class="ok">✓ 已试过</span>
+        <span class="ci">${s.icon}</span>
+        <h4>${s.name}</h4>
+        <div class="pain">${s.pain}</div>
+        <div class="meta"><span class="n">${s.cmds.length ? s.cmds.length + ' 条指令' : '图解 · 看就会'}</span><span>·</span><span>${s.deliv.slice(0, 2).join(' / ')}</span></div>
+      </div>`).join('') + `</div>`;
+  });
+
+  h += `<div class="sect"><h3>🎯 不知道怎么开始？</h3></div>
+    <div class="grid">
+      <div class="card" data-nav="path"><span class="ci">🚀</span><h4>7 天上手路径</h4>
+        <div class="pain">每天 15 分钟，七天后你会有七个能用的东西。</div>
+        <div class="meta"><span class="n">按天走</span><span>·</span><span>配现成指令</span></div></div>
+      <div class="card" data-nav="cases"><span class="ci">🏆</span><h4>本校案例库</h4>
+        <div class="pain">这些事就发生在这所学校，不是网上的传说。</div>
+        <div class="meta"><span class="n">8 个案例</span><span>·</span><span>可复制</span></div></div>
+    </div>`;
+
+  h += `<div class="manual" style="margin-top:26px">
+      <b>内容来源</b>：《WorkBuddy 教师手册》（犀流沙，238 页 / 18 章 71 篇）+ 本校一年来的真实使用记录
+    </div>`;
+  main.innerHTML = h;
+}
+
+function renderScene(id) {
+  const s = SCENES.find(x => x.id === id);
+  if (!s) { renderHome(); return; }
+  const g = GROUPS.find(x => x.id === s.g);
+  const idx = SCENES.indexOf(s);
+  const prev = SCENES[idx - 1], next = SCENES[idx + 1];
+  const done = DONE.has(s.id);
+
+  let h = `
+  <div class="crumb"><span data-nav="home" style="cursor:pointer">总览</span> / <b>${g.name}</b> / <b>${s.name}</b></div>
+  <div class="scene-head">
+    <span class="gp">${g.icon} ${g.name}</span>
+    <h2>${s.icon} ${s.name}</h2>
+    <div class="pain">${s.pain}</div>
+  </div>
+  <div class="facts">
+    <div class="fact"><div class="k">用它之后</div><div class="v good">${s.gain}</div></div>
+    <div class="fact"><div class="k">你能拿到</div><div class="v">${s.deliv.join(' · ')}</div></div>
+    <div class="fact"><div class="k">我的状态</div><div class="v">
+      <button class="copy" style="color:#1a6dff;border-color:#bcd4f6;background:#fff" data-try="${s.id}">
+      ${done ? '✓ 已试过，再试一次' : '标记为已试过'}</button></div></div>
+  </div>`;
+
+  if (s.visual) h += s.visual;
+  if (s.cmds.length) {
+    h += `<div class="cmdwrap">`;
+    s.cmds.forEach((c, i) => {
+      h += `<div class="cmd">
+        <div class="cmd-h">
+          <span class="cmd-t"><span class="idx">${String(i + 1).padStart(2, '0')}</span>${c.t}</span>
+          <button class="copy" data-cp="${s.id}" data-i="${i}">复制</button>
+        </div>
+        <pre class="cmd-b">${esc(c.c)}</pre>
+      </div>`;
+    });
+    h += `</div>`;
+  }
+
+  if (s.case) {
+    h += `<div class="casebox"><div class="ct">🏫 本校怎么用的</div><p>${s.case.d}</p></div>`;
+  }
+
+  h += `<div class="manual"><b>对应手册</b>：${s.manual}${s.cmds.length ? ' · 指令已按小学学段改写，替换学科年级即可' : ' · 照着示意图点，直接出结果'}</div>`;
+
+  h += `<div class="pager">
+    ${prev ? `<button data-nav="scene" data-id="${prev.id}">← ${prev.name}</button>` : '<span></span>'}
+    ${next ? `<button class="nx" data-nav="scene" data-id="${next.id}">${next.name} →</button>` : '<span></span>'}
+  </div>`;
+
+  main.innerHTML = h;
+}
+
+function renderCases() {
+  let h = `<div class="crumb"><span data-nav="home" style="cursor:pointer">总览</span> / <b>本校案例库</b></div>
+  <div class="scene-head">
+    <span class="gp">🎯 实战</span>
+    <h2>🏆 这所学校已经跑通的事</h2>
+    <div class="pain">不是演示，不是别人的故事。这些产物现在还在用——有的在课堂上，有的在群里，有的每天定时跑。</div>
+  </div>`;
+
+  CASES.forEach(c => {
+    h += `<div class="casecard">
+      <div class="ch"><span style="font-size:19px">${c.icon}</span><h4>${c.title}</h4><span class="badge">${c.badge}</span></div>
+      <div class="desc">${c.desc}</div>
+      <div style="margin-top:10px">${c.points.map((p, i) => `<div style="font-size:13.2px;color:#3b4d62;line-height:1.85">· ${p}</div>`).join('')}</div>
+      <div class="res">${c.res.map(r => `<div>${r[0]}：<b>${r[1]}</b></div>`).join('')}</div>
+    </div>`;
+  });
+  main.innerHTML = h;
+}
+
+function renderPath() {
+  let h = `<div class="crumb"><span data-nav="home" style="cursor:pointer">总览</span> / <b>7 天上手</b></div>
+  <div class="scene-head">
+    <span class="gp">🚀 上手路径</span>
+    <h2>每天 15 分钟，七天七个成品</h2>
+    <div class="pain">不用先学完再用。每天挑一件真的要干的活，做完就用上了——这是唯一不会半途而废的学法。</div>
+  </div>
+  <div class="tl">`;
+
+  PATH.forEach(p => {
+    h += `<div class="tli">
+      <div class="day">${p.d}</div>
+      <h4>${p.t}</h4>
+      <p>${p.p}</p>
+      <div class="q">${esc(p.q)}</div>
+    </div>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="sect"><h3>🧭 三句话心态</h3></div>`;
+  MINDSET.forEach(m => {
+    h += `<div class="notebox" style="border-left-color:#1a6dff"><h4>${m.t}</h4><p>${m.p}</p></div>`;
+  });
+
+  h += `<div class="sect"><h3>⚠️ 五个坑，别再踩</h3></div>`;
+  PITS.forEach((p, i) => {
+    h += `<div class="notebox"><h4>坑 ${i + 1} · ${p.t}</h4><p>${p.p}</p></div>`;
+  });
+
+  main.innerHTML = h;
+}
+
+function renderSearch() {
+  const k = keyword.toLowerCase();
+  const hitS = SCENES.filter(s =>
+    s.name.toLowerCase().includes(k) || s.pain.toLowerCase().includes(k) ||
+    s.deliv.join('').toLowerCase().includes(k) ||
+    s.cmds.some(c => c.t.toLowerCase().includes(k) || c.c.toLowerCase().includes(k))
+  );
+  let h = `<div class="crumb"><span data-nav="home" style="cursor:pointer">总览</span> / <b>搜索“${esc(keyword)}”</b></div>
+  <div class="sect"><h3>找到 ${hitS.length} 个相关场景</h3></div>`;
+  if (!hitS.length) {
+    h += `<div class="empty"><span class="big">🔍</span>没找到。<br>换个说法试试，比如“评语”“出卷”“错题”“值日”“学件”。</div>`;
+  } else {
+    hitS.forEach(s => {
+      const hitCmd = s.cmds.filter(c => c.c.toLowerCase().includes(k) || c.t.toLowerCase().includes(k));
+      h += `<div class="sres" data-nav="scene" data-id="${s.id}">
+        <div class="st"><span>${s.icon}</span>${hl(s.name, k)}</div>
+        <div class="sn">${hl(s.pain, k)}</div>
+        ${hitCmd.length ? `<div class="sn" style="margin-top:4px;color:#1a6dff">命中指令：${hitCmd.map(c => hl(c.t, k)).join('、')}</div>` : ''}
+      </div>`;
+    });
+  }
+  main.innerHTML = h;
+}
+
+function esc(t) {
+  return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function hl(t, k) {
+  const e = esc(t);
+  if (!k) return e;
+  const re = new RegExp('(' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return e.replace(re, '<mark>$1</mark>');
+}
+
+/* ---------- 复制 ---------- */
+function copyText(txt, btn) {
+  const ok = () => {
+    const old = btn.textContent;
+    btn.textContent = '已复制 ✓';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = old; btn.classList.remove('ok'); }, 1600);
+  };
+  const fb = () => {
+    const ta = document.createElement('textarea');
+    ta.value = txt;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); ok(); }
+    catch (e) { alert('复制失败，请手动选中文字复制'); }
+    document.body.removeChild(ta);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(ok).catch(fb);
+  } else { fb(); }
+}
+
+/* ---------- 事件 ---------- */
+document.addEventListener('click', e => {
+  const tg = e.target.closest('[data-tg]');
+  if (tg) {
+    const gid = tg.dataset.tg;
+    const grp = tg.closest('.sgroup');
+    grp.classList.toggle('closed');
+    if (grp.classList.contains('closed')) FOLD.add(gid); else FOLD.delete(gid);
+    saveFold();
+    return;
+  }
+
+  const nav = e.target.closest('[data-nav]');
+  if (nav) { go(nav.dataset.nav, nav.dataset.id); return; }
+
+  const cp = e.target.closest('[data-cp]');
+  if (cp) {
+    const s = SCENES.find(x => x.id === cp.dataset.cp);
+    copyText(s.cmds[+cp.dataset.i].c, cp);
+    return;
+  }
+
+  const tryBtn = e.target.closest('[data-try]');
+  if (tryBtn) {
+    const id = tryBtn.dataset.try;
+    if (DONE.has(id)) DONE.delete(id); else DONE.add(id);
+    saveDone(); renderScene(id);
+    return;
+  }
+});
+
+qInput.addEventListener('input', e => {
+  keyword = e.target.value.trim();
+  if (keyword) { renderSearch(); }
+  else { render(); }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== qInput) {
+    e.preventDefault(); qInput.focus(); qInput.select();
+  }
+  if (e.key === 'Escape' && document.activeElement === qInput) {
+    qInput.value = ''; keyword = ''; qInput.blur(); render();
+  }
+});
+
+/* ---------- 启动 ---------- */
+(function init() {
+  const h = (location.hash || '').replace(/^#\/?/, '');
+  if (h.startsWith('scene/')) { route = 'scene'; cur = h.split('/')[1]; }
+  else if (h === 'cases' || h === 'path' || h === 'home') { route = h === 'home' ? 'home' : h; }
+  updateStats();
+  render();
+})();
+</script>
+<!-- pf-home:start -->
+<a id="pf-home" href="../../" aria-label="返回蓝兔数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
+<style>
+#pf-home{position:fixed;left:14px;bottom:14px;z-index:2147483000;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 13px 0 11px;border-radius:16px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);border:1px solid rgba(15,23,42,.13);box-shadow:0 2px 12px rgba(15,23,42,.15);color:#1e293b!important;font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif!important;text-decoration:none!important;letter-spacing:.02em;opacity:.9;transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+#pf-home:hover,#pf-home:focus-visible{opacity:1;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.22);transform:translateY(-1px);outline:none}
+#pf-home .pf-ar{font-size:14px;line-height:1;opacity:.65}
+@media (hover:none){#pf-home{opacity:.95}}
+@media (min-width:901px){#pf-home{left:262px}}
+@media (max-width:520px){#pf-home{opacity:.95;height:30px;padding:0 11px;font-size:12px}}
+@media print{#pf-home{display:none!important}}
+</style>
+<script>
+(function(){try{
+  if(window.__pfHome)return;window.__pfHome=1;
+  document.addEventListener('keydown',function(e){
+    if(e.altKey&&e.key==='ArrowLeft'&&!e.ctrlKey&&!e.metaKey){
+      var a=document.getElementById('pf-home');if(a){e.preventDefault();location.href=a.getAttribute('href');}
+    }
+  });
+}catch(e){}})();
+</script>
+<!-- pf-home:end -->
+</body>
+</html>
