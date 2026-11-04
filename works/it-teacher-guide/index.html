@@ -209,9 +209,9 @@ b, strong { color: #152C4E; }
     <div class="mock-box">
       <div class="mock-head new">⚡ WorkBuddy（直接执行）</div>
       <div class="mock-body">
-        <div class="bubble">“帮我把《六（4）班学生评语.docx》按姓名填入《六4毕业成绩等级.xlsx》的综合素质评价栏，先扫描确认再执行”</div>
+        <div class="bubble">“帮我把《学生评语.docx》按姓名填入《毕业成绩等级.xlsx》的综合素质评价栏，先扫描确认再执行”</div>
         <div class="bubble ai2">✅ 已读取两个文件，匹配到 42 名学生；写入完成，0 条漏填，给你校验报告：</div>
-        <div><span class="file-pill">📄 六4毕业成绩等级（已填好）.xlsx</span><span class="file-pill">📋 校验报告.md</span></div>
+        <div><span class="file-pill">📄 毕业成绩等级（已填好）.xlsx</span><span class="file-pill">📋 校验报告.md</span></div>
         <div class="bubble" style="margin-bottom:0">😄 两小时变两分钟，还不会漏！</div>
       </div>
     </div>
@@ -396,8 +396,8 @@ HTML 文件，我双击就能在教室电脑和希沃白板上用。</div>
     </summary>
     <div class="case-body">
       <span class="kw">按姓名匹配</span><span class="kw">先扫描后写入</span><span class="kw">校验报告</span>
-      <div class="prompt-box"><span class="lb">✍️ 提示词（谨慎分步版）</span>请处理两个文件：D:\...\六（4）班学生评语.docx 和
-D:\...\六4毕业成绩等级.xlsx。
+      <div class="prompt-box"><span class="lb">✍️ 提示词（谨慎分步版）</span>请处理两个文件：D:\...\学生评语.docx 和
+D:\...\毕业成绩等级.xlsx。
 第一步：先只读扫描两边数据，把每个学生按姓名对应关系列出来，
 确认评语能准确对号入座后再告诉我，不要写入；
 第二步：确认无误后，把每位学生的评语填入 Excel 对应行
@@ -417,7 +417,7 @@ D:\...\六4毕业成绩等级.xlsx。
     </summary>
     <div class="case-body">
       <span class="kw">分数段</span><span class="kw">优秀率/及格率</span><span class="kw">关注名单</span>
-      <div class="prompt-box"><span class="lb">✍️ 提示词</span>请分析附件《六4班期末数学成绩.xlsx》：计算总分、平均分、
+      <div class="prompt-box"><span class="lb">✍️ 提示词</span>请分析附件《班级期末数学成绩.xlsx》：计算总分、平均分、
 优秀率(≥90)、及格率(≥60)、各分数段人数分布；
 指出进步明显和需要重点关注的学生（列出名单）；
 生成 2-3 张图表（分数段柱状图、分数对比图）；
@@ -503,7 +503,7 @@ AI 零代码网页学件的小学课堂教学实践。请你用“中文去 AI �
 语气亲切像班主任口吻，包含交通安全、防溺水、居家用电、
 网络防沉迷（给具体时长建议）、假期学习生活建议五个部分；
 开头有学校问候语、结尾有回执栏（家长签字）；
-控制在 1 页 A4，输出 Word 文档，学校名称用“汤庄桥小学”占位。</div>
+控制在 1 页 A4，输出 Word 文档，学校名称用“××小学”占位。</div>
       <div class="eff">✅ <b>效果：</b>30 秒初稿，改一改就能发。心理辅导、体质健康、研学提示……模板库一次建好全年复用。</div>
     </div>
   </details>
@@ -547,7 +547,7 @@ AI 零代码网页学件的小学课堂教学实践。请你用“中文去 AI �
       <h3><span class="ic">🏠</span>生活杂务</h3>
       <ul>
         <li><b>表格化生活</b>：“做一个家庭月记账 Excel：分类=餐饮/交通/教育/医疗/其他，含预算列和超支提醒，再用它分析我上个月哪类花超了。”</li>
-        <li><b>出行规划</b>：“帮我做一张常州→西安 5 日家庭游计划表：每天行程+预算+带娃注意事项，输出 Excel 和一张行李清单。”</li>
+        <li><b>出行规划</b>：“帮我做一张出发地→西安 5 日家庭游计划表：每天行程+预算+带娃注意事项，输出 Excel 和一张行李清单。”</li>
         <li><b>清单与提醒</b>：“每周日上午提醒我整理下周要交的材料清单”——定时自动化连生活琐事都管。</li>
         <li><b>本地小工具</b>：像你的“教师工作台·通讯录”一样，任何生活里的小需求都能让它在本地生成小网页/小工具，自己用、家人用，隐私不外泄。</li>
       </ul>
@@ -561,7 +561,7 @@ AI 零代码网页学件的小学课堂教学实践。请你用“中文去 AI �
   <div class="card">
     <ol>
       <li><b>涉及“删、移、批量改”文件时别嫌它啰嗦</b>——它会先列清单等你确认，这是保护你的设计。⚠️ 千万别对它说“把桌面清理干净”这种模糊指令，务必指明目录、文件类型、处理规则。</li>
-      <li><b>隐私信息要主动声明</b>——涉及学生电话、身份证号等敏感数据，可要求“查询时用姓名+密码门控才显示”（就像你的通讯录 tx2000 方案）。私人文件不外传、不回传公网。</li>
+      <li><b>隐私信息要主动声明</b>——涉及学生电话、身份证号等敏感数据，可要求“查询时用姓名+密码门控才显示”（自建通讯录就是这样做的）。私人文件不外传、不回传公网。</li>
       <li><b>格式要提前说</b>——默认产物按场景来，但正式材料一定写明“输出 Word 文档/Excel 表格”，避免它给 Markdown 或网页。</li>
       <li><b>大活分步走</b>——一次只交代一个大任务；牵一发动全身的操作（改原表）先让它“只读扫描 → 给你确认 → 再执行”。</li>
       <li><b>别删 .workbuddy 文件夹</b>——那是它的“记忆”所在，删了它就“失忆”了，你们之间的默契要从头培养。</li>
@@ -600,7 +600,7 @@ AI 零代码网页学件的小学课堂教学实践。请你用“中文去 AI �
 </div>
 
 <!-- pf-home:start -->
-<a id="pf-home" href="../../" aria-label="返回符京雷数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
+<a id="pf-home" href="../../" aria-label="返回蓝兔数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
 <style>
 #pf-home{position:fixed;left:14px;bottom:14px;z-index:2147483000;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 13px 0 11px;border-radius:16px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);border:1px solid rgba(15,23,42,.13);box-shadow:0 2px 12px rgba(15,23,42,.15);color:#1e293b!important;font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif!important;text-decoration:none!important;letter-spacing:.02em;opacity:.9;transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent;white-space:nowrap}
 #pf-home:hover,#pf-home:focus-visible{opacity:1;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.22);transform:translateY(-1px);outline:none}

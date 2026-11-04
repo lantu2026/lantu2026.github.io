@@ -3,14 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>勤美汤小 wiki · 师生家长实用手册</title>
-<meta name="description" content="常州市新北区汤庄桥小学师生家长共建共享的校园百科手册">
-<link rel="icon" href="assets/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/emblem.png">
+<title>勤美 wiki · 师生家长实用手册</title>
+<meta name="description" content="三人行工作室师生家长共建共享的校园百科手册">
 
 <style>
-/* ============ 勤美汤小 wiki · 设计系统 ============ */
+/* ============ 勤美 wiki · 设计系统 ============ */
 :root{
   /* 默认配色：草木绿（明快版） */
   --g900:#0F5C3A;--g700:#157A4C;--g600:#199A5F;--g500:#22B26B;--g400:#4FC98D;
@@ -462,8 +459,8 @@ html[data-theme="dark"] .rb.parent{background:#332C1C;color:#EFAE72}
 <div class="topbar">
   <div class="tb-in">
     <div class="logo" onclick="go('#/')">
-      <img class="mk-img" src="assets/emblem.png" alt="汤庄桥小学校徽" onerror="this.outerHTML='<div class=&#39;mk-img&#39; style=&#39;display:grid;place-items:center;font-size:18px&#39;>🌿</div>'">
-      <div><b>勤美汤小 wiki</b><small>师生家长实用手册</small></div>
+      <img class="mk-img" src="assets/emblem.png" alt="徽标" onerror="this.outerHTML='<div class=&#39;mk-img&#39; style=&#39;display:grid;place-items:center;font-size:18px&#39;>🌿</div>'">
+      <div><b>勤美 wiki</b><small>师生家长实用手册</small></div>
     </div>
     <div class="tb-space"></div>
     <div class="search">
@@ -491,7 +488,7 @@ html[data-theme="dark"] .rb.parent{background:#332C1C;color:#EFAE72}
 <footer>
   <div class="ft-in">
     <div class="l">
-      <b style="color:var(--g900)">勤美汤小 wiki</b> · 常州市新北区汤庄桥小学<br>
+      <b style="color:var(--g900)">勤美 wiki</b> · 三人行工作室<br>
       内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 协议 ·
       由全校师生家长共建共享 · 非商业用途
     </div>
@@ -512,11 +509,11 @@ html[data-theme="dark"] .rb.parent{background:#332C1C;color:#EFAE72}
 
 <script>
 /* ==========================================================
-   勤美汤小 wiki  ·  数据层
+   勤美 wiki  ·  数据层
    单文件应用：改内容只需改下面的 DB 对象
    ========================================================== */
 var DB = {
-  site:{ name:'勤美汤小 wiki', version:'v0.5', updated:'2026-10-28', license:'CC BY-NC-SA 4.0' },
+  site:{ name:'勤美 wiki', version:'v0.5', updated:'2026-10-28', license:'CC BY-NC-SA 4.0' },
 
   /* 四频道：教师 / 学生 / 家长 / 学校
      —— 前三个按"你是谁"分（角色），学校频道按"学校是什么"分（机构），
@@ -609,7 +606,7 @@ var DB = {
 `},
     'tb-zuoye':{ title:'作业：布置与批改的标准', upd:'2026-10-13', tags:['教学常规'],
       body:`
-<p>作业是课堂的延伸，不是惩罚工具。汤小的作业管理遵循"<b>控量、分层、精批、快反馈</b>"四原则。</p>
+<p>作业是课堂的延伸，不是惩罚工具。这里的作业管理遵循"<b>控量、分层、精批、快反馈</b>"四原则。</p>
 <h2>布置：三个"能不能"</h2>
 <ul>
 <li>能不能在 <b>课后服务时间</b> 内做完大部分？（小学书面作业总量按规定控制）</li>
@@ -682,7 +679,7 @@ var DB = {
     'ky-gongkaike':{ title:'公开课与听评课流程', upd:'', tags:['教研科研'], body:'' },
     'gc-qinglan':{ title:'青蓝携手工程：新教师的第一年', upd:'2026-10-13', tags:['四大工程','专业发展'],
       body:`
-<p>"青蓝携手"是汤小教师发展四大工程之首——用骨干教师的"蓝"，带青年教师的"青"。目标很朴素：<b>让新老师第一年站稳讲台，第三年形成风格</b>。</p>
+<p>"青蓝携手"是教师发展四大工程之首——用骨干教师的"蓝"，带青年教师的"青"。目标很朴素：<b>让新老师第一年站稳讲台，第三年形成风格</b>。</p>
 <h2>结对之后做什么</h2>
 <table>
 <tr><th>时间</th><th>动作</th><th>频次</th></tr>
@@ -994,9 +991,9 @@ var DB = {
     'sc-jianjie':{ title:'学校简介：一所叫"勤美"的小学', upd:'2026-10-13', tags:['学校概况'],
       body:`
 <div style="text-align:center;margin:2px 0 22px">
-<img src="assets/emblem.png" alt="常州市新北区汤庄桥小学校徽" style="width:132px;height:132px;object-fit:contain" onerror="this.parentNode.style.display='none'">
+<img src="assets/emblem.png" alt="徽标" style="width:132px;height:132px;object-fit:contain" onerror="this.parentNode.style.display='none'">
 </div>
-<p><b>常州市新北区汤庄桥小学</b>，以「<b>勤美</b>」为办学品牌，把"勤"（勤学、勤思、勤实践）与"美"（美言、美行、美心灵）写进日常的每一节课、每一次活动里。</p>
+<p><b>三人行工作室</b>，以「<b>勤美</b>」为办学品牌，把"勤"（勤学、勤思、勤实践）与"美"（美言、美行、美心灵）写进日常的每一节课、每一次活动里。</p>
 <p>学校是一所普通的乡镇小学，但"普通"不等于"将就"——这里的老师习惯把日常遇到的问题做成方法，再把方法沉淀下来给下一届用。这份手册本身就是这么来的。</p>
 
 <h2>一、五个品牌栏目</h2>
@@ -1147,7 +1144,7 @@ var DB = {
 var PAGES = {
   about:{ icon:'ℹ️', title:'关于本站',
     body:`
-<p><b>勤美汤小 wiki</b> 是一份面向<b>教师、学生、家长、学校</b>四类视角的校园实用手册，由汤庄桥小学师生家长共同建设、共同维护。</p>
+<p><b>勤美 wiki</b> 是一份面向<b>教师、学生、家长、学校</b>四类视角的校园实用手册，由三人行工作室伙伴共同建设、共同维护。</p>
 <h2>为什么做这个</h2>
 <p>学校里的信息往往散落在通知、纸质材料、老教师的口口相传里。新人来了要问一圈，家长遇到问题不知道找谁。我们想把它们收拢到一处，<b>写得明白、查得方便、随时能更新</b>。</p>
 <h2>和别的网站有什么不同</h2>
@@ -1202,23 +1199,22 @@ var PAGES = {
 <li>🏫 <b>新增「学校频道」</b>：由三个频道扩为四个。教师 / 学生 / 家长按"你是谁"分（角色），学校频道按"学校是什么"分（机构），承载校历作息、校务公开、招生入学等不属于任何单一角色的校级信息</li>
 <li>📚 学校频道下设 5 个栏目共 13 个条目：学校概况（学校简介 / 勤美理念 / 办学成果）、校历与作息、校务公开、招生入学、校园风采（科技节 / 社团 / 智慧校园）</li>
 <li>🔀 原「关于学校」独立页并入学校频道，避免两处内容打架——全站信息只留一个来源</li>
-<li>🎨 学校频道用<b>校徽红</b>作专属色（顶条 + 图标底 + 频道横幅），与前三个频道的绿 / 蓝 / 橙区分，一眼看出"这是校级信息"</li>
+<li>🎨 学校频道用<b>深红</b>作专属色（顶条 + 图标底 + 频道横幅），与前三个频道的绿 / 蓝 / 橙区分，一眼看出"这是校级信息"</li>
 <li>📐 频道卡改为四列排布（窄屏两列、手机单列），卡片尺寸与字号同步微调</li>
 <li>📊 首页「4 个频道」数字改为自动统计，以后加频道不用再手动改</li>
 </ul>
 
 <h2>v0.3.1 · 2026-10-13</h2>
 <ul>
-<li>🏛️ <b>换上官方圆形校徽</b>：由学校提供的标准校徽（外圈校名 + 三色"人"形图案），替换原先从官网扒取的横版标识</li>
-<li>✨ 校徽做了圆形透明化处理，深色模式下不再出现白色方块；顶栏、首屏、「关于学校」三处统一使用</li>
-<li>🎯 校徽位置改为正圆衬白底，像一枚校印，在四套配色下都清晰</li>
-<li>🔖 <b>补上网站图标</b>：浏览器标签页现在显示校徽里的三色"人"形图案（小尺寸下更清晰），另带高清圆章版</li>
+<li>🏛️ <b>换上圆形徽标</b>：圆形透明化处理，深色模式下不再出现白色方块；顶栏、首屏、「关于」三处统一使用</li>
+<li>🎯 徽标位置改为正圆衬白底，像一枚印章，在四套配色下都清晰</li>
+<li>🔖 <b>补上网站图标</b>：浏览器标签页显示专属小图标（小尺寸下更清晰）</li>
 </ul>
 
 <h2>v0.3 · 2026-10-13</h2>
 <ul>
 <li>🎨 <b>四套配色方案</b>：草木绿 / 阳光橙 / 活力蓝 / 童趣粉，点顶栏 🎨 一键切换，深浅色下都做了适配——整体比原来明快活泼，更贴合小学气质</li>
-<li>🏫 <b>换上学校校徽</b>：顶栏与「关于学校」页使用学校标识</li>
+<li>🏫 <b>顶栏与「关于」页使用专属标识</b></li>
 <li>📐 <b>首屏改造</b>：横幅高度压到原来约 1/3，右侧不再是空白——搜索框与数据统计归位，三个频道上移成为第一视觉</li>
 <li>🔧 频道卡加了配色顶条，图标底色随配色联动</li>
 </ul>
@@ -1257,7 +1253,7 @@ var PAGES = {
    endpoint / publishableKey 来自云服务激活时下发的 publicConfig
    ========================================================== */
 /* ==========================================================
-   勤美汤小 wiki · 数据汇聚后端（quickform · 教师端 v0.5）
+   勤美 wiki · 数据汇聚后端（quickform · 教师端 v0.5）
    ----------------------------------------------------------
    写入  POST https://quickform.cn/api/jf0v2dy0dm
    读取  GET  https://quickform.cn/api/jf0v2dy0dm/all
@@ -1346,10 +1342,10 @@ function renderHome(){
   var h = '';
   h += '<div class="hero fade"><div class="hero-in">'
     + '<div class="hero-brand">'
-    + '<img class="hero-emblem" src="assets/emblem.png" alt="汤庄桥小学校徽" onerror="this.style.display=&#39;none&#39;">'
+    + '<img class="hero-emblem" src="assets/emblem.png" alt="徽标" onerror="this.style.display=&#39;none&#39;">'
     + '<div class="hero-txt">'
-    + '<div class="tagline">常州市新北区汤庄桥小学 · 勤美品牌</div>'
-    + '<h1>勤美汤小 wiki</h1>'
+    + '<div class="tagline">三人行工作室 · 勤美品牌</div>'
+    + '<h1>勤美 wiki</h1>'
     + '<div class="sub">师生家长共建共享的实用手册 · 教师怎么教、学生怎么学、家长怎么帮、学校有什么</div>'
     + '</div></div>'
     + '<div class="hero-side">'
@@ -1414,7 +1410,7 @@ function renderHome(){
 
   /* 共建条 */
   h += '<div class="join fade"><h2>🤝 这份手册，欢迎你也写一笔</h2>'
-    + '<p>这里的内容不是从别处抄来的，是汤小人自己踩过的坑、总结的办法。你的一条经验，可能正好解了另一个人的燃眉之急。</p>'
+    + '<p>这里的内容不是从别处抄来的，是我们自己踩过的坑、总结的办法。你的一条经验，可能正好解了另一个人的燃眉之急。</p>'
     + '<div class="ways">'
     + '<div class="way"><b>① 指出问题</b><span>发现错别字、过时说法，告诉我们即可。1 分钟也是贡献。</span></div>'
     + '<div class="way"><b>② 投稿一段</b><span>把你的经验写成 200 字，投给教师发展处，我们帮你成稿。</span></div>'
@@ -1862,7 +1858,7 @@ document.getElementById('updText').textContent = DB.site.updated;
 route();
 </script>
 <!-- pf-home:start -->
-<a id="pf-home" href="../../" aria-label="返回符京雷数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
+<a id="pf-home" href="../../" aria-label="返回蓝兔数字教学作品集" title="返回作品集（Alt+←）"><span class="pf-ar">&larr;</span><span class="pf-tx">作品集</span></a>
 <style>
 #pf-home{position:fixed;left:14px;bottom:14px;z-index:2147483000;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 13px 0 11px;border-radius:16px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);border:1px solid rgba(15,23,42,.13);box-shadow:0 2px 12px rgba(15,23,42,.15);color:#1e293b!important;font:600 13px/1 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif!important;text-decoration:none!important;letter-spacing:.02em;opacity:.9;transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent;white-space:nowrap}
 #pf-home:hover,#pf-home:focus-visible{opacity:1;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.22);transform:translateY(-1px);outline:none}

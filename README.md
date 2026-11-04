@@ -1,6 +1,6 @@
-# 符京雷 · 数字教学作品集
+# 蓝兔 · 数字教学作品集
 
-常州市新北区汤庄桥小学 · 信息科技教师 · 教师发展处
+三人行工作室 · 信息科技教师 · 教师发展处
 
 在线地址：<https://lantu2026.github.io/>
 
@@ -12,7 +12,7 @@ works/              专业成果（给老师看：讲座、手册、共建平台
   shuzhi-funeng/      数智赋能 · 网页学件制作实战
   workbuddy-2/        WorkBuddy 教师数字化实战 2.0
   it-teacher-guide/   小学信息老师 WorkBuddy 应用全指南
-  qinmei-wiki/        勤美汤小 wiki（教师端投稿 + 云端汇总）
+  qinmei-wiki/        勤美 wiki（教师端投稿 + 云端汇总）
 learn/              学生学件（给学生用：即开即用）
   photosynthesis/     光合作用探索实验室
   planting/           种植体验 · 自动定时增湿
