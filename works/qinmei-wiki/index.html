@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>勤美 wiki · 师生家长实用手册</title>
 <meta name="description" content="三人行工作室师生家长共建共享的校园百科手册">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/emblem.png">
 
 <style>
 /* ============ 勤美 wiki · 设计系统 ============ */
@@ -459,7 +462,7 @@ html[data-theme="dark"] .rb.parent{background:#332C1C;color:#EFAE72}
 <div class="topbar">
   <div class="tb-in">
     <div class="logo" onclick="go('#/')">
-      <img class="mk-img" src="assets/emblem.png" alt="徽标" onerror="this.outerHTML='<div class=&#39;mk-img&#39; style=&#39;display:grid;place-items:center;font-size:18px&#39;>🌿</div>'">
+      <img class="mk-img" src="assets/emblem.png" alt="校徽" onerror="this.outerHTML='<div class=&#39;mk-img&#39; style=&#39;display:grid;place-items:center;font-size:18px&#39;>🌿</div>'">
       <div><b>勤美 wiki</b><small>师生家长实用手册</small></div>
     </div>
     <div class="tb-space"></div>
@@ -991,7 +994,7 @@ var DB = {
     'sc-jianjie':{ title:'学校简介：一所叫"勤美"的小学', upd:'2026-10-13', tags:['学校概况'],
       body:`
 <div style="text-align:center;margin:2px 0 22px">
-<img src="assets/emblem.png" alt="徽标" style="width:132px;height:132px;object-fit:contain" onerror="this.parentNode.style.display='none'">
+<img src="assets/emblem.png" alt="校徽" style="width:132px;height:132px;object-fit:contain" onerror="this.parentNode.style.display='none'">
 </div>
 <p><b>三人行工作室</b>，以「<b>勤美</b>」为办学品牌，把"勤"（勤学、勤思、勤实践）与"美"（美言、美行、美心灵）写进日常的每一节课、每一次活动里。</p>
 <p>学校是一所普通的乡镇小学，但"普通"不等于"将就"——这里的老师习惯把日常遇到的问题做成方法，再把方法沉淀下来给下一届用。这份手册本身就是这么来的。</p>
@@ -1199,15 +1202,15 @@ var PAGES = {
 <li>🏫 <b>新增「学校频道」</b>：由三个频道扩为四个。教师 / 学生 / 家长按"你是谁"分（角色），学校频道按"学校是什么"分（机构），承载校历作息、校务公开、招生入学等不属于任何单一角色的校级信息</li>
 <li>📚 学校频道下设 5 个栏目共 13 个条目：学校概况（学校简介 / 勤美理念 / 办学成果）、校历与作息、校务公开、招生入学、校园风采（科技节 / 社团 / 智慧校园）</li>
 <li>🔀 原「关于学校」独立页并入学校频道，避免两处内容打架——全站信息只留一个来源</li>
-<li>🎨 学校频道用<b>深红</b>作专属色（顶条 + 图标底 + 频道横幅），与前三个频道的绿 / 蓝 / 橙区分，一眼看出"这是校级信息"</li>
+<li>🎨 学校频道用<b>校徽红</b>作专属色（顶条 + 图标底 + 频道横幅），与前三个频道的绿 / 蓝 / 橙区分，一眼看出"这是校级信息"</li>
 <li>📐 频道卡改为四列排布（窄屏两列、手机单列），卡片尺寸与字号同步微调</li>
 <li>📊 首页「4 个频道」数字改为自动统计，以后加频道不用再手动改</li>
 </ul>
 
 <h2>v0.3.1 · 2026-10-13</h2>
 <ul>
-<li>🏛️ <b>换上圆形徽标</b>：圆形透明化处理，深色模式下不再出现白色方块；顶栏、首屏、「关于」三处统一使用</li>
-<li>🎯 徽标位置改为正圆衬白底，像一枚印章，在四套配色下都清晰</li>
+<li>🏛️ <b>换上圆形校徽</b>：圆形透明化处理，深色模式下不再出现白色方块；顶栏、首屏、「关于」三处统一使用</li>
+<li>🎯 校徽位置改为正圆衬白底，像一枚校印，在四套配色下都清晰</li>
 <li>🔖 <b>补上网站图标</b>：浏览器标签页显示专属小图标（小尺寸下更清晰）</li>
 </ul>
 
@@ -1342,7 +1345,7 @@ function renderHome(){
   var h = '';
   h += '<div class="hero fade"><div class="hero-in">'
     + '<div class="hero-brand">'
-    + '<img class="hero-emblem" src="assets/emblem.png" alt="徽标" onerror="this.style.display=&#39;none&#39;">'
+    + '<img class="hero-emblem" src="assets/emblem.png" alt="校徽" onerror="this.style.display=&#39;none&#39;">'
     + '<div class="hero-txt">'
     + '<div class="tagline">三人行工作室 · 勤美品牌</div>'
     + '<h1>勤美 wiki</h1>'
